@@ -20,7 +20,6 @@ export default function App() {
                         <Text className={"color-secondary font-qsemibold text-7xl py-10"}>
                             rydio
                         </Text>
-                    
                 </SafeAreaView>
 
                 <StatusBar backgroundColor='#FFFFFF' style="dark"/>
