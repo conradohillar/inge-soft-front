@@ -29,7 +29,7 @@ export default function App() {
                             <Link href="/home" className='mt-6' asChild>
                                 <BlackButton  height={80} width={300}>
                                     <XStack className="items-center justify-center flex-row space-x-3">
-                                        <Text className="text-[17.5px] font-qsemibold text-primary">Continuar con Google</Text>
+                                        <Text className="text-[18px] font-qsemibold text-primary">Continuar con Google</Text>
                                         <Image source={require('../assets/icons/google-icon.png')} className="h-[30px] w-[30px]"/>
                                     </XStack>
                                 </BlackButton> 
