@@ -6,6 +6,8 @@ import { XStack, TamaguiProvider, Theme, YStack } from "tamagui";
 import config from "../tamagui.config";
 import BlackButton from '../components/BlackButton';
 
+import { images } from "../constants"
+
 export default function App() {
     const colorScheme = useColorScheme();
     return (
@@ -38,6 +40,8 @@ export default function App() {
                         </View>
                     </YStack>
                 </SafeAreaView>
+
+                <StatusBar backgroundColor='#FFFFFF' style="dark"/>
             </Theme>
         </TamaguiProvider>
   );
