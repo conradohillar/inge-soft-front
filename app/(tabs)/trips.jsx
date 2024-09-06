@@ -1,11 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { ScrollView } from 'tamagui'
 
 const Trips = () => {
   return (
-    <View>
-      <Text>Trips</Text>
-    </View>
+    <ScrollView className="flex-1 bg-primary">
+
+    </ScrollView>
   )
 }
 

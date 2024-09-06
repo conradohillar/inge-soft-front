@@ -10,7 +10,7 @@ const Home = () => {
         <Text className="text-[30px] font-qsemibold text-black">Buscá tu viaje</Text>
       </View>
       <XStack className="flex-1 items-center justify-center">
-        <Input className='px-4' placeholder="Buscar..." style={{backgroundColor:"#EEEEEE", width:300}} />
+        <Input className='px-4 font-qsemibold w-[300px]' placeholder="Buscar..." style={{backgroundColor:"#EEEEEE"}} />
       </XStack>
       <YStack className="flex-2 items-center justify-evenly">
         <BlackButton height={55} width={250}>

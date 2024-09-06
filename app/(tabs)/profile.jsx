@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { YStack } from 'tamagui'
 
 const Profile = () => {
   return (
-    <View>
-      <Text>Profile</Text>
-    </View>
+    <YStack className="flex-1 items-center justify-evenly bg-primary">
+
+    </YStack>
   )
 }
 
