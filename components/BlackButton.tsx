@@ -6,17 +6,17 @@ export default function BlackButton({children, height, width, ...props}){
 
     return(
         <Button
+            onPressIn={() => setIsPressed(true)}
+            onPressOut={() => setIsPressed(false)}
+            style={{backgroundColor: isPressed ? '#59A58A' : '#000000'}}
             height={height}
             width={width}
            // className={'${className}'}
-            themeInverse
+            //themeInverse
             borderRadius={100}
             margin="$3"
-            style={{backgroundColor: isPressed ? '#59A58A' : '#000'}}
             {... props}
 
-            onPressIn={() => setIsPressed(true)}
-            onPressOut={() => setIsPressed(false)}
         >
             {children}
         </Button>

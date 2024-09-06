@@ -1,12 +1,12 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { ScrollView } from 'tamagui'
+import { StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import Header from '../../components/Header';
 
 const Trips = () => {
   return (
-    <ScrollView className="flex-1 bg-primary">
-
-    </ScrollView>
+    <SafeAreaView className="h-full w-full bg-primary">
+      <Header />
+    </SafeAreaView>
   )
 }
 

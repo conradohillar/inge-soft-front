@@ -1,5 +1,5 @@
-import logo from "../assets/images/logo.png"
+import map from "../assets/images/map.png"
 
 export default {
-    logo,
+    map,
 }

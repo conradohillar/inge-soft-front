@@ -1,8 +1,11 @@
 import { View, Text, Image } from 'react-native'
 import React from 'react'
 import { Tabs, Redirect } from 'expo-router';
+import Header from '../../components/Header'
 
 import { icons } from '../../constants'
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
@@ -22,7 +25,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
 
 const TabsLayout = () => {
   return (
-    <>
+    <> 
       <Tabs
         screenOptions={{
           tabBarShowLabel: false,
@@ -32,7 +35,7 @@ const TabsLayout = () => {
             backgroundColor: '#FFF',
             borderTopWidth: 1,
             borderTopColor: '#CDCDE0',
-            height: 100
+            height: 100,
           }
         }}
       >
@@ -73,8 +76,9 @@ const TabsLayout = () => {
               />
         )}}/>
       </Tabs>
-      
+      <StatusBar style="dark"/>
     </>
+    
   )
 }
 
