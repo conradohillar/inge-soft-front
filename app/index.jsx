@@ -41,7 +41,7 @@ export default function App() {
                     </YStack>
                 </SafeAreaView>
 
-                <StatusBar backgroundColor='#FFFFFF' style="dark"/>
+                <StatusBar backgroundColor='#000' style="light"/>
             </Theme>
         </TamaguiProvider>
   );

@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import Header from '../../components/Header';
 
 const Profile = () => {
   return (
-    <View>
-      <Text>Profile</Text>
-    </View>
+    <SafeAreaView className="h-full w-full bg-primary">
+      <Header />
+    </SafeAreaView>
   )
 }
 
