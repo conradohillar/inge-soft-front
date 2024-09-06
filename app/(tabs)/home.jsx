@@ -7,26 +7,25 @@ import { Link } from 'expo-router'
 const Home = () => {
   return (
     <YStack className="flex-1 items-center justify-evenly bg-primary">
-       <XStack className="flex-1 items-center justify-between ">
+        <XStack className="flex-1 items-center justify-between ">
           <Text className="text-[12px] font-qsemibold text-secondary">¿Querés publicar un viaje?</Text>
           <BlackButton height={52} width={160}>
             <Text className="text-[15px] font-qsemibold text-primary">Publicar viaje</Text>
           </BlackButton>
-      </XStack>
-      <YStack className="flex-4 items-center justify-center">
-        <View className="flex-3 items-center justify-center py-5">
-          <Image source={require("../../assets/images/map.png")} style={{height: 300 , width: 300, borderRadius:35}}/>
+        </XStack>
+        <YStack className="flex-4 items-center justify-center">
+          <View className="flex-3 items-center justify-center py-5">
+            <Image source={require("../../assets/images/map.png")} style={{height: 300 , width: 300, borderRadius:35}}/>
+          </View>
+          <Input className='px-4' placeholder="Buscar..." style={{backgroundColor:"#EEEEEE", width:300}} />
+        </YStack>
+        <View className="flex-1 items-center justify-center">
+          <Link href="/SearchTripPage" asChild>
+            <BlackButton height={70} width={250}>
+              <Text className="text-[20px] font-qsemibold text-primary">Buscar viaje</Text>
+            </BlackButton>
+          </Link>
         </View>
-        <Input className='px-4' placeholder="Buscar..." style={{backgroundColor:"#EEEEEE", width:300}} />
-      </YStack>
-      <View className="flex-1 items-center justify-center">
-        <Link href="/searchTrip" asChild>
-          <BlackButton height={70} width={250}>
-            <Text className="text-[20px] font-qsemibold text-primary">Buscar viaje</Text>
-          </BlackButton>
-        </Link>
-      </View>
-     
     </YStack>
   )
 }
