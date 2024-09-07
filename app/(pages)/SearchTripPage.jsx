@@ -9,6 +9,7 @@ import { Link } from "expo-router";
 import CustomInput from "../../components/CustomInput";
 
 
+
 export default function SearchTripPage(){
 
     return (
@@ -29,7 +30,7 @@ export default function SearchTripPage(){
                 <YStack className="justify-evenly items-center mb-5">
                     <Link href="/TripDetailsPage" asChild>
                     <BlackButton height={60} width={280}> 
-                        <Text className="text-[22px] font-qsemibold text-primary">Viajo yo</Text>
+                        <Text className="text-[22px] font-qsemibold text-primary"  >Viajo yo</Text>
                     </BlackButton>
                     </Link>
                     <BlackButton height={60} width={280}> 
