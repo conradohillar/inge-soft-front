@@ -14,7 +14,7 @@ import { LinearGradient } from 'tamagui/linear-gradient'
 //   label: string;
 // }
   
-export default function SelectField({ items, label, ...props}) {
+export default function SelectField({ items, label, renderItem, ...props}) {
 
   const [val, setVal] = React.useState('')
   const isPlaceholder = val === ''
@@ -22,8 +22,9 @@ export default function SelectField({ items, label, ...props}) {
   return (
     <Select value={val} onValueChange={setVal} disablePreventBodyScroll {...props}>
       <Select.Trigger width={350} height={60} iconAfter={ChevronDown} className='bg-primary text-black rounded-2xl mx-8'>
-        <Select.Value placeholder={items[0]?.name} className='text-base font-qsemibold' 
-                        style={{color: isPlaceholder ? "#bbb":"#000"}} />
+        <Select.Value placeholder={renderItem ? (items[0] && renderItem(items[0])) : items[0]?.value} 
+                      className='text-base font-qsemibold' 
+                      style={{color: isPlaceholder ? "#bbb":"#000"}} />
       </Select.Trigger>
 
       <Adapt when="sm" platform="touch">
@@ -93,18 +94,20 @@ export default function SelectField({ items, label, ...props}) {
                   return (
                     <Select.Item
                       index={i}
-                      key={item.name}
-                      value={item.name.toLowerCase()}
+                      key={item.key}
+                      value={item.value}
                       className='bg-primary border border-gray-100 w-[380px] mx-8'
                     >
-                      <Select.ItemText className='text-base text-black font-qsemibold'>{item.name}</Select.ItemText>
+                      <Select.ItemText className='text-base text-black font-qsemibold'>
+                        {renderItem ? renderItem(item) : item.value }
+                      </Select.ItemText>
                       <Select.ItemIndicator marginLeft="auto">
                         <Check size={20} color="black"/>
                       </Select.ItemIndicator>
                     </Select.Item>
                   )
                 }),
-              [items]
+              [items, renderItem]
             )}
             </YStack>
           </Select.Group>

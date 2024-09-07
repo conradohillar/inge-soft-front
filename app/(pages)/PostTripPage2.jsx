@@ -3,13 +3,12 @@ import Header from "../../components/Header";
 import { View, Text, Image } from "react-native";
 import { YStack,XStack, PortalProvider, Button } from "tamagui";
 import BlackButton from "../../components/BlackButton";
-import CustomInput from "../../components/CustomInput";
 import { Link } from "expo-router";
 import SelectField from "../../components/SelectField";
-import { Backpack, Luggage, User } from "@tamagui/lucide-icons";
+import {  User } from "@tamagui/lucide-icons";
 import Counter from "../../components/Counter";
 import icons from "../../constants/icons";
-import { useState } from "react";
+
 
 
 export default function PostTripPage2(){
@@ -22,7 +21,9 @@ export default function PostTripPage2(){
             <YStack className="items-start justify-center">
                 <Text className="text-sm text-black font-qbold ml-10 mb-3">Seleccioná tu auto</Text>
                 <PortalProvider>
-                    <SelectField items={items} label="Seleccioná tu auto"/>
+                    <SelectField items={items} label="Seleccioná tu auto" renderItem={(item) => (
+                        <Text>{item.value}, {item.key}</Text>
+                    )} />
                 </PortalProvider>
                 <View className="mx-11 mb-2 mt-12">
                     <Text className='text-sm font-qbold text-black'
@@ -64,8 +65,8 @@ export default function PostTripPage2(){
 }
 
 const items = [
-    { name: 'Ford Focus, AB-123-CD ' },
-    { name: 'Toyota Corolla, DE-456-FG' },
-    { name: 'Honda Civic, HI-789-JK' },
-    { name: 'Audi A3, LM-000-AR' },
+    { key: 'AB-123-CD', value: 'Ford Focus' },
+    { key: 'DE-456-FG', value: 'Toyota Corolla'},
+    { key: 'HI-789-JK', value: 'Honda Civic' },
+    { key: 'LM-000-AR', value: 'Audi A3' },
 ]
