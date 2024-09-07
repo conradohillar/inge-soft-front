@@ -7,7 +7,7 @@ export default function TripCard({from, to, driver, date, price}){
         <View className="py-3">
             <Pressable className="h-52 w-150 px-8 py-5 mx-6 bg-gray-100 rounded-3xl border-2 border-gray-300" 
                      style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
-                     onPress={() => console.log("Button pressed")}>
+                     onPress={() => {}}>
                 <YStack>
                     <XStack className="items-center justify-between mb-2">
                         <XStack className="items-center">

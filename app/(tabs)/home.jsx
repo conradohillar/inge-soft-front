@@ -15,12 +15,12 @@ const Home = () => {
               <Image source={require("../../assets/images/map.png")} style={{flex: 1}}/>
           </View>
           <View className="flex-1 items-center justify-center">
-            <Link href="/SearchTripPage" asChild>
+            <Link href="/(pages)/SearchTripPage" asChild>
               <BlackButton height={70} width={250}>
                 <Text className="text-[20px] font-qsemibold text-primary">Buscar viaje</Text>
               </BlackButton>
             </Link>
-            <Link href="/PostTripPage" asChild>
+            <Link href="/(pages)/PostTripPage" asChild>
               <BlackButton height={70} width={250}>
                 <Text className="text-[20px] font-qsemibold text-primary">Publicar viaje</Text>
               </BlackButton>
