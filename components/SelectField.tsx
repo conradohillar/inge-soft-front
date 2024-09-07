@@ -5,20 +5,16 @@ import type { FontSizeTokens, SelectProps } from 'tamagui'
 import { Adapt, Select, Sheet, YStack, getFontSize } from 'tamagui'
 import { LinearGradient } from 'tamagui/linear-gradient'
 
-interface Item {
-    name: string;
-  }
+// interface Item {
+//     name: string;
+//   }
   
-interface SelectTagProps extends SelectProps {
-  items: Item[];
-  label: string;
-}
+// interface SelectTagProps extends SelectProps {
+//   items: Item[];
+//   label: string;
+// }
   
-export default function SelectField({
-    items,
-    label,
-    ...props
-  }: SelectTagProps) {
+export default function SelectField({ items, label, ...props}) {
 
   const [val, setVal] = React.useState('')
   const isPlaceholder = val === ''
@@ -43,7 +39,7 @@ export default function SelectField({
           }}
         >
           <Sheet.Frame backgroundColor="$colorTransparent">
-            <Sheet.ScrollView>
+            <Sheet.ScrollView >
               <Adapt.Contents />
             </Sheet.ScrollView>
           </Sheet.Frame>
@@ -55,7 +51,7 @@ export default function SelectField({
           />
         </Sheet>
       </Adapt>
-
+        
       <Select.Content zIndex={200000}>
         <Select.ScrollUpButton
           alignItems="center"
