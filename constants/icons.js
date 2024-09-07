@@ -5,6 +5,9 @@ import car from "../assets/icons/car.png"
 import bag from "../assets/icons/bag.png"
 import suitcase from "../assets/icons/suitcase.png"
 import trips from "../assets/icons/trips.png"
+import arrowleft from "../assets/icons/arrow-left.png"
+import arrowright from "../assets/icons/arrow-right.png"
+
 
 export default {
     home,
@@ -14,4 +17,6 @@ export default {
     bag,
     suitcase,
     trips,
+    arrowleft,
+    arrowright
 };
