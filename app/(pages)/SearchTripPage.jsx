@@ -35,7 +35,9 @@ export default function SearchTripPage(){
                     <BlackButton height={60} width={280}> 
                         <Text className="text-xl font-qsemibold text-primary">Enviar un paquete</Text>
                     </BlackButton>
-                    <Text className="text-sm font-qsemibold text-red-500 mt-3">Cancelar búsqueda</Text>
+                    <Link href="/home" asChild>
+                        <Text className="text-sm font-qsemibold text-red-500 mt-3">Cancelar búsqueda</Text>
+                    </Link>
                 </YStack>
             </YStack>
         </SafeAreaView>
