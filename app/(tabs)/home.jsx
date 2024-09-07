@@ -20,7 +20,7 @@ const Home = () => {
                 <Text className="text-[20px] font-qsemibold text-primary">Buscar viaje</Text>
               </BlackButton>
             </Link>
-            <Link href="" asChild>
+            <Link href="/PostTripPage" asChild>
               <BlackButton height={70} width={250}>
                 <Text className="text-[20px] font-qsemibold text-primary">Publicar viaje</Text>
               </BlackButton>
