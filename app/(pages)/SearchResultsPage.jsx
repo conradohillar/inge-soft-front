@@ -2,6 +2,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../components/Header";
 import { FlatList, View, Text } from "react-native";
 import TripCard from "../../components/TripCard";
+import { XStack } from "tamagui";
 
 export default function SearchResults(){
     const renderItem = ({ item }) => (
@@ -12,14 +13,17 @@ export default function SearchResults(){
     return (
         <SafeAreaView className="w-full h-full bg-primary">
             <Header />
-            <View className="items-center mt-10 mb-7">
-                <Text className="text-[22px] font-qbold text-black">Resultados de tu búsqueda</Text>
+            <XStack className="items-center justify-center mt-10 mb-7">
+                <Text className="text-[22px] font-qbold text-secondary">Resultados </Text>
+                <Text className="text-[22px] font-qbold text-black">de tu búsqueda</Text>
+            </XStack>
+            <View className="items-center">
+                <FlatList 
+                    data={trips}
+                    keyExtractor={item => item.id}
+                    renderItem={renderItem}
+                />
             </View>
-            <FlatList 
-                data={trips}
-                keyExtractor={item => item.id}
-                renderItem={renderItem}
-            />
         </SafeAreaView>
     );
 }

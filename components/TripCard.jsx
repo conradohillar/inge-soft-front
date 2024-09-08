@@ -5,8 +5,13 @@ import icons from '../constants/icons';
 export default function TripCard({from, to, driver, date, price}){
     return (
         <View className="py-3">
-            <Pressable className="h-52 w-150 px-8 py-5 mx-6 bg-gray-100 rounded-3xl border-2 border-gray-300" 
-                     style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
+            <Pressable 
+                     style={({ pressed }) => ({ 
+                        height:210, width:350, paddingVertical:15, paddingHorizontal:18, marginHorizontal:6,
+                        borderWidth:2, borderColor:"#ccc", borderRadius:40,
+                        opacity: pressed ? 0.7 : 1,
+                        backgroundColor: pressed ? "#cdddcd":"#eee"
+                     })}
                      onPress={() => {}}>
                 <YStack>
                     <XStack className="items-center justify-between mb-2">

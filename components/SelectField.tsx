@@ -4,15 +4,6 @@ import { Check, ChevronDown, ChevronUp } from '@tamagui/lucide-icons'
 import type { FontSizeTokens, SelectProps } from 'tamagui'
 import { Adapt, Select, Sheet, YStack, getFontSize } from 'tamagui'
 import { LinearGradient } from 'tamagui/linear-gradient'
-
-// interface Item {
-//     name: string;
-//   }
-  
-// interface SelectTagProps extends SelectProps {
-//   items: Item[];
-//   label: string;
-// }
   
 export default function SelectField({ items, label, renderItem, ...props}) {
 
