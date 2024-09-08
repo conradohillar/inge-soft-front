@@ -1,7 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../components/Header";
 import { View, Text } from "react-native";
-import { YStack, PortalProvider } from "tamagui";
+import { YStack, PortalProvider, XStack } from "tamagui";
 import BlackButton from "../../components/BlackButton";
 import CustomInput from "../../components/CustomInput";
 import { Link } from "expo-router";
@@ -14,18 +14,19 @@ export default function PostTripPage(){
     return (
         <SafeAreaView className="h-full w-full bg-primary">
             <Header />
-            <View className=" items-center mt-12 mb-6">
-                <Text className="text-[27px] font-qsemibold text-black">Publicá tu viaje</Text>
-            </View>
+            <XStack className=" items-center justify-center mt-12 mb-6">
+                <Text className="text-[27px] font-qbold text-secondary">Publicá</Text>
+                <Text className="text-[27px] font-qsemibold text-black"> tu viaje</Text>
+            </XStack>
             <YStack className="mb-10">
                 <CustomInput title="Desde" placeholder="i.e: Tigre" />
                 <CustomInput title="Hasta" placeholder="i.e: Mar del Plata" />
                 <View className="w-full items-flex-start justify-center px-10 py-3">
-                    <Text className="text-xs font-qsemibold text-gray-600 px-1.5 mb-2">Fecha</Text>
+                    <Text className="text-xs font-qbold text-black px-1.5 mb-2">Fecha</Text>
                     <DatePicker style={{backgroundColor:"#EEEEEE"}} placeholderTextColor="#bbb"/>
                 </View>
                 <View className="w-full items-flex-start justify-center py-3 px-10">
-                    <Text className="text-xs font-qsemibold text-gray-600 px-1.5">Hora de salida</Text>
+                    <Text className="text-xs font-qbold text-black px-1.5">Hora de salida</Text>
                 </View>
                 <PortalProvider>
                     <SelectField items={hours} label="Horario" renderItem={(hour) => (
@@ -34,11 +35,9 @@ export default function PostTripPage(){
                 </PortalProvider>
             </YStack>
             <View className="items-center space-y-4">
-                <Link href="/(pages)/PostTripPage2" asChild>
-                <BlackButton height={80} width={250}>
+                <BlackButton height={90} width={270} href="/(pages)/PostTripPage2">
                     <Text className="text-2xl font-qsemibold text-primary">Continuar</Text>
                 </BlackButton>
-                </Link>
                 <Link href="/(tabs)/home" asChild>
                     <Text className="text-base font-qsemibold text-red-500">Cancelar publicación</Text>
                 </Link>

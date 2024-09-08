@@ -1,12 +1,13 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../components/Header";
-import { XStack, YStack, Input } from "tamagui";
-import { Backpack, Luggage, User } from "@tamagui/lucide-icons";
+import { Button, XStack, YStack } from "tamagui";
+import { User } from "@tamagui/lucide-icons";
 import Counter from "../../components/Counter";
 import {View, Text, Image} from 'react-native';
 import CustomInput from "../../components/CustomInput";
 import BlackButton from "../../components/BlackButton";
 import {Link} from 'expo-router';
+import icons from "../../constants/icons";
 
 export default function TripDetailsPage(){
     return (
@@ -18,11 +19,11 @@ export default function TripDetailsPage(){
                 </View>
                 <View className="items-center justify-evenly">
                     <YStack className="items-center">
-                        <XStack className=" w-[250px] items-center justify-between mb-2">
+                        <XStack className=" w-[250px] items-center justify-between mb-1">
                             <User size="3" color="black"/>
                             <Counter maxCount={4}/>
                         </XStack>
-                        <XStack className=" w-[250px] items-center justify-between mb-2">
+                        <XStack className=" w-[250px] items-center justify-between mb-1">
                             <Image source={require('../../assets/icons/bag.png')} style={{height:40, width:40}} />
                             <Counter maxCount={4}/>
                         </XStack>
@@ -40,11 +41,16 @@ export default function TripDetailsPage(){
                     <CustomInput title="Ingrese las medidas de su/s valija/s" placeholder="i.e: 40cm x 60cm x 30cm"/>
                     <CustomInput title="Comentarios adicionales" placeholder="i.e: Contenido frágil"/>
                 </YStack>
-                <Link href="/SearchResultsPage" asChild>
-                <BlackButton height={70} width={200}>
-                    <Text className="text-lg font-qsemibold text-primary">Buscar viaje</Text>
-                </BlackButton>
-                </Link>
+                <XStack className="items-center space-x-4 mb-3">
+                    <Link href="/(pages)/SearchTripPage" asChild>
+                        <Button className="w-6 h-6 bg-primary">
+                            <Image source={icons.arrowleft} className="w-7 h-7" resizeMode="contain" />
+                        </Button>
+                    </Link>
+                    <BlackButton height={80} width={250} href="/SearchResultsPage">
+                        <Text className="text-xl font-qsemibold text-primary">Buscar viaje</Text>
+                    </BlackButton>
+                </XStack>
             </YStack>
         </SafeAreaView>
     );

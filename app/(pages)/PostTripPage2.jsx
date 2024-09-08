@@ -25,10 +25,14 @@ export default function PostTripPage2(){
                         <Text>{item.value}, {item.key}</Text>
                     )} />
                 </PortalProvider>
-                <View className="mx-11 mb-2 mt-12">
+                <XStack className="mx-11 mb-2 mt-12">
                     <Text className='text-sm font-qbold text-black'
-                    >Indicá los espacios disponibles en tu auto:</Text>
-                </View>
+                    >Indicá los </Text>
+                    <Text className='text-sm font-qbold text-secondary'
+                    >espacios disponibles</Text>
+                    <Text className='text-sm font-qbold text-black'
+                    > en tu auto:</Text>
+                </XStack>
                 <YStack className="items-center mx-12">
                     <XStack className=" w-[250px] items-center justify-between mb-1 mx-10">
                         <User size="3" color="black"/>
@@ -51,7 +55,7 @@ export default function PostTripPage2(){
                                 <Image source={icons.arrowleft} className="w-8 h-8" resizeMode="contain" />
                             </Button>
                         </Link>
-                        <BlackButton height={80} width={250}>
+                        <BlackButton height={80} width={250} href="">
                             <Text className="text-2xl font-qsemibold text-primary">Publicar viaje</Text>
                         </BlackButton>
                     </XStack>
