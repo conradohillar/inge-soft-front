@@ -57,7 +57,7 @@ export default function PostTripPage2(){
                                 <Image source={icons.arrowleft} className="w-8 h-8" resizeMode="contain" />
                             </Button>
                         </Link>
-                        <BlackButton height={90} width={250} href="">
+                        <BlackButton height={90} width={250} href="/(pages)/PostSuccessful">
                             <Text className="text-2xl font-qsemibold text-primary">Publicar viaje</Text>
                         </BlackButton>
                     </XStack>
