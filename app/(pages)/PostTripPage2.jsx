@@ -19,9 +19,11 @@ export default function PostTripPage2(){
                 <Text className="text-[27px] font-qsemibold text-black">Detalles de la publicación</Text>
             </View>
             <YStack className="items-start justify-center">
-                <Text className="text-sm text-black font-qbold ml-10 mb-3">Seleccioná tu auto</Text>
+                <Text className="text-sm text-black font-qbold ml-10 mb-3">Seleccioná tu 
+                    <Text className="text-sm text-secondary font-qbold ml-10 mb-3"> auto</Text>
+                </Text>
                 <PortalProvider>
-                    <SelectField items={items} label="Seleccioná tu auto" renderItem={(item) => (
+                    <SelectField items={items} label="Mis autos" renderItem={(item) => (
                         <Text>{item.value}, {item.key}</Text>
                     )} />
                 </PortalProvider>
@@ -42,20 +44,20 @@ export default function PostTripPage2(){
                         <Image source={require('../../assets/icons/bag.png')} style={{height:40, width:40}} />
                         <Counter maxCount={4}/>
                     </XStack>
-                    <XStack className=" w-[250px] items-center justify-between mb-12">
+                    <XStack className=" w-[250px] items-center justify-between mb-10">
                         <Image source={require('../../assets/icons/suitcase.png')} style={{height:40, width:40}} />
                         <Counter maxCount={4}/>
                     </XStack>
                 </YStack>
 
-                <View className="items-center space-y-3 mx-12">
-                    <XStack className="items-center space-x-5">
+                <View className="items-center space-y-5 mx-12 mb-8">
+                    <XStack className="items-center">
                         <Link href="/(pages)/PostTripPage" asChild>
                             <Button className="w-8 h-8 bg-primary">
                                 <Image source={icons.arrowleft} className="w-8 h-8" resizeMode="contain" />
                             </Button>
                         </Link>
-                        <BlackButton height={80} width={250} href="">
+                        <BlackButton height={90} width={250} href="">
                             <Text className="text-2xl font-qsemibold text-primary">Publicar viaje</Text>
                         </BlackButton>
                     </XStack>

@@ -30,7 +30,7 @@ export default function SearchTripPage(){
                     <BlackButton height={80} width={300} href="/TripDetailsPage"> 
                         <Text className="text-[22px] font-qsemibold text-primary">Viajo yo</Text>
                     </BlackButton>
-                    <BlackButton height={80} width={300} mb={35} href=""> 
+                    <BlackButton height={80} width={300} mb={35} href="/(pages)/SendPackagePage"> 
                         <Text className="text-xl font-qsemibold text-primary">Enviar un paquete</Text>
                     </BlackButton>
                     <Link href="/(tabs)/home">

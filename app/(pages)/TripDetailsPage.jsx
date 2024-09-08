@@ -41,7 +41,7 @@ export default function TripDetailsPage(){
                     <CustomInput title="Ingrese las medidas de su/s valija/s" placeholder="i.e: 40cm x 60cm x 30cm"/>
                     <CustomInput title="Comentarios adicionales" placeholder="i.e: Contenido frágil"/>
                 </YStack>
-                <XStack className="items-center space-x-4 mb-3">
+                <XStack className="items-center mb-3">
                     <Link href="/(pages)/SearchTripPage" asChild>
                         <Button className="w-6 h-6 bg-primary">
                             <Image source={icons.arrowleft} className="w-7 h-7" resizeMode="contain" />
