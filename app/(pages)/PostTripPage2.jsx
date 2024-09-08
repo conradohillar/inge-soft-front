@@ -16,7 +16,7 @@ export default function PostTripPage2(){
         <SafeAreaView className="h-full w-full bg-primary">
             <Header />
             <View className=" items-center mt-10 mb-12">
-                <Text className="text-[27px] font-qsemibold text-black">Detalles de la publicación</Text>
+                <Text className="text-[27px] font-qbold text-black">Detalles de la publicación</Text>
             </View>
             <YStack className="items-start justify-center">
                 <Text className="text-sm text-black font-qbold ml-10 mb-3">Seleccioná tu 
