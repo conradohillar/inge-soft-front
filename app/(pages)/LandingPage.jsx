@@ -17,7 +17,7 @@ export default function LandingPage(){
                     <BlackButton height={90} width={300} href="/(tabs)/home"> 
                         <Text className="text-[22px] font-qsemibold text-primary">Iniciar sesión</Text>
                     </BlackButton>
-                    <BlackButton  height={95} width={305} href="/(tabs)/home">
+                    <BlackButton  height={95} width={305} href="/(pages)/Demo">
                         <XStack className="items-center justify-center flex-row space-x-3">
                             <Text className="text-[18px] font-qsemibold text-primary">Continuar con Google</Text>
                             <Image source={require('../../assets/icons/google-icon.png')} className="h-[30px] w-[30px]"/>

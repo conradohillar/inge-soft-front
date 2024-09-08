@@ -14,27 +14,35 @@ export default function PostTripPage(){
     return (
         <SafeAreaView className="h-full w-full bg-primary">
             <Header />
-            <XStack className=" items-center justify-center mt-12 mb-6">
+            <XStack className=" items-center justify-center mt-8 mb-3">
                 <Text className="text-[27px] font-qbold text-secondary">Publicá</Text>
                 <Text className="text-[27px] font-qsemibold text-black"> tu viaje</Text>
             </XStack>
-            <YStack className="mb-10">
+            <YStack className="mb-6">
                 <CustomInput title="Desde" placeholder="i.e: Tigre" />
                 <CustomInput title="Hasta" placeholder="i.e: Mar del Plata" />
                 <View className="w-full items-flex-start justify-center px-10 py-3">
                     <Text className="text-xs font-qbold text-black px-1.5 mb-2">Fecha</Text>
                     <DatePicker style={{backgroundColor:"#EEEEEE"}} placeholderTextColor="#bbb"/>
                 </View>
-                <View className="w-full items-flex-start justify-center py-3 px-10">
+                <View className="w-full items-flex-start justify-center pt-3 pb-2 px-10">
                     <Text className="text-xs font-qbold text-black px-1.5">Hora de salida</Text>
                 </View>
                 <PortalProvider>
                     <SelectField items={hours} label="Horario" renderItem={(hour) => (
                         <Text>{hour.value}</Text>
-                    )}/>
+                    )}
+                        renderSelected={(value) => renderSelect(value)} />
                 </PortalProvider>
+                <XStack className="items-center mt-3 px-12">
+                    <Text className='text-sm text-gray-400 font-qsemibold' 
+                    >Nota: se asignará automáticamente una franja de
+                    <Text className='text-sm text-secondary font-qbold' 
+                    > 1 hora.</Text>
+                    </Text>
+                </XStack>
             </YStack>
-            <View className="items-center space-y-4">
+            <View className="items-center space-y-2">
                 <BlackButton height={90} width={270} href="/(pages)/PostTripPage2">
                     <Text className="text-2xl font-qsemibold text-primary">Continuar</Text>
                 </BlackButton>
@@ -73,16 +81,19 @@ const hours = [
     { key: 23, value: '23:00'},
 ]
 
-const renderItemFc = (index) => {
-    if (index < 0 || index >= hours.length) {
-        return 'Invalid index';
-      }
-      
-      const start = hours[index].value;
-      // Manejar el caso en el que el índice es el último en el array
-      const end = index === hours.length - 1 ? hours[0].value : hours[index + 1].value;
-      
-      return `${start} - ${end}`;
-    };
+const renderSelect = (value) => {
+    const index = hours.findIndex(h => h.value === value)
+    // Verifica que el índice esté dentro de los límites
+    if (index < 0 || index >= hours.length || hours.length === 0) {
+      return 'Invalid index';
+    }
 
+    const myHour = hours[index];
+    // Si el índice es el último, considera un ciclo (vuelve al primero)
+    const nextHour = index === hours.length - 1 ? hours[0] : hours[index + 1];
+    
+    return (
+        <Text className="text-black text-2xl font-qsemibold">{myHour.value} - {nextHour.value}</Text> 
+    );
+};
   

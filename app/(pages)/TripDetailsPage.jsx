@@ -33,7 +33,7 @@ export default function TripDetailsPage(){
                         </XStack>
                     </YStack>
                     <View className="px-8">
-                        <Text className='text-sm font-qsemibold' style={{color:"#aaaaaa"}}
+                        <Text className='text-sm text-gray-400 font-qsemibold' 
                         >Nota: te recordamos que podés llevar un bolso/mochila sin costo adicional.</Text>
                     </View>
                 </View>
