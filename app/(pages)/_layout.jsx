@@ -9,6 +9,7 @@ const PagesLayout = () => {
         <Stack.Screen name="TripDetailsPage" options={{headerShown: false}}/>
         <Stack.Screen name="SearchResultsPage" options={{headerShown: false}}/>
         <Stack.Screen name="PostTripPage" options={{headerShown: false}}/>
+        <Stack.Screen name="PostTripPage2" options={{headerShown: false}}/>
       </Stack> 
     </>
 
