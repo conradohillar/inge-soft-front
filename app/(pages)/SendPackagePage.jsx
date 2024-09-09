@@ -8,8 +8,33 @@ import CustomInput from "../../components/CustomInput";
 import BlackButton from "../../components/BlackButton";
 import {Link} from 'expo-router';
 import icons from "../../constants/icons";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import ButtonNext from "../../components/ButtonNext";
+import { useState } from "react";
 
 export default function SendPackagePage(){
+    const { fromLocation, toLocation, date } = useLocalSearchParams();
+
+    const [smallPacks, setSmallPacks] = useState(0);
+    const [mediumPacks, setMediumPacks] = useState(0);
+    const [largePacks, setLargePacks] = useState(0);
+
+    const router = useRouter();
+    
+    const handleContinueToPack2 = async () => {
+        try {
+          
+          router.push({
+            
+            pathname: "/(pages)/SendPackagePage2",
+            params: { fromLocation, toLocation, date, smallPacks, mediumPacks, largePacks }
+          });
+        } catch (error) {
+          console.error("Error: ", error);
+        }
+      };
+
+
     return (
         <SafeAreaView className="h-full w-full bg-primary">
             <Header />
@@ -23,7 +48,7 @@ export default function SendPackagePage(){
                 </XStack>
                 <XStack className=" w-[350px] items-center justify-evenly ml-10 mb-1">
                     <Package size="3" color="black"/>
-                    <Counter maxCount={4}/>
+                    <Counter maxCount={4} count={smallPacks} handleChangeCount={setSmallPacks}/>
                 </XStack>
                 <XStack className="w-full items-center justify-center mb-10">
                     <Text className="text-gray-400 text-xs font-qbold ">Medidas: hasta </Text>
@@ -36,7 +61,7 @@ export default function SendPackagePage(){
                 </XStack>
                 <XStack className=" w-[350px]  items-center justify-evenly ml-10 mb-2">
                     <Package size="4.5" color="$gray6"/>
-                    <Counter maxCount={4}/>
+                    <Counter maxCount={4} count={mediumPacks} handleChangeCount={setMediumPacks}/>
                 </XStack>
                 <XStack className="w-full items-center justify-center mb-10">
                     <Text className="text-gray-400 text-xs font-qbold ">Medidas: entre </Text>
@@ -49,7 +74,7 @@ export default function SendPackagePage(){
                 </XStack>
                 <XStack className=" w-[350px]  items-center justify-evenly ml-10 mb-3">
                     <Package size="6" color="$gray5"/>
-                    <Counter maxCount={4}/>
+                    <Counter maxCount={4} count={largePacks} handleChangeCount={setLargePacks}/>
                 </XStack>
                 <XStack className="w-full items-center justify-center mb-8">
                     <Text className="text-gray-400 text-xs font-qbold">Medidas: a partir de </Text>
@@ -61,9 +86,9 @@ export default function SendPackagePage(){
                             <Image source={icons.arrowleft} className="w-8 h-8" resizeMode="contain" />
                         </Button>
                     </Link>
-                    <BlackButton height={90} width={230} href="/(pages)/SendPackagePage2">
-                        <Text className="text-2xl text-primary font-qsemibold">Continuar</Text>
-                    </BlackButton>
+                    <ButtonNext height={90} width={270} onPress={handleContinueToPack2}>
+                        <Text className="text-2xl font-qsemibold text-primary">Continuar</Text>
+                    </ButtonNext>
                 </XStack>
             </YStack>
         </SafeAreaView>

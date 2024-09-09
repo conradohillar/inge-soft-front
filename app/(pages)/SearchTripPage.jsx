@@ -6,6 +6,11 @@ import DatePicker from '../../components/DatePicker';
 import Header from '../../components/Header';
 import { Link } from "expo-router";
 import CustomInput from "../../components/CustomInput";
+import { useState } from "react";
+import AutocompleteCityInput from '../../components/AutocompleteCityInput';
+import ButtonNext from "../../components/ButtonNext";
+import { useRouter } from "expo-router";
+
 
 
 
@@ -14,6 +19,35 @@ export default function SearchTripPage(){
     const [toLocation, setToLocation] = useState('');
     const [date, setDate] = useState('');
 
+    const router = useRouter();
+
+    const handleViajoYo = async () => {
+      try {
+        
+        router.push({
+          
+          pathname: "/(pages)/TripDetailsPage",
+          params: { fromLocation, toLocation, date }
+        });
+      } catch (error) {
+        console.error("Error: ", error);
+      }
+    };
+
+  
+  const handleEnviarPaquete = async () => {
+    try {
+      
+      router.push({
+        
+        pathname: "/(pages)/SendPackagePage",
+        params: { fromLocation, toLocation, date }
+      });
+    } catch (error) {
+      console.error("Error: ", error);
+    }
+  };
+  
     return (
         <SafeAreaView className="bg-primary h-full">
             <Header />
@@ -23,20 +57,30 @@ export default function SearchTripPage(){
                     <Text className="text-2xl font-qsemibold text-black">tu próximo viaje</Text>
                 </XStack>
                 <YStack className=" items-center justify-between mb-12">
-                    <CustomInput title="Desde" placeholder="Seleccione origen" value={fromLocation} handleChangeText={setFromLocation} />
-                    <CustomInput title="Hacia" placeholder="Seleccione destino" value={toLocation} handleChangeText={setToLocation}/>
+                <AutocompleteCityInput
+                    title="Desde"
+                    placeholder="Seleccionar origen"
+                    value={fromLocation}
+                    onChangeText={setFromLocation}
+                />
+                <AutocompleteCityInput
+                    title="Hasta"
+                    placeholder="Seleccionar destino"
+                    value={toLocation}
+                    onChangeText={setToLocation}
+                />
                     <View className="w-full items-flex-start justify-center px-10 pt-3">
                         <Text className="text-xs font-qbold text-gray-600 px-1.5 mb-2">Fecha</Text>
                         <DatePicker style={{backgroundColor:"#EEEEEE"}} placeholderTextColor="#bbb" value={date} onChangeDate={setDate}/>
                     </View>
                 </YStack>
                 <YStack className="items-center">
-                    <BlackButton height={80} width={300} href="/TripDetailsPage"> 
-                        <Text className="text-[22px] font-qsemibold text-primary">Viajo yo</Text>
-                    </BlackButton>
-                    <BlackButton height={80} width={300} mb={35} href="/(pages)/SendPackagePage"> 
-                        <Text className="text-xl font-qsemibold text-primary">Enviar un paquete</Text>
-                    </BlackButton>
+                <ButtonNext height={90} width={270} onPress={handleViajoYo}>
+                    <Text className="text-2xl font-qsemibold text-primary">Viajo yo</Text>
+                </ButtonNext>
+                <ButtonNext height={90} width={270} onPress={handleEnviarPaquete}>
+                    <Text className="text-2xl font-qsemibold text-primary">Enviar un paquete</Text>
+                </ButtonNext>
                     <Link href="/(tabs)/home">
                         <Text className="text-base font-qsemibold text-red-500">Cancelar búsqueda</Text>
                     </Link>

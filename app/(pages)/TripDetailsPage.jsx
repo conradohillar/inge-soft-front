@@ -9,13 +9,32 @@ import BlackButton from "../../components/BlackButton";
 import {Link} from 'expo-router';
 import icons from "../../constants/icons";
 import { useState } from "react";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import ButtonNext from "../../components/ButtonNext";
 
 export default function TripDetailsPage(){
+
+    const { fromLocation, toLocation, date } = useLocalSearchParams();
+
     const [passengers, setPassengers] = useState(0);
     const [bags, setBags] = useState(0);
     const [suitcases, setSuitcases] = useState(0);
-    const [measurements, setMeasurments] = useState('');
-    const [comments, setComments] = useState('');
+    // const [measurements, setMeasurments] = useState('');
+    // const [comments, setComments] = useState('');
+    const router = useRouter();
+    
+    const handleSearch = async () => {
+        try {
+          
+          router.push({
+            
+            pathname: "/(pages)/SearchResultsPage",
+            params: { fromLocation, toLocation, date, passengers, bags, suitcases }
+          });
+        } catch (error) {
+          console.error("Error: ", error);
+        }
+      };
 
     return (
         <SafeAreaView className="h-full w-full bg-primary">
@@ -45,10 +64,10 @@ export default function TripDetailsPage(){
                     </View>
                 </View>
                 <YStack className="w-full item-center justify-evenly">
-                    <CustomInput title="Ingrese las medidas de su/s valija/s" placeholder="i.e: 40cm x 60cm x 30cm"
-                                 value={measurements} handleChangeText={setMeasurments} />
-                    <CustomInput title="Comentarios adicionales" placeholder="i.e: Contenido frágil"
-                                 value={comments} handleChangeText={setComments} />
+                    <CustomInput title="Ingrese las medidas de su/s valija/s" placeholder="i.e: 40cm x 60cm x 30cm" />
+                                {/* //  value={measurements} handleChangeText={setMeasurments} /> */}
+                    <CustomInput title="Comentarios adicionales" placeholder="i.e: Contenido frágil" />
+                                {/* //  value={comments} handleChangeText={setComments} /> */}
                 </YStack>
                 <XStack className="items-center mb-3">
                     <Link href="/(pages)/SearchTripPage" asChild>
@@ -56,9 +75,9 @@ export default function TripDetailsPage(){
                             <Image source={icons.arrowleft} className="w-7 h-7" resizeMode="contain" />
                         </Button>
                     </Link>
-                    <BlackButton height={90} width={250} href="/SearchResultsPage">
+                    <ButtonNext height={90} width={270} onPress={handleSearch}>
                         <Text className="text-2xl font-qsemibold text-primary">Buscar viaje</Text>
-                    </BlackButton>
+                    </ButtonNext>
                 </XStack>
             </YStack>
         </SafeAreaView>

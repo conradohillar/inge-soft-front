@@ -6,8 +6,32 @@ import CustomInput from "../../components/CustomInput";
 import { Link } from "expo-router";
 import BlackButton from "../../components/BlackButton";
 import icons from "../../constants/icons"
+import { useLocalSearchParams, useRouter } from "expo-router";
+import ButtonNext from "../../components/ButtonNext";
+import { useState } from "react";
 
 export default function SendPackagePage2(){
+
+    const { fromLocation, toLocation, date, smallPacks, mediumPacks, largePacks } = useLocalSearchParams();
+
+    // Todavía no se implementaron los comentarios
+  //  const [comments, setComments] = useState('');
+
+    const router = useRouter();
+    
+    const handleSearchResults = async () => {
+        try {
+          
+          router.push({
+            
+            pathname: "/(pages)/SearchResultsPage",
+            params: { fromLocation, toLocation, date, smallPacks, mediumPacks, largePacks }
+          });
+        } catch (error) {
+          console.error("Error: ", error);
+        }
+      };
+
     return (
         <SafeAreaView className="bg-primary h-full w-full">
             <Header />
@@ -28,9 +52,9 @@ export default function SendPackagePage2(){
                             <Image source={icons.arrowleft} className="w-8 h-8" resizeMode="contain" />
                         </Button>
                     </Link>
-                    <BlackButton height={90} width={250} href="/(pages)/SearchResultsPage">
-                        <Text className="text-2xl text-primary font-qsemibold">Buscar viaje</Text>
-                    </BlackButton>
+                    <ButtonNext height={90} width={270} onPress={handleSearchResults}>
+                        <Text className="text-2xl font-qsemibold text-primary">Buscar viaje</Text>
+                    </ButtonNext>
                 </XStack>
             </YStack>
         </SafeAreaView>

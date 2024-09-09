@@ -30,39 +30,42 @@ export default function PostTripPage2(){
     const [spacesLargePackage, setLargePackage] = useState(0);
     const router = useRouter();
     const handleContinue = async () => {
-        
+        console.log("Tenes tanto espacio disponible", availableSeats, spacesLargePackage, spacesMediumPackage,spacesLargePackage)
         const obj = {
             "ride": {
-                "city_from":fromLocation,
-                "city_to":toLocation,
-                "ride_date":date,
-                "start_minimum_time":'21:15:00',        //esto hay que poner el que sale del form!!!!!!!!!!!!!!!!!
-                "start_maximum_time":'21:15:00',
-                "available_space_people":availableSeats,
-                "available_space_small_package":spacesSmallPackage,
-                "available_space_medium_package":spacesMediumPackage,
-                "available_space_large_package":spacesLargePackage,
+              "city_from": fromLocation,
+              "city_to": toLocation,
+              "ride_date": "2024-09-09",
+              "start_minimum_time": "19:20:13.381Z",
+              "start_maximum_time": "19:20:13.381Z",
+              "available_space_people": availableSeats,
+              "available_space_small_package": spacesSmallPackage,
+              "available_space_medium_package": spacesMediumPackage,
+              "available_space_large_package": spacesLargePackage
             },
-            "price":{
-                "price_person":price_person,
-                "price_small_package":price_small_package,
-                "price_medium_package":price_medium_package,
-                "price_large_package":price_large_package,
+            "price": {
+              "price_person": price_person,
+              "price_small_package": price_small_package,
+              "price_medium_package": price_medium_package,
+              "price_large_package": price_large_package
             }
-        }
+          }
+
+
+        
         console.log(obj)
         console.log(car)
-        // try {
-        //   const ans = await postRide(obj,car);
+        try {
+          const ans = await postRide(obj,car);
          
-        //   router.push({
+          router.push({
             
-        //     pathname: "/(pages)/PostTripPage2",
-        //     params: { fromLocation, toLocation, date, departureTime ,price_person, price_small_package, price_medium_package,price_large_package}
-        //   });
-        // } catch (error) {
-        //   console.error("Error: ", error);
-        // }
+            pathname: "/(pages)/PostTripPage2",
+            params: { fromLocation, toLocation, date, departureTime ,price_person, price_small_package, price_medium_package,price_large_package}
+          });
+        } catch (error) {
+          console.error("Error: ", error);
+        }
       };
     
     return (
