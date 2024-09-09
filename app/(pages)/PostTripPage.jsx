@@ -26,11 +26,15 @@ export default function PostTripPage() {
   const handleContinue = async () => {
     try {
       const ans = await fetchRidePartOne(fromLocation, toLocation);
-      
+      const price_person = ans.price_person;      
+      const price_small_package = ans.price_small_package;
+      const price_medium_package = ans.price_medium_package;
+      const price_large_package = ans.price_large_package;
+    
       router.push({
         
         pathname: "/(pages)/PostTripPage2",
-        params: { fromLocation, toLocation, date, ans}
+        params: { fromLocation, toLocation, date, price_person, price_small_package, price_medium_package,price_large_package}
       });
     } catch (error) {
       console.error("Error: ", error);
@@ -60,7 +64,8 @@ export default function PostTripPage() {
         />
                 <View className="w-full items-flex-start justify-center px-10 py-3">
                     <Text className="text-xs font-qbold text-black px-1.5 mb-2">Fecha</Text>
-                    <DatePicker style={{backgroundColor:"#EEEEEE"}} placeholderTextColor="#bbb"/>
+                    <DatePicker style={{backgroundColor:"#EEEEEE"}} placeholderTextColor="#bbb" value={date}
+          onChangeDate={setDate}/>
                 </View>
                 <View className="w-full items-flex-start justify-center pt-3 pb-2 px-10">
                     <Text className="text-xs font-qbold text-black px-1.5">Hora de salida</Text>

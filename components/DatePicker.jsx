@@ -4,8 +4,7 @@ import { Pressable, Text } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { ChevronDown } from '@tamagui/lucide-icons';
 
-export default function DatePicker({style, className, ...props}){
-  const [date, setDate] = useState(new Date());
+export default function DatePicker({style, className,value,onChangeDate, ...props}){
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = () => {
@@ -17,7 +16,7 @@ export default function DatePicker({style, className, ...props}){
   };
 
   const handleConfirm = (selectedDate) => {
-    setDate(selectedDate);
+    onChangeDate(selectedDate);
     hideDatePicker();
   };
 
@@ -28,6 +27,7 @@ export default function DatePicker({style, className, ...props}){
           style={style}
           className={className}
           placeholder="Seleccionar fecha" 
+          value={value}
           editable={false}  // Deshabilita la edición directa
           {...props} />
 
@@ -38,7 +38,7 @@ export default function DatePicker({style, className, ...props}){
         mode="date"
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
-        date={date}
+        value={value}
       />
     </YStack>
   );
