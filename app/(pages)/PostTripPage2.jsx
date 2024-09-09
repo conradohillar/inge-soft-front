@@ -43,9 +43,10 @@ export default function PostTripPage2(){
                     <Text className="text-sm text-secondary font-qbold ml-10 mb-3"> auto</Text>
                 </Text>
                 <PortalProvider>
-                    <SelectField items={items} label="Mis autos" renderItem={(item) => (
-                        <Text>{item.value}, {item.key}</Text>
-                    )} />
+                    <SelectField items={items} label="Mis autos" value={car} handleChangeValue={setCar}
+                        renderItem={(item) => (
+                            <Text>{item.value}, {item.key}</Text>
+                        )} />
                 </PortalProvider>
                 <XStack className="mx-11 mb-2 mt-12">
                     <Text className='text-sm font-qbold text-black'

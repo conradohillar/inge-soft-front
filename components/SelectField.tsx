@@ -5,18 +5,18 @@ import type { FontSizeTokens, SelectProps } from 'tamagui'
 import { Adapt, Select, Sheet, YStack, getFontSize } from 'tamagui'
 import { LinearGradient } from 'tamagui/linear-gradient'
 
-export default function SelectField({ items, label, renderItem, renderSelected, ...props}) {
+export default function SelectField({ items, label, value, handleChangeValue, renderItem, renderSelected, ...props}) {
 
-  const [val, setVal] = useState('')
-  const isPlaceholder = val === ''
+  // const [val, setVal] = useState('')
+  const isPlaceholder = value === ''
 
   return (
-    <Select value={val} onValueChange={(value) => setVal(value)} disablePreventBodyScroll {...props}>
+    <Select value={value} onValueChange={handleChangeValue} disablePreventBodyScroll {...props}>
       <Select.Trigger width={350} height={60} iconAfter={ChevronDown} className='bg-primary text-black rounded-2xl mx-8'>
         <Select.Value placeholder={renderItem ? (items[0] && renderItem(items[0])) : items[0]?.value} 
                       className='text-base font-qsemibold' 
                       style={{color: isPlaceholder ? "#bbb":"#000"}}>
-            { val && (renderSelected ? renderSelected(val) : val)}
+            { value && (renderSelected ? renderSelected(value) : value)}
         </Select.Value>
       </Select.Trigger>
 
