@@ -26,9 +26,9 @@ export default function PostTripPage2(){
       }, []);
     
     const [car, setCar] = useState('');
-    const [availableSeats, setAvailableSeats] = useState('');
-    const [spacesForSmallPackages, setSpacesForSmallPackages] = useState('');
-    const [spacesForBigPackages, setSpacesForBigPackages] = useState('');
+    const [availableSeats, setAvailableSeats] = useState(0);
+    const [spacesForBags, setSpacesForBags] = useState(0);
+    const [spacesForSuitcases, setSpacesForSuitcases] = useState(0);
 
 
     
@@ -59,15 +59,15 @@ export default function PostTripPage2(){
                 <YStack className="items-center mx-12">
                     <XStack className=" w-[250px] items-center justify-between mb-1 mx-10">
                         <User size="3" color="black"/>
-                        <Counter maxCount={4}/>
+                        <Counter maxCount={4} count={availableSeats} handleChangeCount={setAvailableSeats}/>
                     </XStack>
                     <XStack className=" w-[250px] items-center justify-between mb-1">
                         <Image source={require('../../assets/icons/bag.png')} style={{height:40, width:40}} />
-                        <Counter maxCount={4}/>
+                        <Counter maxCount={4} count={spacesForBags} handleChangeCount={setSpacesForBags}/>
                     </XStack>
                     <XStack className=" w-[250px] items-center justify-between mb-10">
                         <Image source={require('../../assets/icons/suitcase.png')} style={{height:40, width:40}} />
-                        <Counter maxCount={4}/>
+                        <Counter maxCount={4} count={spacesForSuitcases} handleChangeCount={setSpacesForSuitcases}/>
                     </XStack>
                 </YStack>
 

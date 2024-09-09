@@ -8,8 +8,15 @@ import CustomInput from "../../components/CustomInput";
 import BlackButton from "../../components/BlackButton";
 import {Link} from 'expo-router';
 import icons from "../../constants/icons";
+import { useState } from "react";
 
 export default function TripDetailsPage(){
+    const [passengers, setPassengers] = useState(0);
+    const [bags, setBags] = useState(0);
+    const [suitcases, setSuitcases] = useState(0);
+    const [measurements, setMeasurments] = useState('');
+    const [comments, setComments] = useState('');
+
     return (
         <SafeAreaView className="h-full w-full bg-primary">
             <Header />
@@ -21,15 +28,15 @@ export default function TripDetailsPage(){
                     <YStack className="items-center">
                         <XStack className=" w-[250px] items-center justify-between ">
                             <User size="3" color="black"/>
-                            <Counter maxCount={4}/>
+                            <Counter maxCount={4} count={passengers} handleChangeCount={setPassengers}/>
                         </XStack>
                         <XStack className=" w-[250px] items-center justify-between ">
                             <Image source={require('../../assets/icons/bag.png')} style={{height:40, width:40}} />
-                            <Counter maxCount={4}/>
+                            <Counter maxCount={4} count={bags} handleChangeCount={setBags}/>
                         </XStack>
                         <XStack className=" w-[250px] items-center justify-between mb-5">
                             <Image source={require('../../assets/icons/suitcase.png')} style={{height:40, width:40}} />
-                            <Counter maxCount={4}/>
+                            <Counter maxCount={4} count={suitcases} handleChangeCount={setSuitcases}/>
                         </XStack>
                     </YStack>
                     <View className="px-8">
@@ -38,8 +45,10 @@ export default function TripDetailsPage(){
                     </View>
                 </View>
                 <YStack className="w-full item-center justify-evenly">
-                    <CustomInput title="Ingrese las medidas de su/s valija/s" placeholder="i.e: 40cm x 60cm x 30cm"/>
-                    <CustomInput title="Comentarios adicionales" placeholder="i.e: Contenido frágil"/>
+                    <CustomInput title="Ingrese las medidas de su/s valija/s" placeholder="i.e: 40cm x 60cm x 30cm"
+                                 value={measurements} handleChangeText={setMeasurments} />
+                    <CustomInput title="Comentarios adicionales" placeholder="i.e: Contenido frágil"
+                                 value={comments} handleChangeText={setComments} />
                 </YStack>
                 <XStack className="items-center mb-3">
                     <Link href="/(pages)/SearchTripPage" asChild>

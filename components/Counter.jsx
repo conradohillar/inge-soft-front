@@ -2,20 +2,20 @@ import { useState } from 'react';
 import { XStack, Text } from 'tamagui';
 import { Pressable } from 'react-native';
 
-const Counter = ({ maxCount }) => {
-  const [count, setCount] = useState(0);
+const Counter = ({ count, handleChangeCount, maxCount }) => {
+  // const [count, setCount] = useState(0);
 
   const increment = () => {
     if (count < maxCount) {
       const newCount = count + 1;
-      setCount(newCount);
+      handleChangeCount(newCount);
     }
   };
 
   const decrement = () => {
     if (count > 0) {
       const newCount = count - 1;
-      setCount(newCount);
+      handleChangeCount(newCount);
     }
   };
 
