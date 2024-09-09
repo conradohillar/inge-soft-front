@@ -18,12 +18,19 @@ import { useLocalSearchParams } from "expo-router";
 export default function PostTripPage2(){
     const { fromLocation, toLocation, date, price_person, price_small_package, price_medium_package,price_large_package } = useLocalSearchParams();
     
-  useEffect(() => {
-    console.log('From:', fromLocation);  // Aquí puedes ver si se reciben correctamente
-    console.log('To:', toLocation);
-    console.log('Date:', date);
-    console.log('person:', price_person);  // Si ans es un objeto, debes hacer un JSON.parse
-  }, []);
+    useEffect(() => {
+        console.log('From:', fromLocation);  // Aquí puedes ver si se reciben correctamente
+        console.log('To:', toLocation);
+        console.log('Date:', date);
+        console.log('person:', price_person);  // Si ans es un objeto, debes hacer un JSON.parse
+      }, []);
+    
+    const [car, setCar] = useState('');
+    const [availableSeats, setAvailableSeats] = useState('');
+    const [spacesForSmallPackages, setSpacesForSmallPackages] = useState('');
+    const [spacesForBigPackages, setSpacesForBigPackages] = useState('');
+
+
     
     return (
         <SafeAreaView className="h-full w-full bg-primary">

@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 
 
 
-export default function CustomInput({title, placeholder, height}){
+export default function CustomInput({title, placeholder, height, value, handleChangeText}){
     return (
         <View className="w-full items-flex-start justify-center py-3 px-10">
             <Text className="text-xs font-qbold text-gray-600 px-1.5 mb-2">{title}</Text>
@@ -16,6 +16,8 @@ export default function CustomInput({title, placeholder, height}){
                    textAlignVertical="top"
                    multiline={true}
                    p={15}
+                   value={value}
+                   onChangeText={handleChangeText}
                    />
         </View>
     );

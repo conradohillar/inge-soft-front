@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Input } from 'tamagui';
+import { Input, YStack } from 'tamagui';
 import { Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { autocomplete } from '../services/autocomplete';
+import CustomInput from './CustomInput';
 
 export default function AutocompleteCityInput({ title, placeholder, value, onChangeText }) {
   const [suggestions, setSuggestions] = useState([]); // Estado para las sugerencias
@@ -22,27 +23,28 @@ export default function AutocompleteCityInput({ title, placeholder, value, onCha
   };
 
   return (
-    <View className="w-full items-flex-start justify-center py-3 px-10">
-      <Text className="text-xs font-qsemibold text-gray-600 px-1.5 mb-2">{title}</Text>
-      <Input
-        placeholder={placeholder}
-        placeholderTextColor="#bbb"
-        style={{ backgroundColor: "#EEEEEE" }}
-        value={value}
-        onChangeText={handleInputChange} // Llamar a la función que maneja el autocompletado
-      />
-      {/* Mostrar sugerencias debajo del input */}
-      {(
-        <FlatList
-          data={suggestions}
-          keyExtractor={(item) => item.place_id}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleSuggestionPress(item.display_name)}>
-              <Text className="p-2 text-black">{item.display_name}</Text>
-            </TouchableOpacity>
+      <YStack className="w-full items-center">
+          <CustomInput
+              title={title}
+              placeholder={placeholder}
+              value={value}
+              handleChangeText={handleInputChange} 
+            />
+
+          <View className="w-full items-flex-start justify-center px-10">
+          {/* Mostrar sugerencias debajo del input */}
+          {(
+            <FlatList
+              data={suggestions}
+              keyExtractor={(item) => item.place_id}
+              renderItem={({ item }) => (
+                <TouchableOpacity onPress={() => handleSuggestionPress(item.display_name)}>
+                  <Text className="p-2 text-black">{item.display_name}</Text>
+                </TouchableOpacity>
+              )}
+            />
           )}
-        />
-      )}
-    </View>
+          </View>
+    </YStack>
   );
 }

@@ -22,6 +22,8 @@ export default function PostTripPage() {
   const [fromLocation, setFromLocation] = useState('');
   const [toLocation, setToLocation] = useState('');
   const [date, setDate] = useState('');
+  const [departureTime, setDepartureTime] = useState('');
+  
   const router = useRouter();
   const handleContinue = async () => {
     try {
