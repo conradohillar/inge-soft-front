@@ -32,7 +32,7 @@ export default function AutocompleteCityInput({ title, placeholder, value, onCha
         onChangeText={handleInputChange} // Llamar a la función que maneja el autocompletado
       />
       {/* Mostrar sugerencias debajo del input */}
-      {suggestions.length > 0 && (
+      {(
         <FlatList
           data={suggestions}
           keyExtractor={(item) => item.place_id}

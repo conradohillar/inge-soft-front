@@ -6,37 +6,55 @@ import BlackButton from "../../components/BlackButton";
 import { Link } from "expo-router";
 import DatePicker from "../../components/DatePicker";
 import AutocompleteCityInput from '../../components/AutocompleteCityInput';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { fetchRidePrices } from "../../services/getPrices";
 import { useRideContext } from "../../context/RideContext";
 import { SelectField } from '../../components/SelectField'
+
 
 export default function PostTripPage() {
   const [fromLocation, setFromLocation] = useState('');
   const [toLocation, setToLocation] = useState('');
   const { rideDetails, updateRideDetails } = useRideContext();
 
-  const handleContinue = async () => {
-    try {
-      const ridePrices = await fetchRidePrices(fromLocation, toLocation);
+  useEffect(() => {
+    console.log("Updated rideDetails:", rideDetails);
+  }, [rideDetails]);
 
-      // Guardar los valores en el contexto correctamente
-      setRideDetails(prevData => ({
+  const handleContinue = async () => {
+    console.log('La ciudad es:', fromLocation);
+  
+    try {
+      // Actualiza cityFrom y cityTo primero
+      await new Promise(resolve => { 
+        updateRideDetails(prevData => {
+          resolve(); // Resuelve la promesa justo después de actualizar el estado
+          return {
+            ...prevData,
+            cityFrom: fromLocation,
+            cityTo: toLocation,
+          };
+        });
+      });
+  
+      const ridePrices = await fetchRidePrices(fromLocation, toLocation);
+  
+      // Luego actualiza priceDetails
+      updateRideDetails(prevData => ({
         ...prevData,
-        cityFrom: fromLocation,
-        cityTo: toLocation,
         priceDetails: {
           pricePerson: ridePrices.price_person,
           priceSmallPackage: ridePrices.price_small_package,
           priceMediumPackage: ridePrices.price_medium_package,
           priceLargePackage: ridePrices.price_large_package,
-        }
+        },
       }));
     } catch (error) {
-      console.error('Error al obtener los precios del viaje:', error);
+      console.error("Error al intentar almacenar los datos", error);
     }
   };
-
+  
+  
   return (
     <SafeAreaView className="h-full w-full bg-primary">
       <Header />
@@ -61,14 +79,14 @@ export default function PostTripPage() {
           <Text className="text-xs font-qbold text-black px-1.5 mb-2">Fecha</Text>
           <DatePicker style={{ backgroundColor: "#EEEEEE" }} placeholderTextColor="#bbb" />
         </View>
-        <View className="w-full items-flex-start justify-center py-3 px-10">
+        {/* <View className="w-full items-flex-start justify-center py-3 px-10">
           <Text className="text-xs font-qbold text-black px-1.5">Hora de salida</Text>
         </View>
         <PortalProvider>
           <SelectField items={hours} label="Horario" renderItem={(hour) => (
             <Text>{hour.value}</Text>
           )} />
-        </PortalProvider>
+        </PortalProvider> */}
       </YStack>
       <View className="items-center space-y-4">
         <BlackButton height={90} width={270} href="/(pages)/PostTripPage2" onPress={handleContinue}>

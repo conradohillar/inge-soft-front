@@ -15,6 +15,7 @@ export default function PostTripPage2() {
   const { rideDetails, updateRideDetails } = useRideContext();
 
   const handleSubmit = async () => {
+    
     const bodyForPostRide = {
       ride: {
         city_from: rideDetails.cityFrom,
@@ -36,7 +37,7 @@ export default function PostTripPage2() {
       plate: rideDetails.selectedCar,
     };
 
-    // Aquí harías el llamado a la API para enviar el viaje
+   
     console.log("Datos para publicar viaje: ", bodyForPostRide);
   };
 
