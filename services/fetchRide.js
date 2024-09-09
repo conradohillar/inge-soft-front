@@ -3,10 +3,10 @@ import axios from 'axios';
 LOCAL_IP="192.168.100.158"
 
 axios.defaults.timeout = 10000;
-export const fetchRidePrices = async (cityFrom, cityTo) => {
+export const fetchRidePartOne = async (cityFrom, cityTo, date) => {
   try {
     // Construir la URL con los parámetros proporcionados
-    const url = `http://${LOCAL_IP}:8000/rides/create?location_from=${encodeURIComponent(cityFrom)}&location_to=${encodeURIComponent(cityTo)}`;
+    const url = `http://${LOCAL_IP}:8000/rides/create?location_from=${encodeURIComponent(cityFrom)}&location_to=${encodeURIComponent(cityTo)}&date=${encodeURIComponent(date)}`;
     
     const response = await axios.get(url);
     

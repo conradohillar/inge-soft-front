@@ -8,38 +8,10 @@ import SelectField from "../../components/SelectField";
 import { User } from "@tamagui/lucide-icons";
 import Counter from "../../components/Counter";
 import icons from "../../constants/icons";
-import { useRideContext } from "../../context/RideContext";
-import React, { useContext } from "react";
+import React from "react";
 
 export default function PostTripPage2() {
-  const { rideDetails, updateRideDetails } = useRideContext();
-
-  const handleSubmit = async () => {
-    
-    const bodyForPostRide = {
-      ride: {
-        city_from: rideDetails.cityFrom,
-        city_to: rideDetails.cityTo,
-        ride_date: rideDetails.rideDate,
-        start_minimum_time: rideDetails.startTime.minimum,
-        start_maximum_time: rideDetails.startTime.maximum,
-        available_space_people: rideDetails.availableSpacePeople,
-        available_space_small_package: rideDetails.availableSpaceSmallPackage,
-        available_space_medium_package: rideDetails.availableSpaceMediumPackage,
-        available_space_large_package: rideDetails.availableSpaceLargePackage,
-      },
-      price: {
-        price_person: rideDetails.priceDetails.pricePerson,
-        price_small_package: rideDetails.priceDetails.priceSmallPackage,
-        price_medium_package: rideDetails.priceDetails.priceMediumPackage,
-        price_large_package: rideDetails.priceDetails.priceLargePackage,
-      },
-      plate: rideDetails.selectedCar,
-    };
-
-   
-    console.log("Datos para publicar viaje: ", bodyForPostRide);
-  };
+  
 
   return (
     <SafeAreaView className="h-full w-full bg-primary">

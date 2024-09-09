@@ -7,51 +7,27 @@ import { Link } from "expo-router";
 import DatePicker from "../../components/DatePicker";
 import AutocompleteCityInput from '../../components/AutocompleteCityInput';
 import React, { useState, useContext, useEffect } from 'react';
-import { fetchRidePrices } from "../../services/getPrices";
-import { useRideContext } from "../../context/RideContext";
+import { fetchRidePartOne } from "../../services/getPrices";
 import { SelectField } from '../../components/SelectField'
 
 
 export default function PostTripPage() {
   const [fromLocation, setFromLocation] = useState('');
   const [toLocation, setToLocation] = useState('');
-  const { rideDetails, updateRideDetails } = useRideContext();
-
-  useEffect(() => {
-    console.log("Updated rideDetails:", rideDetails);
-  }, [rideDetails]);
+  const [date, setDate] = useState('');
+ 
 
   const handleContinue = async () => {
-    console.log('La ciudad es:', fromLocation);
-  
-    try {
-      // Actualiza cityFrom y cityTo primero
-      await new Promise(resolve => { 
-        updateRideDetails(prevData => {
-          resolve(); // Resuelve la promesa justo después de actualizar el estado
-          return {
-            ...prevData,
-            cityFrom: fromLocation,
-            cityTo: toLocation,
-          };
-        });
-      });
-  
-      const ridePrices = await fetchRidePrices(fromLocation, toLocation);
-  
-      // Luego actualiza priceDetails
-      updateRideDetails(prevData => ({
-        ...prevData,
-        priceDetails: {
-          pricePerson: ridePrices.price_person,
-          priceSmallPackage: ridePrices.price_small_package,
-          priceMediumPackage: ridePrices.price_medium_package,
-          priceLargePackage: ridePrices.price_large_package,
-        },
-      }));
-    } catch (error) {
-      console.error("Error al intentar almacenar los datos", error);
+
+    try{
+      const ans = await fetchRidePartOne(fromLocation, toLocation,date);
     }
+    catch(error){
+      console.error("Error: ", error)
+    }
+      
+  
+
   };
   
   
