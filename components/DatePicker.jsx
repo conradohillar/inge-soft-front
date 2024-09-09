@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Input, YStack } from 'tamagui';
 import { Pressable, Text } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { ChevronDown } from '@tamagui/lucide-icons';
 
 export default function DatePicker({style, className, ...props}){
   const [date, setDate] = useState(new Date());
@@ -28,8 +29,8 @@ export default function DatePicker({style, className, ...props}){
           className={className}
           placeholder="Seleccionar fecha" 
           editable={false}  // Deshabilita la edición directa
-          {...props}
-        />
+          {...props} />
+
       </Pressable>
 
       <DateTimePickerModal

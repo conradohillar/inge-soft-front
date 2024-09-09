@@ -15,15 +15,15 @@ export default function TripDetailsPage(){
             <Header />
             <YStack className="flex-1 items-center justify-evenly">
                 <View className="items-center">
-                    <Text className="text-2xl font-qsemibold text-black">Últimos detalles del viaje</Text>
+                    <Text className="text-2xl font-qbold text-black">Últimos detalles del viaje</Text>
                 </View>
                 <View className="items-center justify-evenly">
                     <YStack className="items-center">
-                        <XStack className=" w-[250px] items-center justify-between mb-1">
+                        <XStack className=" w-[250px] items-center justify-between ">
                             <User size="3" color="black"/>
                             <Counter maxCount={4}/>
                         </XStack>
-                        <XStack className=" w-[250px] items-center justify-between mb-1">
+                        <XStack className=" w-[250px] items-center justify-between ">
                             <Image source={require('../../assets/icons/bag.png')} style={{height:40, width:40}} />
                             <Counter maxCount={4}/>
                         </XStack>
@@ -33,7 +33,7 @@ export default function TripDetailsPage(){
                         </XStack>
                     </YStack>
                     <View className="px-8">
-                        <Text className='text-sm font-qsemibold' style={{color:"#aaaaaa"}}
+                        <Text className='text-sm text-gray-400 font-qsemibold' 
                         >Nota: te recordamos que podés llevar un bolso/mochila sin costo adicional.</Text>
                     </View>
                 </View>
@@ -41,14 +41,14 @@ export default function TripDetailsPage(){
                     <CustomInput title="Ingrese las medidas de su/s valija/s" placeholder="i.e: 40cm x 60cm x 30cm"/>
                     <CustomInput title="Comentarios adicionales" placeholder="i.e: Contenido frágil"/>
                 </YStack>
-                <XStack className="items-center space-x-4 mb-3">
+                <XStack className="items-center mb-3">
                     <Link href="/(pages)/SearchTripPage" asChild>
                         <Button className="w-6 h-6 bg-primary">
                             <Image source={icons.arrowleft} className="w-7 h-7" resizeMode="contain" />
                         </Button>
                     </Link>
-                    <BlackButton height={80} width={250} href="/SearchResultsPage">
-                        <Text className="text-xl font-qsemibold text-primary">Buscar viaje</Text>
+                    <BlackButton height={90} width={250} href="/SearchResultsPage">
+                        <Text className="text-2xl font-qsemibold text-primary">Buscar viaje</Text>
                     </BlackButton>
                 </XStack>
             </YStack>

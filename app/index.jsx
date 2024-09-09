@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import LoadingPage from './(pages)/LoadingPage';
 import LandingPage from './(pages)/LandingPage';
-import { RideProvider } from '../context/RideContext';
 
 export default function App() {
   const colorScheme = useColorScheme();
