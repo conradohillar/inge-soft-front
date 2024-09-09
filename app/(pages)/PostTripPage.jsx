@@ -26,6 +26,10 @@ export default function PostTripPage() {
   
   const router = useRouter();
   const handleContinue = async () => {
+    
+    const formattedDate = date.toISOString().split('T')[0]; // YYYY-MM-DD
+   
+    
     try {
       const ans = await fetchRidePartOne(fromLocation, toLocation);
       const price_person = ans.price_person;      
@@ -36,7 +40,7 @@ export default function PostTripPage() {
       router.push({
         
         pathname: "/(pages)/PostTripPage2",
-        params: { fromLocation, toLocation, date, departureTime ,price_person, price_small_package, price_medium_package,price_large_package}
+        params: { fromLocation, toLocation, formattedDate, departureTime ,price_person, price_small_package, price_medium_package,price_large_package}
       });
     } catch (error) {
       console.error("Error: ", error);

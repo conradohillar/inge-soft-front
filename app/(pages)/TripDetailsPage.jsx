@@ -26,10 +26,13 @@ export default function TripDetailsPage(){
     const handleSearch = async () => {
         try {
           
+            const ans = await searchRides(fromLocation, toLocation, date, passengers, bags, suitcases)
+
+
           router.push({
             
             pathname: "/(pages)/SearchResultsPage",
-            params: { fromLocation, toLocation, date, passengers, bags, suitcases }
+            params: { ans }
           });
         } catch (error) {
           console.error("Error: ", error);

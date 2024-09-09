@@ -19,7 +19,7 @@ import { useRouter } from "expo-router";
 
 
 export default function PostTripPage2(){
-    const { fromLocation, toLocation, date, departureTime ,price_person, price_small_package, price_medium_package,price_large_package } = useLocalSearchParams();
+    const { fromLocation, toLocation, formattedDate, departureTime ,price_person, price_small_package, price_medium_package,price_large_package } = useLocalSearchParams();
     
     
     const [car, setCar] = useState('');
@@ -35,7 +35,7 @@ export default function PostTripPage2(){
             "ride": {
               "city_from": fromLocation,
               "city_to": toLocation,
-              "ride_date": "2024-09-09",
+              "ride_date": formattedDate,
               "start_minimum_time": "19:20:13.381Z",
               "start_maximum_time": "19:20:13.381Z",
               "available_space_people": availableSeats,
@@ -60,8 +60,8 @@ export default function PostTripPage2(){
          
           router.push({
             
-            pathname: "/(pages)/PostTripPage2",
-            params: { fromLocation, toLocation, date, departureTime ,price_person, price_small_package, price_medium_package,price_large_package}
+            pathname: "/(pages)/PostSuccessful",
+           
           });
         } catch (error) {
           console.error("Error: ", error);
