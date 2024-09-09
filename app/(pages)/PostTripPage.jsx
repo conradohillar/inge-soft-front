@@ -32,11 +32,11 @@ export default function PostTripPage() {
       const price_small_package = ans.price_small_package;
       const price_medium_package = ans.price_medium_package;
       const price_large_package = ans.price_large_package;
-    
+      
       router.push({
         
         pathname: "/(pages)/PostTripPage2",
-        params: { fromLocation, toLocation, date, price_person, price_small_package, price_medium_package,price_large_package}
+        params: { fromLocation, toLocation, date, departureTime ,price_person, price_small_package, price_medium_package,price_large_package}
       });
     } catch (error) {
       console.error("Error: ", error);
@@ -73,9 +73,10 @@ export default function PostTripPage() {
                     <Text className="text-xs font-qbold text-black px-1.5">Hora de salida</Text>
                 </View>
                 <PortalProvider>
-                    <SelectField items={hours} label="Horario" renderItem={(hour) => (
-                        <Text>{hour.value}</Text>
-                    )}
+                    <SelectField items={hours} label="Horario" value={departureTime} handleChangeValue={setDepartureTime}
+                        renderItem={(hour) => (
+                            <Text>{hour.value}</Text>
+                        )}
                         renderSelected={(value) => renderSelect(value)} />
                 </PortalProvider>
                 <XStack className="items-center mt-3 px-12">

@@ -15,7 +15,8 @@ export default function CustomInput({title, placeholder, height, value, handleCh
                    color="black"
                    textAlignVertical="top"
                    multiline={true}
-                   p={15}
+                  // p={15}
+                   scrollEnabled={true}
                    value={value}
                    onChangeText={handleChangeText}
                    />

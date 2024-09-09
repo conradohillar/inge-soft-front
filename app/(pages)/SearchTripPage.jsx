@@ -10,6 +10,9 @@ import CustomInput from "../../components/CustomInput";
 
 
 export default function SearchTripPage(){
+    const [fromLocation, setFromLocation] = useState('');
+    const [toLocation, setToLocation] = useState('');
+    const [date, setDate] = useState('');
 
     return (
         <SafeAreaView className="bg-primary h-full">
@@ -20,11 +23,11 @@ export default function SearchTripPage(){
                     <Text className="text-2xl font-qsemibold text-black">tu próximo viaje</Text>
                 </XStack>
                 <YStack className=" items-center justify-between mb-12">
-                    <CustomInput title="Desde" placeholder="Seleccione origen" />
-                    <CustomInput title="Hacia" placeholder="Seleccione destino" />
+                    <CustomInput title="Desde" placeholder="Seleccione origen" value={fromLocation} handleChangeText={setFromLocation} />
+                    <CustomInput title="Hacia" placeholder="Seleccione destino" value={toLocation} handleChangeText={setToLocation}/>
                     <View className="w-full items-flex-start justify-center px-10 pt-3">
                         <Text className="text-xs font-qbold text-gray-600 px-1.5 mb-2">Fecha</Text>
-                        <DatePicker style={{backgroundColor:"#EEEEEE"}} placeholderTextColor="#bbb"/>
+                        <DatePicker style={{backgroundColor:"#EEEEEE"}} placeholderTextColor="#bbb" value={date} onChangeDate={setDate}/>
                     </View>
                 </YStack>
                 <YStack className="items-center">
