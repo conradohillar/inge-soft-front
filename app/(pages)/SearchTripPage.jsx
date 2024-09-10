@@ -58,10 +58,10 @@ export default function SearchTripPage(){
             <Header />
             <YStack className="flex-1">
                 <XStack className="items-center mt-12 mb-9 justify-center w-full">
-                    <Text className="text-2xl font-qbold text-secondary">Buscá </Text>
-                    <Text className="text-2xl font-qsemibold text-black">tu próximo viaje</Text>
+                    <Text className="text-[26px] font-qbold text-secondary">Buscá </Text>
+                    <Text className="text-[26px] font-qsemibold text-black">tu próximo viaje</Text>
                 </XStack>
-                <YStack className=" items-center justify-between mb-12">
+                <YStack className=" items-center justify-between mb-10">
                 <AutocompleteCityInput
                     title="Desde"
                     placeholder="Seleccionar origen"
@@ -80,12 +80,12 @@ export default function SearchTripPage(){
                     </View>
                 </YStack>
                 <YStack className="items-center">
-                <ButtonNext height={90} width={270} onPress={handleViajoYo}>
-                    <Text className="text-2xl font-qsemibold text-primary">Viajo yo</Text>
-                </ButtonNext>
-                <ButtonNext height={90} width={270} onPress={handleEnviarPaquete}>
-                    <Text className="text-2xl font-qsemibold text-primary">Enviar un paquete</Text>
-                </ButtonNext>
+                    <ButtonNext height={90} width={300} onPress={handleViajoYo}>
+                        <Text className="text-2xl font-qsemibold text-primary">Viajo yo</Text>
+                    </ButtonNext>
+                    <ButtonNext height={90} width={300} onPress={handleEnviarPaquete} mb={15}>
+                        <Text className="text-2xl font-qsemibold text-primary">Enviar un paquete</Text>
+                    </ButtonNext>
                     <Link href="/(tabs)/home">
                         <Text className="text-base font-qsemibold text-red-500">Cancelar búsqueda</Text>
                     </Link>

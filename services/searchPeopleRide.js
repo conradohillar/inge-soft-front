@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-LOCAL_IP="192.168.0.5"
+LOCAL_IP="192.168.1.36"
 
 
 axios.defaults.timeout = 10000;

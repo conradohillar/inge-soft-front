@@ -29,7 +29,7 @@ export default function AutocompleteCityInput({ title, placeholder, value, onCha
               placeholder={placeholder}
               value={value}
               handleChangeText={handleInputChange} 
-              height={70}
+              height={55}
             />
 
           <View className="w-full items-flex-start justify-center px-10">

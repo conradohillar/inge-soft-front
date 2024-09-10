@@ -5,7 +5,7 @@ import { YStack, XStack, PortalProvider, Button } from "tamagui";
 import BlackButton from "../../components/BlackButton";
 import { Link } from "expo-router";
 import SelectFieldCar from "../../components/SelectFieldCar";
-import { User } from "@tamagui/lucide-icons";
+import { Package, User } from "@tamagui/lucide-icons";
 import Counter from "../../components/Counter";
 import icons from "../../constants/icons";
 import React,{useEffect, useState} from "react";
@@ -97,15 +97,15 @@ export default function PostTripPage2(){
                         <Counter maxCount={4} count={availableSeats} handleChangeCount={setAvailableSeats}/>
                     </XStack>
                     <XStack className=" w-[250px] items-center justify-between mb-1">
-                        <Image source={require('../../assets/icons/bag.png')} style={{height:40, width:40}} />
+                        <Package size="$3" color="black" />
                         <Counter maxCount={4} count={spacesSmallPackage} handleChangeCount={setSmallPackage}/>
                     </XStack>
-                    <XStack className=" w-[250px] items-center justify-between mb-10">
-                        <Image source={require('../../assets/icons/suitcase.png')} style={{height:40, width:40}} />
+                    <XStack className=" w-[250px] items-center justify-between mb-1">
+                        <Package size="$4.5" color="$gray6" />
                         <Counter maxCount={4} count={spacesMediumPackage} handleChangeCount={setMediumPackage}/>
                     </XStack>
                     <XStack className=" w-[250px] items-center justify-between mb-10">
-                        <Image source={require('../../assets/icons/suitcase.png')} style={{height:40, width:40}} />
+                        <Package size="$5" color="$gray5" />
                         <Counter maxCount={4} count={spacesLargePackage} handleChangeCount={setLargePackage}/>
                     </XStack>
                 </YStack>
