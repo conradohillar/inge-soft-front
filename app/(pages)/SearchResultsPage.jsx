@@ -11,10 +11,15 @@ export default function SearchResults(){
     const parsedRides = JSON.parse(vecRides);
     console.log('vecRides:', parsedRides);
     
-    const renderItem = ({ item }) => (
-        <TripCard from={item.city_from} to={item.city_to} driver={item.driver_name} date={item.date} price={item.price} />
-
-      );
+    const renderItem = ({ item }) => {
+        const rounded = (item.price).toFixed(2);
+        const sliced_from = (item-city_from).slice(0,3);
+        const sliced_to = (item-city_to).slice(0,3);
+        return ( 
+            <TripCard from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} price={rounded} />
+        );
+    
+     }
 
     return (
         <SafeAreaView className="w-full h-full bg-primary">
