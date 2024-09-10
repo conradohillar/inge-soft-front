@@ -3,10 +3,16 @@ import Header from "../../components/Header";
 import { FlatList, View, Text } from "react-native";
 import TripCard from "../../components/TripCard";
 import { XStack } from "tamagui";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 export default function SearchResults(){
+
+    const { vecRides } = useLocalSearchParams();
+    const parsedRides = JSON.parse(vecRides);
+    console.log('vecRides:', parsedRides);
+    
     const renderItem = ({ item }) => (
-        <TripCard from={item.from} to={item.to} driver={item.driver} date={item.date} price={item.price} />
+        <TripCard from={item.city_from} to={item.city_to} driver={item.driver_name} date={item.date} price={item.price} />
 
       );
 
@@ -19,8 +25,8 @@ export default function SearchResults(){
             </XStack>
             <View className="items-center">
                 <FlatList 
-                    data={trips}
-                    keyExtractor={item => item.id}
+                    data={parsedRides}
+                    keyExtractor={item => item.ride_id}
                     renderItem={renderItem}
                 />
             </View>

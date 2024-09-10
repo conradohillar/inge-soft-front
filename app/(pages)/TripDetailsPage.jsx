@@ -11,6 +11,8 @@ import icons from "../../constants/icons";
 import { useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import ButtonNext from "../../components/ButtonNext";
+import { searchRides } from "../../services/searchPeopleRide";
+import { format } from 'date-fns';
 
 export default function TripDetailsPage(){
 
@@ -24,15 +26,21 @@ export default function TripDetailsPage(){
     const router = useRouter();
     
     const handleSearch = async () => {
+
+      
+        const formattedDate = format(date, 'yyyy-MM-dd'); // YYYY-MM-DD
+     
         try {
+            
+
           
-            const ans = await searchRides(fromLocation, toLocation, date, passengers, bags, suitcases)
+            const vecRides = await searchRides(fromLocation, toLocation, formattedDate, passengers, bags, suitcases)
 
-
+            const vecRidesString = JSON.stringify(vecRides);
           router.push({
             
             pathname: "/(pages)/SearchResultsPage",
-            params: { ans }
+            params: { vecRides : vecRidesString }
           });
         } catch (error) {
           console.error("Error: ", error);
