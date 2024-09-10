@@ -9,23 +9,26 @@ import icons from "../../constants/icons"
 import { useLocalSearchParams, useRouter } from "expo-router";
 import ButtonNext from "../../components/ButtonNext";
 import { useState } from "react";
+import { searchRidesPackages } from "../../services/searchPackageRide";
 
 export default function SendPackagePage2(){
 
-    const { fromLocation, toLocation, date, smallPacks, mediumPacks, largePacks } = useLocalSearchParams();
+    const { fromLocation, toLocation, formattedDate, smallPacks, mediumPacks, largePacks } = useLocalSearchParams();
 
     // Todavía no se implementaron los comentarios
   //  const [comments, setComments] = useState('');
-
+  
     const router = useRouter();
     
     const handleSearchResults = async () => {
         try {
-          
+
+          const vecRides = await searchRidesPackages(fromLocation, toLocation, formattedDate, smallPacks, mediumPacks, largePacks)
+          const vecRidesString = JSON.stringify(vecRides);
           router.push({
             
             pathname: "/(pages)/SearchResultsPage",
-            params: { fromLocation, toLocation, date, smallPacks, mediumPacks, largePacks }
+            params: { vecRides: vecRidesString }
           });
         } catch (error) {
           console.error("Error: ", error);

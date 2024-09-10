@@ -10,6 +10,7 @@ import { useState } from "react";
 import AutocompleteCityInput from '../../components/AutocompleteCityInput';
 import ButtonNext from "../../components/ButtonNext";
 import { useRouter } from "expo-router";
+import { format } from 'date-fns';
 
 
 
@@ -21,13 +22,16 @@ export default function SearchTripPage(){
 
     const router = useRouter();
 
+
+
     const handleViajoYo = async () => {
+     
       try {
-        
+        const formattedDate = format(date, 'yyyy-MM-dd'); // YYYY-MM-DD
         router.push({
           
           pathname: "/(pages)/TripDetailsPage",
-          params: { fromLocation, toLocation, date }
+          params: { fromLocation, toLocation, formattedDate }
         });
       } catch (error) {
         console.error("Error: ", error);
@@ -37,11 +41,12 @@ export default function SearchTripPage(){
   
   const handleEnviarPaquete = async () => {
     try {
+    const formattedDate = format(date, 'yyyy-MM-dd'); // YYYY-MM-DD
       
       router.push({
         
         pathname: "/(pages)/SendPackagePage",
-        params: { fromLocation, toLocation, date }
+        params: { fromLocation, toLocation, formattedDate }
       });
     } catch (error) {
       console.error("Error: ", error);

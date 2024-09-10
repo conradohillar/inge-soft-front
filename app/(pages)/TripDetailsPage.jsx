@@ -12,11 +12,10 @@ import { useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import ButtonNext from "../../components/ButtonNext";
 import { searchRides } from "../../services/searchPeopleRide";
-import { format } from 'date-fns';
 
 export default function TripDetailsPage(){
 
-    const { fromLocation, toLocation, date } = useLocalSearchParams();
+    const { fromLocation, toLocation, formattedDate } = useLocalSearchParams();
 
     const [passengers, setPassengers] = useState(0);
     const [bags, setBags] = useState(0);
@@ -28,7 +27,7 @@ export default function TripDetailsPage(){
     const handleSearch = async () => {
 
       
-        const formattedDate = format(date, 'yyyy-MM-dd'); // YYYY-MM-DD
+        
      
         try {
             

@@ -13,7 +13,8 @@ import ButtonNext from "../../components/ButtonNext";
 import { useState } from "react";
 
 export default function SendPackagePage(){
-    const { fromLocation, toLocation, date } = useLocalSearchParams();
+    const { fromLocation, toLocation, formattedDate } = useLocalSearchParams();
+
 
     const [smallPacks, setSmallPacks] = useState(0);
     const [mediumPacks, setMediumPacks] = useState(0);
@@ -24,10 +25,13 @@ export default function SendPackagePage(){
     const handleContinueToPack2 = async () => {
         try {
           
+            console.log('this is date -> ', formattedDate);
+
+
           router.push({
             
             pathname: "/(pages)/SendPackagePage2",
-            params: { fromLocation, toLocation, date, smallPacks, mediumPacks, largePacks }
+            params: { fromLocation, toLocation, formattedDate, smallPacks, mediumPacks, largePacks }
           });
         } catch (error) {
           console.error("Error: ", error);
