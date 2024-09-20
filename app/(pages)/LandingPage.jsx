@@ -14,7 +14,7 @@ export default function LandingPage(){
                     </Text>
                 </View>
                 <YStack className="flex-2 items-center justify-center bg-background">
-                    <BlackButton height={90} width={300} href="/(auth)/sign-up"> 
+                    <BlackButton height={90} width={300} href="/(auth)/sign-in"> 
                         <Text className="text-[22px] font-qsemibold text-primary">Iniciar sesión</Text>
                     </BlackButton>
                     <BlackButton  height={95} width={305} href="/(tabs)/home">
@@ -23,7 +23,12 @@ export default function LandingPage(){
                             <Image source={require('../../assets/icons/google-icon.png')} className="h-[30px] w-[30px]"/>
                         </XStack>
                     </BlackButton> 
-                    
+                    <XStack className="w-full items-center mt-2">
+                        <Text className="text-sm text-black font-qsemibold">No tenés cuenta?  </Text>
+                        <Link href="/(auth)/sign-up" asChild>
+                            <Text className="text-sm text-secondary font-qbold underline">Registrate</Text>
+                        </Link>
+                    </XStack>
                 </YStack>
                 <View className="flex-1.2 justify-start">
                     <Image source={require('../../assets/icons/logo.png')} className="h-[150px] w-[150px]"/>

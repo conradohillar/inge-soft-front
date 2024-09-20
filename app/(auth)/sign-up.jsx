@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { YStack } from 'tamagui'
 import CustomInput from '../../components/CustomInput'
 import BlackButton from '../../components/BlackButton'
+import { Link } from 'expo-router'
 
 const SignUp = () => {
   return (
@@ -18,9 +19,14 @@ const SignUp = () => {
           <CustomInput title="Ingresá tu contraseña"/>
           <CustomInput title="Confirmá tu contraseña"/>
         </YStack>
-        <BlackButton href="/(auth)/sign-up2">
-          <Text className="text-primary text-xl font-qsemibold">Continuar</Text>
-        </BlackButton>
+        <YStack className="items-center">
+          <BlackButton href="/(auth)/sign-up2" height={60} width={220}>
+            <Text className="text-primary text-xl font-qsemibold">Continuar</Text>
+          </BlackButton>
+          <Link href="/(pages)/LandingPage" asChild>
+            <Text className="text-base text-red-500 font-qsemibold underline">Cancelar</Text>
+          </Link>
+        </YStack>
       </YStack>
     </SafeAreaView>
   )
