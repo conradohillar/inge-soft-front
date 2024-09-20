@@ -8,29 +8,30 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Home = ({ userName }) => {
   return (
-    <SafeAreaView className="bg-background flex-1">
+    <SafeAreaView className="bg-background2 flex-1">
       <Header />
       
-      <YStack className="flex-1 items-center justify-evenly bg-primary">
+      <YStack className="h-full items-center justify-evenly bg-background">
       
-        <XStack className="items-center my-10 ">
-          <Text className="text-3xl text-black font-qsemibold"> Bienvenido, </Text>
+        <XStack className="items-center h-[15%]">
+          <Text className="text-3xl text-black font-qsemibold"> Bienvenido,</Text>
           <Text className="text-3xl text-secondary font-qbold"> {userName ? userName : 'USER'}</Text>
         </XStack>
-        {/* <View className="flex-1 items-center justify-center">
-          <Image
+        <View className="w-[90%] aspect-square bg-gray-400 rounded-2xl border-2 justify-center">
+          <Text className="text-center text-2xl text-black font-qsemibold">Aca va el mapa</Text>
+          {/* <Image
             source={require("../../assets/images/map.png")}
-            className=" rounded-2xl border-2 border-gray-400"
-          />
-        </View> */}
-        <YStack className="items-center justify-center space-y-4 w-full px-4">
-          <BlackButton href="/(pages)/SearchTripPage" className="w-full max-w-md">
-            <Text className="text-[20px] font-qsemibold text-primary">Buscar viaje</Text>
+            className="w-full items-center justify-evenly rounded-2xl border-2 border-gray-400"
+          /> */}
+        </View>
+        <XStack className="items-center justify-evenly w-[100%] h-[30%]">
+          <BlackButton href="/(pages)/SearchTripPage">
+            <Text className="text-[20px] font-qsemibold text-white">Buscar viaje</Text>
           </BlackButton>
-          <BlackButton href="/(pages)/PostTripPage" className="w-full max-w-md">
-            <Text className="text-[20px] font-qsemibold text-primary">Publicar viaje</Text>
+          <BlackButton href="/(pages)/PostTripPage">
+            <Text className="text-[20px] font-qsemibold text-white">Publicar viaje</Text>
           </BlackButton>
-        </YStack>
+        </XStack>
       </YStack>
     </SafeAreaView>
   );
