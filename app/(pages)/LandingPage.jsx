@@ -14,7 +14,7 @@ export default function LandingPage(){
                     </Text>
                 </View>
                 <YStack className="flex-2 items-center justify-center bg-background">
-                    <BlackButton height={90} width={300} href="/(tabs)/home"> 
+                    <BlackButton height={90} width={300} href="/(auth)/sign-up"> 
                         <Text className="text-[22px] font-qsemibold text-primary">Iniciar sesión</Text>
                     </BlackButton>
                     <BlackButton  height={95} width={305} href="/(tabs)/home">
