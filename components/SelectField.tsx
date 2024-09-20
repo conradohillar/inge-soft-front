@@ -12,7 +12,7 @@ export default function SelectField({ items, label, value, handleChangeValue, re
 
   return (
     <Select value={value} onValueChange={handleChangeValue} disablePreventBodyScroll {...props}>
-      <Select.Trigger width={350} height={60} iconAfter={ChevronDown} className='bg-primary text-black rounded-2xl mx-8'>
+      <Select.Trigger width={350} height={60} iconAfter={ChevronDown} className='bg-background text-black rounded-2xl mx-8'>
         <Select.Value placeholder={renderItem ? (items[0] && renderItem(items[0])) : items[0]?.value} 
                       className='text-base font-qsemibold' 
                       style={{color: isPlaceholder ? "#bbb":"#000"}}>
@@ -76,7 +76,7 @@ export default function SelectField({ items, label, value, handleChangeValue, re
         >
           <Select.Group>
             <YStack className='items-center'>
-            <Select.Label className='text-base text-primary font-qbold bg-secondary w-[380px] mx-8' 
+            <Select.Label className='text-base text-white font-qbold bg-primary w-[380px] mx-8' 
                             style={{borderTopLeftRadius: 15, borderTopRightRadius:15}}>
                 {label}
             </Select.Label>
@@ -89,7 +89,7 @@ export default function SelectField({ items, label, value, handleChangeValue, re
                       index={i}
                       key={item.key}
                       value={item.value}
-                      className='bg-primary border border-gray-100 w-[380px] mx-8'
+                      className='bg-background2 border border-gray-400 w-[380px] mx-8'
                     >
                       <Select.ItemText className='text-base text-black font-qsemibold'>
                         {renderItem ? renderItem(item) : item.value }

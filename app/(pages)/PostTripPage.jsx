@@ -49,7 +49,7 @@ export default function PostTripPage() {
 
 
     return (
-        <SafeAreaView className="h-full w-full bg-primary">
+        <SafeAreaView className="h-full w-full bg-background">
             <Header />
              <XStack className=" items-center justify-center mt-8 mb-3">
                 <Text className="text-[27px] font-qbold text-secondary">Publicá</Text>
@@ -93,7 +93,7 @@ export default function PostTripPage() {
             </YStack>
             <View className="items-center space-y-2">
                 <ButtonNext height={90} width={270} onPress={handleContinue}>
-                    <Text className="text-2xl font-qsemibold text-primary">Continuar</Text>
+                    <Text className="text-2xl font-qsemibold text-white">Continuar</Text>
                 </ButtonNext>
                 <Link href="/(tabs)/home" asChild>
                     <Text className="text-base font-qsemibold text-red-500">Cancelar publicación</Text>

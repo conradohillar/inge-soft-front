@@ -22,7 +22,7 @@ export default function SearchResults(){
      }
 
     return (
-        <SafeAreaView className="w-full h-full bg-primary">
+        <SafeAreaView className="w-full h-full bg-background">
             <Header />
             <XStack className="items-center justify-center mt-10 mb-7">
                 <Text className="text-[22px] font-qbold text-secondary">Resultados </Text>

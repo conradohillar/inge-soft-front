@@ -54,7 +54,7 @@ export default function SearchTripPage(){
   };
   
     return (
-        <SafeAreaView className="bg-primary h-full">
+        <SafeAreaView className="bg-background h-full">
             <Header />
             <YStack className="flex-1">
                 <XStack className="items-center mt-12 mb-9 justify-center w-full">
@@ -80,11 +80,11 @@ export default function SearchTripPage(){
                     </View>
                 </YStack>
                 <YStack className="items-center">
-                    <ButtonNext height={90} width={300} onPress={handleViajoYo}>
-                        <Text className="text-2xl font-qsemibold text-primary">Viajo yo</Text>
+                    <ButtonNext width={"80%"} onPress={handleViajoYo}>
+                        <Text className="text-2xl font-qsemibold text-white">Viajo yo</Text>
                     </ButtonNext>
-                    <ButtonNext height={90} width={300} onPress={handleEnviarPaquete} mb={15}>
-                        <Text className="text-2xl font-qsemibold text-primary">Enviar un paquete</Text>
+                    <ButtonNext width={"80%"} onPress={handleEnviarPaquete} mb={15}>
+                        <Text className="text-2xl font-qsemibold text-white">Enviar un paquete</Text>
                     </ButtonNext>
                     <Link href="/(tabs)/home">
                         <Text className="text-base font-qsemibold text-red-500">Cancelar búsqueda</Text>
