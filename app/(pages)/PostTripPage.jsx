@@ -14,9 +14,6 @@ import { useRouter } from "expo-router";
 import ButtonNext from "../../components/ButtonNext"
 
 
-
-
-
 export default function PostTripPage() {
  
   const [fromLocation, setFromLocation] = useState('');
@@ -31,16 +28,11 @@ export default function PostTripPage() {
    
     
     try {
-      const ans = await fetchRidePartOne(fromLocation, toLocation);
-      const price_person = ans.price_person;      
-      const price_small_package = ans.price_small_package;
-      const price_medium_package = ans.price_medium_package;
-      const price_large_package = ans.price_large_package;
       
       router.push({
         
         pathname: "/(pages)/PostTripPage2",
-        params: { fromLocation, toLocation, formattedDate, departureTime ,price_person, price_small_package, price_medium_package,price_large_package}
+        params: { fromLocation, toLocation, formattedDate, departureTime }
       });
     } catch (error) {
       console.error("Error: ", error);
