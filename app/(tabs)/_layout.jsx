@@ -9,12 +9,12 @@ import { StatusBar } from 'expo-status-bar';
 
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
-    <View className={"items-center justify-center gap-2"}>
+    <View className={"items-center justify-center gap-1 pt-2"}>
       <Image
         source={icon}
         resizeMode="contain"
         tintColor={color}
-        className="w-9 h-9"
+        className="w-7 h-7"
       />
       <Text className={`${focused ? "font-qbold" : "font-qmedium"} text-xs`} style={{ color: color}}>
         {name}
@@ -25,29 +25,29 @@ const TabIcon = ({ icon, color, name, focused }) => {
 
 const TabsLayout = () => {
   return (
-    <> 
+    <>
       <Tabs
         screenOptions={{
           tabBarShowLabel: false,
           tabBarActiveTintColor: '#309090',
-          tabBarInactiveTintColor: '#CDCDE0',
+          tabBarInactiveTintColor: '#999',
           tabBarStyle: {
-            backgroundColor: '#FFF',
+            backgroundColor: '#f5f5f5',
             borderTopWidth: 1,
             borderTopColor: '#CDCDE0',
-            height: 100,
+            height: "10%",
           }
         }}
       >
         <Tabs.Screen name="trips" 
           options={{
-            title: "Trips", 
+            title: "trips", 
             headerShown: false, 
             tabBarIcon: ({ color, focused}) => (
               <TabIcon 
                 icon={icons.car}
                 color={color}
-                name="Trips"
+                name="Viajes"
                 focused={focused}
               />
         )}}/>
@@ -59,7 +59,7 @@ const TabsLayout = () => {
               <TabIcon 
                 icon={icons.home}
                 color={color}
-                name="Home"
+                name="Inicio"
                 focused={focused}
               />
         )}}/>
@@ -71,7 +71,7 @@ const TabsLayout = () => {
               <TabIcon 
                 icon={icons.profile2}
                 color={color}
-                name="Profile"
+                name="Perfil"
                 focused={focused}
               />
         )}}/>

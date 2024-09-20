@@ -2,7 +2,7 @@ import {Button} from "tamagui";
 import { useState } from "react";
 import { Link } from "expo-router";
 
-export default function BlackButton({children, height, width, href, ...props}){
+export default function BlackButton({href, children, className = '', ...props}){
     const [isPressed, setIsPressed] = useState(false);
 
     return(
@@ -10,14 +10,16 @@ export default function BlackButton({children, height, width, href, ...props}){
             <Button
                 onPressIn={() => setIsPressed(true)}
                 onPressOut={() => setIsPressed(false)}
-                style={{backgroundColor: isPressed ? '#59A58A' : '#000000'}}
-                height={height}
-                width={width}
-               // className={'${className}'}
-                //themeInverse
-                borderRadius={100}
-                margin="$3"
-                {... props}
+                className={`
+                    ${isPressed ? 'bg-secondary' : 'bg-black'}
+                    rounded-full 
+                    m-3 
+                    flex
+                    items-center
+                    justify-center
+                    ${className}
+                  `}
+                  {...props}
         
             >
                 {children}

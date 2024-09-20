@@ -4,8 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#FFFFFF',
-        secondary: '#59A58A',
+        background: '#FFFFFF',
+        background2: '#F5F5F5',
+        primary: '#59A58A',
       },
       fontFamily: {
         qbold: ["Quicksand-Bold"],
