@@ -14,8 +14,9 @@ import ButtonNext from "../../components/ButtonNext";
 import { postRide } from "../../services/postRide";
 import { useRouter } from "expo-router";
 import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query' 
-import {LOCAL_IP} from '@env'
+import {LOCAL_IP, TOKEN} from '@env'
 import CustomInput from "../../components/CustomInput";
+import axios from 'axios';
 
 const queryClient = new QueryClient()
 
@@ -39,17 +40,26 @@ function Content(){
     const [spacesSmallPackage, setSmallPackage] = useState(0);
     const [spacesMediumPackage, setMediumPackage] = useState(0);
     const [spacesLargePackage, setLargePackage] = useState(0);
+    const [pricePerson, setPricePerson] = useState(0);
+    const [priceSmallPackage, setPriceSmallPackage] = useState(0);
+    const [priceMediumPackage, setPriceMediumPackage] = useState(0);
+    const [priceLargePackage, setPriceLargePackage] = useState(0);
+    
+    const headers = {
+        Authorization: `Bearer ${TOKEN}`,
+        'Content-Type': 'application/json' 
+      };
 
-        
     const mutation = useMutation({
         mutationFn: (tripData) => {
-          return axios.post(`http://${LOCAL_IP}:8000/rides/create/detail?plate=${plate}`, tripData)
+          return axios.post(`http://${LOCAL_IP}:8000/rides/create/detail?plate=${car}`, tripData, {headers})
         },
       })
 
     const router = useRouter();
+   
     const handleContinue = async () => {
-        console.log("Tenes tanto espacio disponible", availableSeats, spacesLargePackage, spacesMediumPackage,spacesLargePackage)
+        
         const obj = {
             "ride": {
               "city_from": fromLocation,
@@ -63,24 +73,21 @@ function Content(){
               "available_space_large_package": spacesLargePackage
             },
             "price": {
-              "price_person": price_person,
-              "price_small_package": price_small_package,
-              "price_medium_package": price_medium_package,
-              "price_large_package": price_large_package
+              "price_person": pricePerson,
+              "price_small_package": priceSmallPackage,
+              "price_medium_package": priceMediumPackage,
+              "price_large_package": priceLargePackage
             }
           }
+            mutation.mutate(obj)
+          mutation.isPending() ? console.log('loading') : null
+          mutation.isSuccess ? router.push({pathname: "/(pages)/PostSuccessful"}) : null
 
-        try {
-          const ans = await postRide(obj,car);
+          mutation.isError ? console.log(mutation.error) : null  //aca tenemos que renderizar la vista con errores. Podriamos poner los errores en el mismo codigo y ponemos un if en el codigo que diga si renderiza o no
+          
          
-          router.push({
-            
-            pathname: "/(pages)/PostSuccessful",
-           
-          });
-        } catch (error) {
-          console.error("Error: ", error);
-        }
+          
+        
       };
 
       const url = `http://${LOCAL_IP}:8000/rides/create?location_from=${fromLocation}&location_to=${toLocation}`
@@ -92,6 +99,18 @@ function Content(){
             res.json(),
           ),
       })
+
+
+      useEffect(() => {
+        if (data) {
+          setPricePerson(data.price_person.toFixed(2));
+          setPriceSmallPackage(data.price_small_package.toFixed(2));
+          setPriceMediumPackage(data.price_medium_package.toFixed(2));
+          setPriceLargePackage(data.price_large_package.toFixed(2));
+        }
+      }, [data]); 
+  
+      
       if (isPending) return (
             <View className="items-center h-full justify-center">
                 <Text className="text-3xl">Loading...</Text>
@@ -99,13 +118,8 @@ function Content(){
     )
     
       if (error) return (<Text>An error ocurred: {error.message}</Text>)
-    
-    const ph1 = data.price_person.toFixed(2).toString()
-    const ph2 = data.price_small_package.toFixed(2).toString()
-    const ph3 = data.price_medium_package.toFixed(2).toString()
-    const ph4 = data.price_large_package.toFixed(2).toString()
-
-
+        
+          
     return (
         <SafeAreaView className="h-full w-full bg-primary">
             <Header />
@@ -135,19 +149,19 @@ function Content(){
                         </XStack>
                         <YStack className="items-start">
                             <XStack className=" w-full items-end justify-evenly mb-5">
-                                <CustomInput title="Precio por persona" value={data.price_person} placeholder={ph1}/>
+                                <CustomInput title="Precio por persona" value={pricePerson} handleChangeText={setPricePerson}  />
                                 <Counter maxCount={4} count={availableSeats} handleChangeCount={setAvailableSeats}/>
                             </XStack>
                             <XStack className="w-full items-end justify-evenly mb-5">
-                                <CustomInput title="Precio por paquete chico" value={data.price_small_package} placeholder={ph2}/>
+                                <CustomInput title="Precio por paquete chico" value={priceSmallPackage} handleChangeText={setPriceSmallPackage}/>
                                 <Counter maxCount={4} count={spacesSmallPackage} handleChangeCount={setSmallPackage}/>
                             </XStack>
                             <XStack className=" w-full items-end justify-evenly mb-5">
-                                <CustomInput title="Precio por paquete mediano" value={data.price_medium_package} placeholder={ph3}/>
+                                <CustomInput title="Precio por paquete mediano" value={priceMediumPackage} handleChangeText={setPriceMediumPackage}/>
                                 <Counter maxCount={4} count={spacesMediumPackage} handleChangeCount={setMediumPackage}/>
                             </XStack>
                             <XStack className=" w-full items-end justify-evenly mb-10">
-                                <CustomInput title="Precio por paquete grande" value={data.price_large_package} placeholder={ph4}/>
+                                <CustomInput title="Precio por paquete grande" value={priceLargePackage} handleChangeText={setPriceLargePackage}/>
                                 <Counter maxCount={4} count={spacesLargePackage} handleChangeCount={setLargePackage}/>
                             </XStack>
                         </YStack>
