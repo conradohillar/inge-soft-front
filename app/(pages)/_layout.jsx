@@ -7,6 +7,7 @@ const PagesLayout = () => {
     <>
       <Stack>
         
+        <Stack.Screen name="FrontPage" options={{headerShown: false}}/>
         <Stack.Screen name="LoadingPage" options={{headerShown: false}}/>
         <Stack.Screen name="LandingPage" options={{headerShown: false}}/>
         <Stack.Screen name="SearchTripPage" options={{headerShown: false}}/>

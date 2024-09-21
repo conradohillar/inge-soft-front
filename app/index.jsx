@@ -4,7 +4,7 @@ import { TamaguiProvider, Theme, } from "tamagui";
 import config from "../tamagui.config";
 import { useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
-import LoadingPage from './(pages)/LoadingPage';
+import FrontPage from './(pages)/FrontPage';
 import LandingPage from './(pages)/LandingPage';
 
 export default function App() {
@@ -36,7 +36,7 @@ export default function App() {
   }, [isReady]);
 
   if (!isReady) {
-    return <LoadingPage />;
+    return <FrontPage />;
   }
 
   return (

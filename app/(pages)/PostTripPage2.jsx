@@ -17,6 +17,7 @@ import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tansta
 import {LOCAL_IP, TOKEN} from '@env'
 import CustomInput from "../../components/CustomInput";
 import axios from 'axios';
+import LoadingPage from "./LoadingPage";
 
 const queryClient = new QueryClient()
 
@@ -111,11 +112,7 @@ function Content(){
       }, [data]); 
   
       
-      if (isPending) return (
-            <View className="items-center h-full justify-center">
-                <Text className="text-3xl">Loading...</Text>
-            </View>
-    )
+      if (isPending) return (<LoadingPage />)
     
       if (error) return (<Text>An error ocurred: {error.message}</Text>)
         

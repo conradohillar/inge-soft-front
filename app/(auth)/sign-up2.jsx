@@ -9,12 +9,12 @@ import icons from "../../constants/icons"
 
 const SignUp2 = () => {
   return (
-    <SafeAreaView className="bg-primary h-full w-full">
+    <SafeAreaView className="bg-background h-full w-full">
       <YStack className="h-full justify-evenly">
         <YStack className="items-center">
           <Text className="text-black text-4xl font-qbold">Detalles</Text>
           <Text className="text-black text-3xl font-qsemibold">de 
-            <Text className="text-secondary text-3xl font-qbold"> TU PERFIL</Text>
+            <Text className="text-primary text-3xl font-qbold"> TU PERFIL</Text>
           </Text>
         </YStack>
         <YStack className="items-center">
@@ -33,12 +33,12 @@ const SignUp2 = () => {
         </YStack>
         <XStack className="w-full items-center justify-evenly">
           <Link href="/(auth)/sign-up" asChild>
-            <Button className="bg-primary">
+            <Button className="bg-background">
               <Image source={icons.arrowleft} className="h-7 w-7" resizeMode='contain'/>
             </Button>
           </Link>
           <BlackButton href="/(tabs)/home">
-            <Text className="text-primary text-xl font-qsemibold">Ir al Inicio</Text>
+            <Text className="text-white text-xl font-qsemibold">Ir al Inicio</Text>
           </BlackButton>
         </XStack>
       </YStack>

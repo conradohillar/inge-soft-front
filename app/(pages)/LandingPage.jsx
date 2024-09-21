@@ -11,12 +11,12 @@ export default function LandingPage(){
         <SafeAreaView className="bg-backgound h-full w-full flex-1">
             <YStack className="h-full items-center justify-evenly w-full">
                 <View className="justify-end ml-2 flex">
-                    <Text className="text-[90px] font-qsemibold text-secondary">
+                    <Text className="text-[90px] font-qsemibold text-primary">
                         rydio
                     </Text>
                 </View>
                 <YStack className="items-center justify-center w-full h-[50%]">
-                    <BlackButton href="/(tabs)/home" height={"20%"} width={"80%"}> 
+                    <BlackButton href="/(auth)/sign-in" height={"20%"} width={"80%"}> 
                         <Text className="text-[22px] font-qsemibold text-white">Iniciar sesión</Text>
                     </BlackButton>
                     <BlackButton href="/(tabs)/home" height={"20%"} width={"80%"}>
@@ -25,10 +25,10 @@ export default function LandingPage(){
                             <Image source={require('../../assets/icons/google-icon.png')} className="h-[30px] w-[30px]"/>
                         </XStack>
                     </BlackButton> 
-                    <XStack className="w-full items-center mt-2">
+                    <XStack className="w-full items-center justify-center mt-2">
                         <Text className="text-sm text-black font-qsemibold">No tenés cuenta?  </Text>
                         <Link href="/(auth)/sign-up" asChild>
-                            <Text className="text-sm text-secondary font-qbold underline">Registrate</Text>
+                            <Text className="text-sm text-primary font-qbold underline">Registrate</Text>
                         </Link>
                     </XStack>
                 </YStack>
