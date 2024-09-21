@@ -8,35 +8,36 @@ import SelectFieldCar from "../../components/SelectFieldCar";
 import { Package, User } from "@tamagui/lucide-icons";
 import Counter from "../../components/Counter";
 import icons from "../../constants/icons";
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import ButtonNext from "../../components/ButtonNext";
 import { postRide } from "../../services/postRide";
 import { useRouter } from "expo-router";
-import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query' 
-import {LOCAL_IP, TOKEN} from '@env'
+import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query'
+import { LOCAL_IP, TOKEN } from '@env'
 import CustomInput from "../../components/CustomInput";
 import axios from 'axios';
 import LoadingPage from "./LoadingPage";
+import PostSuccessful from "./PostSuccessful";
 
 const queryClient = new QueryClient()
 
-export default function PostTripPage2(){
-    return(
+export default function PostTripPage2() {
+    return (
         <QueryClientProvider client={queryClient} >
-          <Content />
+            <Content />
         </QueryClientProvider>
     )
-  
+
 }
 
 
 
-function Content(){
-    const { fromLocation, toLocation, formattedDate, departureTime } = useLocalSearchParams(); 
-    
+function Content() {
+    const { fromLocation, toLocation, formattedDate, departureTime } = useLocalSearchParams();
+
     const [car, setCar] = useState('');
-   // const [carPlate, setCarPlate] = useState('');
+    // const [carPlate, setCarPlate] = useState('');
     const [availableSeats, setAvailableSeats] = useState(0);
     const [spacesSmallPackage, setSmallPackage] = useState(0);
     const [spacesMediumPackage, setMediumPackage] = useState(0);
@@ -45,150 +46,160 @@ function Content(){
     const [priceSmallPackage, setPriceSmallPackage] = useState(0);
     const [priceMediumPackage, setPriceMediumPackage] = useState(0);
     const [priceLargePackage, setPriceLargePackage] = useState(0);
-    
+
     const headers = {
         Authorization: `Bearer ${TOKEN}`,
-        'Content-Type': 'application/json' 
-      };
+        'Content-Type': 'application/json'
+    };
 
     const mutation = useMutation({
         mutationFn: (tripData) => {
-          return axios.post(`http://${LOCAL_IP}:8000/rides/create/detail?plate=${car}`, tripData, {headers})
+            return axios.post(`http://${LOCAL_IP}:8000/rides/create/detail?plate=${car}`, tripData, { headers })
         },
-      })
+    })
 
     const router = useRouter();
-   
+
     const handleContinue = async () => {
-        
+
         const obj = {
             "ride": {
-              "city_from": fromLocation,
-              "city_to": toLocation,
-              "ride_date": formattedDate,
-              "start_minimum_time": "19:20:13.381Z",
-              "start_maximum_time": "19:20:13.381Z",
-              "available_space_people": availableSeats,
-              "available_space_small_package": spacesSmallPackage,
-              "available_space_medium_package": spacesMediumPackage,
-              "available_space_large_package": spacesLargePackage
+                "city_from": fromLocation,
+                "city_to": toLocation,
+                "ride_date": formattedDate,
+                "start_minimum_time": "19:20:13.381Z",
+                "start_maximum_time": "19:20:13.381Z",
+                "available_space_people": availableSeats,
+                "available_space_small_package": spacesSmallPackage,
+                "available_space_medium_package": spacesMediumPackage,
+                "available_space_large_package": spacesLargePackage
             },
             "price": {
-              "price_person": pricePerson,
-              "price_small_package": priceSmallPackage,
-              "price_medium_package": priceMediumPackage,
-              "price_large_package": priceLargePackage
+                "price_person": pricePerson,
+                "price_small_package": priceSmallPackage,
+                "price_medium_package": priceMediumPackage,
+                "price_large_package": priceLargePackage
             }
-          }
-            mutation.mutate(obj)
-          mutation.isPending() ? console.log('loading') : null
-          mutation.isSuccess ? router.push({pathname: "/(pages)/PostSuccessful"}) : null
+        }
+        console.log(obj);
 
-          mutation.isError ? console.log(mutation.error) : null  //aca tenemos que renderizar la vista con errores. Podriamos poner los errores en el mismo codigo y ponemos un if en el codigo que diga si renderiza o no
-          
-         
-          
-        
-      };
+        mutation.mutate(obj);
 
-      const url = `http://${LOCAL_IP}:8000/rides/create?location_from=${fromLocation}&location_to=${toLocation}`
 
-      const {isPending, error, data} = useQuery({
+
+    };
+
+    const url = `http://${LOCAL_IP}:8000/rides/create?location_from=${fromLocation}&location_to=${toLocation}`
+
+    const { isPending, error, data } = useQuery({
         queryKey: ['fetchRide'],
         queryFn: () =>
-          fetch(url).then((res) =>
-            res.json(),
-          ),
-      })
+            fetch(url).then((res) =>
+                res.json(),
+            ),
+    })
 
 
-      useEffect(() => {
+    useEffect(() => {
         if (data) {
-          setPricePerson(data.price_person.toFixed(2));
-          setPriceSmallPackage(data.price_small_package.toFixed(2));
-          setPriceMediumPackage(data.price_medium_package.toFixed(2));
-          setPriceLargePackage(data.price_large_package.toFixed(2));
+            setPricePerson(data.price_person.toFixed(2));
+            setPriceSmallPackage(data.price_small_package.toFixed(2));
+            setPriceMediumPackage(data.price_medium_package.toFixed(2));
+            setPriceLargePackage(data.price_large_package.toFixed(2));
         }
-      }, [data]); 
-  
-      
-      if (isPending) return (<LoadingPage />)
-    
-      if (error) return (<Text>An error ocurred: {error.message}</Text>)
-        
-          
+    }, [data]);
+
+
+    if (isPending) return (<LoadingPage />)
+
+    if (error) return (<Text>An error ocurred: {error.message}</Text>)
+
+
     return (
         <SafeAreaView className="h-full w-full bg-primary">
-            <Header />
-            <View className=" items-center mt-10 mb-12">
-                <Text className="text-[27px] font-qbold text-black">Detalles de la publicación</Text>
-            </View>
-            <ScrollView>
-                <YStack className="items-start justify-center">
-                    <Text className="text-sm text-black font-qbold ml-10 mb-3">Seleccioná tu 
-                        <Text className="text-sm text-secondary font-qbold ml-10 mb-3"> auto</Text>
-                    </Text>
-                    <PortalProvider>
-                        <SelectFieldCar items={items} label="Mis autos" value={car} handleChangeValue={setCar}
-                            renderItem={(item) => (<Text>{item.key}, {item.value}</Text>)} 
-                            renderSelected={(item) => renderSelectedCar(item)}/>
-                    </PortalProvider>
-                        <XStack className="mx-11 mb-5 mt-12">
-                            <Text className='text-sm font-qbold text-black'>Indicá tus
-                                <Text className='text-sm font-qbold text-secondary'>  precios
-                                    <Text className='text-sm font-qbold text-black'>  y
-                                        <Text className='text-sm font-qbold text-secondary'>  espacios disponibles
-                                            <Text className='text-sm font-qbold text-black'>:</Text>
-                                        </Text> 
+            {mutation.isLoading ? (<LoadingPage />) : (
+                <>
+                    {mutation.isError ? (
+                        <Text>An error occurred: {mutation.error.message}</Text>   // ACA TENEMOS QUE VER QUE MOSTRAMOS
+                    ) : null}
+
+                    {mutation.isSuccess ? <PostSuccessful/> : null}
+
+                    <Header />
+                    <View className=" items-center mt-10 mb-12">
+                        <Text className="text-[27px] font-qbold text-black">Detalles de la publicación</Text>
+                    </View>
+                    <ScrollView>
+                        <YStack className="items-start justify-center">
+                            <Text className="text-sm text-black font-qbold ml-10 mb-3">Seleccioná tu
+                                <Text className="text-sm text-secondary font-qbold ml-10 mb-3"> auto</Text>
+                            </Text>
+                            <PortalProvider>
+                                <SelectFieldCar items={items} label="Mis autos" value={car} handleChangeValue={setCar}
+                                    renderItem={(item) => (<Text>{item.key}, {item.value}</Text>)}
+                                    renderSelected={(item) => renderSelectedCar(item)} />
+                            </PortalProvider>
+                            <XStack className="mx-11 mb-5 mt-12">
+                                <Text className='text-sm font-qbold text-black'>Indicá tus
+                                    <Text className='text-sm font-qbold text-secondary'>  precios
+                                        <Text className='text-sm font-qbold text-black'>  y
+                                            <Text className='text-sm font-qbold text-secondary'>  espacios disponibles
+                                                <Text className='text-sm font-qbold text-black'>:</Text>
+                                            </Text>
+                                        </Text>
                                     </Text>
                                 </Text>
-                            </Text>
-                        </XStack>
-                        <YStack className="items-start">
-                            <XStack className=" w-full items-end justify-evenly mb-5">
-                                <CustomInput title="Precio por persona" value={pricePerson} handleChangeText={setPricePerson}  />
-                                <Counter maxCount={4} count={availableSeats} handleChangeCount={setAvailableSeats}/>
                             </XStack>
-                            <XStack className="w-full items-end justify-evenly mb-5">
-                                <CustomInput title="Precio por paquete chico" value={priceSmallPackage} handleChangeText={setPriceSmallPackage}/>
-                                <Counter maxCount={4} count={spacesSmallPackage} handleChangeCount={setSmallPackage}/>
-                            </XStack>
-                            <XStack className=" w-full items-end justify-evenly mb-5">
-                                <CustomInput title="Precio por paquete mediano" value={priceMediumPackage} handleChangeText={setPriceMediumPackage}/>
-                                <Counter maxCount={4} count={spacesMediumPackage} handleChangeCount={setMediumPackage}/>
-                            </XStack>
-                            <XStack className=" w-full items-end justify-evenly mb-10">
-                                <CustomInput title="Precio por paquete grande" value={priceLargePackage} handleChangeText={setPriceLargePackage}/>
-                                <Counter maxCount={4} count={spacesLargePackage} handleChangeCount={setLargePackage}/>
-                            </XStack>
+                            <YStack className="items-start">
+                                <XStack className=" w-full items-end justify-evenly mb-5">
+                                    <CustomInput title="Precio por persona" value={pricePerson} handleChangeText={setPricePerson} />
+                                    <Counter maxCount={4} count={availableSeats} handleChangeCount={setAvailableSeats} />
+                                </XStack>
+                                <XStack className="w-full items-end justify-evenly mb-5">
+                                    <CustomInput title="Precio por paquete chico" value={priceSmallPackage} handleChangeText={setPriceSmallPackage} />
+                                    <Counter maxCount={4} count={spacesSmallPackage} handleChangeCount={setSmallPackage} />
+                                </XStack>
+                                <XStack className=" w-full items-end justify-evenly mb-5">
+                                    <CustomInput title="Precio por paquete mediano" value={priceMediumPackage} handleChangeText={setPriceMediumPackage} />
+                                    <Counter maxCount={4} count={spacesMediumPackage} handleChangeCount={setMediumPackage} />
+                                </XStack>
+                                <XStack className=" w-full items-end justify-evenly mb-10">
+                                    <CustomInput title="Precio por paquete grande" value={priceLargePackage} handleChangeText={setPriceLargePackage} />
+                                    <Counter maxCount={4} count={spacesLargePackage} handleChangeCount={setLargePackage} />
+                                </XStack>
+                            </YStack>
+                            <View className="items-center space-y-5 mx-12 mb-8">
+                                <XStack className="items-center">
+                                    <Link href="/(pages)/PostTripPage" asChild>
+                                        <Button className="w-8 h-8 bg-primary">
+                                            <Image source={icons.arrowleft} className="w-8 h-8" resizeMode="contain" />
+                                        </Button>
+                                    </Link>
+                                    <ButtonNext height={90} width={270} onPress={handleContinue}>
+                                        <Text className="text-2xl font-qsemibold text-primary">Publicar Viaje</Text>
+                                    </ButtonNext>
+                                </XStack>
+                                <Link href="/(tabs)/home" asChild>
+                                    <Text className="text-base font-qsemibold text-red-500">Cancelar publicación</Text>
+                                </Link>
+                            </View>
                         </YStack>
-                    <View className="items-center space-y-5 mx-12 mb-8">
-                        <XStack className="items-center">
-                            <Link href="/(pages)/PostTripPage" asChild>
-                                <Button className="w-8 h-8 bg-primary">
-                                    <Image source={icons.arrowleft} className="w-8 h-8" resizeMode="contain" />
-                                </Button>
-                            </Link>
-                            <ButtonNext height={90} width={270} onPress={handleContinue}>
-                                <Text className="text-2xl font-qsemibold text-primary">Publicar Viaje</Text>
-                            </ButtonNext>
-                        </XStack>
-                        <Link href="/(tabs)/home" asChild>
-                            <Text className="text-base font-qsemibold text-red-500">Cancelar publicación</Text>
-                        </Link>
-                    </View>
-                </YStack>
-            </ScrollView>
+                    </ScrollView>
+
+
+                </>
+            )}
         </SafeAreaView>
+
     );
 
 }
 
 const items = [
-  { key: 'AB-123-CD', value: 'Ford Focus' },
-  { key: 'DE-456-FG', value: 'Toyota Corolla' },
-  { key: 'HI-789-JK', value: 'Honda Civic' },
-  { key: 'LM-000-AR', value: 'Audi A3' },
+    { key: 'AB-123-CD', value: 'Ford Focus' },
+    { key: 'DE-456-FG', value: 'Toyota Corolla' },
+    { key: 'HI-789-JK', value: 'Honda Civic' },
+    { key: 'LM-000-AR', value: 'Audi A3' },
 ];
 
 const renderSelectedCar = (key) => {
@@ -196,5 +207,5 @@ const renderSelectedCar = (key) => {
     return (<Text>{myItem.value}, {key}</Text>);
 }
 
-  
+
 
