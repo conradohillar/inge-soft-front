@@ -8,14 +8,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Home = ({ userName }) => {
   return (
-    <SafeAreaView className="bg-background2 flex-1">
+    <SafeAreaView className="bg-background flex-1">
       <Header />
       
       <YStack className="h-full items-center justify-evenly bg-background">
       
         <XStack className="items-center h-[15%]">
           <Text className="text-3xl text-black font-qsemibold"> Bienvenido,</Text>
-          <Text className="text-3xl text-secondary font-qbold"> {userName ? userName : 'USER'}</Text>
+          <Text className="text-3xl text-primary font-qbold"> {userName ? userName : 'USER'}</Text>
         </XStack>
         <View className="w-[90%] aspect-square bg-gray-400 rounded-2xl border-2 justify-center">
           <Text className="text-center text-2xl text-black font-qsemibold">Aca va el mapa</Text>
