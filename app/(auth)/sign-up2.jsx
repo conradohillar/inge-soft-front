@@ -28,7 +28,7 @@ const SignUp2 = () => {
           <Text className="text-sm text-gray-500 font-qsemibold mt-3">Agregá una foto de perfil</Text>
         </YStack>
         <YStack className="justify-center">
-          <CustomInput title="E-mail"/>
+          <CustomInput title="Nombre de usuario"/>
           <CustomInput title="Número de teléfono (opcional)"/>
         </YStack>
         <XStack className="w-full items-center justify-evenly">
