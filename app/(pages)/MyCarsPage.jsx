@@ -39,9 +39,11 @@ export default function SearchResults(){
             />
             <XStack className="items-center justify-center my-10">
                 <Text className="text-lg text-gray-600 font-qsemibold">Agregá un auto nuevo</Text>
-                <Button className="h-8 w-8 bg-background rounded-xl ml-3 mt-1">
-                    <Image source={icons.add} className="h-6 w-6" resizeMode="contain" />
-                </Button>
+                <Link href="/(pages)/AddCarPage" asChild>
+                    <Button className="h-8 w-8 bg-background rounded-xl ml-3 mt-1">
+                        <Image source={icons.add} className="h-6 w-6" resizeMode="contain" />
+                    </Button>
+                </Link>
             </XStack>
         </SafeAreaView>
     );
