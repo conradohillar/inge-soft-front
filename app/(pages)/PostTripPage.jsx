@@ -12,6 +12,7 @@ import SelectField  from '../../components/SelectField'
 import { useRouter } from "expo-router";
 
 import ButtonNext from "../../components/ButtonNext"
+import TimePicker from "../../components/TimePicker";
 
 
 export default function PostTripPage() {
@@ -19,6 +20,7 @@ export default function PostTripPage() {
   const [fromLocation, setFromLocation] = useState('');
   const [toLocation, setToLocation] = useState('');
   const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
   const [departureTime, setDepartureTime] = useState('');
   
   const router = useRouter();
@@ -61,20 +63,13 @@ export default function PostTripPage() {
           onChangeText={setToLocation}
         />
                 <View className="w-full items-flex-start justify-center px-10 py-3">
-                    <Text className="text-xs font-qbold text-black px-1.5 mb-2">Fecha</Text>
                     <DatePicker style={{backgroundColor:"#EEEEEE"}} placeholderTextColor="#bbb" value={date}
-          onChangeDate={setDate}/>
+                     onChangeDate={setDate} title={"Fecha de salida"}/>
                 </View>
-                <View className="w-full items-flex-start justify-center pt-3 pb-2 px-10">
-                    <Text className="text-xs font-qbold text-black px-1.5">Hora de salida</Text>
+                <View className="w-full items-flex-start justify-center px-10 py-3">
+                    <TimePicker style={{backgroundColor:"#EEEEEE"}} placeholderTextColor="#bbb" value={time}
+                    onChangeTime={setTime} minuteInterval={30} title={"Hora de salida"}/>
                 </View>
-                <PortalProvider>
-                    <SelectField items={hours} label="Horario" value={departureTime} handleChangeValue={setDepartureTime}
-                        renderItem={(hour) => (
-                            <Text>{hour.value}</Text>
-                        )}
-                        renderSelected={(value) => renderSelect(value)} />
-                </PortalProvider>
                 <XStack className="items-center mt-3 px-12">
                     <Text className='text-sm text-gray-400 font-qsemibold' 
                     >Nota: se asignará automáticamente una franja de

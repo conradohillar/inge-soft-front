@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { Stack, SplashScreen } from 'expo-router';
 import { useFonts } from 'expo-font'
 import { useEffect } from 'react';
+import { Keyboard } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -21,6 +22,8 @@ const RootLayout = () => {
     }, [fontsLoaded, error])
 
     if(!fontsLoaded && !error) return null;
+
+
 
     return (
         

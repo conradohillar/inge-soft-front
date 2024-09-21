@@ -11,11 +11,12 @@ import AutocompleteCityInput from '../../components/AutocompleteCityInput';
 import ButtonNext from "../../components/ButtonNext";
 import { useRouter } from "expo-router";
 import { format } from 'date-fns';
+import { TouchableWithoutFeedback, Keyboard } from "react-native";
 
 
 
 
-export default function SearchTripPage(){
+export default function SearchTripPage() {
     const [fromLocation, setFromLocation] = useState('');
     const [toLocation, setToLocation] = useState('');
     const [date, setDate] = useState('');
@@ -54,7 +55,8 @@ export default function SearchTripPage(){
   };
   
     return (
-        <SafeAreaView className="bg-background h-full">
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView className="h-full bg-background">
             <Header />
             <YStack className="flex-1">
                 <XStack className="items-center mt-12 mb-9 justify-center w-full">
@@ -67,6 +69,7 @@ export default function SearchTripPage(){
                     placeholder="Seleccionar origen"
                     value={fromLocation}
                     onChangeText={setFromLocation}
+                    className={"bg-black"}
                 />
                 <AutocompleteCityInput
                     title="Hasta"
@@ -75,8 +78,7 @@ export default function SearchTripPage(){
                     onChangeText={setToLocation}
                 />
                     <View className="w-full items-flex-start justify-center px-10 pt-3">
-                        <Text className="text-xs font-qbold text-gray-600 px-1.5 mb-2">Fecha</Text>
-                        <DatePicker style={{backgroundColor:"#EEEEEE"}} placeholderTextColor="#bbb" value={date} onChangeDate={setDate}/>
+                        <DatePicker className={'bg-[#EEE]'} placeholderTextColor="#888" value={date} onChangeDate={setDate} title={"Fecha de salida"}/>
                     </View>
                 </YStack>
                 <YStack className="items-center">
@@ -92,5 +94,6 @@ export default function SearchTripPage(){
                 </YStack>
             </YStack>
         </SafeAreaView>
+      </TouchableWithoutFeedback>
     );
 }

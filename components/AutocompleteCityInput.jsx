@@ -4,7 +4,7 @@ import { Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { autocomplete } from '../services/autocomplete';
 import CustomInput from './CustomInput';
 
-export default function AutocompleteCityInput({ title, placeholder, value, onChangeText }) {
+export default function AutocompleteCityInput({ title, placeholder, value, onChangeText, className }) {
   const [suggestions, setSuggestions] = useState([]); // Estado para las sugerencias
 
   const handleInputChange = async (text) => {
@@ -32,7 +32,7 @@ export default function AutocompleteCityInput({ title, placeholder, value, onCha
               height={55}
             />
 
-          <View className="w-full items-flex-start justify-center px-10">
+          <View className={`w-full items-flex-start justify-center px-10 ${className}`}>
           {/* Mostrar sugerencias debajo del input */}
           {(
             <FlatList

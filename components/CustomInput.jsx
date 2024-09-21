@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 
 
 
-export default function CustomInput({title, placeholder, width, height, value, handleChangeText}){
+export default function CustomInput({title, placeholder, width, height, value, handleChangeText, editable = true}){
     return (
         <YStack className="items-start justify-center w-full m-2">
             <View className="w-full items-center">
@@ -14,8 +14,8 @@ export default function CustomInput({title, placeholder, width, height, value, h
             </View>
             <View className="w-full items-center">
                 <Input placeholder={placeholder} 
-                       placeholderTextColor="#bbb" 
-                       backgroundColor="#EEEEEE"
+                       placeholderTextColor="#888" 
+                       backgroundColor="#EEE"
                        color="black"
                        textAlignVertical="top"
                        className="w-[85%]"
@@ -24,6 +24,7 @@ export default function CustomInput({title, placeholder, width, height, value, h
                        scrollEnabled={true}
                        value={value}
                        onChangeText={handleChangeText}
+                       editable={editable}
                        />
             </View>
         </YStack>
