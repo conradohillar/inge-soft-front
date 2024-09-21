@@ -25,7 +25,12 @@ export default function LandingPage(){
                             <Image source={require('../../assets/icons/google-icon.png')} className="h-[30px] w-[30px]"/>
                         </XStack>
                     </BlackButton> 
-                    
+                    <XStack className="w-full items-center mt-2">
+                        <Text className="text-sm text-black font-qsemibold">No tenés cuenta?  </Text>
+                        <Link href="/(auth)/sign-up" asChild>
+                            <Text className="text-sm text-secondary font-qbold underline">Registrate</Text>
+                        </Link>
+                    </XStack>
                 </YStack>
                 <View className="justify-start">
                     <Image source={require('../../assets/icons/logo.png')} className="h-[150px] w-[150px]"/>
