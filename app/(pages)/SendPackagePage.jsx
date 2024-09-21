@@ -40,7 +40,7 @@ export default function SendPackagePage(){
 
 
     return (
-        <SafeAreaView className="h-full w-full bg-primary">
+        <SafeAreaView className="h-full w-full bg-background">
             <Header />
             <XStack className="items-center mt-10 mb-8 justify-center w-full">
                     <Text className="text-3xl font-qsemibold text-black">Detalles de tu envío</Text>
@@ -86,12 +86,12 @@ export default function SendPackagePage(){
                 </XStack>
                 <XStack className="w-full items-center justify-center mb-8">
                     <Link href="/(pages)/SearchTripPage" asChild>
-                        <Button className="w-7 h-7 bg-primary">
+                        <Button className="w-7 h-7 bg-background">
                             <Image source={icons.arrowleft} className="w-8 h-8" resizeMode="contain" />
                         </Button>
                     </Link>
                     <ButtonNext height={90} width={270} onPress={handleContinueToPack2}>
-                        <Text className="text-2xl font-qsemibold text-primary">Continuar</Text>
+                        <Text className="text-2xl font-qsemibold text-white">Continuar</Text>
                     </ButtonNext>
                 </XStack>
             </YStack>

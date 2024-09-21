@@ -1,30 +1,30 @@
 import { useState } from 'react';
-import { Input, XStack, YStack } from 'tamagui';
+import { YStack, XStack } from 'tamagui';
 import { Pressable, Text, View } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { ChevronDown } from '@tamagui/lucide-icons';
 import CustomInput from './CustomInput';
 
-export default function DatePicker({style, className, placeholderTextColor, value, onChangeDate, title, ...props}){
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+export default function TimePicker({style, className, placeholderTextColor, value, onChangeTime, minuteInterval, title, ...props}){
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
-  const [placeholderText, setPlaceholderText] = useState("Seleccionar fecha");
+  const [placeholderText, setPlaceholderText] = useState("Seleccionar hora");
   const [placeholderColor, setPlaceholderColor] = useState(placeholderTextColor);
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
+  const showTimePicker = () => {
+    setTimePickerVisibility(true);
   };
 
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
+  const hideTimePicker = () => {
+    setTimePickerVisibility(false);
   };
 
-  const handleConfirm = (selectedDate) => {
-    onChangeDate(selectedDate);
-    const formatDate = selectedDate.toLocaleDateString('es-ES');  // Formato en español (España)
-    setPlaceholderText(formatDate)
+  const handleConfirm = (selectedTime) => {
+    onChangeTime(selectedTime);
+    const formatTime = selectedTime.toLocaleTimeString('es-ES');  // Formato en español (España)
+    setPlaceholderText(formatTime)
     setPlaceholderColor("#000")
-    hideDatePicker();
+    hideTimePicker();
   };
 
   return (
@@ -35,7 +35,7 @@ export default function DatePicker({style, className, placeholderTextColor, valu
                     <Text className="text-xs font-qbold text-gray-600 px-1.5 mb-2">{title}</Text>
                 </View>
             </View>
-            <Pressable onPress={showDatePicker} style={style} className={`justify-center items-center rounded-xl border-x border-y border-black h-[50px] w-full ${className}` }>
+            <Pressable onPress={showTimePicker} style={style} className={`justify-center items-center rounded-xl border-x border-y border-black h-[50px] w-full ${className}` }>
               <XStack className="items-center w-[90%] p-2 justify-between">
                 <Text className="text-xs font-qsemibold text-gray-600 ">{placeholderText}</Text>
                 <ChevronDown size={16} color="#000" />
@@ -44,13 +44,13 @@ export default function DatePicker({style, className, placeholderTextColor, valu
       </YStack>
 
       <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="date"
+        isVisible={isTimePickerVisible}
+        mode="time" // Change mode to "time"
         onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
+        onCancel={hideTimePicker}
         value={value}
+        minuteInterval={minuteInterval}
       />
     </View>
   );
-
 }

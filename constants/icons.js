@@ -8,6 +8,10 @@ import suitcase from "../assets/icons/suitcase.png"
 import trips from "../assets/icons/trips.png"
 import arrowleft from "../assets/icons/arrow-left.png"
 import arrowright from "../assets/icons/arrow-right.png"
+import history from "../assets/icons/history.png"
+import map from "../assets/icons/map-pin.png"
+import id_card from "../assets/icons/id-card.png"
+import pencil from "../assets/icons/pencil.png"
 
 
 export default {
@@ -20,5 +24,9 @@ export default {
     suitcase,
     trips,
     arrowleft,
-    arrowright
+    arrowright,
+    history,
+    map,
+    id_card,
+    pencil
 };

@@ -47,7 +47,7 @@ export default function TripDetailsPage(){
       };
 
     return (
-        <SafeAreaView className="h-full w-full bg-primary">
+        <SafeAreaView className="h-full w-full bg-background">
             <Header />
             <YStack className="flex-1 items-center justify-evenly">
                 <View className="items-center">
@@ -81,12 +81,12 @@ export default function TripDetailsPage(){
                 </YStack>
                 <XStack className="items-center mb-3">
                     <Link href="/(pages)/SearchTripPage" asChild>
-                        <Button className="w-6 h-6 bg-primary">
+                        <Button className="w-6 h-6 bg-background">
                             <Image source={icons.arrowleft} className="w-7 h-7" resizeMode="contain" />
                         </Button>
                     </Link>
                     <ButtonNext height={90} width={270} onPress={handleSearch}>
-                        <Text className="text-2xl font-qsemibold text-primary">Buscar viaje</Text>
+                        <Text className="text-2xl font-qsemibold text-white">Buscar viaje</Text>
                     </ButtonNext>
                 </XStack>
             </YStack>
