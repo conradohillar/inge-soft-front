@@ -4,6 +4,7 @@ import Header from '../../components/Header';
 import { Avatar, Button, XStack, YStack } from 'tamagui';
 import icons from "../../constants/icons"
 import { History } from '@tamagui/lucide-icons';
+import { Link } from 'expo-router';
 
 export default function Profile(){
   return (
@@ -33,8 +34,10 @@ export default function Profile(){
           <YStack className="w-full">
             <View className="w-full h-[17%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
               <XStack className="w-[80%] items-center justify-start space-x-5" >
-                <Image source={icons.car} className="h-6 w-6" tintColor="#aaa" resizeMode='contain'/> 
-                <Text className="text-xl text-black font-qbold">Mis autos</Text>
+                <Image source={icons.car} className="h-6 w-6" tintColor="#aaa" resizeMode='contain'/>
+                <Link href="/(pages)/MyCarsPage" asChild>
+                  <Text className="text-xl text-black font-qbold">Mis autos</Text>
+                </Link> 
               </XStack>
             </View>
             <View className="w-full h-[17%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>

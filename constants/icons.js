@@ -12,6 +12,9 @@ import history from "../assets/icons/history.png"
 import map from "../assets/icons/map-pin.png"
 import id_card from "../assets/icons/id-card.png"
 import pencil from "../assets/icons/pencil.png"
+import trash from "../assets/icons/trash.png"
+import add from "../assets/icons/add.png"
+import settings from "../assets/icons/settings.png"
 
 
 export default {
@@ -28,5 +31,8 @@ export default {
     history,
     map,
     id_card,
-    pencil
+    pencil,
+    trash,
+    add,
+    settings
 };

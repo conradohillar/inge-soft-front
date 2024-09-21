@@ -1,5 +1,5 @@
 import { Image, View, Text, Pressable } from "react-native";
-import { Button, XStack, YStack } from "tamagui";
+import { Button, XStack, YStack, Avatar } from "tamagui";
 import icons from '../constants/icons';
 
 export default function TripCard({from, to, driver, date, price}){
@@ -17,7 +17,13 @@ export default function TripCard({from, to, driver, date, price}){
                     <XStack className="items-center justify-between mb-2">
                         <XStack className="items-center">
                             <Text className="text-2xl font-qbold text-black">{from} </Text>
-                            <Image source={icons.arrowright} className="w-5 h-5" resizeMode="contain" />
+                            <Avatar circular size="$7" borderColor="$black" borderWidth={1}>
+                              <Avatar.Image
+                                accessibilityLabel="Cam"
+                                src="https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
+                              />
+                            <Avatar.Fallback backgroundColor="$gray5" />
+                            </Avatar>
                             <Text className="text-2xl font-qbold text-black"> {to}</Text>
                         </XStack>
                         <Button className="h-16 w-16 bg-gray-300 rounded-full border-2 border-gray-400">

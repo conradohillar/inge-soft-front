@@ -18,6 +18,7 @@ const PagesLayout = () => {
         <Stack.Screen name="PostTripPage" options={{headerShown: false}}/>
         <Stack.Screen name="PostTripPage2" options={{headerShown: false}}/>
         <Stack.Screen name="PostSuccessful" options={{headerShown: false}}/>
+        <Stack.Screen name="MyCarsPage" options={{headerShown: false}}/>
       </Stack> 
     </>
 
