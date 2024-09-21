@@ -7,7 +7,7 @@ import BlackButton from '../../components/BlackButton'
 import { Link, useRouter } from 'expo-router'
 
 export default function SignUp(){
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -29,7 +29,7 @@ export default function SignUp(){
 
       router.push({
         pathname: "/(auth)/sign-up2",
-        params: { username, password}
+        params: { email, password}
       });
     } catch (error) {
       console.error("Error: ", error);
@@ -43,7 +43,7 @@ export default function SignUp(){
           <Text className="text-primary text-5xl font-qbold">TU CUENTA</Text>
         </YStack>
         <YStack className="items-center justify-center">
-          <CustomInput title="Nombre de usuario" value={username} handleChangeText={setUsername}/>
+          <CustomInput title="E-mail" value={email} handleChangeText={setEmail}/>
           <CustomInput title="Ingresá tu contraseña" value={password} handleChangeText={setPassword}/>
           <CustomInput title="Confirmá tu contraseña" value={confirmPassword} handleChangeText={handleConfirmPasswordChange}/>
         </YStack>
