@@ -52,7 +52,7 @@ function Content() {
     
     const mutation = useMutation({
         mutationFn: ({tripData, token}) => {
-            console.log(token);
+            
             const headers = {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -66,7 +66,7 @@ function Content() {
 
     const handleContinue = async () => {
 
-        let token = "hola"
+        let token = ""
         try {
             token = await SecureStore.getItemAsync("token");
         } catch (error) {
@@ -131,11 +131,11 @@ function Content() {
         handleSuccess();
       }, [mutation.isSuccess]);
     
-      if (mutation.isLoading) {
+      if (mutation.isLoading || isPending) {
         return <LoadingPage />;
       }
     
-      if (mutation.isError) {
+      if (mutation.isError || error) {
         console.log(mutation.error);
         return <ErrorPage />;
       }

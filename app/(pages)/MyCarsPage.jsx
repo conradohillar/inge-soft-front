@@ -5,18 +5,79 @@ import CarCard from "../../components/CarCard";
 import { Button, XStack } from "tamagui";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import icons from "../../constants/icons"
-export default function SearchResults(){
+import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query'
+import {LOCAL_IP} from '@env'
+import LoadingPage from '../(pages)/LoadingPage'
+import ErrorPage from "./ErrorPage";
+import * as SecureStore from 'expo-secure-store';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-    // const { vecRides } = useLocalSearchParams();
-    // const parsedRides = JSON.parse(vecRides);
-    // console.log('vecRides:', parsedRides);
+const queryClient = new QueryClient()
+
+export default function MyCarsPage() {
+
+    return (
+        <QueryClientProvider client={queryClient} >
+            <Content />
+        </QueryClientProvider>
+    )
+}
+
+       
+
+
+function Content() {
+    const [token, setToken] = useState(null);
+
+
+    useEffect(() => {
+        const fetchToken = async () => {
+            try {
+                const storedToken = await SecureStore.getItemAsync('token');
+                if (storedToken) {
+                    setToken(storedToken);
+                }
+            } catch (error) {
+                console.error('Error fetching token from SecureStore', error);
+            }
+        };
+
+        fetchToken();
+    }, []);
+
+    const url = `http://${LOCAL_IP}:8000/users/mycars`
+    
+    const headers = {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+    };
+    
+
+    const { isPending, error, data } = useQuery({
+        queryKey: ['fetchMycars'],
+        queryFn: () =>
+            fetch(url, {headers} ).then((res) =>
+                res.json(),
+            ),
+            enabled: !!token,
+
+    })
+
+    if (isPending) {
+        return <LoadingPage />
+    }
+
+    if (error) {
+        return <ErrorPage />
+    }
     
     const renderItem = ({ item }) => {
-        return ( 
-            <CarCard model={item.value} plate={item.key}/>
+        return (
+            <CarCard model={item.model} plate={item.plate} />
         );
-    
-     }
+
+    }
 
     return (
         <SafeAreaView className="w-full h-full bg-background">
@@ -24,17 +85,17 @@ export default function SearchResults(){
             <View className="items-start mt-5 ml-4">
                 <Link href="/(tabs)/profile" asChild>
                     <Button className="h-9 w-9 bg-background rounded-xl">
-                            <Image source={icons.arrowleft} className="h-7 w-7" resizeMode="contain" />
+                        <Image source={icons.arrowleft} className="h-7 w-7" resizeMode="contain" />
                     </Button>
                 </Link>
             </View>
             <XStack className="items-center justify-center mb-7">
                 <Text className="text-4xl font-qbold text-black">MIS AUTOS</Text>
             </XStack>
-            <FlatList 
+            <FlatList
                 className="w-full"
-                data={cars}
-                keyExtractor={item => item.key}
+                data={data}
+                keyExtractor={item => item.plate}
                 renderItem={renderItem}
             />
             <XStack className="items-center justify-center my-10">
@@ -47,6 +108,7 @@ export default function SearchResults(){
             </XStack>
         </SafeAreaView>
     );
+
 }
 
 const cars = [
@@ -56,4 +118,4 @@ const cars = [
     { key: 'LM-000-AR', value: 'Audi A3' },
     { key: 'OM-224-YE', value: 'Chevrolet Camaro' },
     { key: 'KI-777-GG', value: 'Nissan Sentra' },
-  ];
+];
