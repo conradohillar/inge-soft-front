@@ -17,7 +17,7 @@ export default function BlackButton({href, children, height, width, className = 
                 onPressOut={() => setIsPressed(false)}
                 style={{ height: (height ? height: buttonHeight), width: (width ? width : buttonWidth) }}
                 className={`
-                    ${isPressed ? 'bg-secondary' : 'bg-black'}
+                    ${isPressed ? 'bg-primary' : 'bg-black'}
                     rounded-full 
                     flex
                     items-center

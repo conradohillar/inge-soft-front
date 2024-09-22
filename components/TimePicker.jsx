@@ -28,16 +28,16 @@ export default function TimePicker({style, className, placeholderTextColor, valu
   };
 
   return (
-    <View className="w-full">
-      <YStack className="items-start justify-center w-full m-2">
+    <View className="w-full items-center">
+      <YStack className="items-start justify-center w-[85%] m-2">
             <View className="w-full items-center">
-                <View className="w-[85%]">
-                    <Text className="text-xs font-qbold text-gray-600 px-1.5 mb-2">{title}</Text>
+                <View className="w-[95%]">
+                    <Text className="text-xs font-qbold text-gray-600 mb-2">{title}</Text>
                 </View>
             </View>
             <Pressable onPress={showTimePicker} style={style} className={`justify-center items-center rounded-xl border-x border-y border-black h-[50px] w-full ${className}` }>
               <XStack className="items-center w-[90%] p-2 justify-between">
-                <Text className="text-xs font-qsemibold text-gray-600 ">{placeholderText}</Text>
+                <Text className="text-xs font-qsemibold text-gray-500 ">{placeholderText}</Text>
                 <ChevronDown size={16} color="#000" />
               </XStack>
             </Pressable>

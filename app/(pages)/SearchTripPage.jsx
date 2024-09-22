@@ -77,15 +77,15 @@ export default function SearchTripPage() {
                     value={toLocation}
                     onChangeText={setToLocation}
                 />
-                    <View className="w-full items-flex-start justify-center px-10 pt-3">
+                    <View className="w-full items-flex-start justify-center pt-3">
                         <DatePicker className={'bg-[#EEE]'} placeholderTextColor="#888" value={date} onChangeDate={setDate} title={"Fecha de salida"}/>
                     </View>
                 </YStack>
                 <YStack className="items-center">
-                    <ButtonNext width={"80%"} onPress={handleViajoYo}>
+                    <ButtonNext width={"85%"} onPress={handleViajoYo}>
                         <Text className="text-2xl font-qsemibold text-white">Viajo yo</Text>
                     </ButtonNext>
-                    <ButtonNext width={"80%"} onPress={handleEnviarPaquete} mb={15}>
+                    <ButtonNext width={"85%"} onPress={handleEnviarPaquete}>
                         <Text className="text-2xl font-qsemibold text-white">Enviar un paquete</Text>
                     </ButtonNext>
                     <Link href="/(tabs)/home">

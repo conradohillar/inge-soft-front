@@ -31,7 +31,7 @@ export default function CustomInput({title, placeholder, width, height, value, h
                        onFocus={() => setIsFocused(true)}
                        onBlur={() => setIsFocused(false)}
                        style={{
-                           borderColor: isFocused ? '#59A58A' : '#aaa',
+                           borderColor: isFocused ? '#59A58A' : '#333',
                            borderWidth: isFocused ? 3 : 1
                        }}
                        />

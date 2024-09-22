@@ -15,7 +15,7 @@ export default function LoadingPage(){
                     </Text>
                 </View>
                 <Image source={require('../../assets/icons/logo.png')} style={{height:220, width:220}} />
-                <Spinner size="large" color="$green10" />
+                <Spinner size={55} color="$green10" />
             </View>
         </SafeAreaView>
         <StatusBar style="dark"/>

@@ -6,9 +6,9 @@ import { Link } from "expo-router";
 
 export default function PostSuccessful(){
     return (
-        <SafeAreaView className="h-full w-full bg-primary">
+        <SafeAreaView className="h-full w-full bg-background">
             <YStack className="h-full items-center justify-center">
-            <Text className="text-6xl text-secondary font-qbold">Genial!</Text>
+            <Text className="text-6xl text-primary font-qbold">Genial!</Text>
                 <View className="mb-12 mt-12">
                     <Image source={icons.logo} style={{height:250, width:250}} />
                 </View>
@@ -17,7 +17,7 @@ export default function PostSuccessful(){
                     <Text className="text-xl text-gray-400 font-qbold">Ya podés encontrarlo en la</Text>
                     <XStack className="items-center space-x-3 mb-12">
                         <Text className="text-xl text-gray-400 font-qbold">sección 
-                            <Text className="text-xl text-secondary font-qbold">  MIS VIAJES</Text>
+                            <Text className="text-xl text-primary font-qbold">  MIS VIAJES</Text>
                         </Text>
                         <Image source={icons.car} className="w-8 h-8" tintColor="#59A58A" resizeMode="contain" />
                     </XStack>

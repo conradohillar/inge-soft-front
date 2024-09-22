@@ -46,7 +46,7 @@ export default function PostTripPage() {
         <SafeAreaView className="h-full w-full bg-background">
             <Header />
              <XStack className=" items-center justify-center mt-8 mb-3">
-                <Text className="text-[27px] font-qbold text-secondary">Publicá</Text>
+                <Text className="text-[27px] font-qbold text-primary">Publicá</Text>
                 <Text className="text-[27px] font-qsemibold text-black"> tu viaje</Text>
             </XStack>
             <YStack className="mb-6">
@@ -62,18 +62,18 @@ export default function PostTripPage() {
           value={toLocation}
           onChangeText={setToLocation}
         />
-                <View className="w-full items-flex-start justify-center px-10 py-3">
+                <View className="w-full items-start justify-center mt-3">
                     <DatePicker style={{backgroundColor:"#EEEEEE"}} placeholderTextColor="#bbb" value={date}
                      onChangeDate={setDate} title={"Fecha de salida"}/>
                 </View>
-                <View className="w-full items-flex-start justify-center px-10 py-3">
+                <View className="w-full items-flex-start justify-center pt-3">
                     <TimePicker style={{backgroundColor:"#EEEEEE"}} placeholderTextColor="#bbb" value={time}
                     onChangeTime={setTime} minuteInterval={30} title={"Hora de salida"}/>
                 </View>
                 <XStack className="items-center mt-3 px-12">
                     <Text className='text-sm text-gray-400 font-qsemibold' 
                     >Nota: se asignará automáticamente una franja de
-                    <Text className='text-sm text-secondary font-qbold' 
+                    <Text className='text-sm text-primary font-qbold' 
                     > 1 hora.</Text>
                     </Text>
                 </XStack>

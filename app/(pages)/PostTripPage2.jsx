@@ -142,7 +142,7 @@ function Content() {
 
 
     return (
-        <SafeAreaView className="h-full w-full bg-primary">
+        <SafeAreaView className="h-full w-full bg-background">
             <Header />
             <View className=" items-center mt-10 mb-12">
                 <Text className="text-[27px] font-qbold text-black">Detalles de la publicación</Text>
@@ -150,7 +150,7 @@ function Content() {
             <ScrollView>
                 <YStack className="items-start justify-center">
                     <Text className="text-sm text-black font-qbold ml-10 mb-3">Seleccioná tu
-                        <Text className="text-sm text-secondary font-qbold ml-10 mb-3"> auto</Text>
+                        <Text className="text-sm text-primary font-qbold ml-10 mb-3"> auto</Text>
                     </Text>
                     <PortalProvider>
                         <SelectFieldCar items={items} label="Mis autos" value={car} handleChangeValue={setCar}
@@ -159,9 +159,9 @@ function Content() {
                     </PortalProvider>
                     <XStack className="mx-11 mb-5 mt-12">
                         <Text className='text-sm font-qbold text-black'>Indicá tus
-                            <Text className='text-sm font-qbold text-secondary'>  precios
-                                <Text className='text-sm font-qbold text-black'>  y
-                                    <Text className='text-sm font-qbold text-secondary'>  espacios disponibles
+                            <Text className='text-sm font-qbold text-primary'> precios
+                                <Text className='text-sm font-qbold text-black'> y
+                                    <Text className='text-sm font-qbold text-primary'> espacios disponibles
                                         <Text className='text-sm font-qbold text-black'>:</Text>
                                     </Text>
                                 </Text>
@@ -169,32 +169,40 @@ function Content() {
                         </Text>
                     </XStack>
                     <YStack className="items-start">
-                        <XStack className=" w-full items-end justify-evenly mb-5">
-                            <CustomInput title="Precio por persona" value={pricePerson} handleChangeText={setPricePerson} />
+                        <XStack className=" w-full items-end justify-evenly mb-5 pr-5">
+                            <View className="flex-row items-center justify-between w-[60%]">
+                                <CustomInput title="Precio por persona" value={pricePerson} handleChangeText={setPricePerson} />
+                            </View>
                             <Counter maxCount={4} count={availableSeats} handleChangeCount={setAvailableSeats} />
                         </XStack>
-                        <XStack className="w-full items-end justify-evenly mb-5">
-                            <CustomInput title="Precio por paquete chico" value={priceSmallPackage} handleChangeText={setPriceSmallPackage} />
+                        <XStack className="w-full items-end justify-between mb-5 pr-5">
+                            <View className="flex-row items-center justify-between w-[60%]">
+                                <CustomInput title="Precio por paquete chico" value={priceSmallPackage} handleChangeText={setPriceSmallPackage} />
+                            </View> 
                             <Counter maxCount={4} count={spacesSmallPackage} handleChangeCount={setSmallPackage} />
                         </XStack>
-                        <XStack className=" w-full items-end justify-evenly mb-5">
-                            <CustomInput title="Precio por paquete mediano" value={priceMediumPackage} handleChangeText={setPriceMediumPackage} />
+                        <XStack className=" w-full items-end justify-evenly mb-5 pr-5">
+                            <View className="flex-row items-center justify-between w-[60%]">
+                                <CustomInput title="Precio por paquete mediano" value={priceMediumPackage} handleChangeText={setPriceMediumPackage} />
+                            </View>
                             <Counter maxCount={4} count={spacesMediumPackage} handleChangeCount={setMediumPackage} />
                         </XStack>
-                        <XStack className=" w-full items-end justify-evenly mb-10">
-                            <CustomInput title="Precio por paquete grande" value={priceLargePackage} handleChangeText={setPriceLargePackage} />
+                        <XStack className=" w-full items-end justify-evenly mb-10 pr-5">
+                            <View className="flex-row items-center justify-between w-[60%]">
+                                <CustomInput title="Precio por paquete grande" value={priceLargePackage} handleChangeText={setPriceLargePackage} />
+                            </View>
                             <Counter maxCount={4} count={spacesLargePackage} handleChangeCount={setLargePackage} />
                         </XStack>
                     </YStack>
                     <View className="items-center space-y-5 mx-12 mb-8">
                         <XStack className="items-center">
                             <Link href="/(pages)/PostTripPage" asChild>
-                                <Button className="w-8 h-8 bg-primary">
+                                <Button className="w-8 h-8 bg-background">
                                     <Image source={icons.arrowleft} className="w-8 h-8" resizeMode="contain" />
                                 </Button>
                             </Link>
                             <ButtonNext height={90} width={270} onPress={handleContinue}>
-                                <Text className="text-2xl font-qsemibold text-primary">Publicar Viaje</Text>
+                                <Text className="text-2xl font-qsemibold text-white">Publicar Viaje</Text>
                             </ButtonNext>
                         </XStack>
                         <Link href="/(tabs)/home" asChild>

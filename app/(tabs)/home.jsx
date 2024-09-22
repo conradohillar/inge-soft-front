@@ -17,14 +17,14 @@ const Home = ({ userName }) => {
           <Text className="text-3xl text-black font-qsemibold"> Bienvenido,</Text>
           <Text className="text-3xl text-primary font-qbold"> {userName ? userName : 'USER'}</Text>
         </XStack>
-        <View className="w-[90%] aspect-square bg-gray-400 rounded-2xl border-2 justify-center">
+        <View className="w-[90%] mb-10 aspect-square bg-gray-400 rounded-2xl border-2 justify-center">
           <Text className="text-center text-2xl text-black font-qsemibold">Aca va el mapa</Text>
           {/* <Image
             source={require("../../assets/images/map.png")}
             className="w-full items-center justify-evenly rounded-2xl border-2 border-gray-400"
           /> */}
         </View>
-        <XStack className="items-center justify-evenly w-[100%] h-[30%]">
+        <XStack className="items-start justify-evenly w-[100%] h-[25%]">
           <BlackButton href="/(pages)/SearchTripPage">
             <Text className="text-[20px] font-qsemibold text-white">Buscar viaje</Text>
           </BlackButton>
