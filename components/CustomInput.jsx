@@ -1,10 +1,13 @@
 import { Input, YStack } from 'tamagui';
 import { Text, View } from 'react-native';
+import { useState } from 'react';
 
 
 
 
 export default function CustomInput({title, placeholder, width, height, value, handleChangeText, editable = true}){
+    const [isFocused, setIsFocused] = useState(false);
+
     return (
         <YStack className="items-start justify-center w-full m-2">
             <View className="w-full items-center">
@@ -25,6 +28,12 @@ export default function CustomInput({title, placeholder, width, height, value, h
                        value={value}
                        onChangeText={handleChangeText}
                        editable={editable}
+                       onFocus={() => setIsFocused(true)}
+                       onBlur={() => setIsFocused(false)}
+                       style={{
+                           borderColor: isFocused ? '#59A58A' : '#aaa',
+                           borderWidth: isFocused ? 3 : 1
+                       }}
                        />
             </View>
         </YStack>

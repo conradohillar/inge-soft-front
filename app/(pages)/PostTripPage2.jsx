@@ -14,12 +14,13 @@ import ButtonNext from "../../components/ButtonNext";
 import { postRide } from "../../services/postRide";
 import { useRouter } from "expo-router";
 import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query'
-import { LOCAL_IP, TOKEN } from '@env'
+import { LOCAL_IP } from '@env'
 import CustomInput from "../../components/CustomInput";
 import axios from 'axios';
 import LoadingPage from "./LoadingPage";
 import PostSuccessful from "./PostSuccessful";
 import ErrorPage from "./ErrorPage";
+import * as SecureStore from 'expo-secure-store';
 
 const queryClient = new QueryClient()
 
@@ -48,13 +49,15 @@ function Content() {
     const [priceMediumPackage, setPriceMediumPackage] = useState(0);
     const [priceLargePackage, setPriceLargePackage] = useState(0);
 
-    const headers = {
-        Authorization: `Bearer ${TOKEN}`,
-        'Content-Type': 'application/json'
-    };
-
+    
     const mutation = useMutation({
-        mutationFn: (tripData) => {
+        mutationFn: ({tripData, token}) => {
+            console.log(token);
+            const headers = {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            };
+            console.log(headers);
             return axios.post(`http://${LOCAL_IP}:8000/rides/create/detail?plate=${car}`, tripData, { headers })
         },
     })
@@ -62,6 +65,14 @@ function Content() {
     const router = useRouter();
 
     const handleContinue = async () => {
+
+        let token = "hola"
+        try {
+            token = await SecureStore.getItemAsync("token");
+        } catch (error) {
+            console.error('Error getting token from SecureStore', error);
+            return null;
+        }
 
         const obj = {
             "ride": {
@@ -82,13 +93,11 @@ function Content() {
                 "price_large_package": priceLargePackage
             }
         }
-        console.log(obj);
-
-        mutation.mutate(obj);
-
-
+        console.log(token);
+        mutation.mutate({ tripData: obj, token });
 
     };
+
 
     const url = `http://${LOCAL_IP}:8000/rides/create?location_from=${fromLocation}&location_to=${toLocation}`
 
@@ -100,7 +109,6 @@ function Content() {
             ),
     })
 
-
     useEffect(() => {
         if (data) {
             setPricePerson(data.price_person.toFixed(2));
@@ -110,88 +118,92 @@ function Content() {
         }
     }, [data]);
 
-
-    if (isPending) return (<LoadingPage />)
-
-    if (error) return (<ErrorPage />)
+    useEffect(() => {
+        const handleSuccess = async () => {
+          if (mutation.isSuccess) {
+    
+            router.push({
+              pathname: "/(pages)/PostSuccessful",
+            });
+          }
+        };
+    
+        handleSuccess();
+      }, [mutation.isSuccess]);
+    
+      if (mutation.isLoading) {
+        return <LoadingPage />;
+      }
+    
+      if (mutation.isError) {
+        console.log(mutation.error);
+        return <ErrorPage />;
+      }
 
 
     return (
         <SafeAreaView className="h-full w-full bg-primary">
-            {mutation.isLoading ? (<LoadingPage />) : (
-                <>
-                    {mutation.isError ? (
-                        <Text>An error occurred: {mutation.error.message}</Text>   // ACA TENEMOS QUE VER QUE MOSTRAMOS
-                    ) : null}
-
-                    {mutation.isSuccess ? <PostSuccessful/> : null}
-
-                    <Header />
-                    <View className=" items-center mt-10 mb-12">
-                        <Text className="text-[27px] font-qbold text-black">Detalles de la publicación</Text>
-                    </View>
-                    <ScrollView>
-                        <YStack className="items-start justify-center">
-                            <Text className="text-sm text-black font-qbold ml-10 mb-3">Seleccioná tu
-                                <Text className="text-sm text-secondary font-qbold ml-10 mb-3"> auto</Text>
-                            </Text>
-                            <PortalProvider>
-                                <SelectFieldCar items={items} label="Mis autos" value={car} handleChangeValue={setCar}
-                                    renderItem={(item) => (<Text>{item.key}, {item.value}</Text>)}
-                                    renderSelected={(item) => renderSelectedCar(item)} />
-                            </PortalProvider>
-                            <XStack className="mx-11 mb-5 mt-12">
-                                <Text className='text-sm font-qbold text-black'>Indicá tus
-                                    <Text className='text-sm font-qbold text-secondary'>  precios
-                                        <Text className='text-sm font-qbold text-black'>  y
-                                            <Text className='text-sm font-qbold text-secondary'>  espacios disponibles
-                                                <Text className='text-sm font-qbold text-black'>:</Text>
-                                            </Text>
-                                        </Text>
+            <Header />
+            <View className=" items-center mt-10 mb-12">
+                <Text className="text-[27px] font-qbold text-black">Detalles de la publicación</Text>
+            </View>
+            <ScrollView>
+                <YStack className="items-start justify-center">
+                    <Text className="text-sm text-black font-qbold ml-10 mb-3">Seleccioná tu
+                        <Text className="text-sm text-secondary font-qbold ml-10 mb-3"> auto</Text>
+                    </Text>
+                    <PortalProvider>
+                        <SelectFieldCar items={items} label="Mis autos" value={car} handleChangeValue={setCar}
+                            renderItem={(item) => (<Text>{item.key}, {item.value}</Text>)}
+                            renderSelected={(item) => renderSelectedCar(item)} />
+                    </PortalProvider>
+                    <XStack className="mx-11 mb-5 mt-12">
+                        <Text className='text-sm font-qbold text-black'>Indicá tus
+                            <Text className='text-sm font-qbold text-secondary'>  precios
+                                <Text className='text-sm font-qbold text-black'>  y
+                                    <Text className='text-sm font-qbold text-secondary'>  espacios disponibles
+                                        <Text className='text-sm font-qbold text-black'>:</Text>
                                     </Text>
                                 </Text>
-                            </XStack>
-                            <YStack className="items-start">
-                                <XStack className=" w-full items-end justify-evenly mb-5">
-                                    <CustomInput title="Precio por persona" value={pricePerson} handleChangeText={setPricePerson} />
-                                    <Counter maxCount={4} count={availableSeats} handleChangeCount={setAvailableSeats} />
-                                </XStack>
-                                <XStack className="w-full items-end justify-evenly mb-5">
-                                    <CustomInput title="Precio por paquete chico" value={priceSmallPackage} handleChangeText={setPriceSmallPackage} />
-                                    <Counter maxCount={4} count={spacesSmallPackage} handleChangeCount={setSmallPackage} />
-                                </XStack>
-                                <XStack className=" w-full items-end justify-evenly mb-5">
-                                    <CustomInput title="Precio por paquete mediano" value={priceMediumPackage} handleChangeText={setPriceMediumPackage} />
-                                    <Counter maxCount={4} count={spacesMediumPackage} handleChangeCount={setMediumPackage} />
-                                </XStack>
-                                <XStack className=" w-full items-end justify-evenly mb-10">
-                                    <CustomInput title="Precio por paquete grande" value={priceLargePackage} handleChangeText={setPriceLargePackage} />
-                                    <Counter maxCount={4} count={spacesLargePackage} handleChangeCount={setLargePackage} />
-                                </XStack>
-                            </YStack>
-                            <View className="items-center space-y-5 mx-12 mb-8">
-                                <XStack className="items-center">
-                                    <Link href="/(pages)/PostTripPage" asChild>
-                                        <Button className="w-8 h-8 bg-primary">
-                                            <Image source={icons.arrowleft} className="w-8 h-8" resizeMode="contain" />
-                                        </Button>
-                                    </Link>
-                                    <ButtonNext height={90} width={270} onPress={handleContinue}>
-                                        <Text className="text-2xl font-qsemibold text-primary">Publicar Viaje</Text>
-                                    </ButtonNext>
-                                </XStack>
-                                <Link href="/(tabs)/home" asChild>
-                                    <Text className="text-base font-qsemibold text-red-500">Cancelar publicación</Text>
-                                </Link>
-                            </View>
-                        </YStack>
-                    </ScrollView>
-
-
-                </>
-            )}
+                            </Text>
+                        </Text>
+                    </XStack>
+                    <YStack className="items-start">
+                        <XStack className=" w-full items-end justify-evenly mb-5">
+                            <CustomInput title="Precio por persona" value={pricePerson} handleChangeText={setPricePerson} />
+                            <Counter maxCount={4} count={availableSeats} handleChangeCount={setAvailableSeats} />
+                        </XStack>
+                        <XStack className="w-full items-end justify-evenly mb-5">
+                            <CustomInput title="Precio por paquete chico" value={priceSmallPackage} handleChangeText={setPriceSmallPackage} />
+                            <Counter maxCount={4} count={spacesSmallPackage} handleChangeCount={setSmallPackage} />
+                        </XStack>
+                        <XStack className=" w-full items-end justify-evenly mb-5">
+                            <CustomInput title="Precio por paquete mediano" value={priceMediumPackage} handleChangeText={setPriceMediumPackage} />
+                            <Counter maxCount={4} count={spacesMediumPackage} handleChangeCount={setMediumPackage} />
+                        </XStack>
+                        <XStack className=" w-full items-end justify-evenly mb-10">
+                            <CustomInput title="Precio por paquete grande" value={priceLargePackage} handleChangeText={setPriceLargePackage} />
+                            <Counter maxCount={4} count={spacesLargePackage} handleChangeCount={setLargePackage} />
+                        </XStack>
+                    </YStack>
+                    <View className="items-center space-y-5 mx-12 mb-8">
+                        <XStack className="items-center">
+                            <Link href="/(pages)/PostTripPage" asChild>
+                                <Button className="w-8 h-8 bg-primary">
+                                    <Image source={icons.arrowleft} className="w-8 h-8" resizeMode="contain" />
+                                </Button>
+                            </Link>
+                            <ButtonNext height={90} width={270} onPress={handleContinue}>
+                                <Text className="text-2xl font-qsemibold text-primary">Publicar Viaje</Text>
+                            </ButtonNext>
+                        </XStack>
+                        <Link href="/(tabs)/home" asChild>
+                            <Text className="text-base font-qsemibold text-red-500">Cancelar publicación</Text>
+                        </Link>
+                    </View>
+                </YStack>
+            </ScrollView>
         </SafeAreaView>
-
     );
 
 }

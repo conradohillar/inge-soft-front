@@ -10,6 +10,8 @@ import LoadingPage from '../(pages)/LoadingPage'
 import ErrorPage from '../(pages)/ErrorPage'
 import axios from 'axios'
 import { LOCAL_IP } from '@env'
+import * as SecureStore from 'expo-secure-store';
+
 
 const queryClient = new QueryClient()
 
@@ -50,12 +52,23 @@ const Content = () => {
   }
 
   useEffect(() => {
-    if (mutation.isSuccess) {
-      router.push({
-        pathname: "/(tabs)/home",
-        params: { email, password }
-      });
-    }
+    const handleSuccess = async () => {
+      if (mutation.isSuccess) {
+        const token = mutation.data.data.access_token.toString();
+        await SecureStore.setItemAsync("token", token);
+        let result = await SecureStore.getItemAsync("token");
+        if (!result) {
+          throw new Error(`No value found for key: token`);
+        }
+
+        router.push({
+          pathname: "/(tabs)/home",
+          params: { email, password }
+        });
+      }
+    };
+
+    handleSuccess();
   }, [mutation.isSuccess]);
 
   if (mutation.isLoading) {

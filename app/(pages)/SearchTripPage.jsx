@@ -60,7 +60,7 @@ export default function SearchTripPage() {
             <Header />
             <YStack className="flex-1">
                 <XStack className="items-center mt-12 mb-9 justify-center w-full">
-                    <Text className="text-[26px] font-qbold text-secondary">Buscá </Text>
+                    <Text className="text-[26px] font-qbold text-primary">Buscá </Text>
                     <Text className="text-[26px] font-qsemibold text-black">tu próximo viaje</Text>
                 </XStack>
                 <YStack className=" items-center justify-between mb-10">
