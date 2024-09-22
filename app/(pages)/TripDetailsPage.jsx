@@ -73,7 +73,7 @@ export default function TripDetailsPage(){
                         >Nota: te recordamos que podés llevar un bolso/mochila sin costo adicional.</Text>
                     </View>
                 </View>
-                <YStack className="w-full item-center justify-evenly">
+                <YStack className="w-full items-center justify-evenly">
                     <CustomInput title="Ingrese las medidas de su/s valija/s" placeholder="i.e: 40cm x 60cm x 30cm" />
                                 {/* //  value={measurements} handleChangeText={setMeasurments} /> */}
                     <CustomInput title="Comentarios adicionales" placeholder="i.e: Contenido frágil" />
