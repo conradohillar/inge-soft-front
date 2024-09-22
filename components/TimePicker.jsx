@@ -36,8 +36,8 @@ export default function TimePicker({style, className, placeholderTextColor, valu
                 </View>
             </View>
             <Pressable onPress={showTimePicker} style={style} className={`justify-center items-center rounded-xl border-x border-y border-black h-[50px] w-full ${className}` }>
-              <XStack className="items-center w-[90%] p-2 justify-between">
-                <Text className="text-xs font-qsemibold text-gray-500 ">{placeholderText}</Text>
+              <XStack className="items-center w-[90%] pr-2 justify-between">
+                <Text className="text-sm font-qsemibold text-gray-500 ">{placeholderText}</Text>
                 <ChevronDown size={16} color="#000" />
               </XStack>
             </Pressable>

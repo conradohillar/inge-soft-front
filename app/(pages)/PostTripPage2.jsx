@@ -169,25 +169,25 @@ function Content() {
                         </Text>
                     </XStack>
                     <YStack className="items-start">
-                        <XStack className=" w-full items-end justify-evenly mb-5 pr-5">
+                        <XStack className=" w-full items-end justify-evenly mb-2 pr-5">
                             <View className="flex-row items-center justify-between w-[60%]">
                                 <CustomInput title="Precio por persona" value={pricePerson} handleChangeText={setPricePerson} />
                             </View>
                             <Counter maxCount={4} count={availableSeats} handleChangeCount={setAvailableSeats} />
                         </XStack>
-                        <XStack className="w-full items-end justify-between mb-5 pr-5">
+                        <XStack className="w-full items-end justify-between mb-2 pr-5">
                             <View className="flex-row items-center justify-between w-[60%]">
                                 <CustomInput title="Precio por paquete chico" value={priceSmallPackage} handleChangeText={setPriceSmallPackage} />
                             </View> 
                             <Counter maxCount={4} count={spacesSmallPackage} handleChangeCount={setSmallPackage} />
                         </XStack>
-                        <XStack className=" w-full items-end justify-evenly mb-5 pr-5">
+                        <XStack className=" w-full items-end justify-evenly mb-2 pr-5">
                             <View className="flex-row items-center justify-between w-[60%]">
                                 <CustomInput title="Precio por paquete mediano" value={priceMediumPackage} handleChangeText={setPriceMediumPackage} />
                             </View>
                             <Counter maxCount={4} count={spacesMediumPackage} handleChangeCount={setMediumPackage} />
                         </XStack>
-                        <XStack className=" w-full items-end justify-evenly mb-10 pr-5">
+                        <XStack className=" w-full items-end justify-evenly mb-8 pr-5">
                             <View className="flex-row items-center justify-between w-[60%]">
                                 <CustomInput title="Precio por paquete grande" value={priceLargePackage} handleChangeText={setPriceLargePackage} />
                             </View>

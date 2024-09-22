@@ -79,9 +79,11 @@ export default function PostTripPage() {
                 </XStack>
             </YStack>
             <View className="items-center space-y-2">
-                <ButtonNext height={90} width={270} onPress={handleContinue}>
-                    <Text className="text-2xl font-qsemibold text-white">Continuar</Text>
-                </ButtonNext>
+                <View className="w-[92%]">
+                  <ButtonNext onPress={handleContinue}>
+                      <Text className="text-2xl font-qsemibold text-white">Continuar</Text>
+                  </ButtonNext>
+                </View>
                 <Link href="/(tabs)/home" asChild>
                     <Text className="text-base font-qsemibold text-red-500">Cancelar publicación</Text>
                 </Link>

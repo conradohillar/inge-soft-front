@@ -1,6 +1,6 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../components/Header";
-import { Button, XStack, YStack } from "tamagui";
+import { Button, View, XStack, YStack } from "tamagui";
 import { Package, User } from "@tamagui/lucide-icons";
 import Counter from "../../components/Counter";
 import { Text, Image} from 'react-native';
@@ -90,9 +90,11 @@ export default function SendPackagePage(){
                             <Image source={icons.arrowleft} className="w-8 h-8" resizeMode="contain" />
                         </Button>
                     </Link>
-                    <ButtonNext height={90} width={270} onPress={handleContinueToPack2}>
+                    <View className="w-[75%]">
+                    <ButtonNext onPress={handleContinueToPack2}>
                         <Text className="text-2xl font-qsemibold text-white">Continuar</Text>
                     </ButtonNext>
+                    </View>
                 </XStack>
             </YStack>
         </SafeAreaView>

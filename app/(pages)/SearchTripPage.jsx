@@ -82,12 +82,16 @@ export default function SearchTripPage() {
                     </View>
                 </YStack>
                 <YStack className="items-center">
-                    <ButtonNext width={"85%"} onPress={handleViajoYo}>
-                        <Text className="text-2xl font-qsemibold text-white">Viajo yo</Text>
-                    </ButtonNext>
-                    <ButtonNext width={"85%"} onPress={handleEnviarPaquete}>
-                        <Text className="text-2xl font-qsemibold text-white">Enviar un paquete</Text>
-                    </ButtonNext>
+                    <View className="w-[92%]">
+                      <ButtonNext onPress={handleViajoYo} variant={"secondary"}>
+                          <Text className="text-2xl font-qsemibold text-white">Viajo yo</Text>
+                      </ButtonNext>
+                    </View>
+                    <View className="w-[92%] mb-2">
+                      <ButtonNext onPress={handleEnviarPaquete}>
+                          <Text className="text-2xl font-qsemibold text-white">Enviar un paquete</Text>
+                      </ButtonNext>
+                    </View>
                     <Link href="/(tabs)/home">
                         <Text className="text-base font-qsemibold text-red-500">Cancelar búsqueda</Text>
                     </Link>

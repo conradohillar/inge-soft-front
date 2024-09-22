@@ -24,13 +24,17 @@ const Home = ({ userName }) => {
             className="w-full items-center justify-evenly rounded-2xl border-2 border-gray-400"
           /> */}
         </View>
-        <XStack className="items-start justify-evenly w-[100%] h-[25%]">
-          <BlackButton href="/(pages)/SearchTripPage">
-            <Text className="text-[20px] font-qsemibold text-white">Buscar viaje</Text>
-          </BlackButton>
-          <BlackButton href="/(pages)/PostTripPage">
-            <Text className="text-[20px] font-qsemibold text-white">Publicar viaje</Text>
-          </BlackButton>
+        <XStack className="items-start justify-evenly w-[100%] h-[25%] px-3">
+          <View className="w-[55%]">
+            <BlackButton href="/(pages)/SearchTripPage" variant={"secondary"}>
+              <Text className="text-[20px] font-qsemibold text-white">Buscar viaje</Text>
+            </BlackButton>
+          </View>
+          <View className="w-[55%]">
+            <BlackButton href="/(pages)/PostTripPage">
+              <Text className="text-[20px] font-qsemibold text-white">Publicar viaje</Text>
+            </BlackButton>
+          </View>
         </XStack>
       </YStack>
     </SafeAreaView>

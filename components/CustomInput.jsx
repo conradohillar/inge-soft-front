@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 
 
-export default function CustomInput({title, placeholder, width, height, value, handleChangeText, editable = true}){
+export default function CustomInput({title, placeholder, height, value, handleChangeText, editable = true}){
     const [isFocused, setIsFocused] = useState(false);
 
     return (
@@ -23,6 +23,7 @@ export default function CustomInput({title, placeholder, width, height, value, h
                        textAlignVertical="top"
                        className="w-[85%]"
                        multiline={true}
+                       height={height}
                        p={15}
                        scrollEnabled={true}
                        value={value}
