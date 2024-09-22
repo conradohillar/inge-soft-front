@@ -19,6 +19,7 @@ import CustomInput from "../../components/CustomInput";
 import axios from 'axios';
 import LoadingPage from "./LoadingPage";
 import PostSuccessful from "./PostSuccessful";
+import ErrorPage from "./ErrorPage";
 
 const queryClient = new QueryClient()
 
@@ -112,7 +113,7 @@ function Content() {
 
     if (isPending) return (<LoadingPage />)
 
-    if (error) return (<Text>An error ocurred: {error.message}</Text>)
+    if (error) return (<ErrorPage />)
 
 
     return (

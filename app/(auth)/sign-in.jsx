@@ -7,6 +7,7 @@ import { Link, useRouter } from 'expo-router'
 import ButtonNext from '../../components/ButtonNext'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query' 
 import LoadingPage from '../(pages)/LoadingPage'
+import ErrorPage from '../(pages)/ErrorPage'
 
 const queryClient = new QueryClient()
 
@@ -47,7 +48,7 @@ const Content = () => {
 
   if (isPending) return (<LoadingPage/>)
 
-if (error) return (<Text>An error ocurred: {error.message}</Text>)
+if (error) return (<ErrorPage />)
 
   return (
     <SafeAreaView className="bg-background h-full w-full">

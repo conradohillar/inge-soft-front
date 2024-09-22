@@ -4,13 +4,14 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Avatar, Button, XStack, YStack } from 'tamagui'
 import CustomInput from '../../components/CustomInput'
 import ButtonNext from '../../components/ButtonNext'
-import { Link, useLocalSearchParams } from 'expo-router'
+import { Link, useLocalSearchParams, useRouter} from 'expo-router'
 import { set } from 'date-fns'
 import Home from '../(tabs)/home'
 import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query'
 import axios from 'axios';
 
 import { LOCAL_IP } from '@env'
+import ErrorPage from '../(pages)/ErrorPage'
 
 
 const queryClient = new QueryClient()
@@ -34,7 +35,7 @@ function Content() {
   
   const { email, userName, address } = useLocalSearchParams();
 
-  const [dni, setDni] = useState('');
+  const [dni, setDni] = useState(0);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -45,7 +46,7 @@ function Content() {
   "email": email,
   "password": password,
   "address": address,
-  "dni": dni,
+  "dni": Number(dni),
   "photo_id": 1
 };
 
@@ -64,15 +65,34 @@ function Content() {
       mutation.mutate(userData)
     }
   };
+
+  const router = useRouter();
+      
+  function sendToHome(){
+    try {
+
+          router.push({
+            pathname: "/(tabs)/home",
+          });
+        } catch (error) {
+          console.error("Error: ", error);
+        }
+      
+  }
+
+  mutation.isLoading ? (<LoadingPage />) : (
+
+      mutation.isError ? (
+        console.log(mutation.error),
+        <ErrorPage />   // ACA TENEMOS QUE VER QUE MOSTRAMOS
+      ) :
+
+      mutation.isSuccess ? 
+        sendToHome() : null 
+    )
+
   return (
     <SafeAreaView className="bg-background h-full w-full">
-      {mutation.isLoading ? (<LoadingPage />) : (
-        <>
-          {mutation.isError ? (
-            <Text>An error occurred: {mutation.error.message}</Text>   // ACA TENEMOS QUE VER QUE MOSTRAMOS
-          ) : null}
-
-          {mutation.isSuccess ? <Home /> : null}
           <YStack className="h-full justify-evenly">
             <YStack className="items-center">
               <Text className="text-black text-4xl font-qbold">Detalles</Text>
@@ -95,8 +115,6 @@ function Content() {
               </Link>
             </YStack>
           </YStack>
-        </>
-      )}
     </SafeAreaView>
   )
 }
