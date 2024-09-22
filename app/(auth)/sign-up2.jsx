@@ -68,28 +68,23 @@ function Content() {
 
   const router = useRouter();
       
-  function sendToHome(){
-    try {
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      router.push({
+        pathname: "/(tabs)/home",
+        params: { email, password }
+      });
+    }
+  }, [mutation.isSuccess]);
 
-          router.push({
-            pathname: "/(tabs)/home",
-          });
-        } catch (error) {
-          console.error("Error: ", error);
-        }
-      
+  if (mutation.isLoading) {
+    return <LoadingPage />;
   }
 
-  mutation.isLoading ? (<LoadingPage />) : (
-
-      mutation.isError ? (
-        console.log(mutation.error),
-        <ErrorPage />   // ACA TENEMOS QUE VER QUE MOSTRAMOS
-      ) :
-
-      mutation.isSuccess ? 
-        sendToHome() : null 
-    )
+  if (mutation.isError) {
+    console.log(mutation.error);
+    return <ErrorPage />;
+  }
 
   return (
     <SafeAreaView className="bg-background h-full w-full">

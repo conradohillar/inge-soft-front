@@ -1,13 +1,15 @@
 import { View, Text } from 'react-native'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { YStack, XStack } from 'tamagui'
 import CustomInput from '../../components/CustomInput'
 import { Link, useRouter } from 'expo-router'
 import ButtonNext from '../../components/ButtonNext'
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query' 
+import { QueryClient, QueryClientProvider, useMutation } from '@tanstack/react-query' 
 import LoadingPage from '../(pages)/LoadingPage'
 import ErrorPage from '../(pages)/ErrorPage'
+import axios from 'axios'
+import { LOCAL_IP } from '@env'
 
 const queryClient = new QueryClient()
 
@@ -25,30 +27,45 @@ const Content = () => {
   const [password, setPassword] = useState('');
 
   const router = useRouter();
-  const handleContinue = async () => {
-    
-    try {
 
-      router.push({
-        pathname: "/(tabs)/home",
-        params: { email, password}
-      });
-    } catch (error) {
-      console.error("Error: ", error);
-    }
-  };
-
-  const {isPending, error, data} = useQuery({
-    queryKey: ['repoData'],
-    queryFn: () =>
-      fetch('https://api.github.com/repos/TanStack/query').then((res) =>
-        res.json(),
-      ),
+  const mutation = useMutation({
+    mutationFn: (data) => {
+      return axios.post(`http://${LOCAL_IP}:8000/auth/token`, data, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
+    },
   })
 
-  if (isPending) return (<LoadingPage/>)
 
-if (error) return (<ErrorPage />)
+  const handleContinue = async () => {
+
+    const formData = new URLSearchParams();
+    formData.append('username', email);
+    formData.append('password', password);
+    formData.append('grant_type', 'password');
+    formData.append('scope', '');
+    formData.append('client_id', '');
+    formData.append('client_secret', '');
+
+    mutation.mutate(formData)
+
+  }
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      router.push({
+        pathname: "/(tabs)/home",
+        params: { email, password }
+      });
+    }
+  }, [mutation.isSuccess]);
+
+  if (mutation.isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (mutation.isError) {
+    console.log(mutation.error);
+    return <ErrorPage />;
+  }
 
   return (
     <SafeAreaView className="bg-background h-full w-full">
