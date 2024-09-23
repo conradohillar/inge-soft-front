@@ -127,10 +127,11 @@ function Content() {
             const sectionSource = icons.car
             const returnTo = "Volver al Inicio"
             const returnToSource = icons.home
+            const returnToRef = "/(tabs)/home"
             
             router.push({
               pathname: "/(pages)/PostSuccessful",
-              params: {title, section, sectionSource, returnTo, returnToSource}
+              params: {title, section, sectionSource, returnTo, returnToSource, returnToRef}
             });
           }
         };

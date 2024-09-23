@@ -5,7 +5,7 @@ import icons from "../../constants/icons";
 import { Link, useLocalSearchParams } from "expo-router";
 
 export default function PostSuccessful(){
-    const {title, section, sectionSource, returnTo, returnToSource } = useLocalSearchParams();
+    const {title, section, sectionSource, returnTo, returnToSource, returnToRef } = useLocalSearchParams();
     return (
         <SafeAreaView className="h-full w-full bg-background">
             <YStack className="h-full items-center justify-center">
@@ -22,7 +22,7 @@ export default function PostSuccessful(){
                         </Text>
                         <Image source={sectionSource} className="w-8 h-8" tintColor="#59A58A" resizeMode="contain" />
                     </XStack>
-                    <Link href="/(tabs)/home" asChild>
+                    <Link href={returnToRef} asChild>
                         <XStack className="items-center justify-center space-x-4 mt-5">
                             <Text className="text-black text-2xl font-qbold underline" >{returnTo}</Text>
                             <Image source={returnToSource} className="w-10 h-10" resizeMode="contain" />
