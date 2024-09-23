@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { SafeAreaView, Text } from 'react-native';
 import ButtonNext from '../../components/ButtonNext';
 import { YStack } from 'tamagui';
 import { Link, useRouter } from 'expo-router'
 import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query'
 import * as SecureStore from 'expo-secure-store';
+import axios from 'axios';
+import { LOCAL_IP } from '@env';
+import ErrorPage from './ErrorPage';
 
 const queryClient = new QueryClient();
 
@@ -26,7 +29,7 @@ function Content() {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
             };
-            return axios.post(`http://${LOCAL_IP}:8000/users/driver`, { headers })
+            return axios.post(`http://${LOCAL_IP}:8000/users/driver`,null, { headers })
         },
     })
     
@@ -51,10 +54,12 @@ function Content() {
     
       useEffect(() => {
         const handleSuccess = async () => {
+
           if (mutation.isSuccess) {
-    
+            console.log("Success");
             router.push({
               pathname: "/(tabs)/home",
+    
             });
           }
         };
