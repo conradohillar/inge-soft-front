@@ -11,6 +11,7 @@ import { LOCAL_IP } from '@env'
 import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query'
 import ErrorPage from '../(pages)/ErrorPage'
 import * as SecureStore from 'expo-secure-store';
+import { icons } from '../../constants'
 
 const queryClient = new QueryClient() 
 
@@ -69,7 +70,13 @@ const Content = () => {
       if (mutation.isSuccess) {
 
         router.push({
-          pathname: "/(pages)/MyCarsPage",
+          pathname: "/(pages)/PostSuccessful",
+          params: {
+            title: "Agregaste tu auto!",
+            section: "Mis autos",
+            sectionSource: icons.car,
+            returnTo: "Volver a mis autos" 
+          }
         });
       }
     };

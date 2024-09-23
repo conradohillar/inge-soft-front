@@ -47,7 +47,7 @@ function Content() {
   "password": password,
   "address": address,
   "dni": Number(dni),
-  "photo_id": "photourl"
+  "photo": "photourl"
 };
 
   const mutation = useMutation({
@@ -71,7 +71,7 @@ function Content() {
   useEffect(() => {
     if (mutation.isSuccess) {
       router.push({
-        pathname: "/(tabs)/home",
+        pathname: "/(auth)/sign-in",
         params: { email, password }
       });
     }
