@@ -121,9 +121,16 @@ function Content() {
     useEffect(() => {
         const handleSuccess = async () => {
           if (mutation.isSuccess) {
-    
+
+            const title = "Publicaste tu viaje"
+            const section = "MIS VIAJES"
+            const sectionSource = icons.car
+            const returnTo = "Volver al Inicio"
+            const returnToSource = icons.home
+            
             router.push({
               pathname: "/(pages)/PostSuccessful",
+              params: {title, section, sectionSource, returnTo, returnToSource}
             });
           }
         };
