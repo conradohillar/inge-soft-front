@@ -1,28 +1,68 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, TouchableOpacity, Text, View } from 'react-native'
+import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../../components/Header';
 import { Avatar, Button, XStack, YStack } from 'tamagui';
 import icons from "../../constants/icons"
 import { History } from '@tamagui/lucide-icons';
 import { Link } from 'expo-router';
+import ProfilePictureModal from '../../components/PofilePictureModal';
 
+const Profile = () => {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
 
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
+  const handleChooseFromLibrary = () => {
+    launchImageLibrary({}, response => {
+      if (response.assets && response.assets.length > 0) {
+        setProfileImage(response.assets[0].uri);
+      }
+      toggleModal();
+    });
+  };
 
-export default function Profile(){
+  const handleTakePicture = () => {
+    launchCamera({}, response => {
+      if (response.assets && response.assets.length > 0) {
+        setProfileImage(response.assets[0].uri);
+      }
+      toggleModal();
+    });
+  };
+
+  const handleDeletePicture = () => {
+    setProfileImage(null);
+    toggleModal();
+  };
+
   return (
     <SafeAreaView className="bg-background">
         <Header />
         <YStack className="h-full items-center justify-evenly">
           <YStack className="h-[15%] items-center justify-evenly">
             <XStack className="w-[90%] items-center justify-start">
-              <Avatar circular size="$12" borderColor="$black" borderWidth={1}>
-                <Avatar.Image
-                  accessibilityLabel="Cam"
-                  src="https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
+            <View className="flex-1 justify-center items-center">
+              <TouchableOpacity onPress={toggleModal}>
+                <Avatar circular size="$12" borderColor="$black" borderWidth={1}>
+                  <Avatar.Image
+                    accessibilityLabel="Cam"
+                    src="https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
+                  />
+                  <Avatar.Fallback backgroundColor="$gray5" />
+                </Avatar>
+                <ProfilePictureModal
+                  isVisible={isModalVisible}
+                  onClose={toggleModal}
+                  onChooseFromLibrary={handleChooseFromLibrary}
+                  onTakePicture={handleTakePicture}
+                  onDeletePicture={handleDeletePicture}
                 />
-              <Avatar.Fallback backgroundColor="$gray5" />
-              </Avatar>
+              </TouchableOpacity>
+            </View>
               <YStack className="items-start justify-evenly ml-5">
                 <XStack className="items-center">
                   <Text className="text-black text-lg font-qbold">Camila Lee</Text>
@@ -68,3 +108,5 @@ export default function Profile(){
     </SafeAreaView>
   )
 }
+
+export default Profile;

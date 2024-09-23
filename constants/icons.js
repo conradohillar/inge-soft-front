@@ -15,6 +15,8 @@ import pencil from "../assets/icons/pencil.png"
 import trash from "../assets/icons/trash.png"
 import add from "../assets/icons/add.png"
 import settings from "../assets/icons/settings.png"
+import camera from "../assets/icons/camera.png"
+import image from "../assets/icons/image.png"
 
 
 export default {
@@ -34,5 +36,7 @@ export default {
     pencil,
     trash,
     add,
-    settings
+    settings,
+    camera,
+    image,
 };
