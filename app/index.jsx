@@ -6,11 +6,16 @@ import { useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import FrontPage from './(pages)/FrontPage';
 import LandingPage from './(pages)/LandingPage';
+import { useFonts } from 'expo-font';
 
 export default function App() {
   const colorScheme = useColorScheme();
 
   const [isReady, setIsReady] = useState(false);
+
+  const [fontsLoaded] = useFonts({
+    'Inter': require('../assets/fonts/Inter_18pt-Regular.ttf'), // No se usa para nada, pero si no se carga tira warning
+  });
 
   useEffect(() => {
     const prepare = async () => {
