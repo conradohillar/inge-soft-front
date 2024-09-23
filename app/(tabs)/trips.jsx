@@ -5,7 +5,7 @@ import { YStack } from 'tamagui';
 
 const Trips = () => {
   return (
-    <SafeAreaView className="h-full w-full bg-background2">
+    <SafeAreaView className="h-full w-full bg-background">
       <Header />
       <YStack className="h-full items-center justify-evenly bg-background">      
       </YStack>
