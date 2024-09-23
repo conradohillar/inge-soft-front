@@ -2,23 +2,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../components/Header";
 import { View, Text, Image, ScrollView } from "react-native";
 import { YStack, XStack, PortalProvider, Button } from "tamagui";
-import BlackButton from "../../components/BlackButton";
 import { Link } from "expo-router";
 import SelectFieldCar from "../../components/SelectFieldCar";
-import { Package, User } from "@tamagui/lucide-icons";
 import Counter from "../../components/Counter";
 import icons from "../../constants/icons";
 import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import ButtonNext from "../../components/ButtonNext";
-import { postRide } from "../../services/postRide";
 import { useRouter } from "expo-router";
 import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query'
 import { LOCAL_IP } from '@env'
 import CustomInput from "../../components/CustomInput";
 import axios from 'axios';
 import LoadingPage from "./LoadingPage";
-import PostSuccessful from "./PostSuccessful";
 import ErrorPage from "./ErrorPage";
 import * as SecureStore from 'expo-secure-store';
 
@@ -48,16 +44,17 @@ function Content() {
     const [priceSmallPackage, setPriceSmallPackage] = useState(0);
     const [priceMediumPackage, setPriceMediumPackage] = useState(0);
     const [priceLargePackage, setPriceLargePackage] = useState(0);
+    const [token, setToken] = useState(null);
 
     
     const mutation = useMutation({
-        mutationFn: ({tripData, token}) => {
+        mutationFn: (tripData) => {
             
             const headers = {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
             };
-            console.log(headers);
+            
             return axios.post(`http://${LOCAL_IP}:8000/rides/create/detail?plate=${car}`, tripData, { headers })
         },
     })
@@ -66,14 +63,7 @@ function Content() {
 
     const handleContinue = async () => {
 
-        let token = ""
-        try {
-            token = await SecureStore.getItemAsync("token");
-        } catch (error) {
-            console.error('Error getting token from SecureStore', error);
-            return null;
-        }
-
+    
         const obj = {
             "ride": {
                 "city_from": fromLocation,
@@ -94,27 +84,50 @@ function Content() {
             }
         }
         
-        mutation.mutate({ tripData: obj, token });
+        mutation.mutate(obj);
 
     };
 
 
     const url = `http://${LOCAL_IP}:8000/rides/create?location_from=${fromLocation}&location_to=${toLocation}`
 
+
+    useEffect(() => {
+        const fetchToken = async () => {
+            try {
+                const storedToken = await SecureStore.getItemAsync('token');
+                if (storedToken) {
+                    setToken(storedToken);
+                }
+            } catch (error) {
+                console.error('Error fetching token from SecureStore', error);
+            }
+        };
+
+        fetchToken();
+    }, []);
+    
+    const headers = {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+    };
+
     const { isPending, error, data } = useQuery({
         queryKey: ['fetchRide'],
         queryFn: () =>
-            fetch(url).then((res) =>
+            fetch(url,{headers}).then((res) =>
                 res.json(),
             ),
+            enabled: !!token,
     })
 
     useEffect(() => {
         if (data) {
-            setPricePerson(data.price_person.toFixed(2));
-            setPriceSmallPackage(data.price_small_package.toFixed(2));
-            setPriceMediumPackage(data.price_medium_package.toFixed(2));
-            setPriceLargePackage(data.price_large_package.toFixed(2));
+            setPricePerson(data.prices.price_person.toFixed(2));
+            setPriceSmallPackage(data.prices.price_small_package.toFixed(2));
+            setPriceMediumPackage(data.prices.price_medium_package.toFixed(2));
+            setPriceLargePackage(data.prices.price_large_package.toFixed(2));
+            setCar(data.cars[0].plate);
         }
     }, [data]);
 
@@ -147,7 +160,7 @@ function Content() {
         console.log(mutation.error);
         return <ErrorPage />;
       }
-
+      console.log(data)
 
     return (
         <SafeAreaView className="h-full w-full bg-background">
@@ -161,9 +174,9 @@ function Content() {
                         <Text className="text-sm text-primary font-qbold ml-10 mb-3"> auto</Text>
                     </Text>
                     <PortalProvider>
-                        <SelectFieldCar items={items} label="Mis autos" value={car} handleChangeValue={setCar}
-                            renderItem={(item) => (<Text>{item.key}, {item.value}</Text>)}
-                            renderSelected={(item) => renderSelectedCar(item)} />
+                        <SelectFieldCar items={data.cars} label="Mis autos" value={car} handleChangeValue={setCar}
+                            renderItem={(item) => (<Text>{item.plate}, {item.model}</Text>)}
+                            renderSelected={(item) => renderSelectedCar(data.cars,item)} />
                     </PortalProvider>
                     <XStack className="mx-11 mb-5 mt-12">
                         <Text className='text-sm font-qbold text-black'>Indicá tus
@@ -224,16 +237,10 @@ function Content() {
 
 }
 
-const items = [
-    { key: 'AB-123-CD', value: 'Ford Focus' },
-    { key: 'DE-456-FG', value: 'Toyota Corolla' },
-    { key: 'HI-789-JK', value: 'Honda Civic' },
-    { key: 'LM-000-AR', value: 'Audi A3' },
-];
 
-const renderSelectedCar = (key) => {
-    const myItem = items.find((item) => item.key === key)
-    return (<Text>{myItem.value}, {key}</Text>);
+const renderSelectedCar = (items, plate) => {
+    const myItem = items.find((item) => item.plate === plate)
+    return (<Text>{myItem.model}, {plate}</Text>);
 }
 
 
