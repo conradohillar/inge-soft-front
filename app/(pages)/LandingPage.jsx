@@ -22,7 +22,7 @@ export default function LandingPage(){
                         </BlackButton>
                     </View>
                     <View className="w-[90%]">
-                    <BlackButton href="/(tabs)/home" variant={"secondary"}>
+                    <BlackButton href="/(pages)/PostSuccessful" variant={"secondary"}>
                         <XStack className="items-center justify-center flex-row space-x-3">
                             <Text className="text-[18px] font-qsemibold text-white">Continuar con Google</Text>
                             <Image source={require('../../assets/icons/google-icon.png')} className="h-[30px] w-[30px]"/>
