@@ -5,11 +5,70 @@ import { Avatar, Button, XStack, YStack } from 'tamagui';
 import icons from "../../constants/icons"
 import { History } from '@tamagui/lucide-icons';
 import { Link } from 'expo-router';
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
+import { LOCAL_IP } from '@env'
+import LoadingPage from '../(pages)/LoadingPage'
+import ErrorPage from "../(pages)/ErrorPage";
+import * as SecureStore from 'expo-secure-store';
+import { useState, useEffect } from "react";
 
 
+const queryClient = new QueryClient()
+
+export default function Profile() {
+    return (
+        <QueryClientProvider client={queryClient} >
+            <Content />
+        </QueryClientProvider>
+    )
+
+}
+
+function Content(){
+  const [token, setToken] = useState(null);
 
 
-export default function Profile(){
+  useEffect(() => {
+      const fetchToken = async () => {
+          try {
+              const storedToken = await SecureStore.getItemAsync('token');
+              if (storedToken) {
+                  setToken(storedToken);
+              }
+          } catch (error) {
+              console.error('Error fetching token from SecureStore', error);
+          }
+      };
+
+      fetchToken();
+  }, []);
+
+  const url = `http://${LOCAL_IP}:8000/auth/users/me`
+  
+  const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+  };
+  
+
+  const { isPending, error, data } = useQuery({
+      queryKey: ['fetchUserData'],
+      queryFn: () =>
+          fetch(url, {headers} ).then((res) =>
+              res.json(),
+          ),
+          enabled: !!token,
+
+  })
+
+  if (isPending) {
+      return <LoadingPage />
+  }
+
+  if (error) {
+      return <ErrorPage />
+  }
+
   return (
     <SafeAreaView className="bg-background">
         <Header />
@@ -25,12 +84,12 @@ export default function Profile(){
               </Avatar>
               <YStack className="items-start justify-evenly ml-5">
                 <XStack className="items-center">
-                  <Text className="text-black text-lg font-qbold">Camila Lee</Text>
+                  <Text className="text-black text-lg font-qbold">{data.name}</Text>
                   <Button className="h-5 w-5 bg-background ml-2">
                     <Image source={icons.pencil} className="h-4 w-4" tintColor="#aaa" resizeMode='contain'/> 
                   </Button>
                 </XStack>     
-                <Text className="text-gray-600 text-base font-qsemibold">camilee@gmail.com</Text>     
+                <Text className="text-gray-600 text-base font-qsemibold">{data.email}</Text>     
               </YStack>
             </XStack>
           </YStack>
