@@ -4,6 +4,11 @@ import icons from '../constants/icons';
 import { useState } from "react";
 
 export default function CarCard({model, plate}){
+    
+
+    const handleDelete = () => {
+        console.log("delete");
+    }
 
     return (
         <View className="w-full items-center my-3">
@@ -25,7 +30,7 @@ export default function CarCard({model, plate}){
                         </YStack>
                     </XStack>
                     <View className="items-end mb-3">
-                        <Pressable style={({ pressed }) => ({backgroundColor: pressed ? "#fdcdcd":"#eee"})}>
+                        <Pressable onPress={handleDelete} style={({ pressed }) => ({backgroundColor: pressed ? "#fdcdcd":"#eee"})}>
                             <Image source={icons.trash} className="h-7 w-7" tintColor="#c00" resizeMode="contain"/>
                         </Pressable>
                     </View>

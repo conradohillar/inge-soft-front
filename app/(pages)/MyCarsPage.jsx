@@ -78,7 +78,7 @@ function Content() {
         );
 
     }
-
+    console.log(data)
     return (
         <SafeAreaView className="w-full h-full bg-background">
             <Header />
@@ -92,12 +92,12 @@ function Content() {
             <XStack className="items-center justify-center mb-7">
                 <Text className="text-4xl font-qbold text-black">MIS AUTOS</Text>
             </XStack>
-            <FlatList
+            { data!= undefined && <FlatList
                 className="w-full"
                 data={data}
                 keyExtractor={item => item.plate}
                 renderItem={renderItem}
-            />
+            />}
             <XStack className="items-center justify-center my-10">
                 <Text className="text-lg text-gray-600 font-qsemibold">Agregá un auto nuevo</Text>
                 <Link href="/(pages)/AddCarPage" asChild>

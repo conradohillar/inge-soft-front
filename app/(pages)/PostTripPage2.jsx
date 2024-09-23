@@ -93,7 +93,7 @@ function Content() {
                 "price_large_package": priceLargePackage
             }
         }
-        console.log(token);
+        
         mutation.mutate({ tripData: obj, token });
 
     };

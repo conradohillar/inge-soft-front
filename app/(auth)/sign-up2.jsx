@@ -1,5 +1,5 @@
 import { View, Text, Image } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Avatar, Button, XStack, YStack } from 'tamagui'
 import CustomInput from '../../components/CustomInput'
