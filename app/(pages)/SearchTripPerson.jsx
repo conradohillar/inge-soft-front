@@ -17,9 +17,11 @@ export default function TripDetailsPage(){
 
     const { fromLocation, toLocation, formattedDate } = useLocalSearchParams();
 
-    const [passengers, setPassengers] = useState(0);
-    const [bags, setBags] = useState(0);
-    const [suitcases, setSuitcases] = useState(0);
+    const [people, setPeople] = useState(0);
+    const [smallPacks, setSmallPacks] = useState(0);
+    const [mediumPacks, setMediumPacks] = useState(0);
+    const [largePacks, setLargePacks] = useState(0);
+
     // const [measurements, setMeasurments] = useState('');
     // const [comments, setComments] = useState('');
     const router = useRouter();
@@ -27,13 +29,10 @@ export default function TripDetailsPage(){
     const handleSearch = async () => {
 
         try {
-            const vecRides = await searchRides(fromLocation, toLocation, formattedDate, passengers, bags, suitcases)
-
-            const vecRidesString = JSON.stringify(vecRides);
           router.push({
             
             pathname: "/(pages)/SearchResultsPage",
-            params: { vecRides : vecRidesString }
+            params: { fromLocation, toLocation, formattedDate, people, smallPacks, mediumPacks, largePacks },
           });
         } catch (error) {
           console.error("Error: ", error);
@@ -51,15 +50,15 @@ export default function TripDetailsPage(){
                     <YStack className="items-center">
                         <XStack className=" w-[250px] items-center justify-between ">
                             <User size="3" color="black"/>
-                            <Counter maxCount={4} count={passengers} handleChangeCount={setPassengers}/>
+                            <Counter maxCount={4} count={people} handleChangeCount={setPeople}/>
                         </XStack>
                         <XStack className=" w-[250px] items-center justify-between ">
                             <Image source={require('../../assets/icons/bag.png')} style={{height:40, width:40}} />
-                            <Counter maxCount={4} count={bags} handleChangeCount={setBags}/>
+                            <Counter maxCount={4} count={mediumPacks} handleChangeCount={setMediumPacks}/>
                         </XStack>
                         <XStack className=" w-[250px] items-center justify-between mb-5">
                             <Image source={require('../../assets/icons/suitcase.png')} style={{height:40, width:40}} />
-                            <Counter maxCount={4} count={suitcases} handleChangeCount={setSuitcases}/>
+                            <Counter maxCount={4} count={largePacks} handleChangeCount={setLargePacks}/>
                         </XStack>
                     </YStack>
                     <View className="px-8">

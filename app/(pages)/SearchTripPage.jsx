@@ -31,7 +31,7 @@ export default function SearchTripPage() {
         const formattedDate = format(date, 'yyyy-MM-dd'); // YYYY-MM-DD
         router.push({
           
-          pathname: "/(pages)/TripDetailsPage",
+          pathname: "/(pages)/SearchTripPerson",
           params: { fromLocation, toLocation, formattedDate }
         });
       } catch (error) {
@@ -46,7 +46,7 @@ export default function SearchTripPage() {
       
       router.push({
         
-        pathname: "/(pages)/SendPackagePage",
+        pathname: "/(pages)/SearchTripPackage",
         params: { fromLocation, toLocation, formattedDate }
       });
     } catch (error) {

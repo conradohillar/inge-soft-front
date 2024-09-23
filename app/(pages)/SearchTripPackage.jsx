@@ -19,19 +19,17 @@ export default function SendPackagePage(){
     const [smallPacks, setSmallPacks] = useState(0);
     const [mediumPacks, setMediumPacks] = useState(0);
     const [largePacks, setLargePacks] = useState(0);
+    const [people, setPeople] = useState(0);
 
     const router = useRouter();
     
-    const handleContinueToPack2 = async () => {
+    const handleSearch = async () => {
         try {
-          
-            console.log('this is date -> ', formattedDate);
-
 
           router.push({
             
-            pathname: "/(pages)/SendPackagePage2",
-            params: { fromLocation, toLocation, formattedDate, smallPacks, mediumPacks, largePacks }
+            pathname: "/(pages)/SearchResultsPage",
+            params: { fromLocation, toLocation, formattedDate, people, smallPacks, mediumPacks, largePacks }
           });
         } catch (error) {
           console.error("Error: ", error);
@@ -91,7 +89,7 @@ export default function SendPackagePage(){
                         </Button>
                     </Link>
                     <View className="w-[75%]">
-                    <ButtonNext onPress={handleContinueToPack2}>
+                    <ButtonNext onPress={handleSearch}>
                         <Text className="text-2xl font-qsemibold text-white">Continuar</Text>
                     </ButtonNext>
                     </View>
