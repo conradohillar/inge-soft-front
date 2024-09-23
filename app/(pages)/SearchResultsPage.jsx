@@ -48,8 +48,8 @@ function Content(){
 
     const renderItem = ({ item }) => {
         const rounded = (item.price).toFixed(2);
-        const sliced_from = (item.city_from).slice(0,3);
-        const sliced_to = (item.city_to).slice(0,3);
+        const sliced_from = (item.city_from).slice(0,3).toUpperCase();
+        const sliced_to = (item.city_to).slice(0,3).toUpperCase();
         return ( 
             <TripCard from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} price={rounded} />
         );

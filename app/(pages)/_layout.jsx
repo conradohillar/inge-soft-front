@@ -12,9 +12,9 @@ const PagesLayout = () => {
         <Stack.Screen name="ErrorPage" options={{headerShown: false}}/>
         <Stack.Screen name="LandingPage" options={{headerShown: false}}/>
         <Stack.Screen name="SearchTripPage" options={{headerShown: false}}/>
-        <Stack.Screen name="TripDetailsPage" options={{headerShown: false}}/>
         <Stack.Screen name="SearchResultsPage" options={{headerShown: false}}/>
-        <Stack.Screen name="SendPackagePage" options={{headerShown: false}}/>
+        <Stack.Screen name="SearchTripPerson" options={{headerShown: false}}/>
+        <Stack.Screen name="SearchTripPackage" options={{headerShown: false}}/>
         <Stack.Screen name="SendPackagePage2" options={{headerShown: false}}/>
         <Stack.Screen name="PostTripPage" options={{headerShown: false}}/>
         <Stack.Screen name="PostTripPage2" options={{headerShown: false}}/>
