@@ -26,13 +26,7 @@ export default function TripDetailsPage(){
     
     const handleSearch = async () => {
 
-      
-        
-     
         try {
-            
-
-          
             const vecRides = await searchRides(fromLocation, toLocation, formattedDate, passengers, bags, suitcases)
 
             const vecRidesString = JSON.stringify(vecRides);
@@ -85,9 +79,11 @@ export default function TripDetailsPage(){
                             <Image source={icons.arrowleft} className="w-7 h-7" resizeMode="contain" />
                         </Button>
                     </Link>
-                    <ButtonNext height={90} width={270} onPress={handleSearch}>
+                    <View className="w-3/4 items-center justify-center">
+                    <ButtonNext onPress={handleSearch}>
                         <Text className="text-2xl font-qsemibold text-white">Buscar viaje</Text>
                     </ButtonNext>
+                    </View>
                 </XStack>
             </YStack>
         </SafeAreaView>

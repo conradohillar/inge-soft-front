@@ -75,7 +75,8 @@ const Content = () => {
             title: "Agregaste tu auto!",
             section: "Mis autos",
             sectionSource: icons.car,
-            returnTo: "Volver a mis autos" 
+            returnTo: "Volver a Mis autos",
+            returnToSource: icons.car,
           }
         });
       }

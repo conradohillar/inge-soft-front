@@ -6,6 +6,9 @@ import icons from "../../constants/icons"
 import { History } from '@tamagui/lucide-icons';
 import { Link } from 'expo-router';
 
+
+
+
 export default function Profile(){
   return (
     <SafeAreaView className="bg-background">

@@ -21,7 +21,11 @@ export default function TimePicker({style, className, placeholderTextColor, valu
 
   const handleConfirm = (selectedTime) => {
     onChangeTime(selectedTime);
-    const formatTime = selectedTime.toLocaleTimeString('es-ES');  // Formato en español (España)
+    const formatTime = selectedTime.toLocaleTimeString('es-ES', { // Formato en español (España)
+      hour: '2-digit',
+      minute: '2-digit',
+      second: undefined // Esto es para evitar mostrar los segundos
+    });  
     setPlaceholderText(formatTime)
     setPlaceholderColor("#000")
     hideTimePicker();
