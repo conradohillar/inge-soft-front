@@ -54,8 +54,10 @@ export default function Profile(){
             </View>
             <View className="w-full h-[17%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
               <XStack className="w-[80%] items-center justify-start space-x-5" >
-                <Image source={icons.id_card} className="h-6 w-6" tintColor="#aaa" resizeMode='contain'/> 
-                <Text className="text-xl text-black font-qbold">Credenciales</Text>
+                <Image source={icons.id_card} className="h-6 w-6" tintColor="#aaa" resizeMode='contain'/>
+                <Link href="/(pages)/CredentialsPage" asChild>
+                  <Text className="text-xl text-black font-qbold">Credenciales</Text>
+                </Link>
               </XStack>
             </View>
           </YStack>
