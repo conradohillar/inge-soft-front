@@ -7,6 +7,9 @@ import icons from "../../constants/icons"
 import { History } from '@tamagui/lucide-icons';
 import { Link } from 'expo-router';
 import ProfilePictureModal from '../../components/PofilePictureModal';
+import * as ImagePicker from 'expo-image-picker';
+import { all } from 'axios';
+import { set } from 'date-fns';
 
 const Profile = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -14,6 +17,37 @@ const Profile = () => {
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
+  };
+
+  const [image, setImage] = useState(null);
+
+  const uploadImage = async () => {
+    try {
+      await ImagePicker.requestCameraPermissionsAsync();
+      let result = await ImagePicker.launchCameraAsync({
+        cameraType: ImagePicker.CameraType.front,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+
+      if(!result.canceled){
+        await setImage(result.assets[0].uri);
+        setModalVisible(false);
+      }
+    } catch (error) {
+      alert(error.message);
+      setModalVisible(false);
+    }
+  };
+
+  const saveImage = async () => {
+    try {
+      setImage(image);
+      setModalVisible(false);
+    } catch (error) {
+      throw(error);
+    }
   };
 
   const handleChooseFromLibrary = () => {
@@ -26,12 +60,8 @@ const Profile = () => {
   };
 
   const handleTakePicture = () => {
-    launchCamera({}, response => {
-      if (response.assets && response.assets.length > 0) {
-        setProfileImage(response.assets[0].uri);
-      }
-      toggleModal();
-    });
+    uploadImage();
+    
   };
 
   const handleDeletePicture = () => {
@@ -50,7 +80,7 @@ const Profile = () => {
                 <Avatar circular size="$12" borderColor="$black" borderWidth={1}>
                   <Avatar.Image
                     accessibilityLabel="Cam"
-                    src="https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
+                    src={image}
                   />
                   <Avatar.Fallback backgroundColor="$gray5" />
                 </Avatar>
