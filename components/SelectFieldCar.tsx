@@ -87,12 +87,12 @@ export default function SelectField({ items, label, value, handleChangeValue, re
                   return (
                     <Select.Item
                       index={i}
-                      key={item.value}
-                      value={item.key}
+                      key={item.model}
+                      value={item.plate}
                       className='bg-background border border-gray-100 w-[380px] mx-8'
                     >
                       <Select.ItemText className='text-base text-black font-qsemibold'>
-                        {renderItem ? renderItem(item) : item.value }
+                        {renderItem ? renderItem(item) : item.model }
                       </Select.ItemText>
                       <Select.ItemIndicator marginLeft="auto">
                         <Check size={20} color="black"/>

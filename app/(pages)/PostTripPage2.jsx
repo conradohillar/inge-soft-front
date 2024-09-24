@@ -89,9 +89,7 @@ function Content() {
     };
 
 
-    const url = `http://${LOCAL_IP}:8000/rides/create?location_from=${fromLocation}&location_to=${toLocation}`
-
-
+    
     useEffect(() => {
         const fetchToken = async () => {
             try {
@@ -112,6 +110,8 @@ function Content() {
         'Content-Type': 'application/json'
     };
 
+    const url = `http://${LOCAL_IP}:8000/rides/create?location_from=${fromLocation}&location_to=${toLocation}`
+
     const { isPending, error, data } = useQuery({
         queryKey: ['fetchRide'],
         queryFn: () =>
@@ -120,9 +120,11 @@ function Content() {
             ),
             enabled: !!token,
     })
+    
 
     useEffect(() => {
         if (data) {
+        
             setPricePerson(data.prices.price_person.toFixed(2));
             setPriceSmallPackage(data.prices.price_small_package.toFixed(2));
             setPriceMediumPackage(data.prices.price_medium_package.toFixed(2));
@@ -157,10 +159,8 @@ function Content() {
       }
     
       if (mutation.isError || error) {
-        console.log(mutation.error);
         return <ErrorPage />;
       }
-      console.log(data)
 
     return (
         <SafeAreaView className="h-full w-full bg-background">
