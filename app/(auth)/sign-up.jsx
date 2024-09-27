@@ -6,6 +6,7 @@ import CustomInput from '../../components/CustomInput'
 import ButtonNext from '../../components/ButtonNext'
 import { Link, useRouter } from 'expo-router'
 import AutocompleteCityInput from '../../components/AutocompleteCityInput'
+import { TouchableWithoutFeedback, Keyboard } from 'react-native'
 
 export default function SignUp(){
   const [userName, setUserName] = useState('');
@@ -28,6 +29,7 @@ export default function SignUp(){
     }
   };
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <SafeAreaView className="bg-background h-full w-full">
       <YStack className="h-full justify-evenly">
         <YStack className="items-center">
@@ -51,5 +53,6 @@ export default function SignUp(){
         </YStack>
       </YStack>
     </SafeAreaView>
+    </TouchableWithoutFeedback>
   )
 }

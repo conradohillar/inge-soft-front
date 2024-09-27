@@ -9,7 +9,7 @@ import { set } from 'date-fns'
 import Home from '../(tabs)/home'
 import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query'
 import axios from 'axios';
-
+import { TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { LOCAL_IP } from '@env'
 import ErrorPage from '../(pages)/ErrorPage'
 
@@ -87,6 +87,7 @@ function Content() {
   }
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <SafeAreaView className="bg-background h-full w-full">
           <YStack className="h-full justify-evenly">
             <YStack className="items-center">
@@ -111,5 +112,6 @@ function Content() {
             </YStack>
           </YStack>
     </SafeAreaView>
+  </TouchableWithoutFeedback>
   )
 }
