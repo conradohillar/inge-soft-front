@@ -8,8 +8,9 @@ import { Image } from 'tamagui';
 const ProfilePictureModal = ({ isVisible, onClose, onChooseFromLibrary, onTakePicture, onDeletePicture }) => {
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClose} className="justify-center items-center">
-      <View className="bg-background p-5 rounded-xl items-start w-[90%]">
-        <TouchableOpacity onPress={onChooseFromLibrary} className="py-2 ">
+      <View className="bg-gray-100 p-5 rounded-xl items-center w-[90%] justify-center">
+        <Text className="text-2xl font-bold color-primary pb-4">Cambiar foto de perfil</Text>
+        <TouchableOpacity onPress={onChooseFromLibrary} className="py-2 w-full">
             <XStack className="w-[80%] items-center justify-start space-x-5">
                 <Image source={icons.image} className="h-6 w-6" tintColor="#aaa" resizeMode='contain'/>
                 <Text className="text-lg font-qsemibold">Elegir del carrete</Text>
@@ -21,7 +22,7 @@ const ProfilePictureModal = ({ isVisible, onClose, onChooseFromLibrary, onTakePi
                 <Text className="text-lg font-qsemibold">Sacar una foto</Text>
             </XStack>
         </TouchableOpacity>
-        <TouchableOpacity onPress={onDeletePicture} className="py-2">
+        <TouchableOpacity onPress={onDeletePicture} className="py-2 w-full">
             <XStack className="w-[80%] items-center justify-start space-x-5">
                 <Image source={icons.trash} className="h-6 w-6" tintColor="#aaa" resizeMode='contain'/>
                 <Text className="text-lg font-qsemibold">Eliminar foto</Text>

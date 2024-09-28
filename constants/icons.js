@@ -1,6 +1,5 @@
 import logo from "../assets/icons/logo.png"
 import home from "../assets/icons/home.png"
-import profile from "../assets/icons/profile.png"
 import profile2 from "../assets/icons/profile2.png"
 import car from "../assets/icons/car.png"
 import bag from "../assets/icons/bag2.png"
@@ -17,12 +16,12 @@ import add from "../assets/icons/add.png"
 import settings from "../assets/icons/settings.png"
 import camera from "../assets/icons/camera.png"
 import image from "../assets/icons/image.png"
+import placeholder_profile from "../assets/icons/placeholder-profile.png"
 
 
 export default {
     logo,
     home,
-    profile,
     profile2,
     car,
     bag,
@@ -39,4 +38,5 @@ export default {
     settings,
     camera,
     image,
+    placeholder_profile,
 };

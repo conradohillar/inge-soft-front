@@ -8,31 +8,61 @@ import { History } from '@tamagui/lucide-icons';
 import { Link } from 'expo-router';
 import ProfilePictureModal from '../../components/PofilePictureModal';
 import * as ImagePicker from 'expo-image-picker';
-import { all } from 'axios';
-import { set } from 'date-fns';
+import axios from 'axios';
+import * as FileSystem from 'expo-file-system'
+import { API_KEY_IMGBB } from '@env';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+
+const queryClient = new QueryClient();
 
 const Profile = () => {
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [profileImage, setProfileImage] = useState(null);
+  return (
+    <QueryClientProvider client={queryClient} >
+      <Content />
+    </QueryClientProvider>
+  )
+};
 
+function Content() {
+  const [isModalVisible, setModalVisible] = useState(false);
+
+
+  //REVISAR ESTA FUNCION
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(icons.placeholder_profile);
+  const [deleteUrl, setDeleteUrl] = useState(null);
 
-  const uploadImage = async () => {
+
+  const uploadImage = async (mode) => {
     try {
+
+      let result = {}
+
+      if(mode === 'gallery'){
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+        result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [1, 1],
+          quality: 1,
+        });
+
+      } else {
       await ImagePicker.requestCameraPermissionsAsync();
-      let result = await ImagePicker.launchCameraAsync({
+      result = await ImagePicker.launchCameraAsync({
         cameraType: ImagePicker.CameraType.front,
         allowsEditing: true,
         aspect: [1, 1],
         quality: 1,
       });
+    }
 
       if(!result.canceled){
-        await setImage(result.assets[0].uri);
+        saveImage(result.assets[0].uri);
         setModalVisible(false);
       }
     } catch (error) {
@@ -41,32 +71,90 @@ const Profile = () => {
     }
   };
 
-  const saveImage = async () => {
+  const saveImage = async (uri) => {
     try {
-      setImage(image);
+      const imageData = await sendImageToServer(uri);
+      setDeleteUrl(imageData.deleteUrl);
+      setImage(imageData.url);
+
       setModalVisible(false);
     } catch (error) {
       throw(error);
     }
   };
 
-  const handleChooseFromLibrary = () => {
-    launchImageLibrary({}, response => {
-      if (response.assets && response.assets.length > 0) {
-        setProfileImage(response.assets[0].uri);
+  //AGREGAR FUNCION PARA ELIMINAR IMAGEN DEL BACK
+  const removeImage = async () => {
+    try {
+      setImage(null);
+      setModalVisible(false);
+    } catch ({message}) {
+      alert(message);
+      setModalVisible(false);
+    }
+  };
+}
+
+
+
+
+  
+
+  
+
+  
+  
+  const sendImageToServer = async (imageUri) => {
+    try {
+      const base64Image = await FileSystem.readAsStringAsync(imageUri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+
+      const body = new FormData();
+      body.append('image', base64Image);
+
+      axios.defaults.timeout = 10000;
+
+      const res = await axios({
+        method: 'post',
+        url: `https://api.imgbb.com/1/upload?expiration=600&key=${API_KEY_IMGBB}`,
+        data: body,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+        const responseData = res.data;
+
+        if (responseData.success) {
+          console.log("Image uploaded successfully:", responseData.data.url);
+
+          //TODO: Retornar URL de la imagen subida y URL de eliminación
+
+          return {
+            url: responseData.data.url,
+            deleteUrl: responseData.delete_url, 
+          }
+
+        } else {
+          console.log(res);
+          throw new Error('Image upload failed');
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        throw error;
       }
-      toggleModal();
-    });
+    };
+
+  const handleChooseFromLibrary = () => {
+    uploadImage('gallery');
   };
 
   const handleTakePicture = () => {
     uploadImage();
-    
   };
 
   const handleDeletePicture = () => {
-    setProfileImage(null);
-    toggleModal();
+    removeImage();
   };
 
   return (
@@ -82,7 +170,6 @@ const Profile = () => {
                     accessibilityLabel="Cam"
                     src={image}
                   />
-                  <Avatar.Fallback backgroundColor="$gray5" />
                 </Avatar>
                 <ProfilePictureModal
                   isVisible={isModalVisible}
@@ -136,7 +223,6 @@ const Profile = () => {
           </YStack>
         </YStack>
     </SafeAreaView>
-  )
-}
+  );
 
 export default Profile;
