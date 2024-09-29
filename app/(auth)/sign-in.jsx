@@ -107,5 +107,6 @@ const Content = () => {
         </YStack>
       </SafeAreaView>
     </TouchableWithoutFeedback>
+    
   )
 }
