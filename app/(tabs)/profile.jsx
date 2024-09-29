@@ -235,7 +235,7 @@ function Content(){
             <View className="w-full h-[17%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
               <XStack className="w-[80%] items-center justify-start space-x-5" >
                 <Image source={icons.map} className="h-6 w-6" tintColor="#aaa" resizeMode='contain'/> 
-                <Text className="text-xl text-black font-qbold">PrÃ³ximos viajes</Text>
+                <Text className="text-xl text-black font-qbold">Próximos viajes</Text>
               </XStack>
             </View>
             <View className="w-full h-[17%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
