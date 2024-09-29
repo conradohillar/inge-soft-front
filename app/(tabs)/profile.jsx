@@ -1,16 +1,20 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, TouchableOpacity, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../../components/Header';
 import { Avatar, Button, XStack, YStack } from 'tamagui';
 import icons from "../../constants/icons"
 import { History } from '@tamagui/lucide-icons';
 import { Link } from 'expo-router';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
 import { LOCAL_IP } from '@env'
 import LoadingPage from '../(pages)/LoadingPage'
 import ErrorPage from "../(pages)/ErrorPage";
 import * as SecureStore from 'expo-secure-store';
+import * as FileSystem from 'expo-file-system'
 import { useState, useEffect } from "react";
+import axios from 'axios';
+import * as ImagePicker from 'expo-image-picker';
+import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query'
+import ProfilePictureModal from '../../components/PofilePictureModal';
 
 
 const queryClient = new QueryClient()
@@ -25,7 +29,117 @@ export default function Profile() {
 } 
 
 function Content(){
+  
   const [token, setToken] = useState(null);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [image, setImage] = useState(icons.placeholder_profile);
+  
+
+  //REVISAR ESTA FUNCION
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const uploadImage = async (mode) => {
+    try {
+
+      let result = {}
+
+      if(mode === 'gallery'){
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+        result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [1, 1],
+          quality: 1,
+        });
+
+      } else {
+      await ImagePicker.requestCameraPermissionsAsync();
+      result = await ImagePicker.launchCameraAsync({
+        cameraType: ImagePicker.CameraType.front,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+    }
+
+      if(!result.canceled){
+        saveImage(result.assets[0].uri);
+        setModalVisible(false);
+      }
+    } catch (error) {
+      alert(error.message);
+      setModalVisible(false);
+    }
+  };
+  const edit_image = useMutation({
+    mutationFn: (base64Image) => {
+      const body = {
+        base_64_image: base64Image,
+      };
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+
+      return axios.put(`http://${LOCAL_IP}:8000/users/edit/photo`, body, {
+        headers,
+        timeout: 15000,
+      });
+    },
+    onSuccess: (data) => {
+      setImage(data.data.photo_url);
+    },
+    onError: (error) => {
+      console.error("Error al editar la imagen:", error.message);
+    },
+  });
+  
+  const saveImage = async (imageUri) => {
+    try {
+      
+      const base64Image = await FileSystem.readAsStringAsync(imageUri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+    
+      edit_image.mutate(base64Image);
+      
+    } catch (error) {
+      throw(error);
+    }
+
+      
+    
+  };
+
+  //AGREGAR FUNCION PARA ELIMINAR IMAGEN DEL BACK
+  const removeImage = async () => {
+    try {
+      //llamado al back para borrar la imagen
+      setImage(null);
+      setModalVisible(false);
+      
+    } catch ({message}) {
+      alert(message);
+      setModalVisible(false);
+    }
+  };
+  const handleChooseFromLibrary = () => {
+    uploadImage('gallery');
+  };
+
+  const handleTakePicture = () => {
+    uploadImage();
+  };
+
+  const handleDeletePicture = () => {
+    removeImage();
+  };
+
+
+
+  //--------------------------------------------------------------------------------
 
 
   useEffect(() => {
@@ -75,13 +189,23 @@ function Content(){
         <YStack className="h-full items-center justify-evenly">
           <YStack className="h-[15%] items-center justify-evenly">
             <XStack className="w-[90%] items-center justify-start">
-              <Avatar circular size="$12" borderColor="$black" borderWidth={1}>
-                <Avatar.Image
-                  accessibilityLabel="Cam"
-                  src="https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
+            <View className="flex-1 justify-center items-center">
+              <TouchableOpacity onPress={toggleModal}>
+                <Avatar circular size="$12" borderColor="$black" borderWidth={1}>
+                  <Avatar.Image
+                    accessibilityLabel="Cam"
+                    src={image}
+                  />
+                </Avatar>
+                <ProfilePictureModal
+                  isVisible={isModalVisible}
+                  onClose={toggleModal}
+                  onChooseFromLibrary={handleChooseFromLibrary}
+                  onTakePicture={handleTakePicture}
+                  onDeletePicture={handleDeletePicture}
                 />
-              <Avatar.Fallback backgroundColor="$gray5" />
-              </Avatar>
+              </TouchableOpacity>
+            </View>
               <YStack className="items-start justify-evenly ml-5">
                 <XStack className="items-center">
                   <Text className="text-black text-lg font-qbold">{data.name}</Text>
