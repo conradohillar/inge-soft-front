@@ -175,6 +175,14 @@ function Content(){
 
   })
 
+  useEffect(() => {
+    if (data) {
+    
+        setImage(data.photo_url);
+        
+    }
+}, [data]);
+
   if (isPending) {
       return <LoadingPage />
   }
