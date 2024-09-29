@@ -85,7 +85,7 @@ function Content(){
 
       return axios.put(`http://${LOCAL_IP}:8000/users/edit/photo`, body, {
         headers,
-        timeout: 15000,
+        timeout: 25000,
       });
     },
     onSuccess: (data) => {
