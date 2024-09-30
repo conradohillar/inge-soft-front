@@ -51,7 +51,7 @@ function Content(){
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
           aspect: [1, 1],
-          quality: 1,
+          quality: 0.5,
         });
 
       } else {
@@ -60,7 +60,7 @@ function Content(){
         cameraType: ImagePicker.CameraType.front,
         allowsEditing: true,
         aspect: [1, 1],
-        quality: 1,
+        quality: 0.5,
       });
     }
 
@@ -113,11 +113,32 @@ function Content(){
     
   };
 
+  const delete_image = useMutation({
+    mutationFn: () => {
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+
+      return axios.delete(`http://${LOCAL_IP}:8000/users/delete/photo`, {
+        headers,
+        timeout: 25000,
+      });
+    },
+    onSuccess: (data) => {
+      setImage(icons.placeholder_profile);
+    },
+    onError: (error) => {
+      throw(error);
+    },
+  });
+
   //AGREGAR FUNCION PARA ELIMINAR IMAGEN DEL BACK
   const removeImage = async () => {
     try {
+      
+      delete_image.mutate();
       //llamado al back para borrar la imagen
-      setImage(null);
       setModalVisible(false);
       
     } catch ({message}) {
@@ -176,7 +197,8 @@ function Content(){
   })
 
   useEffect(() => {
-    if (data) {
+    
+    if (data && data.photo_url !== null) {
     
         setImage(data.photo_url);
         

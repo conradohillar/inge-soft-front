@@ -36,8 +36,6 @@ const Content = () => {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
         };
-        console.log(headers);
-        console.log(carData);
         return axios.post(`http://${LOCAL_IP}:8000/users/addcar`, carData, { headers })
     },
 })

@@ -7,7 +7,7 @@ export default function CarCard({model, plate}){
     
 
     const handleDelete = () => {
-        console.log("delete");
+        //implementaaar
     }
 
     return (

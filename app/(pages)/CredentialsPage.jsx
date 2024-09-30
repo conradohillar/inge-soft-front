@@ -56,7 +56,6 @@ function Content() {
         const handleSuccess = async () => {
 
           if (mutation.isSuccess) {
-            console.log("Success");
             router.push({
               pathname: "/(tabs)/home",
     

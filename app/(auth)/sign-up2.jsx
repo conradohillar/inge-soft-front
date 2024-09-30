@@ -47,7 +47,7 @@ function Content() {
   "password": password,
   "address": address,
   "dni": Number(dni),
-  "photo": "photourl"
+  "photo": null
 };
 
   const mutation = useMutation({
@@ -61,7 +61,6 @@ function Content() {
     if (password !== confirmPassword) {
       setError(true);                     //ACA PODEMOS PONER UN RENDERIZADO CONDICIONAL DE LOS ERRORES BAJO LA CONDICION DE ESTE FLAG
     } else {
-      console.log(userData)
       mutation.mutate(userData)
     }
   };

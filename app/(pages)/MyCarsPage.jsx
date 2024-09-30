@@ -78,7 +78,6 @@ function Content() {
         );
 
     }
-    console.log(data)
     return (
         <SafeAreaView className="w-full h-full bg-background">
             <Header />
