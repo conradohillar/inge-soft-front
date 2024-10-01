@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { YStack, XStack } from 'tamagui'
+import { YStack, XStack, ScrollView } from 'tamagui'
 import CustomInput from '../../components/CustomInput'
 import ButtonNext from '../../components/ButtonNext'
 import { Link, useRouter } from 'expo-router'
@@ -12,17 +12,17 @@ import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tansta
 import ErrorPage from '../(pages)/ErrorPage'
 import * as SecureStore from 'expo-secure-store';
 import { icons } from '../../constants'
-import { TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform } from 'react-native'
 
-const queryClient = new QueryClient() 
+const queryClient = new QueryClient()
 
-export default function AddCarPage(){
+export default function AddCarPage() {
   return (
     <QueryClientProvider client={queryClient} >
-        <Content />
+      <Content />
     </QueryClientProvider>
   )
-  
+
 }
 
 const Content = () => {
@@ -31,28 +31,28 @@ const Content = () => {
   const [color, setColor] = useState('')
 
   const mutation = useMutation({
-    mutationFn: ({carData, token}) => {
-        
-        const headers = {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        };
-        return axios.post(`http://${LOCAL_IP}:8000/users/addcar`, carData, { headers })
+    mutationFn: ({ carData, token }) => {
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+      return axios.post(`http://${LOCAL_IP}:8000/users/addcar`, carData, { headers })
     },
-})
+  })
 
 
   const router = useRouter();
 
   const handleContinue = async () => {
-    
-    
+
+
     let token = ""
     try {
-        token = await SecureStore.getItemAsync("token");
+      token = await SecureStore.getItemAsync("token");
     } catch (error) {
-        console.error('Error getting token from SecureStore', error);
-        return null;
+      console.error('Error getting token from SecureStore', error);
+      return null;
     }
 
     const obj = {
@@ -60,7 +60,7 @@ const Content = () => {
       "plate": plate,
       "color": color
     }
-    
+
     mutation.mutate({ carData: obj, token });
   };
 
@@ -75,7 +75,7 @@ const Content = () => {
             section: "Mis autos",
             sectionSource: icons.car,
             returnTo: "Volver a Mis autos",
-            returnToSource: icons.car, 
+            returnToSource: icons.car,
             returnToRef: "/(pages)/MyCarsPage"
           }
         });
@@ -96,30 +96,37 @@ const Content = () => {
 
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView className="bg-background h-full w-full">
-        <YStack className="h-full justify-evenly">
-          <YStack className="items-center justify-center">
-            <Text className="text-black text-4xl font-qbold">Cargá los datos</Text>
-            <Text className="text-black text-4xl font-qbold">de
-              <Text className="text-primary text-4xl font-qbold"> tu auto</Text>
-            </Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"} // "padding" para iOS, "height" para Android
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} className={"h-full"}>
+        <SafeAreaView className="bg-background h-full w-full">
+          <ScrollView className="h-full">
+          <YStack className="h-full justify-evenly">
+            <YStack className="items-center justify-center">
+              <Text className="text-black text-4xl font-qbold">Cargá los datos</Text>
+              <Text className="text-black text-4xl font-qbold">de
+                <Text className="text-primary text-4xl font-qbold"> tu auto</Text>
+              </Text>
+            </YStack>
+            <YStack className="items-center justify-center">
+              <CustomInput title="Modelo" value={model} handleChangeText={setModel} />
+              <CustomInput title="Patente" value={plate} handleChangeText={setPlate} />
+              <CustomInput title="Color" value={color} handleChangeText={setColor} />
+            </YStack>
+            <YStack className="items-center">
+              <ButtonNext onPress={handleContinue}>
+                <Text className="text-white text-xl font-qsemibold">Agregar auto</Text>
+              </ButtonNext>
+              <Link href="/(pages)/MyCarsPage" asChild>
+                <Text className="text-base text-primary font-qsemibold underline">Volver</Text>
+              </Link>
+            </YStack>
           </YStack>
-          <YStack className="items-center justify-center">
-            <CustomInput title="Modelo" value={model} handleChangeText={setModel}/>
-            <CustomInput title="Patente" value={plate} handleChangeText={setPlate}/>
-            <CustomInput title="Color" value={color} handleChangeText={setColor}/>
-          </YStack>
-          <YStack className="items-center space-y-5">
-            <ButtonNext height={60} width={220} onPress={handleContinue}>
-              <Text className="text-white text-xl font-qsemibold">Agregar auto</Text>
-            </ButtonNext>
-            <Link href="/(pages)/MyCarsPage" asChild>
-              <Text className="text-base text-primary font-qsemibold underline">Volver</Text>
-            </Link>
-          </YStack>
-        </YStack>
-      </SafeAreaView>
+          </ScrollView>
+        </SafeAreaView>
       </TouchableWithoutFeedback>
-    )
-  }
+    </KeyboardAvoidingView>
+  )
+}

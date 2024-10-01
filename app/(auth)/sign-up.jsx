@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { YStack } from 'tamagui'
 import CustomInput from '../../components/CustomInput'
@@ -10,16 +10,16 @@ import { TouchableWithoutFeedback, Keyboard } from 'react-native'
 import Header from '../../components/Header'
 import HorizontalTabs from '../../components/HorizontalTabs'
 
-export default function SignUp(){
+export default function SignUp() {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
-  
-    
+
+
   const router = useRouter();
-  
+
   const handleContinue = async () => {
-    
+
     try {
 
       router.push({
@@ -31,30 +31,35 @@ export default function SignUp(){
     }
   };
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <SafeAreaView className="bg-background h-full w-full">
-      <YStack className="h-full justify-evenly">
-        <YStack className="items-center">
-          <Text className="text-black text-5xl font-qbold mb-3">Registrá</Text>
-          <Text className="text-primary text-5xl font-qbold">TU CUENTA</Text>
-        </YStack>
-        <YStack className="items-center justify-center">
-          <CustomInput title="Nombre" value={userName} handleChangeText={setUserName}/>
-          <AutocompleteCityInput title="Dirección" placeholder="i.e: Tigre" value={address} onChangeText={setAddress}/>
-          <CustomInput title="E-mail" value={email} handleChangeText={setEmail}/>
-          
-          
-        </YStack>
-        <YStack className="items-center">
-          <ButtonNext height={90} width={270} onPress={handleContinue}>
-                    <Text className="text-2xl font-qsemibold text-white">Continuar</Text>
-          </ButtonNext>
-          <Link href="/(pages)/LandingPage" asChild>
-            <Text className="text-base text-red-500 font-qsemibold underline">Cancelar</Text>
-          </Link>
-        </YStack>
-      </YStack>
-    </SafeAreaView>
-    </TouchableWithoutFeedback>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"} // "padding" para iOS, "height" para Android
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView className="bg-background h-full w-full">
+          <YStack className="h-full justify-evenly">
+            <YStack className="items-center">
+              <Text className="text-black text-5xl font-qbold mb-3">Registrá</Text>
+              <Text className="text-primary text-5xl font-qbold">TU CUENTA</Text>
+            </YStack>
+            <YStack className="items-center justify-center">
+              <CustomInput title="Nombre" value={userName} handleChangeText={setUserName} />
+              <AutocompleteCityInput title="Dirección" placeholder="i.e: Tigre" value={address} onChangeText={setAddress} />
+              <CustomInput title="E-mail" value={email} handleChangeText={setEmail} />
+
+
+            </YStack>
+            <YStack className="items-center">
+              <ButtonNext height={90} width={270} onPress={handleContinue}>
+                <Text className="text-2xl font-qsemibold text-white">Continuar</Text>
+              </ButtonNext>
+              <Link href="/(pages)/LandingPage" asChild>
+                <Text className="text-base text-red-500 font-qsemibold underline">Cancelar</Text>
+              </Link>
+            </YStack>
+          </YStack>
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   )
 }

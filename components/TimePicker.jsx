@@ -36,7 +36,7 @@ export default function TimePicker({style, className, placeholderTextColor, valu
       <YStack className="items-start justify-center w-[85%] m-2">
             <View className="w-full items-center">
                 <View className="w-[95%]">
-                    <Text className="text-xs font-qbold text-gray-600 mb-2">{title}</Text>
+                    <Text className="text-m font-qbold text-gray-600 mb-2">{title}</Text>
                 </View>
             </View>
             <Pressable onPress={showTimePicker} style={style} className={`justify-center items-center rounded-xl border-x border-y border-black h-[50px] w-full ${className}` }>

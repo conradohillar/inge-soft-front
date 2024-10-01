@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Avatar, Button, XStack, YStack } from 'tamagui'
 import CustomInput from '../../components/CustomInput'
 import ButtonNext from '../../components/ButtonNext'
-import { Link, useLocalSearchParams, useRouter} from 'expo-router'
+import { Link, useLocalSearchParams, useRouter } from 'expo-router'
 import { set } from 'date-fns'
 import Home from '../(tabs)/home'
 import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query'
@@ -32,7 +32,7 @@ export default SignUp2
 
 
 function Content() {
-  
+
   const { email, userName, address } = useLocalSearchParams();
 
   const [dni, setDni] = useState(0);
@@ -41,14 +41,14 @@ function Content() {
 
   const [error, setError] = useState(false);
 
-  const userData =   { 
-  "name": userName,
-  "email": email,
-  "password": password,
-  "address": address,
-  "dni": Number(dni),
-  "photo_url": null
-};
+  const userData = {
+    "name": userName,
+    "email": email,
+    "password": password,
+    "address": address,
+    "dni": Number(dni),
+    "photo_url": null
+  };
 
   const mutation = useMutation({
     mutationFn: (data) => {
@@ -66,7 +66,7 @@ function Content() {
   };
 
   const router = useRouter();
-      
+
   useEffect(() => {
     if (mutation.isSuccess) {
       router.push({
@@ -86,8 +86,12 @@ function Content() {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <SafeAreaView className="bg-background h-full w-full">
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"} // "padding" para iOS, "height" para Android
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView className="bg-background h-full w-full">
           <YStack className="h-full justify-evenly">
             <YStack className="items-center">
               <Text className="text-black text-4xl font-qbold">Detalles</Text>
@@ -98,8 +102,19 @@ function Content() {
 
             <YStack className="justify-center">
               <CustomInput title="DNI" value={dni} handleChangeText={setDni} />
-              <CustomInput title="Contraseña" value={password} handleChangeText={setPassword} />
-              <CustomInput title="Confirmá tu contraseña" value={confirmPassword} handleChangeText={setConfirmPassword} />
+              <CustomInput
+                title="Contraseña"
+                value={password}
+                handleChangeText={setPassword}
+                secureTextEntry={true}
+                placeholder={"Ingresa tu contraseña"}
+              />
+              <CustomInput
+                title="Confirmá tu contraseña"
+                value={confirmPassword}
+                handleChangeText={setConfirmPassword}
+                secureTextEntry={true}
+              />
             </YStack>
             <YStack className="items-center">
               <ButtonNext height={90} width={270} onPress={handleContinue}>
@@ -110,7 +125,8 @@ function Content() {
               </Link>
             </YStack>
           </YStack>
-    </SafeAreaView>
-  </TouchableWithoutFeedback>
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   )
 }

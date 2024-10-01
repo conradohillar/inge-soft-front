@@ -1,17 +1,17 @@
-import { View, Text } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { YStack, XStack } from 'tamagui'
-import CustomInput from '../../components/CustomInput'
-import { Link, useRouter } from 'expo-router'
-import ButtonNext from '../../components/ButtonNext'
-import { QueryClient, QueryClientProvider, useMutation } from '@tanstack/react-query'
-import LoadingPage from '../(pages)/LoadingPage'
-import ErrorPage from '../(pages)/ErrorPage'
-import axios from 'axios'
-import { LOCAL_IP } from '@env'
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Text, Platform } from 'react-native';
+import { Link, useRouter } from 'expo-router';
+import { QueryClient, QueryClientProvider, useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-import { TouchableWithoutFeedback, Keyboard } from 'react-native'
+
+import CustomInput from '../../components/CustomInput';
+import ButtonNext from '../../components/ButtonNext';
+import LoadingPage from '../(pages)/LoadingPage';
+import ErrorPage from '../(pages)/ErrorPage';
+
+import { YStack, XStack } from 'tamagui';
+import { LOCAL_IP } from '@env';
 
 const queryClient = new QueryClient()
 
@@ -83,30 +83,51 @@ const Content = () => {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView className="bg-background h-full w-full">
-        <YStack className="h-full justify-evenly">
-          <YStack className="items-center justify-center">
-            <Text className="text-black text-5xl font-qbold">Iniciá sesión</Text>
-            <Text className="text-black text-4xl font-qbold">con
-              <Text className="text-primary text-4xl font-qbold"> tu cuenta</Text>
-            </Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"} // "padding" para iOS, "height" para Android
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView className="bg-background h-full w-full">
+          <YStack className="h-full justify-evenly">
+            <YStack className="items-center justify-center">
+              <Text className="text-black text-5xl font-qbold">Iniciá sesión</Text>
+              <Text className="text-black text-4xl font-qbold">con
+                <Text className="text-primary text-4xl font-qbold"> tu cuenta</Text>
+              </Text>
+            </YStack>
+            <YStack className="items-center justify-center">
+              <CustomInput
+                title="E-mail"
+                value={email}
+                handleChangeText={setEmail}
+                placeholder={"Ingresá tu e-mail"}
+                autoComplete={"email"}
+                inputMode={"email"}
+
+              />
+              <CustomInput
+                title="Contraseña"
+                value={password}
+                secureTextEntry={true}
+                handleChangeText={setPassword}
+                placeholder={"Ingresá tu contraseña"}
+                autoComplete={"password"}
+                multiline={false}
+                inputMode={"password"}
+              />
+            </YStack>
+            <YStack className="items-center">
+              <ButtonNext height={60} width={220} onPress={handleContinue}>
+                <Text className="text-white text-xl font-qsemibold">Ir al Inicio</Text>
+              </ButtonNext>
+              <Link href="/(pages)/LandingPage" asChild>
+                <Text className="text-base text-primary font-qsemibold underline">Volver</Text>
+              </Link>
+            </YStack>
           </YStack>
-          <YStack className="items-center justify-center">
-            <CustomInput title="E-mail" value={email} handleChangeText={setEmail} />
-            <CustomInput title="Contraseña" value={password} handleChangeText={setPassword} />
-          </YStack>
-          <YStack className="items-center">
-            <ButtonNext height={60} width={220} onPress={handleContinue}>
-              <Text className="text-white text-xl font-qsemibold">Ir al Inicio</Text>
-            </ButtonNext>
-            <Link href="/(pages)/LandingPage" asChild>
-              <Text className="text-base text-primary font-qsemibold underline">Volver</Text>
-            </Link>
-          </YStack>
-        </YStack>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
-    
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   )
 }
