@@ -15,13 +15,18 @@ export default function PostTripPage() {
   const [toLocation, setToLocation] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
-  const [departureTime, setDepartureTime] = useState('');
-
+  
+  
   const router = useRouter();
 
   const handleContinue = async () => {
-    const formattedDate = date.toISOString().split('T')[0]; // Formateo de la fecha (YYYY-MM-DD)
+    
+    const formattedDate = date.toISOString().split('T')[0]; // YYYY-MM-DD
+    const formattedTime = new Date(time);
+    formattedTime.setHours(formattedTime.getHours() - 3);
+    const departureTime = formattedTime.toISOString().split('T')[1]; // HH:MM:SS.sssZ
     try {
+      console.log("time", departureTime);
       router.push({
         pathname: "/(pages)/PostTripPage2",
         params: { fromLocation, toLocation, formattedDate, departureTime }

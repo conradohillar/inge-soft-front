@@ -65,28 +65,31 @@ function Content() {
 
 	const handleContinue = async () => {
 
+        const auxTime = new Date(new Date(`1970-01-01T${departureTime}`).getTime() + 60 * 60 * 1000).toISOString().split('T')[1];
 
-		const obj = {
-			"ride": {
-				"city_from": fromLocation,
-				"city_to": toLocation,
-				"ride_date": formattedDate,
-				"start_minimum_time": "19:20:13.381Z",
-				"start_maximum_time": "19:20:13.381Z",
-				"available_space_people": availableSeats,
-				"available_space_small_package": spacesSmallPackage,
-				"available_space_medium_package": spacesMediumPackage,
-				"available_space_large_package": spacesLargePackage
-			},
-			"price": {
-				"price_person": pricePerson,
-				"price_small_package": priceSmallPackage,
-				"price_medium_package": priceMediumPackage,
-				"price_large_package": priceLargePackage
-			}
-		}
-
-		mutation.mutate(obj);
+        console.log("auxTime", auxTime);    
+        
+        const obj = {
+            "ride": {
+            "city_from": fromLocation,
+            "city_to": toLocation,
+            "ride_date": formattedDate,
+            "start_minimum_time": departureTime,
+            "start_maximum_time": auxTime,
+            "available_space_people": availableSeats,
+            "available_space_small_package": spacesSmallPackage,
+            "available_space_medium_package": spacesMediumPackage,
+            "available_space_large_package": spacesLargePackage
+            },
+            "price": {
+            "price_person": pricePerson,
+            "price_small_package": priceSmallPackage,
+            "price_medium_package": priceMediumPackage,
+            "price_large_package": priceLargePackage
+            }
+        }
+        
+        mutation.mutate(obj);
 
 	};
 

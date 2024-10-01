@@ -22,6 +22,7 @@ const PagesLayout = () => {
         <Stack.Screen name="MyCarsPage" options={{headerShown: false}}/>
         <Stack.Screen name="AddCarPage" options={{headerShown: false}}/>
         <Stack.Screen name="CredentialsPage" options={{headerShown: false}}/>
+        <Stack.Screen name="TripsPage" options={{headerShown: false}}/>
       </Stack> 
     </>
 
