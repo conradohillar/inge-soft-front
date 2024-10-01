@@ -10,8 +10,8 @@ import {LOCAL_IP} from '@env'
 import LoadingPage from '../(pages)/LoadingPage'
 import ErrorPage from "./ErrorPage";
 import * as SecureStore from 'expo-secure-store';
-import { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useFocusEffect } from '@react-navigation/native';
 
 const queryClient = new QueryClient()
 
@@ -46,15 +46,17 @@ function Content() {
         fetchToken();
     }, []);
 
+
     const url = `http://${LOCAL_IP}:8000/users/mycars`
     
     const headers = {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
     };
+
     
 
-    const { isPending, error, data } = useQuery({
+    const { isPending, error, data, refetch } = useQuery({
         queryKey: ['fetchMycars'],
         queryFn: () =>
             fetch(url, {headers} ).then((res) =>
@@ -62,8 +64,9 @@ function Content() {
             ),
             enabled: !!token,
 
-    })
-
+    });
+    
+    
     if (isPending) {
         return <LoadingPage />
     }
@@ -72,7 +75,7 @@ function Content() {
         return <ErrorPage />
     }
 
-    console.log(data)
+
     
     const renderItem = ({ item }) => {
         return (
@@ -111,12 +114,3 @@ function Content() {
     );
 
 }
-
-const cars = [
-    { key: 'AB-123-CD', value: 'Ford Focus' },
-    { key: 'DE-456-FG', value: 'Toyota Corolla' },
-    { key: 'HI-789-JK', value: 'Honda Civic' },
-    { key: 'LM-000-AR', value: 'Audi A3' },
-    { key: 'OM-224-YE', value: 'Chevrolet Camaro' },
-    { key: 'KI-777-GG', value: 'Nissan Sentra' },
-];
