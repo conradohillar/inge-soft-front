@@ -2,7 +2,7 @@ import { Image, View, Text, Pressable } from "react-native";
 import { Button, XStack, YStack, Avatar } from "tamagui";
 import icons from '../constants/icons';
 
-export default function TripCard({from, to, driver, date, price}){
+export default function TripCard({from, to, driver, date, price, url}){
     return (
         <View className="py-3">
             <Pressable 
@@ -21,11 +21,8 @@ export default function TripCard({from, to, driver, date, price}){
                             <Text className="text-2xl font-qbold text-black"> {to}</Text>
                         </XStack>
                         <Avatar circular size="$7" borderColor="$black" borderWidth={1}>
-                              <Avatar.Image
-                                accessibilityLabel="Cam"
-                                src="https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
-                              />
-                            <Avatar.Fallback backgroundColor="$gray5" />
+                            <Avatar.Image src={url}/>
+                            <Avatar.Fallback backgroundColor="$gray8" />
                         </Avatar>
                     </XStack>
                     <YStack>

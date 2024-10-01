@@ -5,6 +5,7 @@ import car from "../assets/icons/car.png"
 import bag from "../assets/icons/bag2.png"
 import suitcase from "../assets/icons/suitcase.png"
 import trips from "../assets/icons/trips.png"
+import wheel from "../assets/icons/wheel.png"
 import arrowleft from "../assets/icons/arrow-left.png"
 import arrowright from "../assets/icons/arrow-right.png"
 import history from "../assets/icons/history.png"
@@ -17,6 +18,7 @@ import settings from "../assets/icons/settings.png"
 import camera from "../assets/icons/camera.png"
 import image from "../assets/icons/image.png"
 import placeholder_profile from "../assets/icons/placeholder-profile.png"
+import alert from "../assets/icons/alert.png"
 
 
 export default {
@@ -27,6 +29,7 @@ export default {
     bag,
     suitcase,
     trips,
+    wheel,
     arrowleft,
     arrowright,
     history,
@@ -39,4 +42,5 @@ export default {
     camera,
     image,
     placeholder_profile,
+    alert
 };
