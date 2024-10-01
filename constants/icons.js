@@ -18,6 +18,7 @@ import settings from "../assets/icons/settings.png"
 import camera from "../assets/icons/camera.png"
 import image from "../assets/icons/image.png"
 import placeholder_profile from "../assets/icons/placeholder-profile.png"
+import alert from "../assets/icons/alert.png"
 
 
 export default {
@@ -41,4 +42,5 @@ export default {
     camera,
     image,
     placeholder_profile,
+    alert
 };

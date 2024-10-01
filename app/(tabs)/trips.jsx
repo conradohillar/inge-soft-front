@@ -2,7 +2,6 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../../components/Header';
 import { XStack, YStack } from 'tamagui';
-import HorizontalTabs from '../../components/HorizontalTabs';
 import { Link } from 'expo-router';
 import icons from '../../constants/icons';
 
