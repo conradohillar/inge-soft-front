@@ -7,6 +7,8 @@ import ButtonNext from '../../components/ButtonNext'
 import { Link, useRouter } from 'expo-router'
 import AutocompleteCityInput from '../../components/AutocompleteCityInput'
 import { TouchableWithoutFeedback, Keyboard } from 'react-native'
+import Header from '../../components/Header'
+import HorizontalTabs from '../../components/HorizontalTabs'
 
 export default function SignUp(){
   const [userName, setUserName] = useState('');

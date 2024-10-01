@@ -60,9 +60,9 @@ const Content = () => {
         await SecureStore.setItemAsync("token", token);
         let result = await SecureStore.getItemAsync("token");
         if (!result) {
+          console.log("No token found");
           throw new Error(`No value found for key: token`);
         }
-
         router.push({
           pathname: "/(tabs)/home",
           params: { email, password }

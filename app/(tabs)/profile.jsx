@@ -178,7 +178,7 @@ function Content(){
       fetchToken();
   }, []);
 
-  const url = `http://${LOCAL_IP}:8000/auth/users/me`
+  const url = `http://${LOCAL_IP}:8000/users/me`
   
   const headers = {
       Authorization: `Bearer ${token}`,

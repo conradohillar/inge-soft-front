@@ -47,7 +47,7 @@ function Content() {
   "password": password,
   "address": address,
   "dni": Number(dni),
-  "photo": null
+  "photo_url": null
 };
 
   const mutation = useMutation({

@@ -32,6 +32,7 @@ function Content(){
       const fetchToken = async () => {
           try {
               const storedToken = await SecureStore.getItemAsync('token');
+
               if (storedToken) {
                   setToken(storedToken);
               }
@@ -43,14 +44,14 @@ function Content(){
       fetchToken();
   }, []);
 
-  const url = `http://${LOCAL_IP}:8000/auth/users/me`
+  const url = `http://${LOCAL_IP}:8000/users/me`
   
   const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json'
   };
   
-
+  console.log(headers);
   const { isPending, error, data } = useQuery({
       queryKey: ['fetchUserData'],
       queryFn: () =>

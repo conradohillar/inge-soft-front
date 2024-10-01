@@ -71,6 +71,8 @@ function Content() {
     if (error) {
         return <ErrorPage />
     }
+
+    console.log(data)
     
     const renderItem = ({ item }) => {
         return (

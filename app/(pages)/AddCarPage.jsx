@@ -12,13 +12,14 @@ import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tansta
 import ErrorPage from '../(pages)/ErrorPage'
 import * as SecureStore from 'expo-secure-store';
 import { icons } from '../../constants'
+import { TouchableWithoutFeedback, Keyboard } from 'react-native'
 
 const queryClient = new QueryClient() 
 
 export default function AddCarPage(){
   return (
     <QueryClientProvider client={queryClient} >
-      <Content />
+        <Content />
     </QueryClientProvider>
   )
   
@@ -95,6 +96,7 @@ const Content = () => {
 
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView className="bg-background h-full w-full">
         <YStack className="h-full justify-evenly">
           <YStack className="items-center justify-center">
@@ -118,5 +120,6 @@ const Content = () => {
           </YStack>
         </YStack>
       </SafeAreaView>
+      </TouchableWithoutFeedback>
     )
   }
