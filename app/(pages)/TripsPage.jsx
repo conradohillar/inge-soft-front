@@ -4,12 +4,12 @@ import Header from '../../components/Header';
 import { YStack } from 'tamagui';
 import HorizontalTabs from '../../components/HorizontalTabs';
 
-export default function TripsPage(){
+export default function TripsPage({category}){
   return (
     <SafeAreaView className="h-full w-full bg-background">
       <Header />
       <YStack className="h-full items-center justify-evenly bg-background">
-        <HorizontalTabs />      
+        <HorizontalTabs category={'driver'}/>      
       </YStack>
     </SafeAreaView>
   )

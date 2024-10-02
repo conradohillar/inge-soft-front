@@ -51,7 +51,7 @@ function Content(){
         const sliced_from = (item.city_from).slice(0,3).toUpperCase();
         const sliced_to = (item.city_to).slice(0,3).toUpperCase();
         return ( 
-            <TripCard from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} price={rounded} />
+            <TripCard from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} price={rounded} url={item.driver_photo} />
         );
 
      }
