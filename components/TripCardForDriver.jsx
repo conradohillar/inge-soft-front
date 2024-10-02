@@ -3,8 +3,7 @@ import { Image, View, Text, Pressable } from "react-native";
 import { Button, XStack, YStack, Avatar } from "tamagui";
 import icons from '../constants/icons';
 
-export default function TripCard({from, to, date, price, passengers, packages}){
-    const [showAlert, setShowAlert] = useState(true);
+export default function TripCardForDriver({from, to, date, price, passengers, packages, state}){
     return (
         <View className="py-3">
             <Pressable 
@@ -30,7 +29,7 @@ export default function TripCard({from, to, date, price, passengers, packages}){
                             <Text className="text-base font-qsemibold text-gray-500">Pasajeros: {passengers}</Text>
                             <XStack className="w-full items-center justify-between">
                                 <Text className="text-base font-qsemibold text-gray-500">Paquetes: {packages}</Text>
-                               {showAlert && <Image source={icons.alert} className="w-10 h-10 mr-5" tintColor="#ff6633" resizeMode="contain"/> }
+                               {state && <Image source={state} className="w-10 h-10 mr-5" tintColor="#ff6633" resizeMode="contain"/> }
                             </XStack>
                         </YStack>
                     </YStack>
