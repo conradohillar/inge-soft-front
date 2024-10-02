@@ -10,6 +10,7 @@ import TripCardForDriver from "./TripCardForDriver"
 import { Button, XStack, YStack } from "tamagui"
 import { Link } from "expo-router"
 import icons from "../constants/icons"
+import { isLoaded } from "expo-font"
 
 
 const renderTripCard = ({ item }) => {
@@ -81,26 +82,24 @@ const Content = ({ type, category }) => {
 
 	const url = `http://${LOCAL_IP}:8000/rides/${type}/${category}`
 
-    console.log(url);
-
-	const { isPending, error, data } = useQuery({
+	const { isLoading, error, data } = useQuery({
 		queryKey: ['fetchTrips'],
 		queryFn: () =>
 			fetch(url, { headers }).then((res) =>
 				res.json(),
 			),
 		enabled: !!token,
+        staleTime: 0,
+        
 	})
 
-    if (isPending) {
+    if (isLoading) {
 		return <LoadingPage />;
 	}
 
 	if (error) {
 		return <ErrorPage />;
 	}
-
-    console.log(data);
 
     return (
         <SafeAreaView className="w-full bg-background">

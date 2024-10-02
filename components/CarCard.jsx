@@ -30,7 +30,8 @@ export default function CarCard({model, plate}){
         }
     })
 
-    if (mutation.isLoading) return <LoadingPage/>
+    if (mutation.isPending) return <LoadingPage/>
+    
     if (mutation.isError) return <ErrorPage />
 
     const handleDelete = () => {

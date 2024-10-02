@@ -17,7 +17,7 @@ export default function Trips(){
             </View>
             <YStack className='w-full h-[70%]'>
             <View className="w-full h-[20%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
-              <Link href="/(pages)/TripsPage" asChild>
+              <Link href={{pathname:"/(pages)/TripsPage", params: { category: "rider" }}} asChild>
                 <XStack className="w-[80%] items-center justify-start space-x-5" >
                   <Image source={icons.profile2} className="h-6 w-6" tintColor="#aaa" resizeMode='contain'/> 
                   <Text className="text-xl text-black font-qbold">Como pasajero</Text>
@@ -25,7 +25,7 @@ export default function Trips(){
               </Link>
             </View>
             <View className="w-full h-[20%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
-              <Link href="/(pages)/TripsPage" asChild>
+              <Link href={{pathname:"/(pages)/TripsPage", params: { category: "driver" }}} asChild>
                 <XStack className="w-[80%] items-center justify-start space-x-5" >
                   <Image source={icons.wheel} className="h-6 w-6" tintColor="#aaa" resizeMode='contain'/> 
                   <Text className="text-xl text-black font-qbold">Como conductor</Text>

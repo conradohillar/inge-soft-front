@@ -51,7 +51,6 @@ function Content(){
       'Content-Type': 'application/json'
   };
   
-  console.log(headers);
   const { isPending, error, data } = useQuery({
       queryKey: ['fetchUserData'],
       queryFn: () =>

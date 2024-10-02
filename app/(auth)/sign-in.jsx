@@ -73,7 +73,7 @@ const Content = () => {
     handleSuccess();
   }, [mutation.isSuccess]);
 
-  if (mutation.isLoading) {
+  if (mutation.isPending) {
     return <LoadingPage />;
   }
 
