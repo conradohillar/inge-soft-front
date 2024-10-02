@@ -24,9 +24,6 @@ export default function MyCarsPage() {
     )
 }
 
-       
-
-
 function Content() {
     const [token, setToken] = useState(null);
 
@@ -56,7 +53,7 @@ function Content() {
 
     
 
-    const { isPending, error, data, refetch } = useQuery({
+    const { isPending, error, data } = useQuery({
         queryKey: ['fetchMycars'],
         queryFn: () =>
             fetch(url, {headers} ).then((res) =>
