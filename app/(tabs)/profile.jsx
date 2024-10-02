@@ -247,8 +247,8 @@ function Content(){
               </YStack>
             </XStack>
           </YStack>
-          <YStack className="w-full">
-            <View className="w-full h-[17%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
+          <YStack className="w-full h-[70%]">
+            <View className="w-full h-[20%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
               <XStack className="w-[80%] items-center justify-start space-x-5" >
                 <Image source={icons.car} className="h-6 w-6" tintColor="#aaa" resizeMode='contain'/>
                 <Link href="/(pages)/MyCarsPage" asChild>
@@ -256,19 +256,7 @@ function Content(){
                 </Link> 
               </XStack>
             </View>
-            <View className="w-full h-[17%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
-              <XStack className="w-[80%] items-center justify-start space-x-5" >
-                <Image source={icons.history} className="h-6 w-6" tintColor="#aaa" resizeMode='contain'/> 
-                <Text className="text-xl text-black font-qbold">Historial</Text>
-              </XStack>
-            </View>
-            <View className="w-full h-[17%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
-              <XStack className="w-[80%] items-center justify-start space-x-5" >
-                <Image source={icons.map} className="h-6 w-6" tintColor="#aaa" resizeMode='contain'/> 
-                <Text className="text-xl text-black font-qbold">Próximos viajes</Text>
-              </XStack>
-            </View>
-            <View className="w-full h-[17%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
+            <View className="w-full h-[20%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
               <XStack className="w-[80%] items-center justify-start space-x-5" >
                 <Image source={icons.id_card} className="h-6 w-6" tintColor="#aaa" resizeMode='contain'/>
                 <Link href="/(pages)/CredentialsPage" asChild>
