@@ -25,6 +25,7 @@ export default function AddCarPage() {
     mutationFn: (carData) => newCar(carData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['getCars'] })
+      queryClient.invalidateQueries({ queryKey: ['getRideData'] })
       router.push({
         pathname: "/(pages)/PostSuccessful",
         params: {

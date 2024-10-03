@@ -26,7 +26,6 @@ export default function PostTripPage() {
     formattedTime.setHours(formattedTime.getHours() - 3);
     const departureTime = formattedTime.toISOString().split('T')[1]; // HH:MM:SS.sssZ
     try {
-      console.log("time", departureTime);
       router.push({
         pathname: "/(pages)/PostTripPage2",
         params: { fromLocation, toLocation, formattedDate, departureTime }

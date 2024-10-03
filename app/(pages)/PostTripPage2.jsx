@@ -13,159 +13,125 @@ import { useRouter } from "expo-router";
 import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query'
 import { LOCAL_IP } from '@env'
 import CustomInput from "../../components/CustomInput";
-import axios from 'axios';
+
 import LoadingPage from "./LoadingPage";
 import ErrorPage from "./ErrorPage";
-import * as SecureStore from 'expo-secure-store';
-import { KeyboardAvoidingView, Platform } from "react-native";
-import { TouchableWithoutFeedback } from "react-native";
-
-const queryClient = new QueryClient()
+import { getRideData } from "../../services/rides";
+import { Pressable } from "react-native";
+import { postTrip } from "../../services/rides";
 
 export default function PostTripPage2() {
-	return (
-		<QueryClientProvider client={queryClient} >
-			<Content />
-		</QueryClientProvider>
-	)
+    const { fromLocation, toLocation, formattedDate, departureTime } = useLocalSearchParams();
 
-}
-
-
-
-function Content() {
-	const { fromLocation, toLocation, formattedDate, departureTime } = useLocalSearchParams();
-
-	const [car, setCar] = useState('');
-	// const [carPlate, setCarPlate] = useState('');
-	const [availableSeats, setAvailableSeats] = useState(0);
-	const [spacesSmallPackage, setSmallPackage] = useState(0);
-	const [spacesMediumPackage, setMediumPackage] = useState(0);
-	const [spacesLargePackage, setLargePackage] = useState(0);
-	const [pricePerson, setPricePerson] = useState(0);
-	const [priceSmallPackage, setPriceSmallPackage] = useState(0);
-	const [priceMediumPackage, setPriceMediumPackage] = useState(0);
-	const [priceLargePackage, setPriceLargePackage] = useState(0);
-	const [token, setToken] = useState(null);
+    const [car, setCar] = useState('');
+    const [availableSeats, setAvailableSeats] = useState(0);
+    const [spacesSmallPackage, setSmallPackage] = useState(0);
+    const [spacesMediumPackage, setMediumPackage] = useState(0);
+    const [spacesLargePackage, setLargePackage] = useState(0);
+    const [pricePerson, setPricePerson] = useState(0);
+    const [priceSmallPackage, setPriceSmallPackage] = useState(0);
+    const [priceMediumPackage, setPriceMediumPackage] = useState(0);
+    const [priceLargePackage, setPriceLargePackage] = useState(0);
 
 
-	const mutation = useMutation({
-		mutationFn: (tripData) => {
+    const { isLoading, error, data } = useQuery({
+        queryKey: ['getRideData'],
+        queryFn: () => getRideData(fromLocation, toLocation)
+    });
 
-			const headers = {
-				Authorization: `Bearer ${token}`,
-				'Content-Type': 'application/json'
-			};
+    useEffect(() => {
+        if (data) {
 
-			return axios.post(`http://${LOCAL_IP}:8000/rides/create/detail?plate=${car}`, tripData, { headers })
-		},
-	})
+            setPricePerson(data.prices.price_person.toFixed(2));
+            setPriceSmallPackage(data.prices.price_small_package.toFixed(2));
+            setPriceMediumPackage(data.prices.price_medium_package.toFixed(2));
+            setPriceLargePackage(data.prices.price_large_package.toFixed(2));
+            setCar(data.cars[0] ? data.cars[0].plate : '');
+        }
+    }, [data]);
 
-	const router = useRouter();
 
-	const handleContinue = async () => {
+    const mutation = useMutation({
+        mutationFn: (tripData) => postTrip(tripData,car),
+        onSuccess: () => {
+            const title = "Publicaste tu viaje"
+            const section = "MIS VIAJES"
+            const sectionSource = icons.car
+            const returnTo = "Volver al Inicio"
+            const returnToSource = icons.home
+            const returnToRef = "/(tabs)/home"
+
+            router.push({
+                pathname: "/(pages)/PostSuccessful",
+                params: { title, section, sectionSource, returnTo, returnToSource, returnToRef }
+            });
+        }
+    });
+
+    const router = useRouter();
+
+    const handleContinue = async () => {
 
         const auxTime = new Date(new Date(`1970-01-01T${departureTime}`).getTime() + 60 * 60 * 1000).toISOString().split('T')[1];
 
-        console.log("auxTime", auxTime);    
-        
         const obj = {
             "ride": {
-            "city_from": fromLocation,
-            "city_to": toLocation,
-            "ride_date": formattedDate,
-            "start_minimum_time": departureTime,
-            "start_maximum_time": auxTime,
-            "available_space_people": availableSeats,
-            "available_space_small_package": spacesSmallPackage,
-            "available_space_medium_package": spacesMediumPackage,
-            "available_space_large_package": spacesLargePackage
+                "city_from": fromLocation,
+                "city_to": toLocation,
+                "ride_date": formattedDate,
+                "start_minimum_time": departureTime,
+                "start_maximum_time": auxTime,
+                "available_space_people": availableSeats,
+                "available_space_small_package": spacesSmallPackage,
+                "available_space_medium_package": spacesMediumPackage,
+                "available_space_large_package": spacesLargePackage
             },
             "price": {
-            "price_person": pricePerson,
-            "price_small_package": priceSmallPackage,
-            "price_medium_package": priceMediumPackage,
-            "price_large_package": priceLargePackage
+                "price_person": pricePerson,
+                "price_small_package": priceSmallPackage,
+                "price_medium_package": priceMediumPackage,
+                "price_large_package": priceLargePackage
             }
         }
-        
+
         mutation.mutate(obj);
-
-	};
-
+    };
 
 
-	useEffect(() => {
-		const fetchToken = async () => {
-			try {
-				const storedToken = await SecureStore.getItemAsync('token');
-				if (storedToken) {
-					setToken(storedToken);
-				}
-			} catch (error) {
-				console.error('Error fetching token from SecureStore', error);
-			}
-		};
-
-		fetchToken();
-	}, []);
-
-	const headers = {
-		Authorization: `Bearer ${token}`,
-		'Content-Type': 'application/json'
-	};
-
-	const url = `http://${LOCAL_IP}:8000/rides/create?location_from=${fromLocation}&location_to=${toLocation}`
-
-	const { isPending, error, data } = useQuery({
-		queryKey: ['fetchRide'],
-		queryFn: () =>
-			fetch(url, { headers }).then((res) =>
-				res.json(),
-			),
-		enabled: !!token,
-	})
 
 
-	useEffect(() => {
-		if (data) {
 
-			setPricePerson(data.prices.price_person.toFixed(2));
-			setPriceSmallPackage(data.prices.price_small_package.toFixed(2));
-			setPriceMediumPackage(data.prices.price_medium_package.toFixed(2));
-			setPriceLargePackage(data.prices.price_large_package.toFixed(2));
-			setCar(data.cars[0].plate);
-		}
-	}, [data]);
 
-	useEffect(() => {
-		const handleSuccess = async () => {
-			if (mutation.isSuccess) {
 
-				const title = "Publicaste tu viaje"
-				const section = "MIS VIAJES"
-				const sectionSource = icons.car
-				const returnTo = "Volver al Inicio"
-				const returnToSource = icons.home
-				const returnToRef = "/(tabs)/home"
 
-				router.push({
-					pathname: "/(pages)/PostSuccessful",
-					params: { title, section, sectionSource, returnTo, returnToSource, returnToRef }
-				});
-			}
-		};
+    if (mutation.isPending || isLoading) {
+        return <LoadingPage />;
+    }
 
-		handleSuccess();
-	}, [mutation.isSuccess]);
-
-	if (mutation.isLoading || isPending) {
-		return <LoadingPage />;
-	}
-
-	if (mutation.isError || error) {
-		return <ErrorPage />;
-	}
+    if (mutation.isError || error) {
+        return <ErrorPage />;
+    }
+    if (data.cars.length === 0) {
+        return (
+            <SafeAreaView className="h-full w-full bg-background">
+                <Header />
+                <View className="items-center mt-10 mb-12">
+                    <Text className="text-[27px] font-qbold text-black">No podes crear un viaje </Text>
+                    <Text className="text-[27px] font-qbold text-black">sin tener un auto</Text>
+                </View>
+                <XStack className="items-center justify-center my-10">
+                    <Link href="/(pages)/AddCarPage" asChild>
+                        <Pressable className="flex-row items-center" on>
+                            <Text className="text-lg text-gray-600 font-qsemibold">Te gustaria agregar un auto?</Text>
+                            <Button className="h-8 w-8 bg-background rounded-xl ml-3 mt-1">
+                                <Image source={icons.add} className="h-6 w-6" resizeMode="contain" />
+                            </Button>
+                        </Pressable>
+                    </Link>
+                </XStack>
+            </SafeAreaView>
+        );
+    }
 
     return (
         <SafeAreaView className="h-full w-full bg-background">
@@ -181,7 +147,7 @@ function Content() {
                     <PortalProvider>
                         <SelectFieldCar items={data.cars} label="Mis autos" value={car} handleChangeValue={setCar}
                             renderItem={(item) => (<Text>{item.plate}, {item.model}</Text>)}
-                            renderSelected={(item) => renderSelectedCar(data.cars,item)} />
+                            renderSelected={(item) => renderSelectedCar(data.cars, item)} />
                     </PortalProvider>
                     <XStack className="mx-11 mb-5 mt-12">
                         <Text className='text-sm font-qbold text-black'>Indicá los
@@ -221,7 +187,7 @@ function Content() {
                         </View>
                         <View className="w-full items-center justify-between">
                             <CustomInput title="Precio por paquete chico" value={priceSmallPackage} handleChangeText={setPriceSmallPackage} />
-                        </View> 
+                        </View>
                         <View className="w-full items-center justify-between">
                             <CustomInput title="Precio por paquete mediano" value={priceMediumPackage} handleChangeText={setPriceMediumPackage} />
                         </View>
@@ -252,9 +218,13 @@ function Content() {
 }
 
 
+
+
+
+
 const renderSelectedCar = (items, plate) => {
-	const myItem = items.find((item) => item.plate === plate)
-	return (<Text>{myItem.model}, {plate}</Text>);
+    const myItem = items.find((item) => item.plate === plate)
+    return (<Text>{myItem.model}, {plate}</Text>);
 }
 
 

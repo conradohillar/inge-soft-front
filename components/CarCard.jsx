@@ -15,7 +15,7 @@ export default function CarCard({model, plate}){
         mutationFn: (plate) => deleteCar(plate),
         onSuccess: () => {
             queryClient.invalidateQueries('getCars');
-            
+            queryClient.invalidateQueries({ queryKey: ['getRideData'] })
         }
     })
     
