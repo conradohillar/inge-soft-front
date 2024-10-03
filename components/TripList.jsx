@@ -1,8 +1,5 @@
 import { FlatList, SafeAreaView, Text, View, Image } from "react-native"
-import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query"
-import { LOCAL_IP } from "@env"
-import { useEffect, useState } from "react"
-import * as SecureStore from "expo-secure-store"
+import {  useQuery } from "@tanstack/react-query"
 import TripCard from "./TripCard"
 import LoadingPage from "../app/(pages)/LoadingPage"
 import ErrorPage from "../app/(pages)/ErrorPage"
@@ -10,7 +7,8 @@ import TripCardForDriver from "./TripCardForDriver"
 import { Button, XStack, YStack } from "tamagui"
 import { Link } from "expo-router"
 import icons from "../constants/icons"
-import { isLoaded } from "expo-font"
+import { getUserOrDriverRides } from "../services/rides"
+
 
 
 const renderTripCard = ({ item }) => {
@@ -46,52 +44,12 @@ const renderTripCard = ({ item }) => {
         return null;
  }
 
-const queryClient = new QueryClient()
-
  export default function TripList({ type, category }) {
-	return (
-		<QueryClientProvider client={queryClient} >
-			<Content type={type} category={category}/>
-		</QueryClientProvider>
-	)
-
-}
-
-const Content = ({ type, category }) => {
-    const [token, setToken] = useState(null);
-
-    useEffect(() => {
-		const fetchToken = async () => {
-			try {
-				const storedToken = await SecureStore.getItemAsync('token');
-				if (storedToken) {
-					setToken(storedToken);
-				}
-			} catch (error) {
-				console.error('Error fetching token from SecureStore', error);
-			}
-		};
-
-		fetchToken();
-	}, []);
-
-	const headers = {
-		Authorization: `Bearer ${token}`,
-		'Content-Type': 'application/json'
-	};
-
-	const url = `http://${LOCAL_IP}:8000/rides/${type}/${category}`
 
 	const { isLoading, error, data } = useQuery({
-		queryKey: ['fetchTrips'],
-		queryFn: () =>
-			fetch(url, { headers }).then((res) =>
-				res.json(),
-			),
-		enabled: !!token,
-        staleTime: 0,
-        
-	})
+		queryKey: ['get', type, category],
+		queryFn: () => getUserOrDriverRides(type, category) 
+	});
 
     if (isLoading) {
 		return <LoadingPage />;
@@ -122,4 +80,6 @@ const Content = ({ type, category }) => {
             </View>
         </SafeAreaView>
     );
-};
+
+}
+

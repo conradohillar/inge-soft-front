@@ -9,54 +9,27 @@ import { LOCAL_IP } from '@env'
 import axios from 'axios';
 import LoadingPage from "./LoadingPage";
 import ErrorPage from "./ErrorPage";
+import { searchRides } from "../../services/rides";
 
-const queryClient = new QueryClient();
 
-export default function SearchResults(){
-    return (
-        <QueryClientProvider client={queryClient}>
-            <Content />
-        </QueryClientProvider>
-    );
-}
-
-function Content(){
+export default function SearchResults() {
     const { fromLocation, toLocation, formattedDate, people, smallPacks, mediumPacks, largePacks } = useLocalSearchParams();
-    
 
-
-    const url = `http://${LOCAL_IP}:8000/rides/search?city_from=${fromLocation}&city_to=${toLocation}&date=${formattedDate}&people=${people}&small_packages=${smallPacks}&medium_packages=${mediumPacks}&large_packages=${largePacks}`;
-
-    const { isPending, error, data } = useQuery({
-        queryKey: ['fetchRide'],
-        queryFn: () =>
-            fetch(url).then((res) =>
-                res.json(),
-            ),
+    const { isLoading, error, data } = useQuery({
+        queryKey: ['searchRides'],
+        queryFn: () => searchRides(fromLocation, toLocation, formattedDate, people, smallPacks, mediumPacks, largePacks)
     })
-    
-      if (isPending) {
+
+    if (isLoading) {
         return <LoadingPage />;
-      }
-    
-      if (error) {
-        console.log(error.message);
+    }
+
+    if (error) {
         return <ErrorPage />;
-      }
+    }
 
 
-
-    const renderItem = ({ item }) => {
-        const rounded = (item.price).toFixed(2);
-        const sliced_from = (item.city_from).slice(0,3).toUpperCase();
-        const sliced_to = (item.city_to).slice(0,3).toUpperCase();
-        return ( 
-            <TripCard from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} price={rounded} url={item.driver_photo} />
-        );
-
-     }
-     
-     if (data.length === 0) {
+    if (data.length === 0) {
         return (
             <SafeAreaView className="w-full h-full bg-background">
                 <Header />
@@ -68,7 +41,7 @@ function Content(){
         );
     }
     return (
-        
+
         <SafeAreaView className="w-full h-full bg-background">
             <Header />
             <XStack className="items-center justify-center mt-10 mb-7">
@@ -76,7 +49,7 @@ function Content(){
                 <Text className="text-[22px] font-qbold text-black">de tu búsqueda</Text>
             </XStack>
             <View className="items-center">
-                <FlatList 
+                <FlatList
                     data={data}
                     keyExtractor={item => item.ride_id}
                     renderItem={renderItem}
@@ -85,3 +58,13 @@ function Content(){
         </SafeAreaView>
     );
 }
+
+
+const renderItem = ({ item }) => {
+    const rounded = (item.price).toFixed(2);
+    const sliced_from = (item.city_from).slice(0, 3).toUpperCase();
+    const sliced_to = (item.city_to).slice(0, 3).toUpperCase();
+    return (
+        <TripCard from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} price={rounded} url={item.driver_photo} />
+    )
+};

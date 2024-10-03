@@ -15,7 +15,6 @@ const PagesLayout = () => {
         <Stack.Screen name="SearchResultsPage" options={{headerShown: false}}/>
         <Stack.Screen name="SearchTripPerson" options={{headerShown: false}}/>
         <Stack.Screen name="SearchTripPackage" options={{headerShown: false}}/>
-        <Stack.Screen name="SendPackagePage2" options={{headerShown: false}}/>
         <Stack.Screen name="PostTripPage" options={{headerShown: false}}/>
         <Stack.Screen name="PostTripPage2" options={{headerShown: false}}/>
         <Stack.Screen name="PostSuccessful" options={{headerShown: false}}/>

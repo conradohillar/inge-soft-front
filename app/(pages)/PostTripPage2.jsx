@@ -99,11 +99,6 @@ export default function PostTripPage2() {
 
 
 
-
-
-
-
-
     if (mutation.isPending || isLoading) {
         return <LoadingPage />;
     }
