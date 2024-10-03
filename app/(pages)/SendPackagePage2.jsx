@@ -9,7 +9,7 @@ import icons from "../../constants/icons"
 import { useLocalSearchParams, useRouter } from "expo-router";
 import ButtonNext from "../../components/ButtonNext";
 import { useState } from "react";
-import { searchRidesPackages } from "../../services/searchPackageRide";
+
 
 export default function SendPackagePage2(){
 

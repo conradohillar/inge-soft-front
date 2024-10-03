@@ -2,64 +2,23 @@ import { View, Text, Image } from 'react-native';
 import React from 'react';
 import { XStack, YStack } from 'tamagui';
 import BlackButton from '../../components/BlackButton';
-import { Link } from 'expo-router';
 import Header from '../../components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
-import { LOCAL_IP } from '@env'
+import { useQuery } from '@tanstack/react-query'
 import LoadingPage from '../(pages)/LoadingPage'
 import ErrorPage from "../(pages)/ErrorPage";
-import * as SecureStore from 'expo-secure-store';
-import { useState, useEffect } from "react";
+import { getUserData } from '../../services/users';
 
 
-const queryClient = new QueryClient()
+
 
 export default function Home() {
-    return (
-        <QueryClientProvider client={queryClient} >
-            <Content />
-        </QueryClientProvider>
-    )
-
-}
-
-function Content(){
-  const [token, setToken] = useState(null);
-
-
-  useEffect(() => {
-      const fetchToken = async () => {
-          try {
-              const storedToken = await SecureStore.getItemAsync('token');
-
-              if (storedToken) {
-                  setToken(storedToken);
-              }
-          } catch (error) {
-              console.error('Error fetching token from SecureStore', error);
-          }
-      };
-
-      fetchToken();
-  }, []);
-
-  const url = `http://${LOCAL_IP}:8000/users/me`
-  
-  const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-  };
+ 
   
   const { isPending, error, data } = useQuery({
-      queryKey: ['fetchUserData'],
-      queryFn: () =>
-          fetch(url, {headers} ).then((res) =>
-              res.json(),
-          ),
-          enabled: !!token,
-
-  })
+      queryKey: ['getUserData'],
+      queryFn: getUserData
+  });
 
   if (isPending) {
       return <LoadingPage />
@@ -100,5 +59,6 @@ function Content(){
         </XStack>
       </YStack>
     </SafeAreaView>
-  );
-};
+  ); 
+
+}

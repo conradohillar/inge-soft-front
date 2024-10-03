@@ -11,7 +11,7 @@ import icons from "../../constants/icons";
 import { useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import ButtonNext from "../../components/ButtonNext";
-import { searchRides } from "../../services/searchPeopleRide";
+
 
 export default function TripDetailsPage(){
 

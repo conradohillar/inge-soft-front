@@ -3,8 +3,11 @@ import { Stack, SplashScreen } from 'expo-router';
 import { useFonts } from 'expo-font'
 import { useEffect } from 'react';
 import { Keyboard } from 'react-native';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient();
 
 const RootLayout = () => {
     const [fontsLoaded, error] = useFonts({
@@ -16,25 +19,26 @@ const RootLayout = () => {
     })
 
     useEffect(() => {
-        if(error) throw error;
+        if (error) throw error;
 
-        if(fontsLoaded) SplashScreen.hideAsync();
+        if (fontsLoaded) SplashScreen.hideAsync();
     }, [fontsLoaded, error])
 
-    if(!fontsLoaded && !error) return null;
+    if (!fontsLoaded && !error) return null;
 
 
 
     return (
-        
+        <QueryClientProvider client={queryClient}>
             <Stack>
-                <Stack.Screen name="index" options={{headerShown: false}}/>
-                <Stack.Screen name="(auth)" options={{headerShown: false}}/>
-                <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
-                <Stack.Screen name="(pages)" options={{headerShown: false}}/>
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+                <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="(pages)" options={{ headerShown: false }} />
             </Stack>
-        
-      
+        </QueryClientProvider>
+
+
     )
 }
 

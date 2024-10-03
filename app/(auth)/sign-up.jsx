@@ -6,7 +6,7 @@ import CustomInput from '../../components/CustomInput'
 import ButtonNext from '../../components/ButtonNext'
 import { Link, useRouter } from 'expo-router'
 import AutocompleteCityInput from '../../components/AutocompleteCityInput'
-import { TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform } from 'react-native'
 import Header from '../../components/Header'
 import HorizontalTabs from '../../components/HorizontalTabs'
 
@@ -30,6 +30,7 @@ export default function SignUp() {
       console.error("Error: ", error);
     }
   };
+  
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"} // "padding" para iOS, "height" para Android

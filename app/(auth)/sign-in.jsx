@@ -1,30 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Text, Platform } from 'react-native';
 import { Link, useRouter } from 'expo-router';
-import { QueryClient, QueryClientProvider, useMutation } from '@tanstack/react-query';
-import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
-
+import { useMutation } from '@tanstack/react-query';
 import CustomInput from '../../components/CustomInput';
 import ButtonNext from '../../components/ButtonNext';
 import LoadingPage from '../(pages)/LoadingPage';
 import ErrorPage from '../(pages)/ErrorPage';
-
 import { YStack, XStack } from 'tamagui';
-import { LOCAL_IP } from '@env';
 
-const queryClient = new QueryClient()
+import { sign_in } from '../../services/auth';
+
+
 
 export default function SignIn() {
-  return (
-    <QueryClientProvider client={queryClient} >
-      <Content />
-    </QueryClientProvider>
-  )
 
-}
-
-const Content = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -32,55 +21,28 @@ const Content = () => {
 
   const mutation = useMutation({
 
-    mutationFn: (data) => {
-      
-      return axios.post(`http://${LOCAL_IP}:8000/auth/token`, data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
-    },
-  })
+    mutationFn: () =>  sign_in(email, password),
+    onSuccess: () => {
+      router.push({
+        pathname: "/(tabs)/home",
+      });
+    }
+  });
 
 
   const handleContinue = async () => {
+    try {
+      mutation.mutate();
+    } catch (error) {
+      console.log("Mutation salio mal", error);
+    }
+  };
 
-    const formData = new URLSearchParams();
-    formData.append('username', email);
-    formData.append('password', password);
-    formData.append('grant_type', 'password');
-    formData.append('scope', '');
-    formData.append('client_id', '');
-    formData.append('client_secret', '');
-
-    mutation.mutate(formData)
-
-  }
-
-  useEffect(() => {
-    const handleSuccess = async () => {
-      if (mutation.isSuccess) {
-        const token = mutation.data.data.access_token.toString();
-        await SecureStore.setItemAsync("token", token);
-        let result = await SecureStore.getItemAsync("token");
-        if (!result) {
-          console.log("No token found");
-          throw new Error(`No value found for key: token`);
-        }
-        router.push({
-          pathname: "/(tabs)/home",
-          params: { email, password }
-        });
-      }
-    };
-
-    handleSuccess();
-  }, [mutation.isSuccess]);
 
   if (mutation.isPending) {
     return <LoadingPage />;
   }
 
-  if (mutation.isError) {
-    console.log(mutation.error);
-    return <ErrorPage />;
-  }
 
   return (
     <KeyboardAvoidingView
@@ -116,6 +78,7 @@ const Content = () => {
                 multiline={false}
                 inputMode={"password"}
               />
+              {mutation.isError && <Text className="text-red-500 text-base font-qsemibold">Error al iniciar sesión</Text>}
             </YStack>
             <YStack className="items-center">
               <ButtonNext height={60} width={220} onPress={handleContinue}>
@@ -131,3 +94,4 @@ const Content = () => {
     </KeyboardAvoidingView>
   )
 }
+
