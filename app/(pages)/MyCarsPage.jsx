@@ -3,69 +3,23 @@ import Header from "../../components/Header";
 import { FlatList, View, Text, ScrollView, Image } from "react-native";
 import CarCard from "../../components/CarCard";
 import { Button, XStack } from "tamagui";
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { Link } from "expo-router";
 import icons from "../../constants/icons"
-import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query'
-import {LOCAL_IP} from '@env'
+import { useQuery } from '@tanstack/react-query'
 import LoadingPage from '../(pages)/LoadingPage'
 import ErrorPage from "./ErrorPage";
-import * as SecureStore from 'expo-secure-store';
-import React, { useState, useEffect } from "react";
-import { useFocusEffect } from '@react-navigation/native';
+import { getMyCars } from "../../services/users";
 
-const queryClient = new QueryClient()
+
 
 export default function MyCarsPage() {
 
-    return (
-        <QueryClientProvider client={queryClient} >
-            <Content />
-        </QueryClientProvider>
-    )
-}
-
-function Content() {
-    const [token, setToken] = useState(null);
-
-
-    useEffect(() => {
-        const fetchToken = async () => {
-            try {
-                const storedToken = await SecureStore.getItemAsync('token');
-                if (storedToken) {
-                    setToken(storedToken);
-                }
-            } catch (error) {
-                console.error('Error fetching token from SecureStore', error);
-            }
-        };
-
-        fetchToken();
-    }, []);
-
-
-    const url = `http://${LOCAL_IP}:8000/users/mycars`
-    
-    const headers = {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-    };
-
-    
-
-    const { isPending, error, data } = useQuery({
-        queryKey: ['fetchMycars'],
-        queryFn: () =>
-            fetch(url, {headers} ).then((res) =>
-                res.json(),
-            ),
-            enabled: !!token,
-            
-
+    const { isLoading, error, data } = useQuery({
+        queryKey: ['getCars'],
+        queryFn: getMyCars
     });
     
-    
-    if (isPending) {
+    if (isLoading) {
         return <LoadingPage />
     }
 

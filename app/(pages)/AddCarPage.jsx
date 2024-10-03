@@ -1,96 +1,63 @@
-import { View, Text } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import { Text } from 'react-native'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { YStack, XStack, ScrollView } from 'tamagui'
 import CustomInput from '../../components/CustomInput'
 import ButtonNext from '../../components/ButtonNext'
 import { Link, useRouter } from 'expo-router'
 import LoadingPage from '../(pages)/LoadingPage'
-import axios from 'axios'
-import { LOCAL_IP } from '@env'
-import { QueryClient, QueryClientProvider, useQuery, useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import ErrorPage from '../(pages)/ErrorPage'
-import * as SecureStore from 'expo-secure-store';
 import { icons } from '../../constants'
 import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform } from 'react-native'
+import { newCar } from '../../services/users'
 
-const queryClient = new QueryClient()
+
+
 
 export default function AddCarPage() {
-  return (
-    <QueryClientProvider client={queryClient} >
-      <Content />
-    </QueryClientProvider>
-  )
-
-}
-
-const Content = () => {
+  const queryClient = useQueryClient();
   const [model, setModel] = useState('')
   const [plate, setPlate] = useState('')
   const [color, setColor] = useState('')
 
   const mutation = useMutation({
-    mutationFn: ({ carData, token }) => {
-
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      };
-      return axios.post(`http://${LOCAL_IP}:8000/users/addcar`, carData, { headers })
-    },
+    mutationFn: (carData) => newCar(carData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['getCars'] })
+      router.push({
+        pathname: "/(pages)/PostSuccessful",
+        params: {
+          title: "Agregaste tu auto!",
+          section: "Mis autos",
+          sectionSource: icons.car,
+          returnTo: "Volver a Mis autos",
+          returnToSource: icons.car,
+          returnToRef: "/(pages)/MyCarsPage"
+        }
+      });
+    }
   })
 
 
   const router = useRouter();
 
-  const handleContinue = async () => {
-
-
-    let token = ""
-    try {
-      token = await SecureStore.getItemAsync("token");
-    } catch (error) {
-      console.error('Error getting token from SecureStore', error);
-      return null;
-    }
-
+  const handleContinue = () => {
     const obj = {
       "model": model,
       "plate": plate,
       "color": color
     }
 
-    mutation.mutate({ carData: obj, token });
+    mutation.mutate(obj);
   };
 
-  useEffect(() => {
-    const handleSuccess = async () => {
-      if (mutation.isSuccess) {
 
-        router.push({
-          pathname: "/(pages)/PostSuccessful",
-          params: {
-            title: "Agregaste tu auto!",
-            section: "Mis autos",
-            sectionSource: icons.car,
-            returnTo: "Volver a Mis autos",
-            returnToSource: icons.car,
-            returnToRef: "/(pages)/MyCarsPage"
-          }
-        });
-      }
-    };
-
-    handleSuccess();
-  }, [mutation.isSuccess]);
-
-  if (mutation.isLoading) {
+  if (mutation.isPending) {
     return <LoadingPage />;
   }
 
   if (mutation.isError) {
-    console.log(mutation.error);
     return <ErrorPage />;
   }
 
