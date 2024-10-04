@@ -62,11 +62,11 @@ export default function Profile() {
 
       if (!result.canceled) {
         saveImage(result.assets[0].uri);
-        setModalVisible(false);
+        setProfilePictureModalVisible(false);
       }
     } catch (error) {
       alert(error.message);
-      setModalVisible(false);
+      setProfilePictureModalVisible(false);
     }
   };
 
@@ -110,7 +110,7 @@ export default function Profile() {
 
   const handleDeletePicture = () => {
     removeImage.mutate();
-    setModalVisible(false);
+    setProfilePictureModalVisible(false);
   };
 
   const handleChooseFromLibrary = () => {

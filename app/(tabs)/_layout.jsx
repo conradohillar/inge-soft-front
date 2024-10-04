@@ -16,7 +16,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
         tintColor={color}
         className="w-7 h-7"
       />
-      <Text className={`${focused ? "font-qbold" : "font-qmedium"} text-xs`} style={{ color: color}}>
+      <Text className={`${focused ? "font-qbold" : "font-qmedium"} text-xs`} style={{ color: color }}>
         {name}
       </Text>
     </View>
@@ -39,46 +39,50 @@ const TabsLayout = () => {
           }
         }}
       >
-        <Tabs.Screen name="trips" 
+        <Tabs.Screen name="trips"
           options={{
-            title: "trips", 
-            headerShown: false, 
-            tabBarIcon: ({ color, focused}) => (
-              <TabIcon 
+            title: "trips",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
                 icon={icons.car}
                 color={color}
                 name="Viajes"
                 focused={focused}
               />
-        )}}/>
-        <Tabs.Screen name="home" 
+            )
+          }} />
+        <Tabs.Screen name="home"
           options={{
-            title: "Home", 
-            headerShown: false, 
-            tabBarIcon: ({ color, focused}) => (
-              <TabIcon 
+            gestureEnabled: false,
+            title: "Home",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
                 icon={icons.home}
                 color={color}
                 name="Inicio"
                 focused={focused}
               />
-        )}}/>
-        <Tabs.Screen name="profile" 
+            )
+          }} />
+        <Tabs.Screen name="profile"
           options={{
-            title: "Profile", 
-            headerShown: false, 
-            tabBarIcon: ({ color, focused}) => (
-              <TabIcon 
+            title: "Profile",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
                 icon={icons.profile2}
                 color={color}
                 name="Perfil"
                 focused={focused}
               />
-        )}}/>
+            )
+          }} />
       </Tabs>
-      <StatusBar style="dark"/>
+      <StatusBar style="dark" />
     </>
-    
+
   )
 }
 

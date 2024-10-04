@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Text, Platform } from 'react-native';
-import { Link, useRouter } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { useMutation } from '@tanstack/react-query';
 import CustomInput from '../../components/CustomInput';
 import ButtonNext from '../../components/ButtonNext';
@@ -17,15 +17,11 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const router = useRouter();
-
   const mutation = useMutation({
 
-    mutationFn: () =>  sign_in(email, password),
+    mutationFn: () => sign_in(email, password),
     onSuccess: () => {
-      router.push({
-        pathname: "/(tabs)/home",
-      });
+      router.replace('../(tabs)/home');
     }
   });
 

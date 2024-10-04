@@ -14,17 +14,16 @@ import { getUserData } from '../../services/users';
 
 export default function Home() {
 
-
-  const { isPending, error, data } = useQuery({
+  const { isLoading, isError, data } = useQuery({
     queryKey: ['getUserData'],
     queryFn: getUserData
   });
 
-  if (isPending) {
+  if (isLoading) {
     return <LoadingPage />
   }
 
-  if (error) {
+  if (isError) {
     return <ErrorPage />
   }
 
