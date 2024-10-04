@@ -12,21 +12,28 @@ import * as FileSystem from 'expo-file-system'
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import * as ImagePicker from 'expo-image-picker';
-import {  useQuery, useMutation } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import ProfilePictureModal from '../../components/PofilePictureModal';
-import { getUserData, deleteImage, newImage } from '../../services/users';
+import { getUserData, deleteImage, newImage, newName } from '../../services/users';
+import EditNameModal from '../../components/EditNameModal';
+
 
 
 export default function Profile() {
+  const queryClient = useQueryClient();
 
-
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isProfilePictureModalVisible, setProfilePictureModalVisible] = useState(false);
+  const [isEditNameModalVisible, setEditNameModalVisible] = useState(false);
   const [image, setImage] = useState(icons.placeholder_profile);
+  const [name, setName] = useState('');
 
 
+  const toggleProfilePictureModal = () => {
+    setProfilePictureModalVisible(!isProfilePictureModalVisible);
+  };
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+  const toggleEditNameModal = () => {
+    setEditNameModalVisible(!isEditNameModalVisible);
   };
 
   const uploadImage = async (mode) => {
@@ -62,8 +69,8 @@ export default function Profile() {
       setModalVisible(false);
     }
   };
-  
-  
+
+
 
   const saveImage = async (imageUri) => {
     try {
@@ -101,7 +108,7 @@ export default function Profile() {
   });
 
 
-  const handleDeletePicture =  () => {
+  const handleDeletePicture = () => {
     removeImage.mutate();
     setModalVisible(false);
   };
@@ -114,13 +121,39 @@ export default function Profile() {
     uploadImage();
   };
 
-const { isLoading, error, data } = useQuery({
+  const saveNewName = useMutation({
+    mutationFn: (name) => newName(name),
+    onSuccess: (name) => {
+      queryClient.setQueryData(
+        ['getUserData'],
+        (oldData) =>
+          oldData
+            ? {
+              ...oldData,
+              name: name,
+            }
+            : oldData,
+      )
+      setName(name);
+    },
+    onError: (error) => {
+      console.error("Error al editar el nombre:", error.message);
+    },
+  });
+
+  const handleSaveName = () => {
+    console.log(name);
+    saveNewName.mutate(name);
+    toggleEditNameModal();
+  };
+
+  const { isLoading, error, data } = useQuery({
     queryKey: ['getUserData'],
     queryFn: getUserData,
   });
 
   useEffect(() => {
-    if(data.photo_url != null){
+    if (data.photo_url != null) {
       setImage(data.photo_url)
     }
   }, [data])
@@ -140,7 +173,7 @@ const { isLoading, error, data } = useQuery({
         <YStack className="h-[15%] items-center justify-evenly">
           <XStack className="w-[90%] items-center justify-start">
             <View className="flex-1 justify-center items-center">
-              <TouchableOpacity onPress={toggleModal}>
+              <TouchableOpacity onPress={toggleProfilePictureModal}>
                 <Avatar circular size="$12" borderColor="$black" borderWidth={1}>
                   <Avatar.Image
                     accessibilityLabel="Cam"
@@ -148,8 +181,8 @@ const { isLoading, error, data } = useQuery({
                   />
                 </Avatar>
                 <ProfilePictureModal
-                  isVisible={isModalVisible}
-                  onClose={toggleModal}
+                  isVisible={isProfilePictureModalVisible}
+                  onClose={toggleProfilePictureModal}
                   onChooseFromLibrary={handleChooseFromLibrary}
                   onTakePicture={handleTakePicture}
                   onDeletePicture={handleDeletePicture}
@@ -159,9 +192,16 @@ const { isLoading, error, data } = useQuery({
             <YStack className="items-start justify-evenly ml-5">
               <XStack className="items-center">
                 <Text className="text-black text-lg font-qbold">{data.name}</Text>
-                <Button className="h-5 w-5 bg-background ml-2">
+                <TouchableOpacity onPress={toggleEditNameModal} className={"px-2"}>
                   <Image source={icons.pencil} className="h-4 w-4" tintColor="#aaa" resizeMode='contain' />
-                </Button>
+                  <EditNameModal
+                    onTextChange={setName}
+                    value={name}
+                    isVisible={isEditNameModalVisible}
+                    onClose={toggleEditNameModal}
+                    onSave={handleSaveName}
+                  />
+                </TouchableOpacity>
               </XStack>
               <Text className="text-gray-600 text-base font-qsemibold">{data.email}</Text>
             </YStack>

@@ -13,31 +13,31 @@ import { getUserData } from '../../services/users';
 
 
 export default function Home() {
- 
-  
+
+
   const { isPending, error, data } = useQuery({
-      queryKey: ['getUserData'],
-      queryFn: getUserData
+    queryKey: ['getUserData'],
+    queryFn: getUserData
   });
 
   if (isPending) {
-      return <LoadingPage />
+    return <LoadingPage />
   }
 
   if (error) {
-      return <ErrorPage />
+    return <ErrorPage />
   }
 
 
   return (
     <SafeAreaView className="bg-background flex-1">
       <Header />
-      
+
       <YStack className="h-full items-center justify-evenly bg-background">
-      
+
         <XStack className="items-center h-[15%]">
           <Text className="text-3xl text-black font-qsemibold"> Bienvenido,</Text>
-          <Text className="text-3xl text-primary font-qbold"> {data.name}</Text>
+          <Text className="text-3xl text-primary font-qbold"> {data.name.split(' ')[0]}</Text>
         </XStack>
         <View className="w-[90%] mb-10 bg-gray-400 rounded-2xl border-2 justify-center">
           <Image
@@ -59,6 +59,6 @@ export default function Home() {
         </XStack>
       </YStack>
     </SafeAreaView>
-  ); 
+  );
 
 }

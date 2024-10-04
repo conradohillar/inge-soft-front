@@ -12,7 +12,7 @@ import HorizontalTabs from '../../components/HorizontalTabs'
 
 export default function SignUp() {
   const [userName, setUserName] = useState('');
-  const [email, setEmail] = useState('');
+  const [dni, setDni] = useState('');
   const [address, setAddress] = useState('');
 
 
@@ -24,13 +24,13 @@ export default function SignUp() {
 
       router.push({
         pathname: "/(auth)/sign-up2",
-        params: { email, userName, address }
+        params: { dni, userName, address }
       });
     } catch (error) {
       console.error("Error: ", error);
     }
   };
-  
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"} // "padding" para iOS, "height" para Android
@@ -45,9 +45,8 @@ export default function SignUp() {
             </YStack>
             <YStack className="items-center justify-center">
               <CustomInput title="Nombre" value={userName} handleChangeText={setUserName} />
+              <CustomInput title="DNI" value={dni} handleChangeText={setDni} />
               <AutocompleteCityInput title="Dirección" placeholder="i.e: Tigre" value={address} onChangeText={setAddress} />
-              <CustomInput title="E-mail" value={email} handleChangeText={setEmail} />
-
 
             </YStack>
             <YStack className="items-center">

@@ -3,29 +3,28 @@ import { Stack } from 'expo-router'
 
 const PagesLayout = () => {
   return (
-
     <>
-      <Stack>
-        
-        <Stack.Screen name="FrontPage" options={{headerShown: false}}/>
-        <Stack.Screen name="LoadingPage" options={{headerShown: false}}/>
-        <Stack.Screen name="ErrorPage" options={{headerShown: false}}/>
-        <Stack.Screen name="LandingPage" options={{headerShown: false}}/>
-        <Stack.Screen name="SearchTripPage" options={{headerShown: false}}/>
-        <Stack.Screen name="SearchResultsPage" options={{headerShown: false}}/>
-        <Stack.Screen name="SearchTripPerson" options={{headerShown: false}}/>
-        <Stack.Screen name="SearchTripPackage" options={{headerShown: false}}/>
-        <Stack.Screen name="PostTripPage" options={{headerShown: false}}/>
-        <Stack.Screen name="PostTripPage2" options={{headerShown: false}}/>
-        <Stack.Screen name="PostSuccessful" options={{headerShown: false}}/>
-        <Stack.Screen name="MyCarsPage" options={{headerShown: false}}/>
-        <Stack.Screen name="AddCarPage" options={{headerShown: false}}/>
-        <Stack.Screen name="CredentialsPage" options={{headerShown: false}}/>
-        <Stack.Screen name="TripsPage" options={{headerShown: false}}/>
-      </Stack> 
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="FrontPage" />
+        <Stack.Screen name="LoadingPage" />
+        <Stack.Screen name="ErrorPage" />
+        <Stack.Screen name="LandingPage" />
+        <Stack.Screen name="SearchTripPage" />
+        <Stack.Screen name="SearchResultsPage" />
+        <Stack.Screen name="SearchTripPerson" />
+        <Stack.Screen name="SearchTripPackage" />
+        <Stack.Screen name="PostTripPage" />
+        <Stack.Screen name="PostTripPage2" />
+        <Stack.Screen name="PostSuccessful" />
+        <Stack.Screen name="MyCarsPage" />
+        <Stack.Screen name="AddCarPage" />
+        <Stack.Screen name="CredentialsPage" />
+        <Stack.Screen name="TripsPage" />
+        <Stack.Screen name="NewCredentialsSuccessful" />
+      </Stack>
     </>
+  );
+};
 
-  )
-}
 
 export default PagesLayout

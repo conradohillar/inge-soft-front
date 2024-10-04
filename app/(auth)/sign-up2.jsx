@@ -1,6 +1,6 @@
 import { SafeAreaView, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Text, Platform } from 'react-native';
 import React, { useState, useEffect } from 'react'
-import {  YStack } from 'tamagui'
+import { YStack } from 'tamagui'
 import CustomInput from '../../components/CustomInput'
 import ButtonNext from '../../components/ButtonNext'
 import { Link, useLocalSearchParams, useRouter } from 'expo-router'
@@ -12,8 +12,8 @@ import { sign_up } from '../../services/auth'
 
 export default function SignUp2() {
 
-  const { email, userName, address } = useLocalSearchParams();
-  const [dni, setDni] = useState(0);
+  const { dni, userName, address } = useLocalSearchParams();
+  const [email, setEmail] = useState(0);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -38,9 +38,9 @@ export default function SignUp2() {
       "dni": Number(dni),
       "photo_url": null
     };
-    
-   mutation.mutate(userData)
-    
+
+    mutation.mutate(userData)
+
   };
 
   if (mutation.isLoading) {
@@ -68,12 +68,18 @@ export default function SignUp2() {
             </YStack>
 
             <YStack className="justify-center">
-              <CustomInput title="DNI" value={dni} handleChangeText={setDni} />
+              <CustomInput
+                title="E-mail"
+                value={email}
+                handleChangeText={setEmail} />
               <CustomInput
                 title="Contraseña"
                 value={password}
                 handleChangeText={setPassword}
                 secureTextEntry={true}
+                autoComplete={"password"}
+                multiline={false}
+                inputMode={"password"}
                 placeholder={"Ingresa tu contraseña"}
               />
               <CustomInput
@@ -81,6 +87,10 @@ export default function SignUp2() {
                 value={confirmPassword}
                 handleChangeText={setConfirmPassword}
                 secureTextEntry={true}
+                autoComplete={"password"}
+                multiline={false}
+                inputMode={"password"}
+                placeholder={"Reingresá tu contraseña"}
               />
             </YStack>
             <YStack className="items-center">
