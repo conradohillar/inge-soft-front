@@ -14,21 +14,21 @@ import { getMyCars } from "../../services/users";
 
 export default function MyCarsPage() {
 
-    const { isLoading, error, data } = useQuery({
+    const { isLoading, isError, data } = useQuery({
         queryKey: ['getCars'],
         queryFn: getMyCars
     });
-    
+
     if (isLoading) {
         return <LoadingPage />
     }
 
-    if (error) {
+    if (isError) {
         return <ErrorPage />
     }
 
 
-    
+
     const renderItem = ({ item }) => {
         return (
             <CarCard model={item.model} plate={item.plate} />
@@ -48,7 +48,7 @@ export default function MyCarsPage() {
             <XStack className="items-center justify-center mb-7">
                 <Text className="text-4xl font-qbold text-black">MIS AUTOS</Text>
             </XStack>
-            { data!= undefined && <FlatList
+            {data != undefined && <FlatList
                 className="w-full"
                 data={data}
                 keyExtractor={item => item.plate}

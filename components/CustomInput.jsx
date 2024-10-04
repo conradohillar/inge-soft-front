@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 
 
-export default function CustomInput({ title, placeholder, height, value, handleChangeText, editable = true, secureTextEntry = false, autoComplete, inputMode, multiline=true }) {
+export default function CustomInput({ title, placeholder, height, value, handleChangeText, editable = true, secureTextEntry = false, autoComplete, inputMode, multiline = true }) {
     const [isFocused, setIsFocused] = useState(false);
 
     return (

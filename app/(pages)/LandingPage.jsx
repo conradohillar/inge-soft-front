@@ -6,6 +6,7 @@ import BlackButton from '../../components/BlackButton';
 import { StatusBar } from 'expo-status-bar';
 
 export default function LandingPage() {
+
     return (
         <>
             <SafeAreaView className="bg-backgound h-full w-full flex-1">
@@ -40,6 +41,7 @@ export default function LandingPage() {
                     </View>
                 </YStack>
             </SafeAreaView>
+            <StatusBar style="dark" />
         </>
     );
 }

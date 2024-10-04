@@ -5,7 +5,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { ChevronDown } from '@tamagui/lucide-icons';
 import CustomInput from './CustomInput';
 
-export default function TimePicker({style, className, placeholderTextColor, value, onChangeTime, minuteInterval, title, ...props}){
+export default function TimePicker({ style, className, placeholderTextColor, value, onChangeTime, minuteInterval, title, ...props }) {
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
   const [placeholderText, setPlaceholderText] = useState("Seleccionar hora");
@@ -25,7 +25,7 @@ export default function TimePicker({style, className, placeholderTextColor, valu
       hour: '2-digit',
       minute: '2-digit',
       second: undefined // Esto es para evitar mostrar los segundos
-    });  
+    });
     setPlaceholderText(formatTime)
     setPlaceholderColor("#000")
     hideTimePicker();
@@ -34,17 +34,21 @@ export default function TimePicker({style, className, placeholderTextColor, valu
   return (
     <View className="w-full items-center">
       <YStack className="items-start justify-center w-[85%] m-2">
-            <View className="w-full items-center">
-                <View className="w-[95%]">
-                    <Text className="text-m font-qbold text-gray-600 mb-2">{title}</Text>
-                </View>
-            </View>
-            <Pressable onPress={showTimePicker} style={style} className={`justify-center items-center rounded-xl border-x border-y border-black h-[50px] w-full ${className}` }>
-              <XStack className="items-center w-[90%] pr-2 justify-between">
-                <Text className="text-sm font-qsemibold text-gray-500 ">{placeholderText}</Text>
-                <ChevronDown size={16} color="#000" />
-              </XStack>
-            </Pressable>
+        <View className="w-full items-center">
+          <View className="w-[95%]">
+            <Text className="text-m font-qbold text-gray-600 mb-2">{title}</Text>
+          </View>
+        </View>
+        <Pressable
+          onPress={showTimePicker}
+          style={style}
+          className={`justify-center items-center rounded-lg ${isTimePickerVisible ? 'border-2 border-primary' : 'border border-gray-900'} h-[50px] w-full ${className}`}
+        >
+          <XStack className="items-center w-[93%] justify-between">
+            <Text className={`text-sm font-qsemibold text-[${placeholderColor}]`}>{placeholderText}</Text>
+            <ChevronDown size={20} color="#777" />
+          </XStack>
+        </Pressable>
       </YStack>
 
       <DateTimePickerModal

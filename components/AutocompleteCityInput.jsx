@@ -1,51 +1,113 @@
-import React, { useState } from 'react';
-import { Input, YStack } from 'tamagui';
-import { Text, View, FlatList, TouchableOpacity } from 'react-native';
+
 import { autocomplete } from '../services/autocomplete';
-import CustomInput from './CustomInput';
+import React, { memo, useCallback, useRef, useState } from 'react'
+import { Button, Dimensions, Text, View, Platform } from 'react-native'
+import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown'
+import { YStack } from 'tamagui';
 
-export default function AutocompleteCityInput({ title, placeholder, value, onChangeText, className }) {
-  const [suggestions, setSuggestions] = useState([]); // Estado para las sugerencias
+export default function AutocompleteCityInput({ title, placeholder, value, setValue, className }) {
+  const [isFocused, setIsFocused] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [suggestionsList, setSuggestionsList] = useState(null)
+  const dropdownController = useRef(null)
 
-  const handleInputChange = async (text) => {
-    onChangeText(text);
-    if (text.length > 2) { // Solo buscar si el texto tiene más de 2 caracteres
-      const results = await autocomplete(text);
-      setSuggestions(results); // Guardar las sugerencias
-    } else {
-      setSuggestions([]); // Limpiar sugerencias si el texto es demasiado corto
+  const searchRef = useRef(null)
+
+  const getSuggestions = useCallback(async text => {
+    const filterToken = text.toLowerCase()
+    console.log('getSuggestions', text)
+    if (typeof text !== 'string' || text.length < 3) {
+      setSuggestionsList(null)
+      return
     }
-  };
+    setLoading(true)
+    const items = await autocomplete(text)
+    const suggestions = items.map(item => ({
+      id: item.display_name,
+      title: item.display_name,
+    }))
+    setSuggestionsList(suggestions)
+    setLoading(false)
+  }, [])
 
-  const handleSuggestionPress = (displayName) => {
-    onChangeText(displayName); // Actualizar el valor del campo de texto
-    setSuggestions([]); // Limpiar la lista de sugerencias
-  };
+  const onClearPress = useCallback(() => {
+    setSuggestionsList(null)
+  }, [])
+
+  const onOpenSuggestionsList = useCallback(isOpened => { }, [])
 
   return (
-      <YStack className="w-full items-center">
-          <CustomInput
-              title={title}
-              placeholder={placeholder}
-              value={value}
-              handleChangeText={handleInputChange} 
-              height={75}
-            />
-
-          <View className={`w-full items-flex-start justify-center px-10 ${className}`}>
-          {/* Mostrar sugerencias debajo del input */}
-          {(
-            <FlatList
-              data={suggestions}
-              keyExtractor={(item) => item.place_id}
-              renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => handleSuggestionPress(item.display_name)}>
-                  <Text className="p-2 text-black">{item.display_name}</Text>
-                </TouchableOpacity>
-              )}
-            />
-          )}
+    <>
+      <YStack className="w-full items-start justify-center ml-7 mt-4">
+        <View className="w-full px-2">
+          <View className="w-[85%]">
+            <Text className="text-m font-qbold text-gray-600 mb-2">{title}</Text>
           </View>
-    </YStack>
-  );
+        </View>
+        <AutocompleteDropdown
+          ref={searchRef}
+          controller={controller => {
+            dropdownController.current = controller
+          }}
+          direction={Platform.select({ ios: 'down' })}
+          dataSet={suggestionsList}
+          onChangeText={getSuggestions}
+          ///////////////////////////////////////////////////
+
+          //ARREGLAR LO QUE ESTA COMENTADO
+
+          ///////////////////////////////////////////////////
+
+
+          // onSelectItem={item => {
+          //   setValue(item.title)
+          //   setSuggestionsList(null)
+          // }}
+          debounce={600}
+          suggestionsListMaxHeight={Dimensions.get('window').height * 0.4}
+          onClear={onClearPress}
+          onOpenSuggestionsList={onOpenSuggestionsList}
+          loading={loading}
+          useFilter={false} // set false to prevent rerender twice
+          textInputProps={{
+            placeholder: placeholder,
+            autoCorrect: false,
+            autoCapitalize: 'none',
+            style: {
+              color: '#000',
+              fontFamily: 'Quicksand-Semibold',
+              fontSize: 14,
+            },
+          }}
+          rightButtonsContainerStyle={{
+            right: 8,
+            height: 30,
+            alignSelf: 'center',
+          }}
+          inputContainerStyle={{
+            backgroundColor: "#eee",
+            height: 50, width: '100%',
+            borderRadius: 8,
+            borderWidth: isFocused ? 2 : 1,
+            borderColor: isFocused ? "#59A58A" : "#333"
+          }}
+          suggestionsListContainerStyle={{
+            backgroundColor: '#ddd',
+            borderWidth: 1,
+            borderColor: "#000"
+          }}
+          containerStyle={{
+            width: '85%',
+          }}
+          renderItem={(item, text) => <Text style={{ color: '#000', padding: 15, fontFamily: 'Quicksand-Semibold' }}>{item.title}</Text>}
+          //   ChevronIconComponent={<Feather name="chevron-down" size={20} color="#fff" />}
+          //   ClearIconComponent={<Feather name="x-circle" size={18} color="#fff" />}
+          inputHeight={50}
+          showChevron={true}
+          closeOnBlur={true}
+          showClear={false}
+        />
+      </YStack >
+    </>
+  )
 }

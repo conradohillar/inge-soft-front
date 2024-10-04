@@ -19,10 +19,9 @@ export const autocomplete = async (text) => {
   lastRequestTime = now; // Actualizamos el tiempo de la última solicitud
 
   try {
-    const url = `https://api.locationiq.com/v1/autocomplete?key=${API_KEY}&q=${text}&limit=5&countrycodes=AR`;
+    const url = `https://api.locationiq.com/v1/autocomplete?key=${API_KEY}&q=${text}&limit=8&countrycodes=AR`;
 
     const response = await axios.get(url);
-
     return response.data;
   } catch (error) {
     console.error('Error al autocompletar:', error);

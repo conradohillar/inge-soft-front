@@ -15,12 +15,12 @@ export default function PostTripPage() {
   const [toLocation, setToLocation] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
-  
-  
+
+
   const router = useRouter();
 
   const handleContinue = async () => {
-    
+
     const formattedDate = date.toISOString().split('T')[0]; // YYYY-MM-DD
     const formattedTime = new Date(time);
     formattedTime.setHours(formattedTime.getHours() - 3);
@@ -64,7 +64,7 @@ export default function PostTripPage() {
               <View className="w-full items-start justify-center mt-3">
                 <DatePicker
                   style={{ backgroundColor: "#EEEEEE" }}
-                  placeholderTextColor="#bbb"
+                  placeholderTextColor="#777"
                   value={date}
                   onChangeDate={setDate}
                   title={"Fecha de salida"}
@@ -73,7 +73,7 @@ export default function PostTripPage() {
               <View className="w-full items-start justify-center pt-3">
                 <TimePicker
                   style={{ backgroundColor: "#EEEEEE" }}
-                  placeholderTextColor="#bbb"
+                  placeholderTextColor="#777"
                   value={time}
                   onChangeTime={setTime}
                   minuteInterval={30}

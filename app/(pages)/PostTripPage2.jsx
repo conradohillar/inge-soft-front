@@ -19,6 +19,8 @@ import ErrorPage from "./ErrorPage";
 import { getRideData } from "../../services/rides";
 import { Pressable } from "react-native";
 import { postTrip } from "../../services/rides";
+import CarDropdown from "../../components/DropdownComponent";
+
 
 export default function PostTripPage2() {
     const { fromLocation, toLocation, formattedDate, departureTime } = useLocalSearchParams();
@@ -52,7 +54,7 @@ export default function PostTripPage2() {
 
 
     const mutation = useMutation({
-        mutationFn: (tripData) => postTrip(tripData,car),
+        mutationFn: (tripData) => postTrip(tripData, car),
         onSuccess: () => {
             const title = "Publicaste tu viaje"
             const section = "MIS VIAJES"
@@ -106,27 +108,6 @@ export default function PostTripPage2() {
     if (mutation.isError || error) {
         return <ErrorPage />;
     }
-    if (data.cars.length === 0) {
-        return (
-            <SafeAreaView className="h-full w-full bg-background">
-                <Header />
-                <View className="items-center mt-10 mb-12">
-                    <Text className="text-[27px] font-qbold text-black">No podes crear un viaje </Text>
-                    <Text className="text-[27px] font-qbold text-black">sin tener un auto</Text>
-                </View>
-                <XStack className="items-center justify-center my-10">
-                    <Link href="/(pages)/AddCarPage" asChild>
-                        <Pressable className="flex-row items-center" on>
-                            <Text className="text-lg text-gray-600 font-qsemibold">Te gustaria agregar un auto?</Text>
-                            <Button className="h-8 w-8 bg-background rounded-xl ml-3 mt-1">
-                                <Image source={icons.add} className="h-6 w-6" resizeMode="contain" />
-                            </Button>
-                        </Pressable>
-                    </Link>
-                </XStack>
-            </SafeAreaView>
-        );
-    }
 
     return (
         <SafeAreaView className="h-full w-full bg-background">
@@ -139,11 +120,13 @@ export default function PostTripPage2() {
                     <Text className="text-sm text-black font-qbold ml-10 mb-3">Seleccioná tu
                         <Text className="text-sm text-primary font-qbold ml-10 mb-3"> auto</Text>
                     </Text>
-                    <PortalProvider>
-                        <SelectFieldCar items={data.cars} label="Mis autos" value={car} handleChangeValue={setCar}
-                            renderItem={(item) => (<Text>{item.plate}, {item.model}</Text>)}
-                            renderSelected={(item) => renderSelectedCar(data.cars, item)} />
-                    </PortalProvider>
+                    <View className="w-full items-start ml-7">
+                        <CarDropdown data={data.cars.map(car => ({
+                            label: `${car.model} - ${car.plate}`,
+                            value: car.plate
+                        }))} value={car} setValue={setCar} />
+                    </View>
+
                     <XStack className="mx-11 mb-5 mt-12">
                         <Text className='text-sm font-qbold text-black'>Indicá los
                             <Text className='text-sm font-qbold text-primary'> espacios disponibles
