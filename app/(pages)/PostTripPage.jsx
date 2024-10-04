@@ -26,6 +26,7 @@ export default function PostTripPage() {
     formattedTime.setHours(formattedTime.getHours() - 3);
     const departureTime = formattedTime.toISOString().split('T')[1]; // HH:MM:SS.sssZ
     try {
+
       router.push({
         pathname: "/(pages)/PostTripPage2",
         params: { fromLocation, toLocation, formattedDate, departureTime }
@@ -52,14 +53,12 @@ export default function PostTripPage() {
               <AutocompleteCityInput
                 title="Desde"
                 placeholder="i.e: Tigre"
-                value={fromLocation}
-                onChangeText={setFromLocation}
+                setValue={setFromLocation}
               />
               <AutocompleteCityInput
                 title="Hasta"
                 placeholder="i.e: Mar del Plata"
-                value={toLocation}
-                onChangeText={setToLocation}
+                setValue={setToLocation}
               />
               <View className="w-full items-start justify-center mt-3">
                 <DatePicker

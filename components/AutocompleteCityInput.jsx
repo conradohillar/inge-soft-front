@@ -5,7 +5,7 @@ import { Button, Dimensions, Text, View, Platform } from 'react-native'
 import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown'
 import { YStack } from 'tamagui';
 
-export default function AutocompleteCityInput({ title, placeholder, value, setValue, className }) {
+export default function AutocompleteCityInput({ title, placeholder, setValue }) {
   const [isFocused, setIsFocused] = useState(false)
   const [loading, setLoading] = useState(false)
   const [suggestionsList, setSuggestionsList] = useState(null)
@@ -59,10 +59,10 @@ export default function AutocompleteCityInput({ title, placeholder, value, setVa
           ///////////////////////////////////////////////////
 
 
-          // onSelectItem={item => {
-          //   setValue(item.title)
-          //   setSuggestionsList(null)
-          // }}
+          onSelectItem={item => {
+            setValue(item ? item.title : '')
+            setSuggestionsList(null)
+          }}
           debounce={600}
           suggestionsListMaxHeight={Dimensions.get('window').height * 0.4}
           onClear={onClearPress}

@@ -71,15 +71,13 @@ export default function SearchTripPage() {
                 <AutocompleteCityInput
                   title="Desde"
                   placeholder="Seleccionar origen"
-                  value={fromLocation}
-                  onChangeText={setFromLocation}
+                  setValue={setFromLocation}
                   className={"bg-black"}
                 />
                 <AutocompleteCityInput
                   title="Hasta"
                   placeholder="Seleccionar destino"
-                  value={toLocation}
-                  onChangeText={setToLocation}
+                  setValue={setToLocation}
                 />
                 <View className="w-full items-flex-start justify-center pt-3">
                   <DatePicker className={'bg-[#EEE]'} placeholderTextColor="#888" value={date} onChangeDate={setDate} title={"Fecha de salida"} />
