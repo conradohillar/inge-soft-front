@@ -142,7 +142,6 @@ export default function Profile() {
   });
 
   const handleSaveName = () => {
-    console.log(name);
     saveNewName.mutate(name);
     toggleEditNameModal();
   };

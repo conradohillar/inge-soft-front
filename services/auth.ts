@@ -33,8 +33,6 @@ export const sign_in = async (email: string, password: string) => {
 export const sign_up = async (userData) => {
     const url = `http://${LOCAL_IP}:8000/auth/users/register`
 
-    console.log(userData)
-    console.log(basicHeader)
     try {
         const response = await axios.post(url, userData, {headers: basicHeader});
         return response.data;

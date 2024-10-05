@@ -1,10 +1,9 @@
 import { View, Text, ScrollView, Pressable, Image } from 'react-native';
 import { useEffect, useState } from 'react';
 import { XStack, YStack, Avatar, Button } from 'tamagui';
-import BlackButton from '../../components/BlackButton';
 import Header from '../../components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { getRideDetail } from '../../services/rides';
 import LoadingPage from './LoadingPage'
 import {Link} from 'expo-router';
@@ -12,7 +11,9 @@ import ErrorPage from './ErrorPage';
 import Counter from '../../components/Counter';
 import icons from '../../constants/icons';
 import { useLocalSearchParams } from 'expo-router';
-import { parse, set } from 'date-fns';
+import ButtonNext from '../../components/ButtonNext';
+import { joinRide } from '../../services/rides';
+import {useRouter} from 'expo-router';
 
 
 
@@ -33,15 +34,48 @@ export default function TripSearchDetail() {
         queryFn: () => getRideDetail(ride_id),
     });
 
-    if (isLoading) {
+    const router = useRouter()
+
+    const mutation = useMutation({
+        mutationFn: (data) => joinRide(data),
+        onSuccess: () => {
+            const title = "Reservaste tu viaje"
+            const section = "MIS VIAJES"
+            const sectionSource = icons.car
+            const returnTo = "Volver al Inicio"
+            const returnToSource = icons.home
+            const returnToRef = "/(tabs)/home"
+
+            router.push({
+                pathname: "/(pages)/PostSuccessful",
+                params: { title, section, sectionSource, returnTo, returnToSource, returnToRef }
+            });
+        }
+    });
+
+    const handleJoin = () => {
+        const data = {
+            "ride_id": ride_id ,
+            "people": seats,
+            "small_packages": spacesSmallPackage,
+            "medium_packages": spacesMediumPackage,
+            "large_packages": spacesLargePackage
+        }
+        mutation.mutate(data)
+    }
+
+    if (isLoading || mutation.isPending) {
         return <LoadingPage />
     }
 
-    if (isError) {
+    if (isError || mutation.isError) {
         return <ErrorPage />
     }
     
     const price = (data.price_person * seats + data.price_small_package * spacesSmallPackage + data.price_medium_package * spacesMediumPackage + data.price_large_package * spacesLargePackage).toFixed(2)
+
+
+
 
     return (
         <SafeAreaView className="bg-background flex-1">
@@ -155,9 +189,9 @@ export default function TripSearchDetail() {
                                     Costo: ${price}
                                 </Text>
                             </View>
-                            <BlackButton href={"/(tabs)/home"}>
+                            <ButtonNext onPress={handleJoin} >
                                 <Text className="text-2xl font-qsemibold text-white">Reservar viaje</Text>
-                            </BlackButton>
+                            </ButtonNext>
                         </YStack>
                     </ScrollView>
                 </YStack>

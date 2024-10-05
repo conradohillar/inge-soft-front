@@ -48,7 +48,7 @@ export default function SignUp2() {
   }
 
   if (mutation.isError) {
-    console.log(mutation.error);
+    console.error(mutation.error);
     return <ErrorPage />;
   }
 

@@ -39,10 +39,8 @@ export const searchRides = async (fromLocation, toLocation, formattedDate, peopl
 }
 
 export const getUserOrDriverRides = async (type, category) => {
-    console.log(type, category);
     const headers = await getHeaderWithToken();
     const url = `http://${LOCAL_IP}:8000/rides/${type}/${category}`
-    console.log(url);
     try {
         const response = await axios.get(url, { headers: headers });
         return response.data;
@@ -59,10 +57,17 @@ export const getRideDetail = async (rideId) => {
     const url = `http://${LOCAL_IP}:8000/rides/detail/${rideId}`;
     try {
         const response = await axios.get(url);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error(error);
         return null;
     }
+}
+
+export const joinRide = async (data) => {
+    const headers = await getHeaderWithToken();
+
+    const url = `http://${LOCAL_IP}:8000/rides/join`
+
+    return axios.post(url, data, { headers })
 }

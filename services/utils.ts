@@ -5,7 +5,7 @@ export const setToken = async (token: string) => {
     await SecureStore.setItemAsync("token", token);
     let result = await SecureStore.getItemAsync("token");
     if (!result) {
-      console.log("No token found");
+      console.error("No token found");
       throw new Error(`No value found for key: token`);
     }
 }

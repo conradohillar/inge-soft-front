@@ -15,6 +15,7 @@ export default function App() {
 
   const [fontsLoaded] = useFonts({
     'Inter': require('../assets/fonts/Inter_18pt-Regular.ttf'), // No se usa para nada, pero si no se carga tira warning
+    'Quicksand-Semibold': require('../assets/fonts/Quicksand-SemiBold.ttf'),
   });
 
   useEffect(() => {
