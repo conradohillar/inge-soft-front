@@ -1,5 +1,5 @@
 
-import { autocomplete } from '../services/autocomplete';
+import { autocomplete } from '../services/utils';
 import React, { memo, useCallback, useRef, useState } from 'react'
 import { Button, Dimensions, Text, View, Platform } from 'react-native'
 import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown'
@@ -14,18 +14,19 @@ export default function AutocompleteCityInput({ title, placeholder, setValue }) 
   const searchRef = useRef(null)
 
   const getSuggestions = useCallback(async text => {
-    const filterToken = text.toLowerCase()
-    console.log('getSuggestions', text)
-    if (typeof text !== 'string' || text.length < 3) {
+
+    if (text.length < 3) {
       setSuggestionsList(null)
       return
     }
     setLoading(true)
     const items = await autocomplete(text)
+
     const suggestions = items.map(item => ({
       id: item.display_name,
       title: item.display_name,
     }))
+
     setSuggestionsList(suggestions)
     setLoading(false)
   }, [])
@@ -52,17 +53,12 @@ export default function AutocompleteCityInput({ title, placeholder, setValue }) 
           direction={Platform.select({ ios: 'down' })}
           dataSet={suggestionsList}
           onChangeText={getSuggestions}
-          ///////////////////////////////////////////////////
-
-          //ARREGLAR LO QUE ESTA COMENTADO
-
-          ///////////////////////////////////////////////////
-
 
           onSelectItem={item => {
             setValue(item ? item.title : '')
             setSuggestionsList(null)
           }}
+
           debounce={600}
           suggestionsListMaxHeight={Dimensions.get('window').height * 0.4}
           onClear={onClearPress}

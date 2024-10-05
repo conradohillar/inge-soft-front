@@ -8,6 +8,7 @@ import { useMutation } from '@tanstack/react-query'
 import ErrorPage from '../(pages)/ErrorPage'
 import LoadingPage from '../(pages)/LoadingPage'
 import { sign_up } from '../../services/auth'
+import { emailValidation } from '../../services/utils';
 
 
 export default function SignUp2() {
@@ -29,7 +30,10 @@ export default function SignUp2() {
     }
   })
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
+
+    await emailValidation(email);
+
     const userData = {
       "name": userName,
       "email": email,

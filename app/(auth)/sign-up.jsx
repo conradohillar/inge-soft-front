@@ -5,10 +5,9 @@ import { YStack } from 'tamagui'
 import CustomInput from '../../components/CustomInput'
 import ButtonNext from '../../components/ButtonNext'
 import { Link, useRouter } from 'expo-router'
-import AutocompleteCityInput from '../../components/AutocompleteCityInput'
+import AutocompleteCityInput from '../../components/AutocompleteCityInput';
 import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform } from 'react-native'
-import Header from '../../components/Header'
-import HorizontalTabs from '../../components/HorizontalTabs'
+
 
 export default function SignUp() {
   const [userName, setUserName] = useState('');
@@ -46,8 +45,11 @@ export default function SignUp() {
             <YStack className="items-center justify-center">
               <CustomInput title="Nombre" value={userName} handleChangeText={setUserName} />
               <CustomInput title="DNI" value={dni} handleChangeText={setDni} />
-              <AutocompleteCityInput title="Dirección" placeholder="i.e: Tigre" value={address} onChangeText={setAddress} />
-
+              <AutocompleteCityInput
+                title="Dirección"
+                placeholder="i.e: Tigre"
+                setValue={setAddress}
+              />
             </YStack>
             <YStack className="items-center">
               <ButtonNext height={90} width={270} onPress={handleContinue}>

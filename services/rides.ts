@@ -59,7 +59,6 @@ export const getRideDetail = async (rideId) => {
     const url = `http://${LOCAL_IP}:8000/rides/detail/${rideId}`;
     try {
         const response = await axios.get(url);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error(error);
