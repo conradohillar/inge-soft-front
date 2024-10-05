@@ -20,6 +20,32 @@ export default function SearchResults() {
         queryFn: () => searchRides(fromLocation, toLocation, formattedDate, people, smallPacks, mediumPacks, largePacks)
     })
 
+    const router = useRouter()
+
+    const handleDetail = (ride_id) => {
+    
+        try {
+    
+            router.push({
+              pathname: "/(pages)/TripSearchDetail",
+              params: { ride_id, people, smallPacks, mediumPacks, largePacks }
+            });
+          } catch (error) {
+            console.error("Error: ", error);
+          }
+        
+    }
+
+    const renderItem = ({ item }) => {
+        const rounded = (item.price).toFixed(2);
+        const sliced_from = (item.city_from).slice(0, 3).toUpperCase();
+        const sliced_to = (item.city_to).slice(0, 3).toUpperCase();
+        return (
+            <TripCard from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} 
+                        price={rounded} url={item.driver_photo} ride_id={item.ride_id} handleOpenDetail={handleDetail}/>
+        )
+    };
+
     if (isLoading) {
         return <LoadingPage />;
     }
@@ -60,11 +86,5 @@ export default function SearchResults() {
 }
 
 
-const renderItem = ({ item }) => {
-    const rounded = (item.price).toFixed(2);
-    const sliced_from = (item.city_from).slice(0, 3).toUpperCase();
-    const sliced_to = (item.city_to).slice(0, 3).toUpperCase();
-    return (
-        <TripCard from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} price={rounded} url={item.driver_photo} />
-    )
-};
+
+

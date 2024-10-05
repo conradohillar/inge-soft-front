@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Pressable, Image } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { XStack, YStack, Avatar, Button } from 'tamagui';
 import BlackButton from '../../components/BlackButton';
 import Header from '../../components/Header';
@@ -11,23 +11,26 @@ import {Link} from 'expo-router';
 import ErrorPage from './ErrorPage';
 import Counter from '../../components/Counter';
 import icons from '../../constants/icons';
+import { useLocalSearchParams } from 'expo-router';
+import { parse, set } from 'date-fns';
 
 
 
-export default function TripDetail() {
+export default function TripSearchDetail() {
+
+    const { ride_id, people, smallPacks, mediumPacks, largePacks } = useLocalSearchParams();
 
     const [pressed, setPressed] = useState(false)
 
-    const [availableSeats, setAvailableSeats] = useState(0);
-    const [spacesSmallPackage, setSmallPackage] = useState(0);
-    const [spacesMediumPackage, setMediumPackage] = useState(0);
-    const [spacesLargePackage, setLargePackage] = useState(0);
+    const [seats, setSeats] = useState(parseInt(people,10));
+    const [spacesSmallPackage, setSmallPackage] = useState(parseInt(smallPacks,10));
+    const [spacesMediumPackage, setMediumPackage] = useState(parseInt(mediumPacks,10));
+    const [spacesLargePackage, setLargePackage] = useState(parseInt(largePacks,10));
 
-    const id = '21635d30-a3c2-4bed-b467-3dc4125760bc';
 
     const { data, isError, isLoading } = useQuery({
-        queryKey: ['rideDetail', id],
-        queryFn: () => getRideDetail(id),
+        queryKey: ['rideDetail', ride_id],
+        queryFn: () => getRideDetail(ride_id),
     });
 
     if (isLoading) {
@@ -38,7 +41,7 @@ export default function TripDetail() {
         return <ErrorPage />
     }
     
-    const price = (data.price_person * availableSeats + data.price_small_package * spacesSmallPackage + data.price_medium_package * spacesMediumPackage + data.price_large_package * spacesLargePackage).toFixed(2)
+    const price = (data.price_person * seats + data.price_small_package * spacesSmallPackage + data.price_medium_package * spacesMediumPackage + data.price_large_package * spacesLargePackage).toFixed(2)
 
     return (
         <SafeAreaView className="bg-background flex-1">
@@ -132,7 +135,7 @@ export default function TripDetail() {
                             <YStack className="w-full items-start justify-center mb-10">
                                 <XStack className="w-full items-center justify-around px-10 ml-2 mb-1">
                                     <Image source={icons.profile2} className="w-8 h-8" resizeMode="contain" />
-                                    <Counter maxCount={data.available_space_persons} count={availableSeats} handleChangeCount={setAvailableSeats} />
+                                    <Counter maxCount={data.available_space_persons} count={seats} handleChangeCount={setSeats} />
                                 </XStack>
                                 <XStack className="w-full items-center justify-around px-10 ml-2 mb-1">
                                     <Image source={icons.mypackage} className="w-8 h-8" resizeMode="contain" />
