@@ -23,7 +23,7 @@ export default function LandingPage() {
                             </BlackButton>
                         </View>
                         <View className="w-[90%]">
-                            <BlackButton href="/(pages)/TripDetail" variant={"secondary"}>
+                            <BlackButton href="/(pages)/TripHistoryDetailForDriver" variant={"secondary"}>
                                 <XStack className="items-center justify-center flex-row space-x-3">
                                     <Text className="text-[22px] font-qsemibold text-white">Continuar sin cuenta</Text>
                                 </XStack>

@@ -30,7 +30,7 @@ export default function SignIn() {
     try {
       mutation.mutate();
     } catch (error) {
-      console.log("Mutation salio mal", error);
+      console.error("Mutation salio mal", error);
     }
   };
 

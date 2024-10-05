@@ -18,11 +18,6 @@ export default function TripDetail() {
 
     const [pressed, setPressed] = useState(false)
 
-    const [availableSeats, setAvailableSeats] = useState(0);
-    const [spacesSmallPackage, setSmallPackage] = useState(0);
-    const [spacesMediumPackage, setMediumPackage] = useState(0);
-    const [spacesLargePackage, setLargePackage] = useState(0);
-
     const id = '21635d30-a3c2-4bed-b467-3dc4125760bc';
 
     const { data, isError, isLoading } = useQuery({
@@ -37,8 +32,6 @@ export default function TripDetail() {
     if (isError) {
         return <ErrorPage />
     }
-    
-    const price = (data.price_person * availableSeats + data.price_small_package * spacesSmallPackage + data.price_medium_package * spacesMediumPackage + data.price_large_package * spacesLargePackage).toFixed(2)
 
     return (
         <SafeAreaView className="bg-background flex-1">
@@ -78,7 +71,7 @@ export default function TripDetail() {
                                 </Text>
                             </Text>
                             <Text className=" w-full pt-5 text-base font-qsemibold text-gray-500 mb-1 border-t-2 border-t-[#eee]">Espacios 
-                                <Text className="text-base font-qbold text-primary"> disponibles:</Text>
+                                <Text className="text-base font-qbold text-primary"> reservados:</Text>
                             </Text>
                             <Text className="text-base font-qbold text-black mb-1">Personas:
                                 <Text className="text-base font-qbold text-black"> {data.available_space_persons}</Text>
@@ -98,8 +91,13 @@ export default function TripDetail() {
                                     <Text className="text-base font-qbold text-black"> {data.available_space_large_package}</Text>
                                 </Text>
                             </Text>
+                            <View className="w-full items-start border-t-2 border-t-[#eee] mt-6 pt-4">
+                                <Text className="text-xl font-qbold text-grey-800 mb-3">
+                                    Costo: ${data.price}
+                                </Text>
+                            </View>
                         </YStack>
-                        <YStack className="items-start justify-between w-full px-4 pb-6 pt-3 mb-1 border-2 border-[#eee]">
+                        <YStack className="items-start justify-between w-full px-4 pb-6 pt-3 mb-12 border-2 border-[#eee]">
                             <Text className="text-sm font-qbold text-[#ccc] mb-5">Sobre el conductor</Text>
                             <XStack className="items-center justify-start w-full mb-5">
                                 <Avatar circular size="$10" borderColor="$black" borderWidth={1}>
@@ -126,35 +124,6 @@ export default function TripDetail() {
                                     </Pressable>
                                 </Link>
                             </View>
-                        </YStack>
-                        <YStack className="items-start justify-between w-full px-4 pb-8 pt-3 mb-12 border-t-2 border-t-[#eee]">
-                            <Text className="text-sm font-qbold text-[#ccc] mb-5">Confirmá tu reserva</Text>
-                            <YStack className="w-full items-start justify-center mb-10">
-                                <XStack className="w-full items-center justify-around px-10 ml-2 mb-1">
-                                    <Image source={icons.profile2} className="w-8 h-8" resizeMode="contain" />
-                                    <Counter maxCount={data.available_space_persons} count={availableSeats} handleChangeCount={setAvailableSeats} />
-                                </XStack>
-                                <XStack className="w-full items-center justify-around px-10 ml-2 mb-1">
-                                    <Image source={icons.mypackage} className="w-8 h-8" resizeMode="contain" />
-                                    <Counter maxCount={data.available_space_small_package} count={spacesSmallPackage} handleChangeCount={setSmallPackage} />
-                                </XStack>
-                                <XStack className="w-full items-center justify-around px-10 ml-2 mb-1">
-                                    <Image source={icons.mypackage} className="w-10 h-10" resizeMode="contain" />
-                                    <Counter maxCount={data.available_space_medium_package} count={spacesMediumPackage} handleChangeCount={setMediumPackage} />
-                                </XStack>
-                                <XStack className="w-full items-center justify-around px-10 ml-2">
-                                    <Image source={icons.mypackage} className="w-12 h-12" resizeMode="contain" />
-                                    <Counter maxCount={data.available_space_large_package} count={spacesLargePackage} handleChangeCount={setLargePackage} />
-                                </XStack>
-                            </YStack>
-                            <View className="w-full items-center justify-center mb-3">
-                                <Text className="text-xl font-qbold text-grey-800 mb-3">
-                                    Costo: ${price}
-                                </Text>
-                            </View>
-                            <BlackButton href={"/(tabs)/home"}>
-                                <Text className="text-2xl font-qsemibold text-white">Reservar viaje</Text>
-                            </BlackButton>
                         </YStack>
                     </ScrollView>
                 </YStack>

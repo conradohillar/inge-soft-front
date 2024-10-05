@@ -39,7 +39,7 @@ export default function CredentialsPage() {
   }
 
   if (mutation.isError) {
-    console.log(mutation.error);
+    console.error(mutation.error);
     return <ErrorPage />;
   }
 
