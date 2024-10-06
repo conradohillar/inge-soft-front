@@ -52,9 +52,35 @@ export const getUserOrDriverRides = async (type, category) => {
 }
 
 
-export const getRideDetail = async (rideId) => {
+export const getRideSearchDetail = async (rideId) => {
 
-    const url = `http://${LOCAL_IP}:8000/rides/detail/${rideId}`;
+    const url = `http://${LOCAL_IP}:8000/rides/search/detail/${rideId}`;
+    try {
+        const response = await axios.get(url);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+export const getRiderUpcomingDetail = async (rideId) => {
+
+    const url = `http://${LOCAL_IP}:8000/rides/rider/upcoming/detail/${rideId}`;
+    const headers = await getHeaderWithToken();
+
+    try {
+        const response = await axios.get(url, { headers });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+export const getDriverUpcomingDetail = async (rideId) => {
+
+    const url = `http://${LOCAL_IP}:8000/rides/driver/upcoming/detail/${rideId}`;
     try {
         const response = await axios.get(url);
         return response.data;

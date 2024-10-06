@@ -102,8 +102,8 @@ export default function TripList({ type, category }) {
     }
 
     return (
-        <SafeAreaView className="w-full bg-background">
-            <YStack className="h-[25%] justify-center mb-5">
+        <SafeAreaView className="h-full w-full bg-background">
+            <YStack className="h-[90px] justify-center mb-5">
                 <Link href="/(tabs)/trips" asChild>
                     <Button className="w-7 h-7 bg-background ml-4 mt-5">
                         <Image source={icons.arrowleft} className="w-7 h-7" tintColor="#000" resizeMode="contain" />
@@ -113,7 +113,7 @@ export default function TripList({ type, category }) {
                     {type === 'upcoming' ? (category === 'driver' ? 'PUBLICADOS' : 'RESERVADOS') : 'HISTORIAL'}
                 </Text>
             </YStack>
-            <View className="items-center">
+            <View className="h-[500px] items-center">
                 <FlatList
                     data={data}
                     keyExtractor={item => item.ride_id}

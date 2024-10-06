@@ -4,7 +4,7 @@ import { XStack, YStack, Avatar, Button } from 'tamagui';
 import Header from '../../components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { getRideDetail } from '../../services/rides';
+import { getRideSearchDetail } from '../../services/rides';
 import LoadingPage from './LoadingPage'
 import {Link} from 'expo-router';
 import ErrorPage from './ErrorPage';
@@ -30,8 +30,8 @@ export default function TripSearchDetail() {
 
 
     const { data, isError, isLoading } = useQuery({
-        queryKey: ['rideDetail', ride_id],
-        queryFn: () => getRideDetail(ride_id),
+        queryKey: ['rideSearchDetail', ride_id],
+        queryFn: () => getRideSearchDetail(ride_id),
     });
 
     const router = useRouter()

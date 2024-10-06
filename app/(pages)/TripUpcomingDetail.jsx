@@ -1,15 +1,13 @@
 import { View, Text, ScrollView, Pressable, Image } from 'react-native';
 import { useState } from 'react';
 import { XStack, YStack, Avatar, Button } from 'tamagui';
-import BlackButton from '../../components/BlackButton';
 import Header from '../../components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useQuery } from '@tanstack/react-query';
-import { getRideDetail } from '../../services/rides';
+import { getRiderUpcomingDetail } from '../../services/rides';
 import LoadingPage from './LoadingPage'
 import {Link} from 'expo-router';
 import ErrorPage from './ErrorPage';
-import Counter from '../../components/Counter';
 import icons from '../../constants/icons';
 import { useLocalSearchParams } from 'expo-router';
 
@@ -20,8 +18,8 @@ export default function TripUpcomingDetail() {
     const [pressed, setPressed] = useState(false)
 
     const { data, isError, isLoading } = useQuery({
-        queryKey: ['rideDetail', ride_id],
-        queryFn: () => getRideDetail(ride_id),
+        queryKey: ['riderUpcomingDetail', ride_id],
+        queryFn: () => getRiderUpcomingDetail(ride_id),
     });
 
     if (isLoading) {
@@ -74,26 +72,26 @@ export default function TripUpcomingDetail() {
                                 <Text className="text-base font-qbold text-primary"> reservados:</Text>
                             </Text>
                             <Text className="text-base font-qbold text-black mb-1">Personas:
-                                <Text className="text-base font-qbold text-black"> {data.available_space_persons}</Text>
+                                <Text className="text-base font-qbold text-black"> {data.space_persons}</Text>
                             </Text>
                             <Text className="text-base font-qbold text-black mb-1">Paquetes
                                 <Text className="text-base font-qbold text-primary"> chicos:
-                                    <Text className="text-base font-qbold text-black"> {data.available_space_small_package}</Text>
+                                    <Text className="text-base font-qbold text-black"> {data.space_small_package}</Text>
                                 </Text>
                             </Text>
                             <Text className="text-base font-qbold text-black mb-1">Paquetes
                                 <Text className="text-base font-qbold text-primary"> medianos:
-                                    <Text className="text-base font-qbold text-black"> {data.available_space_medium_package}</Text>
+                                    <Text className="text-base font-qbold text-black"> {data.space_medium_package}</Text>
                                 </Text>
                             </Text>
                             <Text className="text-base font-qbold text-black">Paquetes
                                 <Text className="text-base font-qbold text-primary"> grandes:
-                                    <Text className="text-base font-qbold text-black"> {data.available_space_large_package}</Text>
+                                    <Text className="text-base font-qbold text-black"> {data.space_large_package}</Text>
                                 </Text>
                             </Text>
                             <View className="w-full items-start border-t-2 border-t-[#eee] mt-6 pt-4">
                                 <Text className="text-xl font-qbold text-red-700 mb-3">
-                                    Costo: ${data.price}
+                                    Costo: ${data.price.toFixed(2)}
                                 </Text>
                             </View>
                         </YStack>
