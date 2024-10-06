@@ -24,7 +24,9 @@ const PagesLayout = () => {
           <Stack.Screen name="TripsPage" />
           <Stack.Screen name="NewCredentialsSuccessful" />
           <Stack.Screen name="TripSearchDetail" />
-          <Stack.Screen name="TripHistoryDetail" />
+          <Stack.Screen name="TripDetailForRider" />
+          <Stack.Screen name="TripHistoryDetailForDriver" />
+          <Stack.Screen name="TripUpcomingDetailForDriver" />
         </Stack>
       </AutocompleteDropdownContextProvider>
     </>

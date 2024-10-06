@@ -44,17 +44,10 @@ export default function TripList({ type, category }) {
     const router = useRouter()
 
     const handleRiderTrips = (ride_id) => {
-        if(type === 'upcoming'){
-            router.push({
-                pathname: "/(pages)/TripUpcomingDetail",
-                params: { ride_id }
-            });
-        } else {
-            router.push({
-                pathname: "/(pages)/TripHistoryDetail",
-                params: { ride_id }
-            });
-        }
+        router.push({
+            pathname: "/(pages)/TripDetailForRider",
+            params: { ride_id }
+        });
 
     }
 

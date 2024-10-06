@@ -64,9 +64,9 @@ export const getRideSearchDetail = async (rideId) => {
     }
 }
 
-export const getRiderUpcomingDetail = async (rideId) => {
+export const getRiderDetail = async (rideId) => {
 
-    const url = `http://${LOCAL_IP}:8000/rides/rider/upcoming/detail/${rideId}`;
+    const url = `http://${LOCAL_IP}:8000/rides/rider/detail/${rideId}`;
     const headers = await getHeaderWithToken();
 
     try {
