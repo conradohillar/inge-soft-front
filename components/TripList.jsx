@@ -10,16 +10,6 @@ import icons from "../constants/icons"
 import { getUserOrDriverRides } from "../services/rides"
 import BlackButton from "./BlackButton"
 
-const getState = (state) => {
-    if (state === 'pending') {
-        return require('../assets/icons/alert.png');
-    } else if (state === 'accepted') {
-        return require('../assets/icons/accepted.png');
-    } else if (state === 'dismissed') {
-        return require('../assets/icons/dismissed.png');
-    } else
-        return null;
-}
 
 export default function TripList({ type, category }) {
 
@@ -35,7 +25,7 @@ export default function TripList({ type, category }) {
         const sliced_to = (item.city_to).slice(0, 3).toUpperCase();
         return (
             <TripCard from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} price={rounded}
-                url={item.driver_photo} state={getState(item.state)} ride_id={item.ride_id} handleOpenDetail={handleRiderTrips}/>
+                url={item.driver_photo} state={item.state} ride_id={item.ride_id} handleOpenDetail={handleRiderTrips}/>
         );
     
     }
@@ -46,7 +36,7 @@ export default function TripList({ type, category }) {
         const sliced_to = (item.city_to).slice(0, 3).toUpperCase();
         return (
             <TripCardForDriver from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} price={rounded}
-                passengers={4} packages={3} state={getState(item.state)} ride_id={item.ride_id} handleOpenDetail={handleDriverTrips} />
+                passengers={4} packages={3} state={item.state} ride_id={item.ride_id} handleOpenDetail={handleDriverTrips} />
         );
     
     }

@@ -29,7 +29,7 @@ export default function TripCardForDriver({from, to, date, price, passengers, pa
                             <Text className="text-base font-qsemibold text-gray-500">Pasajeros: {passengers}</Text>
                             <XStack className="w-full items-center justify-between">
                                 <Text className="text-base font-qsemibold text-gray-500">Paquetes: {packages}</Text>
-                               {state && <Image source={state} className="w-10 h-10 mr-5" tintColor="#ff6633" resizeMode="contain"/> }
+                               {state && <Image source={icons.alert} className="w-10 h-10 mr-5" tintColor="#ff6633" resizeMode="contain"/> }
                             </XStack>
                         </YStack>
                     </YStack>

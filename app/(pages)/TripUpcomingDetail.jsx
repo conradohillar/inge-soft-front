@@ -101,7 +101,7 @@ export default function TripUpcomingDetail() {
                             <Text className="text-sm font-qbold text-[#ccc] mb-5">Sobre el conductor</Text>
                             <XStack className="items-center justify-start w-full mb-5">
                                 <Avatar circular size="$10" borderColor="$black" borderWidth={1}>
-                                    <Avatar.Image src={{ uri: data.driver_photo }} />
+                                    <Avatar.Image src={data.driver_photo === '' ? icons.placeholder_profile : data.driver_photo } />
                                     <Avatar.Fallback backgroundColor="$gray8" />
                                 </Avatar>
                                 <YStack className="items-start justify-start">
