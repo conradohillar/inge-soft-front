@@ -9,7 +9,7 @@ import LoadingPage from './LoadingPage'
 import {Link} from 'expo-router';
 import ErrorPage from './ErrorPage';
 import icons from '../../constants/icons';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import ButtonNext from '../../components/ButtonNext';
 
 
@@ -19,13 +19,19 @@ export default function TripUpcomingDetailForDriver() {
 
     const { ride_id } = useLocalSearchParams();
 
-    const [pressed, setPressed] = useState(false)
-
-
     const { data, isError, isLoading } = useQuery({
         queryKey: ['rideDetail', ride_id],
         queryFn: () => getRideDetail(ride_id),
     });
+
+    const router = useRouter();
+
+    const handleRequests = () => {
+        router.push({
+            pathname: "/(pages)/ReservationRequest",
+            params: { ride_id }
+        });
+    }
 
 
     if (isLoading) {
@@ -103,7 +109,7 @@ export default function TripUpcomingDetailForDriver() {
                         </YStack>
                         <YStack className="items-start justify-between w-full px-4 pb-8 pt-3 mb-12 border-t-2 border-t-[#eee]">
                             <Text className="text-sm font-qbold text-[#ccc] mb-5">Manejá las solicitudes de tus pasajeros</Text>
-                            <ButtonNext onPress={() => {}} >
+                            <ButtonNext onPress={handleRequests} >
                                 <Text className="text-2xl font-qsemibold text-white">Ver solicitudes</Text>
                             </ButtonNext>
                         </YStack>

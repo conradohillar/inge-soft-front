@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
-import { API_KEY_LOCATIONIQ } from '@env'
+import { LOCAL_IP, API_KEY_LOCATIONIQ } from '@env'
 
 export const setToken = async (token: string) => {
     await SecureStore.setItemAsync("token", token);

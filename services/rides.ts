@@ -71,3 +71,33 @@ export const joinRide = async (data) => {
 
     return axios.post(url, data, { headers })
 }
+
+
+
+export const getReservationData = async (ride_id) => {
+
+    const url = `http://${LOCAL_IP}:8000/rides/requests/pendings/${ride_id}`;
+
+    const headers = await getHeaderWithToken();
+
+    try {
+        const response = await axios.get(url, { headers });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+export const handleReservation = async (data) => {
+    const headers = await getHeaderWithToken();
+    const url = `http://${LOCAL_IP}:8000/rides/requests/isAccepted`;
+
+    try {
+        const response = await axios.put(url, data, { headers });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
