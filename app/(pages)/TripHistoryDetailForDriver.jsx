@@ -1,11 +1,9 @@
-import { View, Text, ScrollView, Pressable, Image } from 'react-native';
-import { useState } from 'react';
+import { View, Text, ScrollView, Image } from 'react-native';
 import { XStack, YStack, Avatar, Button } from 'tamagui';
-import BlackButton from '../../components/BlackButton';
 import Header from '../../components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useQuery } from '@tanstack/react-query';
-import { getRideDetail } from '../../services/rides';
+import { getDriverHistoryDetail } from '../../services/rides';
 import LoadingPage from './LoadingPage'
 import {Link, useLocalSearchParams} from 'expo-router';
 import ErrorPage from './ErrorPage';
@@ -18,8 +16,8 @@ export default function TripHistoryDetailForDriver() {
     const {ride_id} = useLocalSearchParams()
 
     const { data, isError, isLoading } = useQuery({
-        queryKey: ['rideDetail', ride_id],
-        queryFn: () => getRideDetail(ride_id),
+        queryKey: ['driverHistoryDetail', ride_id],
+        queryFn: () => getDriverHistoryDetail(ride_id),
     });
 
     if (isLoading) {
@@ -62,28 +60,31 @@ export default function TripHistoryDetailForDriver() {
                             <Text className="text-base font-qbold text-primary mb-3">Fecha
                                 <Text className="text-base font-qbold text-black">: {data.date}</Text>
                             </Text>
-                            <Text className="text-base font-qsemibold text-gray-500 mb-6">Hora de
+                            <Text className="text-base font-qsemibold text-gray-500 mb-3">Hora de
                                 <Text className="text-base font-qbold text-primary"> salida
                                     <Text className="text-base font-qbold text-black">: {data.start_minimum_time.split(':').slice(0, 2).join(':')} - {data.start_maximum_time.split(':').slice(0, 2).join(':')}</Text>
                                 </Text>
                             </Text>
+                            <Text className="text-base font-qbold text-primary mb-6">Vehículo:
+                                <Text className="text-base font-qbold text-black"> {data.car_model}, {data.car_plate}</Text>
+                            </Text>
                             <Text className=" w-full pt-5 text-base font-qsemibold text-gray-500 mb-1 border-t-2 border-t-[#eee]">Trasladaste:</Text>
                             <Text className="text-base font-qbold text-black mb-1">Personas:
-                                <Text className="text-base font-qbold text-black"> {data.available_space_persons}</Text>
+                                <Text className="text-base font-qbold text-black"> {data.persons}</Text>
                             </Text>
                             <Text className="text-base font-qbold text-black mb-1">Paquetes
                                 <Text className="text-base font-qbold text-primary"> chicos
-                                    <Text className="text-base font-qbold text-black">: {data.available_space_small_package}</Text>
+                                    <Text className="text-base font-qbold text-black">: {data.small_package}</Text>
                                 </Text>
                             </Text>
                             <Text className="text-base font-qbold text-black mb-1">Paquetes
                                 <Text className="text-base font-qbold text-primary"> medianos
-                                    <Text className="text-base font-qbold text-black">: {data.available_space_medium_package}</Text>
+                                    <Text className="text-base font-qbold text-black">: {data.medium_package}</Text>
                                 </Text>
                             </Text>
                             <Text className="text-base font-qbold text-black">Paquetes
                                 <Text className="text-base font-qbold text-primary"> grandes
-                                    <Text className="text-base font-qbold text-black">: {data.available_space_large_package}</Text>
+                                    <Text className="text-base font-qbold text-black">: {data.large_package}</Text>
                                 </Text>
                             </Text>
                             <View className="w-full items-start border-t-2 border-t-[#eee] mt-6 pt-4">

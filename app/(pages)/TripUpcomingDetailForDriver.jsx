@@ -4,7 +4,7 @@ import { XStack, YStack, Avatar, Button } from 'tamagui';
 import Header from '../../components/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { getRideDetail } from '../../services/rides';
+import { getDriverUpcomingDetail } from '../../services/rides';
 import LoadingPage from './LoadingPage'
 import {Link} from 'expo-router';
 import ErrorPage from './ErrorPage';
@@ -20,8 +20,8 @@ export default function TripUpcomingDetailForDriver() {
     const { ride_id } = useLocalSearchParams();
 
     const { data, isError, isLoading } = useQuery({
-        queryKey: ['rideDetail', ride_id],
-        queryFn: () => getRideDetail(ride_id),
+        queryKey: ['driverUpcomingDetail', ride_id],
+        queryFn: () => getDriverUpcomingDetail(ride_id),
     });
 
     const router = useRouter();
@@ -80,10 +80,13 @@ export default function TripUpcomingDetailForDriver() {
                             <Text className="text-base font-qbold text-primary mb-3">Fecha:
                                 <Text className="text-base font-qbold text-black"> {data.date}</Text>
                             </Text>
-                            <Text className="text-base font-qsemibold text-gray-500 mb-6">Hora de
+                            <Text className="text-base font-qsemibold text-gray-500 mb-3">Hora de
                                 <Text className="text-base font-qbold text-primary"> salida:
                                     <Text className="text-base font-qbold text-black"> {data.start_minimum_time.split(':').slice(0, 2).join(':')} - {data.start_maximum_time.split(':').slice(0, 2).join(':')}</Text>
                                 </Text>
+                            </Text>
+                            <Text className="text-base font-qbold text-primary mb-6">Vehículo:
+                                <Text className="text-base font-qbold text-black"> {data.car_model}, {data.car_plate}</Text>
                             </Text>
                             <Text className=" w-full pt-5 text-base font-qsemibold text-gray-500 mb-1 border-t-2 border-t-[#eee]">Espacios 
                                 <Text className="text-base font-qbold text-primary"> disponibles:</Text>

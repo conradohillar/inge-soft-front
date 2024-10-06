@@ -36,7 +36,7 @@ export default function TripList({ type, category }) {
         const sliced_to = (item.city_to).slice(0, 3).toUpperCase();
         return (
             <TripCardForDriver from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} price={rounded}
-                passengers={4} packages={3} state={item.state} ride_id={item.ride_id} handleOpenDetail={handleDriverTrips} />
+                passengers={item.persons} packages={item.packages} state={item.state} ride_id={item.ride_id} handleOpenDetail={handleDriverTrips} />
         );
     
     }
