@@ -7,7 +7,7 @@ export default function TripCard({from, to, driver, date, price, url, state, han
         <View className="py-3">
             <Pressable 
                      style={({ pressed }) => ({ 
-                        height:210, width:350, paddingVertical:15, paddingHorizontal:18, marginHorizontal:6,
+                        height:218, width:350, paddingVertical:15, paddingHorizontal:18, marginHorizontal:6,
                         borderWidth:2, borderColor:"#ccc", borderRadius:40,
                         opacity: pressed ? 0.7 : 1,
                         backgroundColor: pressed ? "#cdddcd":"#eee"
@@ -30,7 +30,9 @@ export default function TripCard({from, to, driver, date, price, url, state, han
                         <Text className="text-basefont-qsemibold text-grey-100 mb-3">{date}</Text>
                         <XStack className="items-center justify-between">
                             <Text className="text-xl font-qbold text-grey-800">${price}</Text>
-                          { state && <Image source={state} className="w-5 h-5" tintColor="#FFD700" resizeMode="contain"/> }
+                          { state && <Image source={state} className="w-10 h-10 mr-4" resizeMode="contain"
+                                    style={{tintColor: state === "pending" ? "#ff6633" : (state === "accepted" ? "#008000" : "#FF0000")}}
+                          /> }
                         </XStack>
                     </YStack>
                 </YStack>

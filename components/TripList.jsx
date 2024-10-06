@@ -5,41 +5,17 @@ import LoadingPage from "../app/(pages)/LoadingPage"
 import ErrorPage from "../app/(pages)/ErrorPage"
 import TripCardForDriver from "./TripCardForDriver"
 import { Button, XStack, YStack } from "tamagui"
-import { Link } from "expo-router"
+import { Link, useRouter } from "expo-router"
 import icons from "../constants/icons"
 import { getUserOrDriverRides } from "../services/rides"
-
-
-
-const renderTripCard = ({ item }) => {
-    const rounded = (item.price).toFixed(2);
-    const sliced_from = (item.city_from).slice(0, 3).toUpperCase();
-    const sliced_to = (item.city_to).slice(0, 3).toUpperCase();
-    return (
-        <TripCard from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} price={rounded}
-            url={item.driver_photo} state={getState(item.state)} />
-    );
-
-}
-
-const renderTripCardForDriver = ({ item }) => {
-    const rounded = (item.price).toFixed(2);
-    const sliced_from = (item.city_from).slice(0, 3).toUpperCase();
-    const sliced_to = (item.city_to).slice(0, 3).toUpperCase();
-    return (
-        <TripCardForDriver from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} price={rounded}
-            passengers={4} packages={3} state={getState(item.state)} />
-    );
-
-}
 
 const getState = (state) => {
     if (state === 'pending') {
         return require('../assets/icons/alert.png');
     } else if (state === 'accepted') {
-        return require('../assets/icons/alert.png');
+        return require('../assets/icons/accepted.png');
     } else if (state === 'dismissed') {
-        return require('../assets/icons/alert.png');
+        return require('../assets/icons/dismissed.png');
     } else
         return null;
 }
@@ -50,6 +26,42 @@ export default function TripList({ type, category }) {
         queryKey: ['get', type, category],
         queryFn: () => getUserOrDriverRides(type, category)
     });
+
+
+    const renderTripCard = ({ item }) => {
+        const rounded = (item.price).toFixed(2);
+        const sliced_from = (item.city_from).slice(0, 3).toUpperCase();
+        const sliced_to = (item.city_to).slice(0, 3).toUpperCase();
+        return (
+            <TripCard from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} price={rounded}
+                url={item.driver_photo} state={getState(item.state)} ride_id={item.ride_id} handleOpenDetail={handleRiderTrips}/>
+        );
+    
+    }
+    
+    const renderTripCardForDriver = ({ item }) => {
+        const rounded = (item.price).toFixed(2);
+        const sliced_from = (item.city_from).slice(0, 3).toUpperCase();
+        const sliced_to = (item.city_to).slice(0, 3).toUpperCase();
+        return (
+            <TripCardForDriver from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} price={rounded}
+                passengers={4} packages={3} state={getState(item.state)} />
+        );
+    
+    }
+
+    const router = useRouter()
+
+    const handleRiderTrips = (ride_id) => {
+        if(type === 'upcoming'){
+            router.push({
+                pathname: "/(pages)/TripUpcomingDetail",
+                params: { ride_id }
+            });
+        }
+
+    }
+
 
     if (isLoading) {
         return <LoadingPage />;

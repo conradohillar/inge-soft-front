@@ -11,18 +11,17 @@ import {Link} from 'expo-router';
 import ErrorPage from './ErrorPage';
 import Counter from '../../components/Counter';
 import icons from '../../constants/icons';
+import { useLocalSearchParams } from 'expo-router';
 
+export default function TripUpcomingDetail() {
 
-
-export default function TripHistoryDetail() {
+    const { ride_id } = useLocalSearchParams();
 
     const [pressed, setPressed] = useState(false)
 
-    const id = '21635d30-a3c2-4bed-b467-3dc4125760bc';
-
     const { data, isError, isLoading } = useQuery({
-        queryKey: ['rideDetail', id],
-        queryFn: () => getRideDetail(id),
+        queryKey: ['rideDetail', ride_id],
+        queryFn: () => getRideDetail(ride_id),
     });
 
     if (isLoading) {
@@ -38,8 +37,8 @@ export default function TripHistoryDetail() {
             <Header />
                 <YStack className="h-full items-start justify-start bg-background mb-12">
                     <View className="w-full h-[10%] items-center justify-center">
-                        <XStack className="w-full items-start justify-center ml-12">
-                            <Link href={"/(pages)/SearchResultsPage"} asChild>
+                        <XStack className="w-full items-start justify-center ml-12 mt-3">
+                            <Link href={{pathname:"/(pages)/TripsPage", params: { category: "rider" }}}  asChild>
                                 <Button className="h-9 w-9 bg-background rounded-xl ml-12">
                                     <Image source={icons.arrowleft} className="h-7 w-7" resizeMode="contain" />
                                 </Button>
@@ -51,6 +50,7 @@ export default function TripHistoryDetail() {
                             </View>
                         </XStack>
                     </View>
+                    { data.state && <StatusMsg state={data.state}/> }
                     <ScrollView className="h-full">
                         <YStack className="items-start justify-between w-full px-4 pb-8 pt-2 mb-1 border-2 border-[#eee]">
                             <Text className="text-sm font-qbold text-[#ccc] mb-5">Logísticos</Text>
@@ -129,4 +129,31 @@ export default function TripHistoryDetail() {
                 </YStack>
         </SafeAreaView>
     );
+}
+
+
+const StatusMsg = ({state}) => {
+
+    const msg = state === "pending" ? "todavía no aceptó" : (state === "accepted" ? "ya aceptó" : "rechazó");
+
+    return (
+        <View className="w-full items-center">
+            <XStack className='w-[95%] items-center justify-center space-x-2 mb-4'>
+                <Image source={getState(state)} className="h-6 w-6" resizeMode="contain"
+                        style={{tintColor: state === "pending" ? "#ff6633" : (state === "accepted" ? "#008000" : "#FF0000")}} />
+                <Text className="text-sm font-qbold text-gray-600">El conductor {msg} tu solicitud</Text>
+            </XStack> 
+        </View>
+    )
+}
+
+const getState = (state) => {
+    if (state === 'pending') {
+        return require('../../assets/icons/alert.png');
+    } else if (state === 'accepted') {
+        return require('../../assets/icons/accepted.png');
+    } else if (state === 'dismissed') {
+        return require('../../assets/icons/dismissed.png');
+    } else
+        return null;
 }

@@ -6,6 +6,8 @@ import TripList from './TripList';
 export default function HorizontalTabs({category}){
   const [selectedTab, setSelectedTab] = useState('tab1');
 
+  const tab1Title = category === 'driver' ? 'Publicados' : 'Reservados';
+
     return (
       <View className="h-full w-full">
       <Tabs
@@ -27,7 +29,7 @@ export default function HorizontalTabs({category}){
           aria-label="Manage your account"
         >
           <Tabs.Tab flex={1} value="tab1" backgroundColor="#59A58A" style={{opacity: selectedTab === 'tab1' ? 1 : 0.5 }}>
-            <SizableText className='text-white font-qsemibold'>Próximos viajes</SizableText>
+            <SizableText className='text-white font-qsemibold'>{tab1Title}</SizableText>
           </Tabs.Tab>
           <Tabs.Tab flex={1} value="tab2" backgroundColor="#59A58A" style={{opacity: selectedTab === 'tab2' ? 1 : 0.5 }}>
             <SizableText className='text-white font-qsemibold'>Historial</SizableText>

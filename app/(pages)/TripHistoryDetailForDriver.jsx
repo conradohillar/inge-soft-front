@@ -14,7 +14,7 @@ import icons from '../../constants/icons';
 
 
 
-export default function TripDetail() {
+export default function TripHistoryDetailForDriver() {
 
     const [pressed, setPressed] = useState(false)
 
@@ -52,7 +52,7 @@ export default function TripDetail() {
                         </XStack>
                     </View>
                     <ScrollView className="h-full">
-                        <YStack className="items-start justify-between w-full px-4 pb-8 pt-2 mb-1 border-2 border-[#eee]">
+                        <YStack className="items-start justify-between w-full px-4 pb-8 pt-2 mb-1 border-t-2 border-t-[#eee]">
                             <Text className="text-sm font-qbold text-[#ccc] mb-5">Logísticos</Text>
                             <Text className="text-base font-qsemibold text-gray-500">Punto de 
                                 <Text className="text-base font-qbold text-primary"> partida:</Text>
@@ -90,37 +90,9 @@ export default function TripDetail() {
                                 </Text>
                             </Text>
                             <View className="w-full items-start border-t-2 border-t-[#eee] mt-6 pt-4">
-                                <Text className="text-xl font-qbold text-grey-800 mb-3">
-                                    Costo: ${data.price}
+                                <Text className="text-xl font-qbold text-primary mb-3">
+                                    Ganancia: ${data.price}
                                 </Text>
-                            </View>
-                        </YStack>
-                        <YStack className="items-start justify-between w-full px-4 pb-6 pt-3 mb-12 border-2 border-[#eee]">
-                            <Text className="text-sm font-qbold text-[#ccc] mb-5">Sobre el conductor</Text>
-                            <XStack className="items-center justify-start w-full mb-5">
-                                <Avatar circular size="$10" borderColor="$black" borderWidth={1}>
-                                    <Avatar.Image src={{ uri: data.driver_photo }} />
-                                    <Avatar.Fallback backgroundColor="$gray8" />
-                                </Avatar>
-                                <YStack className="items-start justify-start">
-                                    <Text className="text-xl font-qbold text-black ml-3 mb-1">{data.driver_name}</Text>
-                                    <Text className="text-sm font-qbold text-gray-500 ml-3">Vehículo: {data.car_model}, {data.car_plate}</Text>
-                                </YStack>
-                            </XStack>
-                            <View className="w-full items-center mb-4">
-                                <Link href={`/driver/${data.driver_id}`} asChild>
-                                    <Pressable  onPressIn={() => setPressed(true)} onPressOut={() => setPressed(false)}
-                                                style={{ 
-                                                    backgroundColor: '#59A58A',
-                                                    opacity: pressed ? 0.7 : 1,
-                                                    alignItems: 'center',
-                                                    paddingVertical: 8,
-                                                    borderRadius: 8,
-                                                    width: '60%',
-                                                 }}>
-                                        <Text className="text-sm font-qsemibold text-white">Ver perfil del conductor</Text>
-                                    </Pressable>
-                                </Link>
                             </View>
                         </YStack>
                     </ScrollView>
