@@ -8,6 +8,7 @@ import { Button, XStack, YStack } from "tamagui"
 import { Link, useRouter } from "expo-router"
 import icons from "../constants/icons"
 import { getUserOrDriverRides } from "../services/rides"
+import BlackButton from "./BlackButton"
 
 const getState = (state) => {
     if (state === 'pending') {
@@ -45,7 +46,7 @@ export default function TripList({ type, category }) {
         const sliced_to = (item.city_to).slice(0, 3).toUpperCase();
         return (
             <TripCardForDriver from={sliced_from} to={sliced_to} driver={item.driver_name} date={item.date} price={rounded}
-                passengers={4} packages={3} state={getState(item.state)} />
+                passengers={4} packages={3} state={getState(item.state)} ride_id={item.ride_id} handleOpenDetail={handleDriverTrips} />
         );
     
     }
@@ -58,8 +59,27 @@ export default function TripList({ type, category }) {
                 pathname: "/(pages)/TripUpcomingDetail",
                 params: { ride_id }
             });
+        } else {
+            router.push({
+                pathname: "/(pages)/TripHistoryDetail",
+                params: { ride_id }
+            });
         }
 
+    }
+
+    const handleDriverTrips = (ride_id) => {
+        if(type === 'upcoming'){
+            router.push({
+                pathname: "/(pages)/TripUpcomingDetailForDriver",
+                params: { ride_id }
+            });
+        } else {
+            router.push({
+                pathname: "/(pages)/TripHistoryDetailForDriver",
+                params: { ride_id }
+            });
+        }
     }
 
 
@@ -69,6 +89,26 @@ export default function TripList({ type, category }) {
 
     if (error) {
         return <ErrorPage />;
+    }
+
+    if(data.length === 0){
+        return (
+            <SafeAreaView className="w-full bg-background">
+                <YStack className="h-[80%] w-full items-center justify-around">
+                    <View className="items-center">
+                        <Text className="text-3xl font-qbold text-primary">Todavía
+                            <Text className="text-3xl font-qbold text-black"> no realizaste</Text>
+                        </Text>
+                        <Text className="text-3xl font-qbold text-black">ningún viaje</Text>
+                    </View>
+                    <View className="w-[75%] mt-10 items-center">
+                      <BlackButton href="/(pages)/SearchTripPage" variant={"primary"}>
+                        <Text className="text-2xl font-qsemibold text-white">Buscar viaje</Text>
+                      </BlackButton>
+                    </View>
+                </YStack>
+            </SafeAreaView>
+        )
     }
 
     return (

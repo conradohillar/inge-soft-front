@@ -3,7 +3,7 @@ import { Image, View, Text, Pressable } from "react-native";
 import { Button, XStack, YStack, Avatar } from "tamagui";
 import icons from '../constants/icons';
 
-export default function TripCardForDriver({from, to, date, price, passengers, packages, state}){
+export default function TripCardForDriver({from, to, date, price, passengers, packages, state, ride_id, handleOpenDetail}){
     return (
         <View className="py-3">
             <Pressable 
@@ -13,7 +13,7 @@ export default function TripCardForDriver({from, to, date, price, passengers, pa
                         opacity: pressed ? 0.7 : 1,
                         backgroundColor: pressed ? "#cdddcd":"#eee"
                      })}
-                     onPress={() => {}}>
+                     onPress={() => handleOpenDetail(ride_id) }>
                 <YStack>
                     <YStack className="">
                         <XStack className="w-full items-center justify-between px-2 mt-2 mb-4">
