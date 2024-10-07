@@ -131,11 +131,16 @@ export default function ReservationRequest() {
           </Text>
         </Text>
       </YStack>
-      <View className="flex-1 items-center mb-12">
+      <View className="flex-1">
         <FlatList
           data={data}
-          keyExtractor={(item) => item.ride_id}
+          keyExtractor={(item) => item.user_id}
           renderItem={renderItem}
+          contentContainerStyle={{
+            paddingBottom: 20,
+            alignItems: "center",
+            width: "100%",
+          }}
         />
       </View>
     </SafeAreaView>

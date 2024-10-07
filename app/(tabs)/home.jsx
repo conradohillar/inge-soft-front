@@ -1,30 +1,26 @@
-import { View, Text, Image } from 'react-native';
-import React from 'react';
-import { XStack, YStack } from 'tamagui';
-import BlackButton from '../../components/BlackButton';
-import Header from '../../components/Header';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useQuery } from '@tanstack/react-query'
-import LoadingPage from '../(pages)/LoadingPage'
+import { View, Text, Image } from "react-native";
+import React from "react";
+import { XStack, YStack } from "tamagui";
+import BlackButton from "../../components/BlackButton";
+import Header from "../../components/Header";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useQuery } from "@tanstack/react-query";
+import LoadingPage from "../(pages)/LoadingPage";
 import ErrorPage from "../(pages)/ErrorPage";
-import { getUserData } from '../../services/users';
-
-
-
+import { getUserData } from "../../services/users";
 
 export default function Home() {
-
   const { isLoading, isError, data } = useQuery({
-    queryKey: ['getUserData'],
-    queryFn: getUserData
+    queryKey: ["getUserData"],
+    queryFn: getUserData,
   });
 
   if (isLoading) {
-    return <LoadingPage />
+    return <LoadingPage />;
   }
 
   if (isError) {
-    return <ErrorPage />
+    return <ErrorPage />;
   }
 
   return (
@@ -32,10 +28,14 @@ export default function Home() {
       <Header />
 
       <YStack className="h-full items-center justify-evenly bg-background">
-
         <XStack className="items-center h-[15%]">
-          <Text className="text-3xl text-black font-qsemibold"> Bienvenido,</Text>
-          <Text className="text-3xl text-primary font-qbold"> {data.name.split(' ')[0]}</Text>
+          <Text className="text-3xl text-black font-qsemibold">
+            Bienvenido,
+          </Text>
+          <Text className="text-3xl text-primary font-qbold">
+            {" "}
+            {data ? data.name.split(" ")[0] : "USER"}
+          </Text>
         </XStack>
         <View className="w-[90%] mb-10 bg-gray-400 rounded-2xl border-2 justify-center">
           <Image
@@ -46,17 +46,20 @@ export default function Home() {
         <XStack className="items-start justify-evenly w-[100%] h-[25%] px-3">
           <View className="w-[55%]">
             <BlackButton href="/(pages)/SearchTripPage" variant={"secondary"}>
-              <Text className="text-[20px] font-qsemibold text-white">Buscar viaje</Text>
+              <Text className="text-[20px] font-qsemibold text-white">
+                Buscar viaje
+              </Text>
             </BlackButton>
           </View>
           <View className="w-[55%]">
             <BlackButton href="/(pages)/PostTripPage">
-              <Text className="text-[20px] font-qsemibold text-white">Publicar viaje</Text>
+              <Text className="text-[20px] font-qsemibold text-white">
+                Publicar viaje
+              </Text>
             </BlackButton>
           </View>
         </XStack>
       </YStack>
     </SafeAreaView>
   );
-
 }

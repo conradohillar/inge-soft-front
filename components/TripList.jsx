@@ -133,13 +133,18 @@ export default function TripList({ type, category }) {
             : "HISTORIAL"}
         </Text>
       </YStack>
-      <View className="flex-1 items-center mb-12">
+      <View className="flex-1">
         <FlatList
           data={data}
           keyExtractor={(item) => item.ride_id}
           renderItem={
             category === "rider" ? renderTripCard : renderTripCardForDriver
           }
+          contentContainerStyle={{
+            paddingBottom: 130,
+            alignItems: "center",
+            width: "100%",
+          }}
         />
       </View>
     </SafeAreaView>
