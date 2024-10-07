@@ -7,28 +7,49 @@ import ButtonNext from '../../components/ButtonNext';
 import LoadingPage from '../(pages)/LoadingPage';
 import ErrorPage from '../(pages)/ErrorPage';
 import { YStack, XStack } from 'tamagui';
+import * as yup from 'yup';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import { sign_in } from '../../services/auth';
 
 
 
 export default function SignIn() {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const schema = yup.object().shape({
+    email: yup
+      .string()
+      .required('Email is required')
+      .email('Invalid email'),
+    password: yup
+      .string()
+      .required('Password is required')
+      .min(8, 'Password must contain at least 8 characters'),
+  });
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
   const mutation = useMutation({
 
-    mutationFn: () => sign_in(email, password),
+    mutationFn: (formData) => sign_in(formData.email, formData.password),
     onSuccess: () => {
       router.replace('../(tabs)/home');
     }
   });
 
 
-  const handleContinue = async () => {
+  const handleContinue = async (formData) => {
     try {
-      mutation.mutate();
+      mutation.mutate(formData);
     } catch (error) {
       console.error("Mutation salio mal", error);
     }
@@ -55,29 +76,48 @@ export default function SignIn() {
               </Text>
             </YStack>
             <YStack className="items-center justify-center">
-              <CustomInput
-                title="E-mail"
-                value={email}
-                handleChangeText={setEmail}
-                placeholder={"Ingresá tu e-mail"}
-                autoComplete={"email"}
-                inputMode={"email"}
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <CustomInput
+                    title="E-mail"
+                    value={value}
+                    handleChangeText={onChange}
+                    placeholder={"Ingresá tu e-mail"}
+                    autoComplete={"email"}
+                    inputMode={"email"}
 
+                  />
+                )}
+                name="email"
               />
-              <CustomInput
-                title="Contraseña"
-                value={password}
-                secureTextEntry={true}
-                handleChangeText={setPassword}
-                placeholder={"Ingresá tu contraseña"}
-                autoComplete={"password"}
-                multiline={false}
-                inputMode={"password"}
+              {errors.email && <Text className="text-red-500 text-base font-qsemibold">{errors.email.message}</Text>}
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <CustomInput
+                    title="Contraseña"
+                    value={value}
+                    secureTextEntry={true}
+                    handleChangeText={onChange}
+                    placeholder={"Ingresá tu contraseña"}
+                    autoComplete={"password"}
+                    multiline={false}
+                    inputMode={"password"}
+                  />
+                )}
+                name="password"
               />
-              {mutation.isError && <Text className="text-red-500 text-base font-qsemibold">Error al iniciar sesión</Text>}
+              {errors.password && <Text className="text-red-500 text-base font-qsemibold">{errors.password.message}</Text>}
             </YStack>
             <YStack className="items-center">
-              <ButtonNext height={60} width={220} onPress={handleContinue}>
+              <ButtonNext height={60} width={220} onPress={handleSubmit(handleContinue)}>
                 <Text className="text-white text-xl font-qsemibold">Ir al Inicio</Text>
               </ButtonNext>
               <Link href="/(pages)/LandingPage" asChild>
