@@ -131,7 +131,7 @@ export default function ReservationRequest() {
           </Text>
         </Text>
       </YStack>
-      <View className="items-center">
+      <View className="flex-1 items-center mb-12">
         <FlatList
           data={data}
           keyExtractor={(item) => item.ride_id}
