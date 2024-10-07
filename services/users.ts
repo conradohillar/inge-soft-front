@@ -2,75 +2,81 @@ import { getHeaderWithToken } from './utils';
 import { LOCAL_IP } from '@env';
 import axios from 'axios';
 
+const BASE_URL = `http://${LOCAL_IP}:8000/rides`;
 
+const getHeaders = async () => {
+    return await getHeaderWithToken();
+};
 
-export const getUserData = async () => {
-    const headers = await getHeaderWithToken();
-    const url = `http://${LOCAL_IP}:8000/users/me`;
-    
-    
+const handleRequest = async (requestFunc) => {
     try {
-        const response = await axios.get(url, {headers: headers});
-
+        const response = await requestFunc();
         return response.data;
-        
-    }catch (error) {
-        
+    } catch (error) {
         console.error(error);
-        return null; 
+        return null;
     }
+};
 
-}
+export const getRideData = async (fromLocation, toLocation) => {
+    const headers = await getHeaders();
+    const url = `${BASE_URL}/create?location_from=${fromLocation}&location_to=${toLocation}`;
+    return handleRequest(() => axios.get(url, { headers }));
+};
 
-export const deleteImage = async () => {
-    const headers = await getHeaderWithToken();
-    const url = `http://${LOCAL_IP}:8000/users/delete/photo`;
+export const postTrip = async (tripData, car) => {
+    const headers = await getHeaders();
+    const url = `${BASE_URL}/create/detail?plate=${car}`;
+    return axios.post(url, tripData, { headers });
+};
 
-      return axios.delete(url, {
-        headers,
-        timeout: 25000,
-      });
-}
+export const searchRides = async (fromLocation, toLocation, formattedDate, people, smallPacks, mediumPacks, largePacks) => {
+    const url = `${BASE_URL}/search?city_from=${fromLocation}&city_to=${toLocation}&date=${formattedDate}&people=${people}&small_packages=${smallPacks}&medium_packages=${mediumPacks}&large_packages=${largePacks}`;
+    return handleRequest(() => axios.get(url));
+};
 
-export const newImage = async (base64Image) => {
-    const body = {
-      base_64_image: base64Image,
-    };
-    const headers = await getHeaderWithToken();
-    const url = `http://${LOCAL_IP}:8000/users/edit/photo`;
-    return axios.put(url, body, { headers, timeout: 25000 });
-  }
+export const getUserOrDriverRides = async (type, category) => {
+    const headers = await getHeaders();
+    const url = `${BASE_URL}/${type}/${category}`;
+    return handleRequest(() => axios.get(url, { headers }));
+};
 
+export const getRideSearchDetail = async (rideId) => {
+    const url = `${BASE_URL}/search/detail/${rideId}`;
+    return handleRequest(() => axios.get(url));
+};
 
-export const newCar = async (carData) => {
-    const headers = await getHeaderWithToken();
-    return axios.post(`http://${LOCAL_IP}:8000/users/addcar`, carData, { headers });
-}
+export const getRiderDetail = async (rideId) => {
+    const headers = await getHeaders();
+    const url = `${BASE_URL}/rider/detail/${rideId}`;
+    return handleRequest(() => axios.get(url, { headers }));
+};
 
+export const getDriverUpcomingDetail = async (rideId) => {
+    const url = `${BASE_URL}/search/detail/${rideId}`;
+    return handleRequest(() => axios.get(url));
+};
 
-export const getMyCars = async () => {
-    const url = `http://${LOCAL_IP}:8000/users/mycars`;
-    const headers = await getHeaderWithToken();
-    const ans = await axios.get(url, {headers});
-    return ans.data;
-}
+export const getDriverHistoryDetail = async (rideId) => {
+    const headers = await getHeaders();
+    const url = `${BASE_URL}/driver/history/detail/${rideId}`;
+    return handleRequest(() => axios.get(url, { headers }));
+};
 
-export const deleteCar = async (plate) => {
-    const url = `http://${LOCAL_IP}:8000/users/removecar?plate=${plate}`;
-    const headers = await getHeaderWithToken();
-    return axios.delete(url, { headers });
-}
+export const joinRide = async (data) => {
+    const headers = await getHeaders();
+    const url = `${BASE_URL}/join`;
+    return axios.post(url, data, { headers });
+};
 
-export const newCredential = async () => {
-    const url = `http://${LOCAL_IP}:8000/users/driver`    
-    const headers = await getHeaderWithToken()
-    const ans = await axios.post(url, null, { headers })
-    return ans
-}
+export const getReservationData = async (ride_id) => {
+    const headers = await getHeaders();
+    const url = `${BASE_URL}/requests/pendings/${ride_id}`;
+    return handleRequest(() => axios.get(url, { headers }));
+};
 
-export const newName = async (name) => {
-    const url = `http://${LOCAL_IP}:8000/users/edit/name?name=${name}`
-    const headers = await getHeaderWithToken()
-    const ans = await axios.put(url, null, { headers })
-    return ans.data.name
-}
+export const handleReservation = async (data) => {
+    const headers = await getHeaders();
+    const url = `${BASE_URL}/requests/isAccepted`;
+    return handleRequest(() => axios.put(url, data, { headers }));
+};

@@ -27,7 +27,6 @@ export default function Home() {
     return <ErrorPage />
   }
 
-
   return (
     <SafeAreaView className="bg-background flex-1">
       <Header />

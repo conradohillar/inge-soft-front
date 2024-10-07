@@ -10,7 +10,6 @@ import LoadingPage from '../(pages)/LoadingPage'
 import ErrorPage from "../(pages)/ErrorPage";
 import * as FileSystem from 'expo-file-system'
 import { useState, useEffect } from "react";
-import axios from 'axios';
 import * as ImagePicker from 'expo-image-picker';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import ProfilePictureModal from '../../components/PofilePictureModal';
@@ -123,18 +122,18 @@ export default function Profile() {
 
   const saveNewName = useMutation({
     mutationFn: (name) => newName(name),
-    onSuccess: (name) => {
+    onSuccess: (data) => {
       queryClient.setQueryData(
         ['getUserData'],
         (oldData) =>
           oldData
             ? {
               ...oldData,
-              name: name,
+              name: data.name,
             }
             : oldData,
       )
-      setName(name);
+      setName(data.name);
     },
     onError: (error) => {
       console.error("Error al editar el nombre:", error.message);
