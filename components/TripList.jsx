@@ -89,21 +89,45 @@ export default function TripList({ type, category }) {
   if (data.length === 0) {
     return (
       <SafeAreaView className="w-full bg-background">
-        <YStack className="h-[80%] w-full items-center justify-around">
-          <View className="items-center">
+        <View className="w-full items-start justify-center">
+          <Link href="/(tabs)/trips" asChild>
+            <Button className="w-7 h-7 bg-background ml-4 mt-5">
+              <Image
+                source={icons.arrowleft}
+                className="w-7 h-7"
+                tintColor="#000"
+                resizeMode="contain"
+              />
+            </Button>
+          </Link>
+        </View>
+        <YStack className="h-[80%] w-full items-center justify-start">
+          <View className="items-center my-12">
             <Text className="text-3xl font-qbold text-primary">
               Todavía
               <Text className="text-3xl font-qbold text-black">
                 {" "}
-                no realizaste
+                no{" "}
+                {type === "history"
+                  ? "realizaste"
+                  : category === "driver"
+                  ? "publicaste"
+                  : "reservaste"}
               </Text>
             </Text>
             <Text className="text-3xl font-qbold text-black">ningún viaje</Text>
           </View>
           <View className="w-[75%] mt-10 items-center">
-            <BlackButton href="/(pages)/SearchTripPage" variant={"primary"}>
+            <BlackButton
+              href={
+                category === "driver"
+                  ? "/(pages)/PostTripPage"
+                  : "/(pages)/SearchTripPage"
+              }
+              variant={"primary"}
+            >
               <Text className="text-2xl font-qsemibold text-white">
-                Buscar viaje
+                {category === "driver" ? "Publicar" : "Buscar"} viaje
               </Text>
             </BlackButton>
           </View>
