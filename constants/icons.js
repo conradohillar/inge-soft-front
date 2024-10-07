@@ -20,7 +20,10 @@ import image from "../assets/icons/image.png"
 import placeholder_profile from "../assets/icons/placeholder-profile.png"
 import alert from "../assets/icons/alert.png"
 import mypackage from "../assets/icons/package.png"
-
+import accepted from "../assets/icons/accepted.png"
+import dismissed from "../assets/icons/dismissed.png"
+import tick from "../assets/icons/tick.png"
+import cross from "../assets/icons/cross.png"
 
 export default {
     logo,
@@ -43,6 +46,10 @@ export default {
     camera,
     image,
     placeholder_profile,
+    mypackage,
     alert,
-    mypackage
+    accepted,
+    dismissed,
+    tick,
+    cross
 };
