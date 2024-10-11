@@ -21,6 +21,7 @@ const handleRequest = async (requestFunc) => {
 export const getUserData = async () => {
     const headers = await getHeaders();
     const url = `${BASE_URL}/me`;
+    console.log(url);
     return handleRequest(() => axios.get(url, { headers }));
 };
 

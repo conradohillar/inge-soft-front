@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font'
 import { useEffect } from 'react';
 import { Keyboard } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown'
 
 SplashScreen.preventAutoHideAsync();
 
@@ -30,12 +31,14 @@ const RootLayout = () => {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <Stack>
-                <Stack.Screen name="index" options={{ headerShown: false }} />
-                <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen name="(pages)" options={{ headerShown: false }} />
-            </Stack>
+            <AutocompleteDropdownContextProvider>
+                <Stack>
+                    <Stack.Screen name="index" options={{ headerShown: false }} />
+                    <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                    <Stack.Screen name="(pages)" options={{ headerShown: false }} />
+                </Stack>
+            </AutocompleteDropdownContextProvider>
         </QueryClientProvider>
 
 

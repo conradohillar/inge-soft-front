@@ -27,13 +27,14 @@ export default function SignUp2() {
       router.push({
         pathname: "/(auth)/sign-in"
       });
+    },
+    onError: (error) => {
+      console.error("Error: ", error);
     }
   })
 
   const handleContinue = async () => {
-
-    await emailValidation(email);
-
+    console.log("HOLA")
     const userData = {
       "name": userName,
       "email": email,
