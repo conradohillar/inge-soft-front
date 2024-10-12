@@ -43,6 +43,9 @@ export default function SignIn() {
     mutationFn: (formData) => sign_in(formData.email, formData.password),
     onSuccess: () => {
       router.replace('../(tabs)/home');
+    },
+    onError: (error) => {
+      console.error("Error en la mutacion", error);
     }
   });
 
@@ -75,7 +78,9 @@ export default function SignIn() {
                 <Text className="text-primary text-4xl font-qbold"> tu cuenta</Text>
               </Text>
             </YStack>
+
             <YStack className="items-center justify-center">
+              {errors.email && <Text className="text-red-500 text-base font-qsemibold pb-12">{errors.email.message}</Text>}
               <Controller
                 control={control}
                 rules={{
