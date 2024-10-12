@@ -24,9 +24,10 @@ export const sign_in = async (email: string, password: string) => {
         
         return 0;
     }catch (error) {
-        
-        console.error(error);
-        return new Error('Error signing in', error); 
+        if (error.response == undefined) {
+            throw new Error('408');
+        }
+        throw new Error(error.response.status); 
     }
 }
 
