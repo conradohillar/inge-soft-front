@@ -7,31 +7,21 @@ import ButtonNext from '../../components/ButtonNext';
 import LoadingPage from '../(pages)/LoadingPage';
 import ErrorPage from '../(pages)/ErrorPage';
 import { YStack, XStack } from 'tamagui';
-import * as yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
 import { sign_in } from '../../services/auth';
+import { signInSchema } from '../../validation/authSchemas';
 
 
 
 export default function SignIn() {
-  const schema = yup.object().shape({
-    email: yup
-      .string()
-      .required('Email is required')
-      .email('Invalid email'),
-    password: yup
-      .string()
-      .required('Password is required')
-      .min(8, 'Password must contain at least 8 characters'),
-  });
+
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(signInSchema),
     defaultValues: {
       email: '',
       password: '',
