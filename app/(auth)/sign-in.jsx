@@ -7,31 +7,21 @@ import ButtonNext from '../../components/ButtonNext';
 import LoadingPage from '../(pages)/LoadingPage';
 import ErrorPage from '../(pages)/ErrorPage';
 import { YStack, XStack } from 'tamagui';
-import * as yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
 import { sign_in } from '../../services/auth';
+import { signInSchema } from '../../validation/authSchemas';
 
 
 
 export default function SignIn() {
-  const schema = yup.object().shape({
-    email: yup
-      .string()
-      .required('Email is required')
-      .email('Invalid email'),
-    password: yup
-      .string()
-      .required('Password is required')
-      .min(8, 'Password must contain at least 8 characters'),
-  });
+
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(signInSchema),
     defaultValues: {
       email: '',
       password: '',
@@ -43,25 +33,21 @@ export default function SignIn() {
     mutationFn: (formData) => sign_in(formData.email, formData.password),
     onSuccess: () => {
       router.replace('../(tabs)/home');
-    },
-    onError: (error) => {
-      console.error("Error en la mutacion", error);
     }
   });
 
 
   const handleContinue = async (formData) => {
-    try {
-      mutation.mutate(formData);
-    } catch (error) {
-      console.error("Mutation salio mal", error);
-    }
+
+    mutation.mutate(formData);
+
   };
 
 
   if (mutation.isPending) {
     return <LoadingPage />;
   }
+
 
 
   return (
@@ -80,7 +66,8 @@ export default function SignIn() {
             </YStack>
 
             <YStack className="items-center justify-center">
-              {errors.email && <Text className="text-red-500 text-base font-qsemibold pb-12">{errors.email.message}</Text>}
+              {mutation.isError && mutation.error.message == 408 && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
+              {mutation.isError && mutation.error.message == 401 && <Text className="text-red-500 text-base font-qsemibold pb-12">E-mail o contrasena invalidos.</Text>}
               <Controller
                 control={control}
                 rules={{

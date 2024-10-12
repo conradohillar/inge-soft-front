@@ -7,27 +7,35 @@ import ButtonNext from '../../components/ButtonNext'
 import { Link, useRouter } from 'expo-router'
 import AutocompleteCityInput from '../../components/AutocompleteCityInput';
 import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform } from 'react-native'
+import { signUpPart1Schema } from '../../validation/authSchemas'
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 
 export default function SignUp() {
-  const [userName, setUserName] = useState('');
-  const [dni, setDni] = useState('');
-  const [address, setAddress] = useState('');
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(signUpPart1Schema),
+    defaultValues: {
+      userName: '',
+      dni: '',
+      address: ''
+    },
+  });
 
 
   const router = useRouter();
 
-  const handleContinue = async () => {
+  const handleContinue = async (userName, dni, address) => {
+    router.push({
+      pathname: "/(auth)/sign-up2",
+      params: { userName, dni, address }
+    });
 
-    try {
-
-      router.push({
-        pathname: "/(auth)/sign-up2",
-        params: { dni, userName, address }
-      });
-    } catch (error) {
-      console.error("Error: ", error);
-    }
   };
 
   return (
@@ -43,16 +51,53 @@ export default function SignUp() {
               <Text className="text-primary text-5xl font-qbold">TU CUENTA</Text>
             </YStack>
             <YStack className="items-center justify-center">
-              <CustomInput title="Nombre" value={userName} handleChangeText={setUserName} />
-              <CustomInput title="DNI" value={dni} handleChangeText={setDni} />
-              <AutocompleteCityInput
-                title="Dirección"
-                placeholder="i.e: Tigre"
-                setValue={setAddress}
+              <Controller
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { onChange, value } }) => (
+                  <CustomInput
+                    title="Nombre"
+                    value={value}
+                    handleChangeText={onChange}
+                    placeholder="Ingresá tu nombre"
+                  />
+                )}
+                name="userName"
               />
+              {errors.userName && <Text className="text-red-500">{errors.userName.message}</Text>}
+
+              <Controller
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { onChange, value } }) => (
+                  <CustomInput
+                    title="DNI"
+                    value={value}
+                    handleChangeText={onChange}
+                    placeholder="Ingresá tu DNI"
+                  />
+                )}
+                name="dni"
+              />
+              {errors.dni && <Text className="text-red-500">{errors.dni.message}</Text>}
+
+              <Controller
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { onChange, value } }) => (
+                  <AutocompleteCityInput
+                    title="Dirección"
+                    placeholder="i.e: Tigre"
+                    setValue={onChange}
+                    value={value}
+                  />
+                )}
+                name="address"
+              />
+              {errors.address && <Text className="text-red-500">{errors.address.message}</Text>}
             </YStack>
             <YStack className="items-center">
-              <ButtonNext height={90} width={270} onPress={handleContinue}>
+              <ButtonNext height={90} width={270} onPress={handleSubmit(handleContinue)}>
                 <Text className="text-2xl font-qsemibold text-white">Continuar</Text>
               </ButtonNext>
               <Link href="/(pages)/LandingPage" asChild>

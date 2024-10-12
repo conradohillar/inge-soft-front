@@ -24,9 +24,10 @@ export const sign_in = async (email: string, password: string) => {
         
         return 0;
     }catch (error) {
-        
-        console.error(error);
-        return new Error('Error signing in', error); 
+        if (error.response == undefined) {
+            throw new Error('408');
+        }
+        throw new Error(error.response.status); 
     }
 }
 
@@ -37,6 +38,9 @@ export const sign_up = async (userData) => {
         const response = await axios.post(url, userData, {headers: basicHeader});
         return response.data;
     }catch (error) {
-        return new Error('Error signing up', error); 
+        if (error.response == undefined) {
+            throw new Error('408');
+        }
+        throw new Error(error.response.status); 
     }
 } 
