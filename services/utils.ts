@@ -59,13 +59,3 @@ export const autocomplete = async (text) => {
     }
 };
 
-
-export const emailValidation = async (email) => {
-    axios.get(`https://emailvalidation.abstractapi.com/v1/?api_key=adffe0a7d64041efbdc7001a9c4385e0&email=${email}`)
-        .then(response => {
-            console.log(response.data);
-        })
-        .catch(error => {
-            console.log(error);
-        });
-}

@@ -30,10 +30,10 @@ export default function SignUp() {
 
   const router = useRouter();
 
-  const handleContinue = async (userName, dni, address) => {
+  const handleContinue = async (formData) => {
     router.push({
       pathname: "/(auth)/sign-up2",
-      params: { userName, dni, address }
+      params: { "userName": formData.userName, "dni": formData.dni, "address": formData.address }
     });
 
   };
