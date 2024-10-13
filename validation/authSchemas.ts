@@ -5,12 +5,12 @@ import * as yup from 'yup';
 export const signInSchema = yup.object().shape({
     email: yup
         .string()
-        .required('Email is required')
-        .email('Invalid email'),
+        .required('Se requiere un email')
+        .email('E-mail no es válido'),
     password: yup
         .string()
         .required('Password is required')
-        .min(8, 'Password must contain at least 8 characters'),
+        .min(8, 'La contraseña debe tener al menos 8 caracteres'),
 });
 
 // Schema for Sign Up - Part 1

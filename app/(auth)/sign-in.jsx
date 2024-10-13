@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Text, Platform } from 'react-native';
+import { SafeAreaView, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Text, Platform, TextInput } from 'react-native';
 import { Link, router } from 'expo-router';
 import { useMutation } from '@tanstack/react-query';
 import CustomInput from '../../components/CustomInput';
@@ -14,8 +14,8 @@ import { signInSchema } from '../../validation/authSchemas';
 
 
 
-export default function SignIn() {
 
+export default function SignIn() {
   const {
     control,
     handleSubmit,
@@ -68,6 +68,7 @@ export default function SignIn() {
             <YStack className="items-center justify-center">
               {mutation.isError && mutation.error.message == 408 && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
               {mutation.isError && mutation.error.message == 401 && <Text className="text-red-500 text-base font-qsemibold pb-12">E-mail o contrasena invalidos.</Text>}
+
               <Controller
                 control={control}
                 rules={{
