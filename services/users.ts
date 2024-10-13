@@ -13,8 +13,10 @@ const handleRequest = async (requestFunc) => {
         const response = await requestFunc();
         return response.data;
     } catch (error) {
-        console.error(error);
-        return null;
+        if (error.response == undefined) {
+            throw new Error('408');
+        }
+        throw new Error(error.response.status); 
     }
 };
 
@@ -27,20 +29,20 @@ export const getUserData = async () => {
 export const deleteImage = async () => {
     const headers = await getHeaders();
     const url = `${BASE_URL}/delete/photo`;
-    return axios.delete(url, { headers, timeout: 25000 });
+    return handleRequest(() => axios.delete(url, { headers, timeout: 25000 }));
 };
 
 export const newImage = async (base64Image) => {
     const headers = await getHeaders();
     const url = `${BASE_URL}/edit/photo`;
     const body = { base_64_image: base64Image };
-    return axios.put(url, body, { headers, timeout: 25000 });
+    return handleRequest(() =>axios.put(url, body, { headers, timeout: 25000 }));
 };
 
 export const newCar = async (carData) => {
     const headers = await getHeaders();
     const url = `${BASE_URL}/addcar`;
-    return axios.post(url, carData, { headers });
+    return handleRequest(() =>axios.post(url, carData, { headers }));
 };
 
 export const getMyCars = async () => {
@@ -52,7 +54,7 @@ export const getMyCars = async () => {
 export const deleteCar = async (plate) => {
     const headers = await getHeaders();
     const url = `${BASE_URL}/removecar?plate=${plate}`;
-    return axios.delete(url, { headers });
+    return handleRequest(() =>axios.delete(url, { headers }));
 };
 
 export const newCredential = async () => {

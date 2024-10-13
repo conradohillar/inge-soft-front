@@ -16,12 +16,25 @@ import {
   Platform,
 } from "react-native";
 import { newCar } from "../../services/users";
+import { addCarSchema } from "../../validation/usersSchemas";
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export default function AddCarPage() {
   const queryClient = useQueryClient();
-  const [model, setModel] = useState("");
-  const [plate, setPlate] = useState("");
-  const [color, setColor] = useState("");
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(addCarSchema),
+    defaultValues: {
+      model: '',
+      plate: '',
+      color: '',
+    },
+  });
 
   const mutation = useMutation({
     mutationFn: (carData) => newCar(carData),
@@ -44,11 +57,11 @@ export default function AddCarPage() {
 
   const router = useRouter();
 
-  const handleContinue = () => {
+  const handleContinue = (formData) => {
     const obj = {
-      model: model,
-      plate: plate,
-      color: color,
+      model: formData.model,
+      plate: formData.plate,
+      color: formData.color,
     };
 
     mutation.mutate(obj);
@@ -58,9 +71,7 @@ export default function AddCarPage() {
     return <LoadingPage />;
   }
 
-  if (mutation.isError) {
-    return <ErrorPage />;
-  }
+
 
   return (
     <KeyboardAvoidingView
@@ -83,24 +94,58 @@ export default function AddCarPage() {
               </Text>
             </YStack>
             <YStack className="items-center justify-center">
-              <CustomInput
-                title="Modelo"
-                value={model}
-                handleChangeText={setModel}
+              {mutation.isError && mutation.error.message == 408 && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
+              {mutation.isError && mutation.error.message == 403 && <Text className="text-red-500 text-base font-qsemibold pb-12">Aun no sos conductor.</Text>}
+              {mutation.isError && mutation.error.message == 402 && <Text className="text-red-500 text-base font-qsemibold pb-12">Ya tenes un auto con esta patente.</Text>}
+
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <CustomInput
+                    title="Modelo"
+                    value={value}
+                    handleChangeText={onChange}
+                  />
+                )}
+                name="model"
               />
-              <CustomInput
-                title="Patente"
-                value={plate}
-                handleChangeText={setPlate}
+              {errors.model && <Text className="text-red-500 text-base font-qsemibold">{errors.model.message}</Text>}
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <CustomInput
+                    title="Patente"
+                    value={value}
+                    handleChangeText={onChange}
+                  />
+                )}
+                name="plate"
               />
-              <CustomInput
-                title="Color"
-                value={color}
-                handleChangeText={setColor}
+              {errors.plate && <Text className="text-red-500 text-base font-qsemibold">{errors.plate.message}</Text>}
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <CustomInput
+                    title="Color"
+                    value={value}
+                    handleChangeText={onChange}
+                  />
+                )}
+                name="color"
               />
+              {errors.color && <Text className="text-red-500 text-base font-qsemibold">{errors.color.message}</Text>}
             </YStack>
             <YStack className="items-center">
-              <ButtonNext onPress={handleContinue}>
+              <ButtonNext onPress={handleSubmit(handleContinue)}>
                 <Text className="text-white text-xl font-qsemibold">
                   Agregar auto
                 </Text>
