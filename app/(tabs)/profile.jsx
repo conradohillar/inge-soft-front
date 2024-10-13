@@ -154,10 +154,11 @@ export default function Profile() {
   });
 
   useEffect(() => {
-    if (data.photo_url != null) {
+    if (data != null && data.photo_url != null) {
       setImage(data.photo_url)
     }
   }, [data])
+
 
   if (isLoading) {
     return <LoadingPage />
@@ -180,7 +181,7 @@ export default function Profile() {
             <View className="flex-1 justify-center items-center">
               <TouchableOpacity onPress={toggleProfilePictureModal}>
                 <Avatar circular size="$12" borderColor="$black" borderWidth={1}>
-                  <Avatar.Image
+                  <Avatar.Image data-testid="profile-picture"
                     accessibilityLabel="Cam"
                     src={image}
                   />

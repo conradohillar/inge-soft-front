@@ -80,7 +80,7 @@ describe('SignIn component', () => {
             expect(getByText("E-mail o contrasena invalidos.")).toBeTruthy();
         });
     });
-    it('should display error message for non-existent email and password', async () => {
+    it('should display error message for timeout', async () => {
         axios.post.mockRejectedValue({
             response: {
                 status: 408,
