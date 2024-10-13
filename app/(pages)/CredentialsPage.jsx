@@ -36,15 +36,13 @@ export default function CredentialsPage() {
     return <LoadingPage />;
   }
 
-  if (mutation.isError) {
-    console.error(mutation.error);
-    return <ErrorPage />;
-  }
 
   return (
     <SafeAreaView className="h-full w-full bg-background">
       <YStack className="items-center justify-evenly h-full">
         <Text className="text-black text-3xl font-qbold">Mis credenciales</Text>
+        {mutation.isError && mutation.error.message == 408 && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
+        {mutation.isError && mutation.error.message == 403 && <Text className="text-red-500 text-base font-qsemibold pb-12">Ya sos conductor.</Text>}
         <ButtonNext variant={"secondary"} onPress={handleContinue}>
           <Text className="text-white text-2xl font-qsemibold">
             Quiero ser conductor

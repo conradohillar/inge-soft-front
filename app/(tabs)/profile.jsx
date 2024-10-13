@@ -96,15 +96,7 @@ export default function Profile() {
     },
   });
 
-  const removeImage = useMutation({
-    mutationFn: deleteImage,
-    onSuccess: () => {
-      setImage(icons.placeholder_profile);
-    },
-    onError: (error) => {
-      throw (error);
-    },
-  });
+
 
 
   const handleDeletePicture = () => {
@@ -120,6 +112,16 @@ export default function Profile() {
     uploadImage();
   };
 
+  const removeImage = useMutation({
+    mutationFn: deleteImage,
+    onSuccess: () => {
+      setImage(icons.placeholder_profile);
+    },
+    onError: (error) => {
+      throw (error);
+    },
+  });
+
   const saveNewName = useMutation({
     mutationFn: (name) => newName(name),
     onSuccess: (data) => {
@@ -134,18 +136,19 @@ export default function Profile() {
             : oldData,
       )
       setName(data.name);
-    },
-    onError: (error) => {
-      console.error("Error al editar el nombre:", error.message);
-    },
+    }
   });
 
   const handleSaveName = () => {
+    if (name === '') {
+      alert("El nombre no puede estar vacio.");
+      return;
+    }
     saveNewName.mutate(name);
     toggleEditNameModal();
   };
 
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, isError, data } = useQuery({
     queryKey: ['getUserData'],
     queryFn: getUserData,
   });
@@ -160,9 +163,13 @@ export default function Profile() {
     return <LoadingPage />
   }
 
-  if (error) {
+  if (isError) {
     return <ErrorPage />
   }
+
+  const handleRestrictedAccess = (message) => {
+    alert(message);
+  };
 
   return (
     <SafeAreaView className="bg-background">
@@ -204,22 +211,41 @@ export default function Profile() {
               <Text className="text-gray-600 text-base font-qsemibold">{data.email}</Text>
             </YStack>
           </XStack>
+          {removeImage.isError && removeImage.error.message == 408 && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
+          {saveNewName.isError && saveNewName.error.message == 408 && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
+          {editImage.isError && editImage.error.message == 408 && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
+
+          {removeImage.isError && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
+          {saveNewName.isError && saveNewName.error.message == 400 && <Text className="text-red-500 text-base font-qsemibold pb-12">El nombre no puede estar vacio.</Text>}
+          {editImage.isError && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
         </YStack>
         <YStack className="w-full h-[70%]">
           <View className="w-full h-[20%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
             <XStack className="w-[80%] items-center justify-start space-x-5" >
               <Image source={icons.car} className="h-6 w-6" tintColor="#aaa" resizeMode='contain' />
-              <Link href="/(pages)/MyCarsPage" asChild>
-                <Text className="text-xl text-black font-qbold">Mis autos</Text>
-              </Link>
+              {data.is_driver ? (
+                <Link href="/(pages)/MyCarsPage" asChild>
+                  <Text className="text-xl text-black font-qbold">Mis autos</Text>
+                </Link>
+              ) : (
+                <TouchableOpacity onPress={() => handleRestrictedAccess("Primero tenes que convertirte en conductor.")}>
+                  <Text className="text-xl text-black font-qbold">Mis autos</Text>
+                </TouchableOpacity>
+              )}
             </XStack>
           </View>
-          <View className="w-full h-[20%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
+          <View className="w-full h-[20%] items-center justify-center " borderTopColor="#ddd" borderTopWidth={2}>
             <XStack className="w-[80%] items-center justify-start space-x-5" >
               <Image source={icons.id_card} className="h-6 w-6" tintColor="#aaa" resizeMode='contain' />
-              <Link href="/(pages)/CredentialsPage" asChild>
-                <Text className="text-xl text-black font-qbold">Credenciales</Text>
-              </Link>
+              {!data.is_driver ? (
+                <Link href="/(pages)/CredentialsPage" asChild>
+                  <Text className="text-xl text-black font-qbold">Credenciales</Text>
+                </Link>
+              ) : (
+                <TouchableOpacity onPress={() => handleRestrictedAccess("Ya sos conductor.")}>
+                  <Text className="text-xl text-black font-qbold">Credenciales</Text>
+                </TouchableOpacity>
+              )}
             </XStack>
           </View>
         </YStack>
