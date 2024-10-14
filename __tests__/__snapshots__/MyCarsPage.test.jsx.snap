@@ -1,0 +1,805 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyCarsPage my cars page Snapshot debería coincidir con la snapshot 1`] = `
+<RNCSafeAreaView
+  edges={
+    {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
+  style={
+    [
+      {
+        "width": "100%",
+      },
+      {
+        "height": "100%",
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#FFFFFF",
+        "borderBottomColor": "#ccc",
+        "borderBottomWidth": 2,
+        "borderStyle": "solid",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "minHeight": "8%",
+        "paddingLeft": 16,
+        "paddingRight": 16,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      focusVisibleStyle={{}}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      role="button"
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderBottomColor": "transparent",
+          "borderBottomLeftRadius": 16,
+          "borderBottomRightRadius": 16,
+          "borderBottomWidth": 1,
+          "borderLeftColor": "transparent",
+          "borderLeftWidth": 1,
+          "borderRightColor": "transparent",
+          "borderRightWidth": 1,
+          "borderStyle": "solid",
+          "borderTopColor": "transparent",
+          "borderTopLeftRadius": 16,
+          "borderTopRightRadius": 16,
+          "borderTopWidth": 1,
+          "flexDirection": "row",
+          "flexWrap": "nowrap",
+          "height": 40,
+          "justifyContent": "center",
+          "paddingLeft": 18,
+          "paddingRight": 18,
+          "width": 40,
+        }
+      }
+    >
+      <Image
+        resizeMode="contain"
+        source={1}
+        style={
+          [
+            {
+              "height": 32,
+            },
+            {
+              "width": 32,
+            },
+          ]
+        }
+      />
+    </View>
+    <Text
+      href="/home"
+      onPress={[Function]}
+      role="link"
+      style={
+        [
+          {
+            "fontSize": 48,
+            "lineHeight": 48,
+          },
+          {
+            "fontFamily": "Quicksand-Bold",
+          },
+          {
+            "color": "#59A58A",
+          },
+          {
+            "marginTop": 8,
+          },
+        ]
+      }
+    >
+      rydio
+    </Text>
+  </View>
+  <View
+    style={
+      [
+        {
+          "alignItems": "flex-start",
+        },
+        {
+          "marginTop": 20,
+        },
+        {
+          "marginLeft": 16,
+        },
+      ]
+    }
+  >
+    <View
+      focusVisibleStyle={{}}
+      focusable={true}
+      href="/profile"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      role="link"
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderBottomColor": "transparent",
+          "borderBottomLeftRadius": 12,
+          "borderBottomRightRadius": 12,
+          "borderBottomWidth": 1,
+          "borderLeftColor": "transparent",
+          "borderLeftWidth": 1,
+          "borderRightColor": "transparent",
+          "borderRightWidth": 1,
+          "borderStyle": "solid",
+          "borderTopColor": "transparent",
+          "borderTopLeftRadius": 12,
+          "borderTopRightRadius": 12,
+          "borderTopWidth": 1,
+          "flexDirection": "row",
+          "flexWrap": "nowrap",
+          "height": 36,
+          "justifyContent": "center",
+          "paddingLeft": 18,
+          "paddingRight": 18,
+          "width": 36,
+        }
+      }
+    >
+      <Image
+        resizeMode="contain"
+        source={1}
+        style={
+          [
+            {
+              "height": 28,
+            },
+            {
+              "width": 28,
+            },
+          ]
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 28,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "fontSize": 36,
+            "lineHeight": 40,
+          },
+          {
+            "fontFamily": "Quicksand-Bold",
+          },
+          {
+            "color": "#000",
+          },
+        ]
+      }
+    >
+      MIS AUTOS
+    </Text>
+  </View>
+  <RCTScrollView
+    data={
+      [
+        {
+          "model": "Toyota",
+          "plate": "ABC123",
+        },
+        {
+          "model": "Honda",
+          "plate": "XYZ789",
+        },
+      ]
+    }
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={0.0001}
+    stickyHeaderIndices={[]}
+    style={
+      [
+        {
+          "width": "100%",
+        },
+      ]
+    }
+    viewabilityConfigCallbackPairs={[]}
+  >
+    <View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            [
+              {
+                "width": "100%",
+              },
+              {
+                "alignItems": "center",
+              },
+              {
+                "marginBottom": 12,
+                "marginTop": 12,
+              },
+            ]
+          }
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "backgroundColor": "#eee",
+                "borderColor": "#aaa",
+                "borderRadius": 40,
+                "borderWidth": 2,
+                "height": 150,
+                "paddingHorizontal": 30,
+                "paddingTop": 20,
+                "width": "85%",
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "flexDirection": "column",
+                }
+              }
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                  }
+                }
+              >
+                <View
+                  style={
+                    {
+                      "flexDirection": "column",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        [
+                          {
+                            "color": "#000",
+                          },
+                          {
+                            "fontSize": 24,
+                            "lineHeight": 32,
+                          },
+                          {
+                            "fontFamily": "Quicksand-Bold",
+                          },
+                        ]
+                      }
+                    >
+                      Toyota
+                    </Text>
+                    <Image
+                      resizeMode="contain"
+                      source={1}
+                      style={
+                        [
+                          {
+                            "height": 40,
+                          },
+                          {
+                            "width": 40,
+                          },
+                          [
+                            {
+                              "marginLeft": 20,
+                            },
+                          ],
+                        ]
+                      }
+                      tintColor="#bbb"
+                    />
+                  </View>
+                  <Text
+                    style={
+                      [
+                        {
+                          "fontSize": 16,
+                          "lineHeight": 24,
+                        },
+                        {
+                          "fontFamily": "Quicksand-SemiBold",
+                        },
+                        [
+                          {
+                            "marginTop": 12,
+                          },
+                        ],
+                      ]
+                    }
+                  >
+                    Patente: 
+                    ABC123
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={
+                  [
+                    {
+                      "alignItems": "flex-end",
+                    },
+                    {
+                      "marginBottom": 12,
+                    },
+                  ]
+                }
+              >
+                <View
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={true}
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    {
+                      "backgroundColor": "#eee",
+                    }
+                  }
+                >
+                  <Image
+                    resizeMode="contain"
+                    source={1}
+                    style={
+                      [
+                        {
+                          "height": 28,
+                        },
+                        {
+                          "width": 28,
+                        },
+                      ]
+                    }
+                    tintColor="#c00"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            [
+              {
+                "width": "100%",
+              },
+              {
+                "alignItems": "center",
+              },
+              {
+                "marginBottom": 12,
+                "marginTop": 12,
+              },
+            ]
+          }
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "backgroundColor": "#eee",
+                "borderColor": "#aaa",
+                "borderRadius": 40,
+                "borderWidth": 2,
+                "height": 150,
+                "paddingHorizontal": 30,
+                "paddingTop": 20,
+                "width": "85%",
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "flexDirection": "column",
+                }
+              }
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "flex-start",
+                    "flexDirection": "row",
+                    "justifyContent": "space-between",
+                  }
+                }
+              >
+                <View
+                  style={
+                    {
+                      "flexDirection": "column",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        [
+                          {
+                            "color": "#000",
+                          },
+                          {
+                            "fontSize": 24,
+                            "lineHeight": 32,
+                          },
+                          {
+                            "fontFamily": "Quicksand-Bold",
+                          },
+                        ]
+                      }
+                    >
+                      Honda
+                    </Text>
+                    <Image
+                      resizeMode="contain"
+                      source={1}
+                      style={
+                        [
+                          {
+                            "height": 40,
+                          },
+                          {
+                            "width": 40,
+                          },
+                          [
+                            {
+                              "marginLeft": 20,
+                            },
+                          ],
+                        ]
+                      }
+                      tintColor="#bbb"
+                    />
+                  </View>
+                  <Text
+                    style={
+                      [
+                        {
+                          "fontSize": 16,
+                          "lineHeight": 24,
+                        },
+                        {
+                          "fontFamily": "Quicksand-SemiBold",
+                        },
+                        [
+                          {
+                            "marginTop": 12,
+                          },
+                        ],
+                      ]
+                    }
+                  >
+                    Patente: 
+                    XYZ789
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={
+                  [
+                    {
+                      "alignItems": "flex-end",
+                    },
+                    {
+                      "marginBottom": 12,
+                    },
+                  ]
+                }
+              >
+                <View
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": undefined,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={true}
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    {
+                      "backgroundColor": "#eee",
+                    }
+                  }
+                >
+                  <Image
+                    resizeMode="contain"
+                    source={1}
+                    style={
+                      [
+                        {
+                          "height": 28,
+                        },
+                        {
+                          "width": 28,
+                        },
+                      ]
+                    }
+                    tintColor="#c00"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 40,
+        "marginTop": 40,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "fontSize": 18,
+            "lineHeight": 28,
+          },
+          {
+            "color": "#4b5563",
+          },
+          {
+            "fontFamily": "Quicksand-SemiBold",
+          },
+        ]
+      }
+    >
+      Agregá un auto nuevo
+    </Text>
+    <View
+      focusVisibleStyle={{}}
+      focusable={true}
+      href="/AddCarPage"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      role="link"
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderBottomColor": "transparent",
+          "borderBottomLeftRadius": 12,
+          "borderBottomRightRadius": 12,
+          "borderBottomWidth": 1,
+          "borderLeftColor": "transparent",
+          "borderLeftWidth": 1,
+          "borderRightColor": "transparent",
+          "borderRightWidth": 1,
+          "borderStyle": "solid",
+          "borderTopColor": "transparent",
+          "borderTopLeftRadius": 12,
+          "borderTopRightRadius": 12,
+          "borderTopWidth": 1,
+          "flexDirection": "row",
+          "flexWrap": "nowrap",
+          "height": 32,
+          "justifyContent": "center",
+          "marginLeft": 12,
+          "marginTop": 4,
+          "paddingLeft": 18,
+          "paddingRight": 18,
+          "width": 32,
+        }
+      }
+    >
+      <Image
+        resizeMode="contain"
+        source={1}
+        style={
+          [
+            {
+              "height": 24,
+            },
+            {
+              "width": 24,
+            },
+          ]
+        }
+      />
+    </View>
+  </View>
+</RNCSafeAreaView>
+`;

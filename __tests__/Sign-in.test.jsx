@@ -17,17 +17,20 @@ const Provider = ({ children }) => (
     </TamaguiProvider>
 );
 
-describe('SignIn component', () => {
-    const user = [{
-        "name": "Santiago Bassi",
-        "email": "santiagobassi21@gmail.com",
-        "address": "Chascomús, Partido de Chascomús, Buenos Aires, Argentina",
-        "dni": 123456789,
-        "photo_url": "https://i.ibb.co/WxTJXCZ/de12caf4398b.jpg",
-        "is_driver": true
-    }];
+const user = [{
+    "name": "Santiago Bassi",
+    "email": "santiagobassi21@gmail.com",
+    "address": "Chascomús, Partido de Chascomús, Buenos Aires, Argentina",
+    "dni": 123456789,
+    "photo_url": "https://i.ibb.co/WxTJXCZ/de12caf4398b.jpg",
+    "is_driver": true
+}];
 
-    axios.get.mockResolvedValue(user);
+axios.get.mockResolvedValue(user);
+
+
+describe('SignIn component', () => {
+
 
     it('should render the component', async () => {
         const { getByPlaceholderText } = render(<Provider><SignIn /></Provider>);
@@ -100,6 +103,14 @@ describe('SignIn component', () => {
 
         await waitFor(() => {
             expect(getByText("Error de conexion, intente mas tarde.")).toBeTruthy();
+        });
+
+
+    });
+    describe('add car page Snapshot', () => {
+        it('debería coincidir con la snapshot', () => {
+            const tree = render(<Provider><SignIn /></Provider>).toJSON();
+            expect(tree).toMatchSnapshot();
         });
     });
 });

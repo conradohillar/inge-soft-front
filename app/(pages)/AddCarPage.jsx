@@ -108,6 +108,7 @@ export default function AddCarPage() {
                     title="Modelo"
                     value={value}
                     handleChangeText={onChange}
+                    placeholder={"Ej: Toyota etios"}
                   />
                 )}
                 name="model"
@@ -123,6 +124,7 @@ export default function AddCarPage() {
                     title="Patente"
                     value={value}
                     handleChangeText={onChange}
+                    placeholder={"Ej: abc-123"}
                   />
                 )}
                 name="plate"
@@ -138,6 +140,7 @@ export default function AddCarPage() {
                     title="Color"
                     value={value}
                     handleChangeText={onChange}
+                    placeholder={"Ej: Rojo"}
                   />
                 )}
                 name="color"

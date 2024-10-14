@@ -1,0 +1,559 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Profile Component profile page Snapshot debería coincidir con la snapshot 1`] = `
+<RNCSafeAreaView
+  edges={
+    {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
+  style={
+    [
+      {
+        "backgroundColor": "#FFFFFF",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#FFFFFF",
+        "borderBottomColor": "#ccc",
+        "borderBottomWidth": 2,
+        "borderStyle": "solid",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "minHeight": "8%",
+        "paddingLeft": 16,
+        "paddingRight": 16,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      focusVisibleStyle={{}}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      role="button"
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderBottomColor": "transparent",
+          "borderBottomLeftRadius": 16,
+          "borderBottomRightRadius": 16,
+          "borderBottomWidth": 1,
+          "borderLeftColor": "transparent",
+          "borderLeftWidth": 1,
+          "borderRightColor": "transparent",
+          "borderRightWidth": 1,
+          "borderStyle": "solid",
+          "borderTopColor": "transparent",
+          "borderTopLeftRadius": 16,
+          "borderTopRightRadius": 16,
+          "borderTopWidth": 1,
+          "flexDirection": "row",
+          "flexWrap": "nowrap",
+          "height": 40,
+          "justifyContent": "center",
+          "paddingLeft": 18,
+          "paddingRight": 18,
+          "width": 40,
+        }
+      }
+    >
+      <Image
+        resizeMode="contain"
+        source={1}
+        style={
+          [
+            {
+              "height": 32,
+            },
+            {
+              "width": 32,
+            },
+          ]
+        }
+      />
+    </View>
+    <Text
+      href="/home"
+      onPress={[Function]}
+      role="link"
+      style={
+        [
+          {
+            "fontSize": 48,
+            "lineHeight": 48,
+          },
+          {
+            "fontFamily": "Quicksand-Bold",
+          },
+          {
+            "color": "#59A58A",
+          },
+          {
+            "marginTop": 8,
+          },
+        ]
+      }
+    >
+      rydio
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "column",
+        "height": "100%",
+        "justifyContent": "space-evenly",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "column",
+          "height": "15%",
+          "justifyContent": "space-evenly",
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "flex-start",
+            "width": "90%",
+          }
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "flexBasis": "0%",
+                "flexGrow": 1,
+                "flexShrink": 1,
+              },
+              {
+                "justifyContent": "center",
+              },
+              {
+                "alignItems": "center",
+              },
+            ]
+          }
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "borderBottomLeftRadius": 100000,
+                  "borderBottomRightRadius": 100000,
+                  "borderBottomWidth": 1,
+                  "borderLeftWidth": 1,
+                  "borderRightWidth": 1,
+                  "borderStyle": "solid",
+                  "borderTopLeftRadius": 100000,
+                  "borderTopRightRadius": 100000,
+                  "borderTopWidth": 1,
+                  "flexDirection": "column",
+                  "height": 144,
+                  "justifyContent": "center",
+                  "maxHeight": 144,
+                  "maxWidth": 144,
+                  "minHeight": 144,
+                  "minWidth": 144,
+                  "overflow": "hidden",
+                  "paddingBottom": 0,
+                  "paddingLeft": 0,
+                  "paddingRight": 0,
+                  "paddingTop": 0,
+                  "position": "relative",
+                  "width": 144,
+                }
+              }
+            >
+              <View
+                style={
+                  {
+                    "bottom": 0,
+                    "flexDirection": "column",
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                    "zIndex": 1,
+                  }
+                }
+              >
+                <Image
+                  accessibilityLabel="Cam"
+                  fullscreen={true}
+                  onError={[Function]}
+                  onLoad={[Function]}
+                  source={
+                    {
+                      "uri": "https://i.ibb.co/WxTJXCZ/de12caf4398b.jpg",
+                    }
+                  }
+                  style={
+                    {
+                      "height": 144,
+                      "width": 144,
+                    }
+                  }
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "flex-start",
+              "flexDirection": "column",
+              "justifyContent": "space-evenly",
+              "marginLeft": 20,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+              }
+            }
+          >
+            <Text
+              style={
+                [
+                  {
+                    "color": "#000",
+                  },
+                  {
+                    "fontSize": 18,
+                    "lineHeight": 28,
+                  },
+                  {
+                    "fontFamily": "Quicksand-Bold",
+                  },
+                ]
+              }
+            >
+              Santiago Bassi
+            </Text>
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "opacity": 1,
+                  "paddingLeft": 8,
+                  "paddingRight": 8,
+                }
+              }
+            >
+              <Image
+                resizeMode="contain"
+                source={1}
+                style={
+                  [
+                    {
+                      "height": 16,
+                    },
+                    {
+                      "width": 16,
+                    },
+                  ]
+                }
+                tintColor="#aaa"
+              />
+            </View>
+          </View>
+          <Text
+            style={
+              [
+                {
+                  "color": "#4b5563",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                {
+                  "fontFamily": "Quicksand-SemiBold",
+                },
+              ]
+            }
+          >
+            santaigobassi21@gmail.com
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        {
+          "flexDirection": "column",
+          "height": "70%",
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        borderTopColor="#ddd"
+        borderTopWidth={2}
+        style={
+          [
+            {
+              "width": "100%",
+            },
+            {
+              "height": "20%",
+            },
+            {
+              "alignItems": "center",
+            },
+            {
+              "justifyContent": "center",
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+              "width": "80%",
+            }
+          }
+        >
+          <Image
+            resizeMode="contain"
+            source={1}
+            style={
+              [
+                {
+                  "height": 24,
+                },
+                {
+                  "width": 24,
+                },
+              ]
+            }
+            tintColor="#aaa"
+          />
+          <Text
+            href="/MyCarsPage"
+            onPress={[Function]}
+            role="link"
+            style={
+              [
+                {
+                  "fontSize": 20,
+                  "lineHeight": 28,
+                },
+                {
+                  "color": "#000",
+                },
+                {
+                  "fontFamily": "Quicksand-Bold",
+                },
+                [
+                  {
+                    "marginLeft": 20,
+                  },
+                ],
+              ]
+            }
+          >
+            Mis autos
+          </Text>
+        </View>
+      </View>
+      <View
+        borderTopColor="#ddd"
+        borderTopWidth={2}
+        style={
+          [
+            {
+              "width": "100%",
+            },
+            {
+              "height": "20%",
+            },
+            {
+              "alignItems": "center",
+            },
+            {
+              "justifyContent": "center",
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+              "width": "80%",
+            }
+          }
+        >
+          <Image
+            resizeMode="contain"
+            source={1}
+            style={
+              [
+                {
+                  "height": 24,
+                },
+                {
+                  "width": 24,
+                },
+              ]
+            }
+            tintColor="#aaa"
+          />
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "marginLeft": 20,
+                "opacity": 1,
+              }
+            }
+          >
+            <Text
+              style={
+                [
+                  {
+                    "fontSize": 20,
+                    "lineHeight": 28,
+                  },
+                  {
+                    "color": "#000",
+                  },
+                  {
+                    "fontFamily": "Quicksand-Bold",
+                  },
+                ]
+              }
+            >
+              Credenciales
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RNCSafeAreaView>
+`;

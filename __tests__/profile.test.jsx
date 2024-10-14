@@ -8,6 +8,8 @@ import axios from 'axios';
 
 jest.mock('axios');
 
+global.alert = jest.fn();
+
 const queryClient = new QueryClient();
 const Provider = ({ children }) => (
     <TamaguiProvider config={config}>
@@ -38,10 +40,18 @@ describe('Profile Component', () => {
             expect(getByText(name)).toBeTruthy();
             expect(getByText(email)).toBeTruthy();
             expect(findByTestId("profile-picture")).toBeTruthy();
+            expect(getByText("Credenciales")).toBeTruthy();
+            expect(getByText("Mis autos")).toBeTruthy();
         });
     });
 
 
 
+    describe('profile page Snapshot', () => {
+        it('debería coincidir con la snapshot', () => {
+            const tree = render(<Provider><Profile /></Provider>).toJSON();
+            expect(tree).toMatchSnapshot();
+        });
+    });
 
 });

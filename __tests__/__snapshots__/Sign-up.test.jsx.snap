@@ -1,0 +1,786 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignUp Component sign-up page Snapshot debería coincidir con la snapshot 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "paddingBottom": 0,
+      },
+    ]
+  }
+>
+  <RNCSafeAreaView
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessible={true}
+    edges={
+      {
+        "bottom": "additive",
+        "left": "additive",
+        "right": "additive",
+        "top": "additive",
+      }
+    }
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": "#FFFFFF",
+        },
+        {
+          "height": "100%",
+        },
+        {
+          "width": "100%",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "flexDirection": "column",
+          "height": "100%",
+          "justifyContent": "space-evenly",
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "column",
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#000",
+              },
+              {
+                "fontSize": 48,
+                "lineHeight": 48,
+              },
+              {
+                "fontFamily": "Quicksand-Bold",
+              },
+              {
+                "marginBottom": 12,
+              },
+            ]
+          }
+        >
+          Registrá
+        </Text>
+        <Text
+          style={
+            [
+              {
+                "color": "#59A58A",
+              },
+              {
+                "fontSize": 48,
+                "lineHeight": 48,
+              },
+              {
+                "fontFamily": "Quicksand-Bold",
+              },
+            ]
+          }
+        >
+          TU CUENTA
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "column",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "flex-start",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "marginBottom": 8,
+              "marginLeft": 8,
+              "marginRight": 8,
+              "marginTop": 8,
+              "width": "100%",
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "width": "100%",
+                },
+                {
+                  "alignItems": "center",
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "width": "85%",
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  [
+                    {
+                      "fontFamily": "Quicksand-Bold",
+                    },
+                    {
+                      "color": "#4b5563",
+                    },
+                    {
+                      "paddingLeft": 6,
+                      "paddingRight": 6,
+                    },
+                    {
+                      "marginBottom": 8,
+                    },
+                  ]
+                }
+              >
+                Nombre
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              [
+                {
+                  "width": "100%",
+                },
+                {
+                  "alignItems": "center",
+                },
+              ]
+            }
+          >
+            <TextInput
+              backgroundColor="#EEE"
+              color="black"
+              editable={true}
+              multiline={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              p={15}
+              placeholder="Ingresá tu nombre"
+              placeholderTextColor="#888"
+              scrollEnabled={true}
+              secureTextEntry={false}
+              style={
+                [
+                  {
+                    "width": "85%",
+                  },
+                  {
+                    "backgroundColor": "#EEE",
+                  },
+                  {
+                    "borderBottomLeftRadius": 8,
+                    "borderBottomRightRadius": 8,
+                    "borderTopLeftRadius": 8,
+                    "borderTopRightRadius": 8,
+                  },
+                  {
+                    "color": "#000",
+                  },
+                  {
+                    "paddingBottom": 16,
+                    "paddingLeft": 16,
+                    "paddingRight": 16,
+                    "paddingTop": 16,
+                  },
+                  {
+                    "borderBottomWidth": 1,
+                    "borderLeftWidth": 1,
+                    "borderRightWidth": 1,
+                    "borderTopWidth": 1,
+                  },
+                  {
+                    "borderBottomColor": "#111827",
+                    "borderLeftColor": "#111827",
+                    "borderRightColor": "#111827",
+                    "borderTopColor": "#111827",
+                  },
+                ]
+              }
+              textAlignVertical="top"
+              value=""
+            />
+          </View>
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "flex-start",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "marginBottom": 8,
+              "marginLeft": 8,
+              "marginRight": 8,
+              "marginTop": 8,
+              "width": "100%",
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "width": "100%",
+                },
+                {
+                  "alignItems": "center",
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "width": "85%",
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  [
+                    {
+                      "fontFamily": "Quicksand-Bold",
+                    },
+                    {
+                      "color": "#4b5563",
+                    },
+                    {
+                      "paddingLeft": 6,
+                      "paddingRight": 6,
+                    },
+                    {
+                      "marginBottom": 8,
+                    },
+                  ]
+                }
+              >
+                DNI
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              [
+                {
+                  "width": "100%",
+                },
+                {
+                  "alignItems": "center",
+                },
+              ]
+            }
+          >
+            <TextInput
+              backgroundColor="#EEE"
+              color="black"
+              editable={true}
+              multiline={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              p={15}
+              placeholder="Ingresá tu DNI"
+              placeholderTextColor="#888"
+              scrollEnabled={true}
+              secureTextEntry={false}
+              style={
+                [
+                  {
+                    "width": "85%",
+                  },
+                  {
+                    "backgroundColor": "#EEE",
+                  },
+                  {
+                    "borderBottomLeftRadius": 8,
+                    "borderBottomRightRadius": 8,
+                    "borderTopLeftRadius": 8,
+                    "borderTopRightRadius": 8,
+                  },
+                  {
+                    "color": "#000",
+                  },
+                  {
+                    "paddingBottom": 16,
+                    "paddingLeft": 16,
+                    "paddingRight": 16,
+                    "paddingTop": 16,
+                  },
+                  {
+                    "borderBottomWidth": 1,
+                    "borderLeftWidth": 1,
+                    "borderRightWidth": 1,
+                    "borderTopWidth": 1,
+                  },
+                  {
+                    "borderBottomColor": "#111827",
+                    "borderLeftColor": "#111827",
+                    "borderRightColor": "#111827",
+                    "borderTopColor": "#111827",
+                  },
+                ]
+              }
+              textAlignVertical="top"
+              value=""
+            />
+          </View>
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "marginTop": 16,
+              "width": "100%",
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "width": "100%",
+                },
+                {
+                  "alignItems": "center",
+                },
+                {
+                  "paddingLeft": 8,
+                  "paddingRight": 8,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "width": "85%",
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  [
+                    {
+                      "fontFamily": "Quicksand-Bold",
+                    },
+                    {
+                      "color": "#4b5563",
+                    },
+                    {
+                      "marginBottom": 8,
+                    },
+                  ]
+                }
+              >
+                Dirección
+              </Text>
+            </View>
+          </View>
+          <View
+            onStartShouldSetResponder={[Function]}
+            onTouchEnd={[Function]}
+            style={
+              [
+                {
+                  "marginVertical": 2,
+                },
+                {
+                  "width": "85%",
+                },
+              ]
+            }
+          >
+            <View
+              onLayout={[Function]}
+              style={
+                [
+                  {
+                    "backgroundColor": "#e5ecf2",
+                    "borderRadius": 5,
+                    "display": "flex",
+                    "flexDirection": "row",
+                    "overflow": "hidden",
+                  },
+                  {
+                    "backgroundColor": "#eee",
+                    "borderColor": "#333",
+                    "borderRadius": 8,
+                    "borderWidth": 1,
+                    "height": 50,
+                    "width": "100%",
+                  },
+                ]
+              }
+            >
+              <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                pointerEvents="box-only"
+                style={
+                  {
+                    "flexGrow": 1,
+                    "flexShrink": 1,
+                  }
+                }
+              >
+                <TextInput
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  editable={true}
+                  onBlur={[Function]}
+                  onChangeText={[Function]}
+                  onFocus={[Function]}
+                  onSubmitEditing={[Function]}
+                  placeholder="i.e: Tigre"
+                  placeholderTextColor="#00000066"
+                  style={
+                    [
+                      {
+                        "color": "#333",
+                        "flexGrow": 1,
+                        "flexShrink": 1,
+                        "fontSize": 16,
+                        "overflow": "hidden",
+                        "paddingHorizontal": 13,
+                      },
+                      {
+                        "height": 50,
+                      },
+                      {
+                        "color": "#000",
+                        "fontFamily": "Quicksand-Semibold",
+                        "fontSize": 14,
+                      },
+                    ]
+                  }
+                  value=""
+                />
+              </View>
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "alignSelf": "center",
+                    "backgroundColor": "transparent",
+                    "flex": 0,
+                    "flexDirection": "row",
+                    "height": 30,
+                    "justifyContent": "center",
+                    "position": "relative",
+                    "right": 8,
+                    "zIndex": 10,
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                  style={
+                    {
+                      "transform": [
+                        {
+                          "rotate": "0deg",
+                        },
+                      ],
+                    }
+                  }
+                >
+                  <View
+                    accessibilityState={
+                      {
+                        "busy": undefined,
+                        "checked": undefined,
+                        "disabled": undefined,
+                        "expanded": undefined,
+                        "selected": undefined,
+                      }
+                    }
+                    accessibilityValue={
+                      {
+                        "max": undefined,
+                        "min": undefined,
+                        "now": undefined,
+                        "text": undefined,
+                      }
+                    }
+                    accessible={true}
+                    collapsable={false}
+                    focusable={true}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      {
+                        "alignItems": "center",
+                        "height": "100%",
+                        "justifyContent": "center",
+                        "opacity": 1,
+                        "width": 26,
+                      }
+                    }
+                  >
+                    <RNSVGSvgView
+                      align="xMidYMid"
+                      bbHeight={24}
+                      bbWidth={20}
+                      fill="none"
+                      focusable={false}
+                      height={24}
+                      meetOrSlice={0}
+                      minX={0}
+                      minY={0}
+                      stroke="#727992"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      style={
+                        [
+                          {
+                            "backgroundColor": "transparent",
+                            "borderWidth": 0,
+                          },
+                          {
+                            "flex": 0,
+                            "height": 24,
+                            "width": 20,
+                          },
+                        ]
+                      }
+                      vbHeight={24}
+                      vbWidth={24}
+                      width={20}
+                    >
+                      <RNSVGGroup
+                        fill={null}
+                        propList={
+                          [
+                            "fill",
+                            "stroke",
+                            "strokeWidth",
+                            "strokeLinecap",
+                            "strokeLinejoin",
+                          ]
+                        }
+                        stroke={
+                          {
+                            "payload": 4285692306,
+                            "type": 0,
+                          }
+                        }
+                        strokeLinecap={1}
+                        strokeLinejoin={1}
+                        strokeWidth={2}
+                      >
+                        <RNSVGPath
+                          d="M6 9l6 6 6-6"
+                          fill={
+                            {
+                              "payload": 4278190080,
+                              "type": 0,
+                            }
+                          }
+                        />
+                      </RNSVGGroup>
+                    </RNSVGSvgView>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "column",
+          }
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "alignItems": "center",
+              },
+              {
+                "width": "100%",
+              },
+            ]
+          }
+        >
+          <View
+            focusVisibleStyle={{}}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            role="button"
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "black",
+                "borderBottomColor": "black",
+                "borderBottomLeftRadius": 9999,
+                "borderBottomRightRadius": 9999,
+                "borderBottomWidth": 1,
+                "borderColor": "black",
+                "borderLeftColor": "black",
+                "borderLeftWidth": 1,
+                "borderRightColor": "black",
+                "borderRightWidth": 1,
+                "borderStyle": "solid",
+                "borderTopColor": "black",
+                "borderTopLeftRadius": 9999,
+                "borderTopRightRadius": 9999,
+                "borderTopWidth": 1,
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "flexWrap": "nowrap",
+                "height": 75,
+                "justifyContent": "center",
+                "marginBottom": 8,
+                "marginLeft": 8,
+                "marginRight": 8,
+                "marginTop": 8,
+                "paddingLeft": 18,
+                "paddingRight": 18,
+                "width": "85%",
+              }
+            }
+          >
+            <Text
+              style={
+                [
+                  {
+                    "fontSize": 24,
+                    "lineHeight": 32,
+                  },
+                  {
+                    "fontFamily": "Quicksand-SemiBold",
+                  },
+                  {
+                    "color": "#fff",
+                  },
+                ]
+              }
+            >
+              Continuar
+            </Text>
+          </View>
+        </View>
+        <Text
+          href="/LandingPage"
+          onPress={[Function]}
+          role="link"
+          style={
+            [
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              {
+                "color": "#ef4444",
+              },
+              {
+                "fontFamily": "Quicksand-SemiBold",
+              },
+              {
+                "textDecorationLine": "underline",
+              },
+            ]
+          }
+        >
+          Cancelar
+        </Text>
+      </View>
+    </View>
+  </RNCSafeAreaView>
+</View>
+`;

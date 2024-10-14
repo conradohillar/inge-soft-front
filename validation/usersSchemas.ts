@@ -6,8 +6,9 @@ export const addCarSchema = yup.object().shape({
         .required('Model is required'),
     plate: yup
         .string()
-        .matches(/^[a-zA-Z]{3}-\d{3}$/, 'Plate must have the format abc-123')
-        .required('Plate is required'),
+        .required('Plate is required')
+        .matches(/^[a-zA-Z]{3}-\d{3}$/, 'Plate must have the format abc-123'),
+        
     color: yup
         .string()
         .required('Color is required'),

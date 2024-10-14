@@ -1,0 +1,501 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignIn component add car page Snapshot debería coincidir con la snapshot 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "paddingBottom": 0,
+      },
+    ]
+  }
+>
+  <RCTSafeAreaView
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": "#FFFFFF",
+        },
+        {
+          "height": "100%",
+        },
+        {
+          "width": "100%",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "flexDirection": "column",
+          "height": "100%",
+          "justifyContent": "space-evenly",
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "column",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#000",
+              },
+              {
+                "fontSize": 48,
+                "lineHeight": 48,
+              },
+              {
+                "fontFamily": "Quicksand-Bold",
+              },
+            ]
+          }
+        >
+          Iniciá sesión
+        </Text>
+        <Text
+          style={
+            [
+              {
+                "color": "#000",
+              },
+              {
+                "fontSize": 36,
+                "lineHeight": 40,
+              },
+              {
+                "fontFamily": "Quicksand-Bold",
+              },
+            ]
+          }
+        >
+          con
+          <Text
+            style={
+              [
+                {
+                  "color": "#59A58A",
+                },
+                {
+                  "fontSize": 36,
+                  "lineHeight": 40,
+                },
+                {
+                  "fontFamily": "Quicksand-Bold",
+                },
+              ]
+            }
+          >
+             tu cuenta
+          </Text>
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "column",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "flex-start",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "marginBottom": 8,
+              "marginLeft": 8,
+              "marginRight": 8,
+              "marginTop": 8,
+              "width": "100%",
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "width": "100%",
+                },
+                {
+                  "alignItems": "center",
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "width": "85%",
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  [
+                    {
+                      "fontFamily": "Quicksand-Bold",
+                    },
+                    {
+                      "color": "#4b5563",
+                    },
+                    {
+                      "paddingLeft": 6,
+                      "paddingRight": 6,
+                    },
+                    {
+                      "marginBottom": 8,
+                    },
+                  ]
+                }
+              >
+                E-mail
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              [
+                {
+                  "width": "100%",
+                },
+                {
+                  "alignItems": "center",
+                },
+              ]
+            }
+          >
+            <TextInput
+              autoComplete="email"
+              backgroundColor="#EEE"
+              color="black"
+              editable={true}
+              inputMode="email"
+              multiline={true}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              p={15}
+              placeholder="Ingresá tu e-mail"
+              placeholderTextColor="#888"
+              scrollEnabled={true}
+              secureTextEntry={false}
+              style={
+                [
+                  {
+                    "width": "85%",
+                  },
+                  {
+                    "backgroundColor": "#EEE",
+                  },
+                  {
+                    "borderBottomLeftRadius": 8,
+                    "borderBottomRightRadius": 8,
+                    "borderTopLeftRadius": 8,
+                    "borderTopRightRadius": 8,
+                  },
+                  {
+                    "color": "#000",
+                  },
+                  {
+                    "paddingBottom": 16,
+                    "paddingLeft": 16,
+                    "paddingRight": 16,
+                    "paddingTop": 16,
+                  },
+                  {
+                    "borderBottomWidth": 1,
+                    "borderLeftWidth": 1,
+                    "borderRightWidth": 1,
+                    "borderTopWidth": 1,
+                  },
+                  {
+                    "borderBottomColor": "#111827",
+                    "borderLeftColor": "#111827",
+                    "borderRightColor": "#111827",
+                    "borderTopColor": "#111827",
+                  },
+                ]
+              }
+              textAlignVertical="top"
+              value=""
+            />
+          </View>
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "flex-start",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "marginBottom": 8,
+              "marginLeft": 8,
+              "marginRight": 8,
+              "marginTop": 8,
+              "width": "100%",
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "width": "100%",
+                },
+                {
+                  "alignItems": "center",
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "width": "85%",
+                  },
+                ]
+              }
+            >
+              <Text
+                style={
+                  [
+                    {
+                      "fontFamily": "Quicksand-Bold",
+                    },
+                    {
+                      "color": "#4b5563",
+                    },
+                    {
+                      "paddingLeft": 6,
+                      "paddingRight": 6,
+                    },
+                    {
+                      "marginBottom": 8,
+                    },
+                  ]
+                }
+              >
+                Contraseña
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              [
+                {
+                  "width": "100%",
+                },
+                {
+                  "alignItems": "center",
+                },
+              ]
+            }
+          >
+            <TextInput
+              autoComplete="password"
+              backgroundColor="#EEE"
+              color="black"
+              editable={true}
+              inputMode="password"
+              multiline={false}
+              onBlur={[Function]}
+              onChangeText={[Function]}
+              onFocus={[Function]}
+              p={15}
+              placeholder="Ingresá tu contraseña"
+              placeholderTextColor="#888"
+              scrollEnabled={true}
+              secureTextEntry={true}
+              style={
+                [
+                  {
+                    "width": "85%",
+                  },
+                  {
+                    "backgroundColor": "#EEE",
+                  },
+                  {
+                    "borderBottomLeftRadius": 8,
+                    "borderBottomRightRadius": 8,
+                    "borderTopLeftRadius": 8,
+                    "borderTopRightRadius": 8,
+                  },
+                  {
+                    "color": "#000",
+                  },
+                  {
+                    "paddingBottom": 16,
+                    "paddingLeft": 16,
+                    "paddingRight": 16,
+                    "paddingTop": 16,
+                  },
+                  {
+                    "borderBottomWidth": 1,
+                    "borderLeftWidth": 1,
+                    "borderRightWidth": 1,
+                    "borderTopWidth": 1,
+                  },
+                  {
+                    "borderBottomColor": "#111827",
+                    "borderLeftColor": "#111827",
+                    "borderRightColor": "#111827",
+                    "borderTopColor": "#111827",
+                  },
+                ]
+              }
+              textAlignVertical="top"
+              value=""
+            />
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "column",
+          }
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "alignItems": "center",
+              },
+              {
+                "width": "100%",
+              },
+            ]
+          }
+        >
+          <View
+            focusVisibleStyle={{}}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            role="button"
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "black",
+                "borderBottomColor": "black",
+                "borderBottomLeftRadius": 9999,
+                "borderBottomRightRadius": 9999,
+                "borderBottomWidth": 1,
+                "borderColor": "black",
+                "borderLeftColor": "black",
+                "borderLeftWidth": 1,
+                "borderRightColor": "black",
+                "borderRightWidth": 1,
+                "borderStyle": "solid",
+                "borderTopColor": "black",
+                "borderTopLeftRadius": 9999,
+                "borderTopRightRadius": 9999,
+                "borderTopWidth": 1,
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "flexWrap": "nowrap",
+                "height": 75,
+                "justifyContent": "center",
+                "marginBottom": 8,
+                "marginLeft": 8,
+                "marginRight": 8,
+                "marginTop": 8,
+                "paddingLeft": 18,
+                "paddingRight": 18,
+                "width": "85%",
+              }
+            }
+          >
+            <Text
+              style={
+                [
+                  {
+                    "color": "#fff",
+                  },
+                  {
+                    "fontSize": 20,
+                    "lineHeight": 28,
+                  },
+                  {
+                    "fontFamily": "Quicksand-SemiBold",
+                  },
+                ]
+              }
+            >
+              Ir al Inicio
+            </Text>
+          </View>
+        </View>
+        <Text
+          href="/LandingPage"
+          onPress={[Function]}
+          role="link"
+          style={
+            [
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              {
+                "color": "#59A58A",
+              },
+              {
+                "fontFamily": "Quicksand-SemiBold",
+              },
+              {
+                "textDecorationLine": "underline",
+              },
+            ]
+          }
+        >
+          Volver
+        </Text>
+      </View>
+    </View>
+  </RCTSafeAreaView>
+</View>
+`;
