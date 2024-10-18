@@ -35,14 +35,14 @@ export default function SearchTripPage() {
 
 
 
-  const handleViajoYo = async (formDate) => {
+  const handleViajoYo = async (formData) => {
 
     try {
-      const formattedDate = format(formDate.date, 'yyyy-MM-dd'); // YYYY-MM-DD
+      const formattedDate = format(formData.date, 'yyyy-MM-dd'); // YYYY-MM-DD
       router.push({
 
         pathname: "/(pages)/SearchTripPerson",
-        params: { fromLocation: formDate.fromLocation, toLocation: formDate.toLocation, formattedDate }
+        params: { fromLocation: formData.fromLocation, toLocation: formData.toLocation, formattedDate }
       });
     } catch (error) {
       console.error("Error: ", error);
@@ -50,14 +50,14 @@ export default function SearchTripPage() {
   };
 
 
-  const handleEnviarPaquete = async (formDate) => {
+  const handleEnviarPaquete = async (formData) => {
     try {
-      const formattedDate = format(formDate.date, 'yyyy-MM-dd'); // YYYY-MM-DD
+      const formattedDate = format(formData.date, 'yyyy-MM-dd'); // YYYY-MM-DD
 
       router.push({
 
         pathname: "/(pages)/SearchTripPackage",
-        params: { fromLocation: formDate.fromLocation, toLocation: formDate.toLocation, formattedDate }
+        params: { fromLocation: formData.fromLocation, toLocation: formData.toLocation, formattedDate }
       });
     } catch (error) {
       console.error("Error: ", error);

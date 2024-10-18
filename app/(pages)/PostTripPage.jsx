@@ -9,6 +9,7 @@ import DatePicker from "../../components/DatePicker";
 import TimePicker from "../../components/TimePicker";
 import ButtonNext from "../../components/ButtonNext";
 import { useForm, Controller } from 'react-hook-form';
+import { format } from 'date-fns';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from "expo-router";
 import { postTripSchema } from '../../validation/ridesSchemas';
@@ -35,7 +36,7 @@ export default function PostTripPage() {
 
   const handleContinue = async (formData) => {
     try {
-      const formattedDate = formData.date.toISOString().split('T')[0]; // YYYY-MM-DD
+      const formattedDate = format(formData.date, 'yyyy-MM-dd'); // YYYY-MM-DD
       const formattedTime = new Date(formData.time);
       formattedTime.setHours(formattedTime.getHours() - 3);
       const departureTime = formattedTime.toISOString().split('T')[1]; // HH:MM:SS.sssZ

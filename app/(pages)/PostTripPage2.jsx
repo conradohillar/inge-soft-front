@@ -16,7 +16,6 @@ import ErrorPage from "./ErrorPage";
 import icons from "../../constants/icons";
 import { getRideData, postTrip } from "../../services/rides";
 import { postTripDetailsSchema } from "../../validation/ridesSchemas";
-import { string } from "yup";
 
 export default function PostTripPage2() {
   const { fromLocation, toLocation, formattedDate, departureTime } =
@@ -63,11 +62,11 @@ export default function PostTripPage2() {
       setValue('defaultPriceLargePackage', Math.round(data.prices.price_large_package));
       setValue('car', data.cars[0].plate);
     }
-  }, [data, setValue]);
+  }, [data]);
 
 
   const mutation = useMutation({
-    mutationFn: (tripData) => postTrip(tripData, car),
+    mutationFn: ({ tripData, car }) => postTrip(tripData, car),
     onSuccess: () => {
       const title = "Publicaste tu viaje";
       const section = "MIS VIAJES";
@@ -119,7 +118,7 @@ export default function PostTripPage2() {
       },
     };
 
-    mutation.mutate(obj);
+    mutation.mutate({ tripData: obj, car: formData.car });
   };
 
   if (mutation.isPending || isLoading) {

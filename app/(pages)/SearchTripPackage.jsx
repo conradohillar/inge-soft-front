@@ -22,7 +22,6 @@ export default function SendPackagePage() {
         mediumPacks: 0,
         largePacks: 0,
     });
-
     const setSmallPacks = (count) => {
         setFormData((prev) => ({ ...prev, smallPacks: count }));
     };
