@@ -2,6 +2,18 @@ import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 import { LOCAL_IP, API_KEY_LOCATIONIQ } from '@env'
 
+
+export const handleRequest = async (requestFunc) => {
+    try {
+        const response = await requestFunc();
+        return response.data;
+    } catch (error) {
+        if (error.response == undefined) {
+            throw new Error('408');
+        }
+        throw new Error(error.response.status); 
+    }
+};
 export const setToken = async (token: string) => {
     await SecureStore.setItemAsync("token", token);
     let result = await SecureStore.getItemAsync("token");
@@ -34,7 +46,6 @@ export const getHeaderWithToken = async () => {
 };
 
 
-const API_KEY = 'pk.2e190d42afd4bf8da39b9ba216bc5be7';
 
 
 let lastRequestTime = 0;
@@ -55,7 +66,7 @@ export const autocomplete = async (text) => {
         const response = await axios.get(url);
         return response.data;
     } catch (error) {
-        console.error('Error al autocompletar:', error);
+        throw new Error(error);
     }
 };
 

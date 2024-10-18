@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 
 
-export default function CustomInput({ title, placeholder, height, value, handleChangeText, editable = true, secureTextEntry = false, autoComplete, inputMode, multiline = true }) {
+export default function CustomInput({ title, placeholder, height, value, handleChangeText, keyboardType = 'default', editable = true, secureTextEntry = false, autoComplete, inputMode, multiline = true }) {
     const [isFocused, setIsFocused] = useState(false);
 
     return (
@@ -17,6 +17,7 @@ export default function CustomInput({ title, placeholder, height, value, handleC
             </View>
             <View className="w-full items-center">
                 <TextInput
+                    keyboardType={keyboardType}
                     inputMode={inputMode}
                     placeholder={placeholder}
                     autoComplete={autoComplete}

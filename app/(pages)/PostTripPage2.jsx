@@ -1,44 +1,50 @@
+import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Text, Image, ScrollView, Pressable } from "react-native";
+import { YStack, XStack, Button } from "tamagui";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useQuery, useMutation } from "@tanstack/react-query";
 import Header from "../../components/Header";
-import { View, Text, Image, ScrollView } from "react-native";
-import { YStack, XStack, PortalProvider, Button } from "tamagui";
-import { Link } from "expo-router";
-import SelectFieldCar from "../../components/SelectFieldCar";
 import Counter from "../../components/Counter";
-import icons from "../../constants/icons";
-import React, { useEffect, useState } from "react";
-import { useLocalSearchParams } from "expo-router";
 import ButtonNext from "../../components/ButtonNext";
-import { useRouter } from "expo-router";
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-  useMutation,
-} from "@tanstack/react-query";
-import { LOCAL_IP } from "@env";
 import CustomInput from "../../components/CustomInput";
-
+import DropdownComponent from "../../components/DropdownComponent";
 import LoadingPage from "./LoadingPage";
 import ErrorPage from "./ErrorPage";
-import { getRideData } from "../../services/rides";
-import { Pressable } from "react-native";
-import { postTrip } from "../../services/rides";
-import DropdownComponent from "../../components/DropdownComponent";
+import icons from "../../constants/icons";
+import { getRideData, postTrip } from "../../services/rides";
+import { postTripDetailsSchema } from "../../validation/ridesSchemas";
+import { string } from "yup";
 
 export default function PostTripPage2() {
   const { fromLocation, toLocation, formattedDate, departureTime } =
     useLocalSearchParams();
 
-  const [car, setCar] = useState("");
-  const [availableSeats, setAvailableSeats] = useState(0);
-  const [spacesSmallPackage, setSmallPackage] = useState(0);
-  const [spacesMediumPackage, setMediumPackage] = useState(0);
-  const [spacesLargePackage, setLargePackage] = useState(0);
-  const [pricePerson, setPricePerson] = useState(0);
-  const [priceSmallPackage, setPriceSmallPackage] = useState(0);
-  const [priceMediumPackage, setPriceMediumPackage] = useState(0);
-  const [priceLargePackage, setPriceLargePackage] = useState(0);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    resolver: yupResolver(postTripDetailsSchema),
+    defaultValues: {
+      car: '',
+      availableSeats: 0,
+      spacesSmallPackage: 0,
+      spacesMediumPackage: 0,
+      spacesLargePackage: 0,
+      pricePerson: 0,
+      priceSmallPackage: 0,
+      priceMediumPackage: 0,
+      priceLargePackage: 0,
+      defaultPricePerson: 0,
+      defaultPriceSmallPackage: 0,
+      defaultPriceMediumPackage: 0,
+      defaultPriceLargePackage: 0,
+    },
+  });
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["getRideData"],
@@ -46,14 +52,19 @@ export default function PostTripPage2() {
   });
 
   useEffect(() => {
-    if (data) {
-      setPricePerson(data.prices.price_person.toFixed(2));
-      setPriceSmallPackage(data.prices.price_small_package.toFixed(2));
-      setPriceMediumPackage(data.prices.price_medium_package.toFixed(2));
-      setPriceLargePackage(data.prices.price_large_package.toFixed(2));
-      setCar(data.cars[0] ? data.cars[0].plate : "");
+    if (data && data.prices) {
+      setValue('pricePerson', Math.round(data.prices.price_person));
+      setValue('priceSmallPackage', Math.round(data.prices.price_small_package));
+      setValue('priceMediumPackage', Math.round(data.prices.price_medium_package));
+      setValue('priceLargePackage', Math.round(data.prices.price_large_package));
+      setValue('defaultPricePerson', Math.round(data.prices.price_person));
+      setValue('defaultPriceSmallPackage', Math.round(data.prices.price_small_package));
+      setValue('defaultPriceMediumPackage', Math.round(data.prices.price_medium_package));
+      setValue('defaultPriceLargePackage', Math.round(data.prices.price_large_package));
+      setValue('car', data.cars[0].plate);
     }
-  }, [data]);
+  }, [data, setValue]);
+
 
   const mutation = useMutation({
     mutationFn: (tripData) => postTrip(tripData, car),
@@ -81,7 +92,7 @@ export default function PostTripPage2() {
 
   const router = useRouter();
 
-  const handleContinue = async () => {
+  const handleContinue = async (formData) => {
     const auxTime = new Date(
       new Date(`1970-01-01T${departureTime}`).getTime() + 60 * 60 * 1000
     )
@@ -95,16 +106,16 @@ export default function PostTripPage2() {
         ride_date: formattedDate,
         start_minimum_time: departureTime,
         start_maximum_time: auxTime,
-        available_space_people: availableSeats,
-        available_space_small_package: spacesSmallPackage,
-        available_space_medium_package: spacesMediumPackage,
-        available_space_large_package: spacesLargePackage,
+        available_space_people: formData.availableSeats,
+        available_space_small_package: formData.spacesSmallPackage,
+        available_space_medium_package: formData.spacesMediumPackage,
+        available_space_large_package: formData.spacesLargePackage,
       },
       price: {
-        price_person: pricePerson,
-        price_small_package: priceSmallPackage,
-        price_medium_package: priceMediumPackage,
-        price_large_package: priceLargePackage,
+        price_person: formData.pricePerson,
+        price_small_package: formData.priceSmallPackage,
+        price_medium_package: formData.priceMediumPackage,
+        price_large_package: formData.priceLargePackage,
       },
     };
 
@@ -137,14 +148,21 @@ export default function PostTripPage2() {
             </Text>
           </Text>
           <View className="w-full items-start ml-7">
-            <DropdownComponent
-              data={data.cars.map((car) => ({
-                label: `${car.model} - ${car.plate}`,
-                value: car.plate,
-              }))}
-              value={car}
-              setValue={setCar}
+            <Controller
+              control={control}
+              name="car"
+              render={({ field: { onChange, value } }) => (
+                <DropdownComponent
+                  data={data.cars.map((car) => ({
+                    label: `${car.model} - ${car.plate}`,
+                    value: car.plate,
+                  }))}
+                  value={value}
+                  setValue={onChange}
+                />
+              )}
             />
+            {errors.car && <Text className="text-red-500">{errors.car.message}</Text>}
           </View>
 
           <XStack className="mx-11 mb-5 mt-12">
@@ -167,11 +185,18 @@ export default function PostTripPage2() {
                 className="w-8 h-8"
                 resizeMode="contain"
               />
-              <Counter
-                maxCount={4}
-                count={availableSeats}
-                handleChangeCount={setAvailableSeats}
+              <Controller
+                control={control}
+                name="availableSeats"
+                render={({ field: { onChange, value } }) => (
+                  <Counter
+                    maxCount={4}
+                    count={value}
+                    handleChangeCount={onChange}
+                  />
+                )}
               />
+              {errors.availableSeats && <Text className="text-red-500">{errors.availableSeats.message}</Text>}
             </XStack>
             <XStack className="w-full items-center justify-around px-10 ml-2 mb-3">
               <Image
@@ -179,11 +204,18 @@ export default function PostTripPage2() {
                 className="w-8 h-8"
                 resizeMode="contain"
               />
-              <Counter
-                maxCount={4}
-                count={spacesSmallPackage}
-                handleChangeCount={setSmallPackage}
+              <Controller
+                control={control}
+                name="spacesSmallPackage"
+                render={({ field: { onChange, value } }) => (
+                  <Counter
+                    maxCount={4}
+                    count={value}
+                    handleChangeCount={onChange}
+                  />
+                )}
               />
+              {errors.spacesSmallPackage && <Text className="text-red-500">{errors.spacesSmallPackage.message}</Text>}
             </XStack>
             <XStack className="w-full items-center justify-around px-10 ml-2 mb-3">
               <Image
@@ -191,11 +223,18 @@ export default function PostTripPage2() {
                 className="w-10 h-10"
                 resizeMode="contain"
               />
-              <Counter
-                maxCount={4}
-                count={spacesMediumPackage}
-                handleChangeCount={setMediumPackage}
+              <Controller
+                control={control}
+                name="spacesMediumPackage"
+                render={({ field: { onChange, value } }) => (
+                  <Counter
+                    maxCount={4}
+                    count={value}
+                    handleChangeCount={onChange}
+                  />
+                )}
               />
+              {errors.spacesMediumPackage && <Text className="text-red-500">{errors.spacesMediumPackage.message}</Text>}
             </XStack>
             <XStack className="w-full items-center justify-around px-10 ml-2">
               <Image
@@ -203,11 +242,18 @@ export default function PostTripPage2() {
                 className="w-12 h-12"
                 resizeMode="contain"
               />
-              <Counter
-                maxCount={4}
-                count={spacesLargePackage}
-                handleChangeCount={setLargePackage}
+              <Controller
+                control={control}
+                name="spacesLargePackage"
+                render={({ field: { onChange, value } }) => (
+                  <Counter
+                    maxCount={4}
+                    count={value}
+                    handleChangeCount={onChange}
+                  />
+                )}
               />
+              {errors.spacesLargePackage && <Text className="text-red-500">{errors.spacesLargePackage.message}</Text>}
             </XStack>
           </YStack>
           <XStack className="mx-11 my-5 ">
@@ -225,32 +271,64 @@ export default function PostTripPage2() {
           </XStack>
           <YStack className="w-full items-start mb-10 space-y-3">
             <View className="w-full items-center justify-between">
-              <CustomInput
-                title="Precio por persona"
-                value={pricePerson}
-                handleChangeText={setPricePerson}
+              <Controller
+                control={control}
+                name="pricePerson"
+                render={({ field: { onChange, value } }) => (
+                  <CustomInput
+                    keyboardType="numeric"
+                    title="Precio por persona"
+                    value={String(value)}
+                    handleChangeText={onChange}
+                  />
+                )}
               />
+              {errors.pricePerson && <Text className="text-red-500">{errors.pricePerson.message}</Text>}
             </View>
             <View className="w-full items-center justify-between">
-              <CustomInput
-                title="Precio por paquete chico"
-                value={priceSmallPackage}
-                handleChangeText={setPriceSmallPackage}
+              <Controller
+                control={control}
+                name="priceSmallPackage"
+                render={({ field: { onChange, value } }) => (
+                  <CustomInput
+                    keyboardType="numeric"
+                    title="Precio por paquete chico"
+                    value={String(value)}
+                    handleChangeText={onChange}
+                  />
+                )}
               />
+              {errors.priceSmallPackage && <Text className="text-red-500">{errors.priceSmallPackage.message}</Text>}
             </View>
             <View className="w-full items-center justify-between">
-              <CustomInput
-                title="Precio por paquete mediano"
-                value={priceMediumPackage}
-                handleChangeText={setPriceMediumPackage}
+              <Controller
+                control={control}
+                name="priceMediumPackage"
+                render={({ field: { onChange, value } }) => (
+                  <CustomInput
+                    keyboardType="numeric"
+                    title="Precio por paquete mediano"
+                    value={String(value)}
+                    handleChangeText={onChange}
+                  />
+                )}
               />
+              {errors.priceMediumPackage && <Text className="text-red-500">{errors.priceMediumPackage.message}</Text>}
             </View>
             <View className="w-full items-center justify-between">
-              <CustomInput
-                title="Precio por paquete grande"
-                value={priceLargePackage}
-                handleChangeText={setPriceLargePackage}
+              <Controller
+                control={control}
+                name="priceLargePackage"
+                render={({ field: { onChange, value } }) => (
+                  <CustomInput
+                    keyboardType="numeric"
+                    title="Precio por paquete grande"
+                    value={String(value)}
+                    handleChangeText={onChange}
+                  />
+                )}
               />
+              {errors.priceLargePackage && <Text className="text-red-500">{errors.priceLargePackage.message}</Text>}
             </View>
           </YStack>
           <View className="items-center space-y-5 mx-12 mb-8">
@@ -264,7 +342,7 @@ export default function PostTripPage2() {
                   />
                 </Button>
               </Link>
-              <ButtonNext height={90} width={270} onPress={handleContinue}>
+              <ButtonNext height={90} width={270} onPress={handleSubmit(handleContinue)}>
                 <Text className="text-2xl font-qsemibold text-white">
                   Publicar Viaje
                 </Text>

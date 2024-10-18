@@ -1,6 +1,8 @@
 import { getHeaderWithToken } from './utils';
 import { LOCAL_IP } from '@env';
 import axios from 'axios';
+import { handleRequest } from './utils';
+
 
 const BASE_URL = `http://${LOCAL_IP}:8000/users`;
 
@@ -8,17 +10,7 @@ const getHeaders = async () => {
     return await getHeaderWithToken();
 };
 
-const handleRequest = async (requestFunc) => {
-    try {
-        const response = await requestFunc();
-        return response.data;
-    } catch (error) {
-        if (error.response == undefined) {
-            throw new Error('408');
-        }
-        throw new Error(error.response.status); 
-    }
-};
+
 
 export const getUserData = async () => {
     const headers = await getHeaders();

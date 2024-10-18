@@ -22,22 +22,28 @@ export default function AutocompleteCityInput({
       return;
     }
     setLoading(true);
-    const items = await autocomplete(text);
+    try {
+      const items = await autocomplete(text);
+      const suggestions = items.map((item, index) => ({
+        id: index,
+        title: item.display_name,
+      }));
 
-    const suggestions = items.map((item, index) => ({
-      id: index,
-      title: item.display_name,
-    }));
+      setSuggestionsList(suggestions);
+      setLoading(false);
+    } catch (e) {
+      throw e;
+    }
 
-    setSuggestionsList(suggestions);
-    setLoading(false);
+
+
   }, []);
 
   const onClearPress = useCallback(() => {
     setSuggestionsList(null);
   }, []);
 
-  const onOpenSuggestionsList = useCallback((isOpened) => {}, []);
+  const onOpenSuggestionsList = useCallback((isOpened) => { }, []);
 
   return (
     <>

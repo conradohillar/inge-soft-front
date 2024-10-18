@@ -8,28 +8,41 @@ import AutocompleteCityInput from '../../components/AutocompleteCityInput';
 import DatePicker from "../../components/DatePicker";
 import TimePicker from "../../components/TimePicker";
 import ButtonNext from "../../components/ButtonNext";
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from "expo-router";
+import { postTripSchema } from '../../validation/ridesSchemas';
+
 
 export default function PostTripPage() {
-  const [fromLocation, setFromLocation] = useState('');
-  const [toLocation, setToLocation] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(postTripSchema),
+    defaultValues: {
+      fromLocation: '',
+      toLocation: '',
+      date: '',
+      time: '',
+    },
+  });
 
 
   const router = useRouter();
 
-  const handleContinue = async () => {
-
-    const formattedDate = date.toISOString().split('T')[0]; // YYYY-MM-DD
-    const formattedTime = new Date(time);
-    formattedTime.setHours(formattedTime.getHours() - 3);
-    const departureTime = formattedTime.toISOString().split('T')[1]; // HH:MM:SS.sssZ
+  const handleContinue = async (formData) => {
     try {
+      const formattedDate = formData.date.toISOString().split('T')[0]; // YYYY-MM-DD
+      const formattedTime = new Date(formData.time);
+      formattedTime.setHours(formattedTime.getHours() - 3);
+      const departureTime = formattedTime.toISOString().split('T')[1]; // HH:MM:SS.sssZ
 
       router.push({
         pathname: "/(pages)/PostTripPage2",
-        params: { fromLocation, toLocation, formattedDate, departureTime }
+        params: { fromLocation: formData.fromLocation, toLocation: formData.toLocation, formattedDate, departureTime }
       });
     } catch (error) {
       console.error("Error: ", error);
@@ -50,35 +63,73 @@ export default function PostTripPage() {
               <Text className="text-[27px] font-qsemibold text-black"> tu viaje</Text>
             </XStack>
             <YStack className="mb-6">
-              <AutocompleteCityInput
-                title="Desde"
-                placeholder="i.e: Tigre"
-                setValue={setFromLocation}
+
+              <Controller
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { onChange, value } }) => (
+                  <AutocompleteCityInput
+                    title="Desde"
+                    placeholder="i.e: Tigre"
+                    setValue={onChange}
+                    value={value}
+                  />
+                )}
+                name="fromLocation"
               />
-              <AutocompleteCityInput
-                title="Hasta"
-                placeholder="i.e: Mar del Plata"
-                setValue={setToLocation}
+              {errors.fromLocation && <Text className="text-red-500 text-center pt-3">{errors.fromLocation.message}</Text>}
+
+              <Controller
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { onChange, value } }) => (
+                  <AutocompleteCityInput
+                    title="Hasta"
+                    placeholder="i.e: Mar del Plata"
+                    setValue={onChange}
+                    value={value}
+                  />
+                )}
+                name="toLocation"
               />
+              {errors.toLocation && <Text className="text-red-500 text-center pt-3">{errors.toLocation.message}</Text>}
+
               <View className="w-full items-start justify-center mt-3">
-                <DatePicker
-                  style={{ backgroundColor: "#EEEEEE" }}
-                  placeholderTextColor="#777"
-                  value={date}
-                  onChangeDate={setDate}
-                  title={"Fecha de salida"}
+                <Controller
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { onChange, value } }) => (
+                    <DatePicker
+                      style={{ backgroundColor: "#EEEEEE" }}
+                      placeholderTextColor="#777"
+                      value={value}
+                      onChangeDate={onChange}
+                      title={"Fecha de salida"}
+                    />
+                  )}
+                  name="date"
                 />
               </View>
+              {errors.date && <Text className="text-red-500 text-center pt-3">{errors.date.message}</Text>}
+
               <View className="w-full items-start justify-center pt-3">
-                <TimePicker
-                  style={{ backgroundColor: "#EEEEEE" }}
-                  placeholderTextColor="#777"
-                  value={time}
-                  onChangeTime={setTime}
-                  minuteInterval={30}
-                  title={"Hora de salida"}
+                <Controller
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { onChange, value } }) => (
+                    <TimePicker
+                      style={{ backgroundColor: "#EEEEEE" }}
+                      placeholderTextColor="#777"
+                      value={value}
+                      onChangeTime={onChange}
+                      minuteInterval={30}
+                      title={"Hora de salida"}
+                    />
+                  )}
+                  name="time"
                 />
               </View>
+              {errors.time && <Text className="text-red-500 text-center pt-3">{errors.time.message}</Text>}
               <XStack className="items-center mt-3 px-12">
                 <Text className='text-sm text-gray-400 font-qsemibold'>
                   Nota: se asignará automáticamente una franja de
@@ -88,7 +139,7 @@ export default function PostTripPage() {
             </YStack>
             <View className="items-center space-y-2">
               <View className="w-[92%]">
-                <ButtonNext onPress={handleContinue}>
+                <ButtonNext onPress={handleSubmit(handleContinue)}>
                   <Text className="text-2xl font-qsemibold text-white">Continuar</Text>
                 </ButtonNext>
               </View>
