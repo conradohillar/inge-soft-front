@@ -11,43 +11,39 @@ export const postTripSchema = yup.object().shape({
 });
 
 export const postTripDetailsSchema = yup.object().shape({
-    // car: yup.string().required('El campo "Auto" es obligatorio.'),
-    // availableSeats: yup
-    //     .number()
-    //     .min(0, 'Debe haber al menos un asiento disponible.')
-    //     .required('El campo "Asientos disponibles" es obligatorio.'),
-    // spacesSmallPackage: yup
-    //     .number()
-    //     .min(0, 'El número de espacios para paquetes pequeños no puede ser negativo.')
-    //     .required('El campo "Espacios para paquetes pequeños" es obligatorio.'),
-    // spacesMediumPackage: yup
-    //     .number()
-    //     .min(0, 'El número de espacios para paquetes medianos no puede ser negativo.')
-    //     .required('El campo "Espacios para paquetes medianos" es obligatorio.'),
-    // spacesLargePackage: yup
-    //     .number()
-    //     .min(0, 'El número de espacios para paquetes grandes no puede ser negativo.')
-    //     .required('El campo "Espacios para paquetes grandes" es obligatorio.'),
-    // minPricePerson: yup.number().min(0, 'El precio mínimo por persona no puede ser negativo.').required(),
-    // pricePerson: yup
-    //     .number()
-    //     .min(yup.ref('defaultPricePerson'), 'El precio por persona no puede ser menor que el valor mínimo.')
-    //     .required('El campo "Precio por persona" es obligatorio.'),
-    // minPriceSmallPackage: yup.number().min(0, 'El precio mínimo por paquete pequeño no puede ser negativo.').required(),
-    // priceSmallPackage: yup
-    //     .number()
-    //     .min(yup.ref('defaultPriceSmallPackage'), 'El precio por paquete pequeño no puede ser menor que el valor mínimo.')
-    //     .required('El campo "Precio por paquete pequeño" es obligatorio.'),
-    // minPriceMediumPackage: yup.number().min(0, 'El precio mínimo por paquete mediano no puede ser negativo.').required(),
-    // priceMediumPackage: yup
-    //     .number()
-    //     .min(yup.ref('defaultPriceMediumPackage'), 'El precio por paquete mediano no puede ser menor que el valor mínimo.')
-    //     .required('El campo "Precio por paquete mediano" es obligatorio.'),
-    // minPriceLargePackage: yup.number().min(0, 'El precio mínimo por paquete grande no puede ser negativo.').required(),
-    // priceLargePackage: yup
-    //     .number()
-    //     .min(yup.ref('defaultPriceLargePackage'), 'El precio por paquete grande no puede ser menor que el valor mínimo.')
-    //     .required('El campo "Precio por paquete grande" es obligatorio.'),
+    car: yup.string().required('El campo "Auto" es obligatorio.'),
+    availableSeats: yup
+        .number()
+        .min(0, 'Debe haber al menos un asiento disponible.')
+        .required('El campo "Asientos disponibles" es obligatorio.'),
+    spacesSmallPackage: yup
+        .number()
+        .min(0, 'El número de espacios para paquetes pequeños no puede ser negativo.')
+        .required('El campo "Espacios para paquetes pequeños" es obligatorio.'),
+    spacesMediumPackage: yup
+        .number()
+        .min(0, 'El número de espacios para paquetes medianos no puede ser negativo.')
+        .required('El campo "Espacios para paquetes medianos" es obligatorio.'),
+    spacesLargePackage: yup
+        .number()
+        .min(0, 'El número de espacios para paquetes grandes no puede ser negativo.')
+        .required('El campo "Espacios para paquetes grandes" es obligatorio.'),
+    pricePerson: yup
+        .number()
+        .min(yup.ref('defaultPricePerson'), 'El precio por persona no puede ser menor que el valor mínimo.')
+        .required('El campo "Precio por persona" es obligatorio.'),
+    priceSmallPackage: yup
+        .number()
+        .min(yup.ref('defaultPriceSmallPackage'), 'El precio por paquete pequeño no puede ser menor que el valor mínimo.')
+        .required('El campo "Precio por paquete pequeño" es obligatorio.'),
+    priceMediumPackage: yup
+        .number()
+        .min(yup.ref('defaultPriceMediumPackage'), 'El precio por paquete mediano no puede ser menor que el valor mínimo.')
+        .required('El campo "Precio por paquete mediano" es obligatorio.'),
+    priceLargePackage: yup
+        .number()
+        .min(yup.ref('defaultPriceLargePackage'), 'El precio por paquete grande no puede ser menor que el valor mínimo.')
+        .required('El campo "Precio por paquete grande" es obligatorio.'),
 });
 
 export const searchTripSchema = yup.object().shape({
