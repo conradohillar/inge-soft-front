@@ -3,7 +3,10 @@ import * as yup from 'yup';
 export const postTripSchema = yup.object().shape({
     fromLocation: yup.string().required('El campo "Desde" es obligatorio.'),
     toLocation: yup.string().required('El campo "Hasta" es obligatorio.'),
-    date: yup.date().required('El campo "Fecha de salida" es obligatorio.'),
+    date: yup
+        .string()
+        .required('El campo "Fecha de salida" es obligatorio.')
+        .test('is-valid-date', 'El campo "Fecha de salida" debe ser una fecha válida.', value => !isNaN(Date.parse(value))),
     time: yup.string().required('El campo "Hora de salida" es obligatorio.')
 });
 
@@ -45,4 +48,13 @@ export const postTripDetailsSchema = yup.object().shape({
         .number()
         .min(yup.ref('defaultPriceLargePackage'), 'El precio por paquete grande no puede ser menor que el valor mínimo.')
         .required('El campo "Precio por paquete grande" es obligatorio.'),
+});
+
+export const searchTripSchema = yup.object().shape({
+    fromLocation: yup.string().required('El campo "Desde" es obligatorio.'),
+    toLocation: yup.string().required('El campo "Hasta" es obligatorio.'),
+    date: yup
+        .string()
+        .required('El campo "Fecha de salida" es obligatorio.')
+        .test('is-valid-date', 'El campo "Fecha de salida" debe ser una fecha válida.', value => !isNaN(Date.parse(value))),
 });
