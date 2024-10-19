@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font'
 import { useEffect, createContext, useContext, useState } from 'react';
 import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import icons from "../constants/icons"
 
 SplashScreen.preventAutoHideAsync();
 
@@ -14,7 +15,7 @@ const RootLayout = () => {
         fullName: "User",
         firstName: "User",
         email: "",
-        photoUrl: "",
+        photoUrl: icons.placeholder_profile,
         isLogued: false,
         isDriver: false
     });

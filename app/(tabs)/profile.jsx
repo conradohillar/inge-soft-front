@@ -15,16 +15,17 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import ProfilePictureModal from '../../components/PofilePictureModal';
 import { getUserData, deleteImage, newImage, newName } from '../../services/users';
 import EditNameModal from '../../components/EditNameModal';
+import { useGlobalState } from '../_layout';
 
 
 
 export default function Profile() {
   const queryClient = useQueryClient();
+  const { globalState, setGlobalState } = useGlobalState();
+
 
   const [isProfilePictureModalVisible, setProfilePictureModalVisible] = useState(false);
   const [isEditNameModalVisible, setEditNameModalVisible] = useState(false);
-  const [image, setImage] = useState(icons.placeholder_profile);
-  const [name, setName] = useState('');
 
 
   const toggleProfilePictureModal = () => {
@@ -89,7 +90,11 @@ export default function Profile() {
   const editImage = useMutation({
     mutationFn: (base64Image) => newImage(base64Image),
     onSuccess: (data) => {
-      setImage(data.data.photo_url);
+
+      setGlobalState({
+        ...globalState,
+        photoUrl: data.data.photo_url
+      });
     },
     onError: (error) => {
       console.error("Error al editar la imagen:", error.message);
@@ -115,7 +120,11 @@ export default function Profile() {
   const removeImage = useMutation({
     mutationFn: deleteImage,
     onSuccess: () => {
-      setImage(icons.placeholder_profile);
+
+      setGlobalState({
+        ...globalState,
+        photoUrl: icons.placeholder_profile
+      });
     },
     onError: (error) => {
       throw (error);
@@ -125,48 +134,23 @@ export default function Profile() {
   const saveNewName = useMutation({
     mutationFn: (name) => newName(name),
     onSuccess: (data) => {
-      queryClient.setQueryData(
-        ['getUserData'],
-        (oldData) =>
-          oldData
-            ? {
-              ...oldData,
-              name: data.name,
-            }
-            : oldData,
-      )
-      setName(data.name);
+      setGlobalState({
+        ...globalState,
+        fullName: data.data.name,
+        firstName: fullName.split(" ")[0]
+      });
+      console.log(globalState)
     }
   });
 
   const handleSaveName = () => {
-    if (name === '') {
+    if (globalState.fullName === '') {
       alert("El nombre no puede estar vacio.");
       return;
     }
-    saveNewName.mutate(name);
+    saveNewName.mutate(globalState.fullName);
     toggleEditNameModal();
   };
-
-  const { isLoading, isError, data } = useQuery({
-    queryKey: ['getUserData'],
-    queryFn: getUserData,
-  });
-
-  useEffect(() => {
-    if (data != null && data.photo_url != null) {
-      setImage(data.photo_url)
-    }
-  }, [data])
-
-
-  if (isLoading) {
-    return <LoadingPage />
-  }
-
-  if (isError) {
-    return <ErrorPage />
-  }
 
   const handleRestrictedAccess = (message) => {
     alert(message);
@@ -183,7 +167,7 @@ export default function Profile() {
                 <Avatar circular size="$12" borderColor="$black" borderWidth={1}>
                   <Avatar.Image data-testid="profile-picture"
                     accessibilityLabel="Cam"
-                    src={image}
+                    src={globalState.photoUrl}
                   />
                 </Avatar>
                 <ProfilePictureModal
@@ -197,19 +181,19 @@ export default function Profile() {
             </View>
             <YStack className="items-start justify-evenly ml-5">
               <XStack className="items-center">
-                <Text className="text-black text-lg font-qbold">{data.name}</Text>
+                <Text className="text-black text-lg font-qbold">{globalState.fullName}</Text>
                 <TouchableOpacity onPress={toggleEditNameModal} className={"px-2"}>
                   <Image source={icons.pencil} className="h-4 w-4" tintColor="#aaa" resizeMode='contain' />
                   <EditNameModal
-                    onTextChange={setName}
-                    value={name}
+                    onTextChange={(text) => setGlobalState({ ...globalState, fullName: text })}
+                    value={globalState.fullName}
                     isVisible={isEditNameModalVisible}
                     onClose={toggleEditNameModal}
                     onSave={handleSaveName}
                   />
                 </TouchableOpacity>
               </XStack>
-              <Text className="text-gray-600 text-base font-qsemibold">{data.email}</Text>
+              <Text className="text-gray-600 text-base font-qsemibold">{globalState.email}</Text>
             </YStack>
           </XStack>
           {removeImage.isError && removeImage.error.message == 408 && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
@@ -224,7 +208,7 @@ export default function Profile() {
           <View className="w-full h-[20%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
             <XStack className="w-[80%] items-center justify-start space-x-5" >
               <Image source={icons.car} className="h-6 w-6" tintColor="#aaa" resizeMode='contain' />
-              {data.is_driver ? (
+              {globalState.isDriver ? (
                 <Link href="/(pages)/MyCarsPage" asChild>
                   <Text className="text-xl text-black font-qbold">Mis autos</Text>
                 </Link>
@@ -238,7 +222,7 @@ export default function Profile() {
           <View className="w-full h-[20%] items-center justify-center " borderTopColor="#ddd" borderTopWidth={2}>
             <XStack className="w-[80%] items-center justify-start space-x-5" >
               <Image source={icons.id_card} className="h-6 w-6" tintColor="#aaa" resizeMode='contain' />
-              {!data.is_driver ? (
+              {!globalState.isDriver ? (
                 <Link href="/(pages)/CredentialsPage" asChild>
                   <Text className="text-xl text-black font-qbold">Credenciales</Text>
                 </Link>

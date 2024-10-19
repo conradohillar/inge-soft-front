@@ -1,27 +1,16 @@
 import { View, Text, Image } from "react-native";
-import React from "react";
 import { XStack, YStack } from "tamagui";
 import BlackButton from "../../components/BlackButton";
 import Header from "../../components/Header";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useQuery } from "@tanstack/react-query";
-import LoadingPage from "../(pages)/LoadingPage";
-import ErrorPage from "../(pages)/ErrorPage";
-import { getUserData } from "../../services/users";
+import { useGlobalState } from '../_layout';
+
 
 export default function Home() {
-  const { isLoading, isError, data } = useQuery({
-    queryKey: ["getUserData"],
-    queryFn: getUserData,
-  });
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
 
-  if (isError) {
-    return <ErrorPage />;
-  }
+  const { globalState, setGlobalState } = useGlobalState();
+
 
   return (
     <SafeAreaView className="bg-background flex-1">
@@ -34,7 +23,7 @@ export default function Home() {
           </Text>
           <Text className="text-3xl text-primary font-qbold">
             {" "}
-            {data ? data.name.split(" ")[0] : "USER"}
+            {globalState.firstName}
           </Text>
         </XStack>
         <View className="w-[90%] mb-10 bg-gray-400 rounded-2xl border-2 justify-center">
@@ -52,8 +41,12 @@ export default function Home() {
             </BlackButton>
           </View>
           <View className="w-[55%]">
-            <BlackButton href="/(pages)/PostTripPage">
-              <Text className="text-[20px] font-qsemibold text-white">
+            <BlackButton
+              href="/(pages)/PostTripPage"
+              className={`${globalState.isDriver ? '' : 'opacity-50 bg-gray-500'}`}
+              disabled={!globalState.isDriver}
+            >
+              <Text className={`text-[20px] font-qsemibold text-white`}>
                 Publicar viaje
               </Text>
             </BlackButton>
