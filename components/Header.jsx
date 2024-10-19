@@ -4,7 +4,7 @@ import { Image, View, Text, Modal, FlatList, TouchableOpacity } from "react-nati
 import { XStack, YStack, Button } from "tamagui";
 import icons from "../constants/icons"
 import React, { useState, useEffect } from "react";
-import { getIndieNotificationInbox, getUnreadIndieNotificationInboxCount } from 'native-notify';
+import { getIndieNotificationInbox, deleteIndieNotificationInbox } from 'native-notify';
 import { useGlobalState } from "../app/_layout";
 
 export default function Header() {
@@ -15,20 +15,16 @@ export default function Header() {
 
 
     useEffect(() => {
-        const getNotificationInboxCount = async () => {
-            let count = await getUnreadIndieNotificationInboxCount(globalState.userId, 24233, 'SX3XOZEi4N2YNO4U2RkCfD');
-            setUnreadNotificationCount(count);
-        };
-        getNotificationInboxCount();
+        const getNots = async () => {
 
-
-        const getNotifications = async () => {
-            let notifications = await getIndieNotificationInbox(globalState.userId, 24233, 'SX3XOZEi4N2YNO4U2RkCfD');
-            setNotifications(notifications);
+            let not = await getIndieNotificationInbox(globalState.userId, 24233, 'SX3XOZEi4N2YNO4U2RkCfD');
+            console.log('not', not);
+            setNotifications(not);
         };
-        getNotifications();
+        getNots();
 
     }, []);
+    // Esto no esta funcando, lo voy a revisar
 
 
     const toggleModal = () => {
