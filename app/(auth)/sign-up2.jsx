@@ -5,10 +5,8 @@ import CustomInput from '../../components/CustomInput'
 import ButtonNext from '../../components/ButtonNext'
 import { Link, useLocalSearchParams, useRouter } from 'expo-router'
 import { useMutation } from '@tanstack/react-query'
-import ErrorPage from '../(pages)/ErrorPage'
 import LoadingPage from '../(pages)/LoadingPage'
 import { sign_up } from '../../services/auth'
-import { emailValidation } from '../../services/utils';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signUpPart2Schema } from '../../validation/authSchemas';
@@ -40,6 +38,7 @@ export default function SignUp2() {
     mutationFn: (userData) => sign_up(userData),
     onSuccess: (user_id) => {
       registerIndieID(user_id.user_id, 24233, 'SX3XOZEi4N2YNO4U2RkCfD');
+
       router.push({
         pathname: "/(auth)/sign-in"
       });

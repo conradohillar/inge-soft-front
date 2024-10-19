@@ -44,7 +44,8 @@ export default function SignIn() {
         email: user.email,
         photoUrl: user.photo_url,
         isLogued: true,
-        isDriver: user.is_driver
+        isDriver: user.is_driver,
+        userId: user.id,
       });
 
       router.replace('../(tabs)/home');

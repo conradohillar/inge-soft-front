@@ -17,7 +17,8 @@ const RootLayout = () => {
         email: "",
         photoUrl: icons.placeholder_profile,
         isLogued: false,
-        isDriver: false
+        isDriver: false,
+        userId: null
     });
     const [fontsLoaded, error] = useFonts({
         "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
