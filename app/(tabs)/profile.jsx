@@ -93,7 +93,7 @@ export default function Profile() {
 
       setGlobalState({
         ...globalState,
-        photoUrl: data.data.photo_url
+        photoUrl: data.photo_url
       });
     },
     onError: (error) => {
@@ -136,14 +136,14 @@ export default function Profile() {
     onSuccess: (data) => {
       setGlobalState({
         ...globalState,
-        fullName: data.data.name,
-        firstName: fullName.split(" ")[0]
+        firstName: data.name.split(" ")[0],
+        fullName: data.name
       });
-      console.log(globalState)
+
     }
   });
 
-  const handleSaveName = () => {
+  const handleSaveName = async () => {
     if (globalState.fullName === '') {
       alert("El nombre no puede estar vacio.");
       return;
@@ -200,9 +200,9 @@ export default function Profile() {
           {saveNewName.isError && saveNewName.error.message == 408 && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
           {editImage.isError && editImage.error.message == 408 && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
 
-          {removeImage.isError && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
+          {/* {removeImage.isError && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
           {saveNewName.isError && saveNewName.error.message == 400 && <Text className="text-red-500 text-base font-qsemibold pb-12">El nombre no puede estar vacio.</Text>}
-          {editImage.isError && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
+          {editImage.isError && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>} */}
         </YStack>
         <YStack className="w-full h-[70%]">
           <View className="w-full h-[20%] items-center justify-center" borderTopColor="#ddd" borderTopWidth={2}>
