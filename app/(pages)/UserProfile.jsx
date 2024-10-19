@@ -70,13 +70,16 @@ export default function UserProfile() {
                 {"(1.928)"}
               </Text>
             </XStack>
-            <View className="w-full pt-4 pb-6 mb-1 border-b-2 border-b-[#eee]">
-              <Comment
-                photoUrl={data.photo_url}
-                username={data.name}
-                date="Hace 2 días"
-                body="Excelente conductor, muy amable y puntual."
-                rating={5}
+            <View className="flex-1">
+              <FlatList
+                data={data}
+                keyExtractor={(item) => item.user_id}
+                renderItem={renderComments}
+                contentContainerStyle={{
+                  paddingBottom: 130,
+                  alignItems: "center",
+                  width: "100%",
+                }}
               />
             </View>
           </YStack>
@@ -85,3 +88,17 @@ export default function UserProfile() {
     </SafeAreaView>
   );
 }
+
+const renderComments = ({ item }) => {
+  return (
+    <View className="w-full pt-4 pb-6 mb-1 border-b-2 border-b-[#eee]">
+      <Comment
+        photoUrl={item.photo_url}
+        username={item.name}
+        date={item.date}
+        body={item.body}
+        rating={item.rating}
+      />
+    </View>
+  );
+};
