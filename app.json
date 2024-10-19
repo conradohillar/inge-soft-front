@@ -29,6 +29,12 @@
       "expo-router",
       "expo-font",
       "expo-secure-store"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ae93c844-06af-402e-9051-2ef49041c9c6"
+      }
+    },
+    "owner": "santiagobassi"
   }
 }

@@ -75,6 +75,7 @@ export default function SignUp() {
                     value={value}
                     handleChangeText={onChange}
                     placeholder="Ingresá tu DNI"
+                    keyboardType="numeric"
                   />
                 )}
                 name="dni"

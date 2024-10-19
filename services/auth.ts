@@ -22,7 +22,7 @@ export const sign_in = async (email: string, password: string, setGlobalState) =
 
         await setToken(response.data.access_token.toString());
           
-        return 0;
+        return response.data;
     }catch (error) {
         if (error.response == undefined) {
             throw new Error('408');

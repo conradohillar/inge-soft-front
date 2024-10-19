@@ -7,6 +7,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import FrontPage from './(pages)/FrontPage';
 import LandingPage from './(pages)/LandingPage';
 import { useFonts } from 'expo-font';
+import registerNNPushToken from 'native-notify';
 
 export default function App() {
   const colorScheme = useColorScheme();
@@ -17,7 +18,7 @@ export default function App() {
     'Inter': require('../assets/fonts/Inter_18pt-Regular.ttf'), // No se usa para nada, pero si no se carga tira warning
     'Quicksand-Semibold': require('../assets/fonts/Quicksand-SemiBold.ttf'),
   });
-
+  registerNNPushToken(24233, 'SX3XOZEi4N2YNO4U2RkCfD');
   useEffect(() => {
     const prepare = async () => {
       try {
@@ -46,14 +47,14 @@ export default function App() {
   }
 
   return (
-    
-      <TamaguiProvider config={config}>
-        <Theme name={colorScheme === "dark" ? "dark" : "light"}>
-          <LandingPage />
-          <StatusBar theme="dark" />
-        </Theme>
-      </TamaguiProvider>
-    
+
+    <TamaguiProvider config={config}>
+      <Theme name={colorScheme === "dark" ? "dark" : "light"}>
+        <LandingPage />
+        <StatusBar theme="dark" />
+      </Theme>
+    </TamaguiProvider>
+
 
   );
 }
