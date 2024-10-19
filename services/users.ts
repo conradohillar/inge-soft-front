@@ -60,3 +60,9 @@ export const newName = async (name) => {
     const url = `${BASE_URL}/edit/name?name=${name}`;
     return handleRequest(() => axios.put(url, null, { headers }));
 };
+
+export const getProfileInfo = async (id) => {
+    const headers = await getHeaders();
+    const url = `${BASE_URL}/me?id=${id}`;
+    return handleRequest(() => axios.get(url, { headers }));
+}

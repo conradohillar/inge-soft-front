@@ -24,6 +24,7 @@ import accepted from "../assets/icons/accepted.png"
 import dismissed from "../assets/icons/dismissed.png"
 import tick from "../assets/icons/tick.png"
 import cross from "../assets/icons/cross.png"
+import star from "../assets/icons/star.png"
 
 export default {
     logo,
@@ -51,5 +52,6 @@ export default {
     accepted,
     dismissed,
     tick,
-    cross
+    cross,
+    star
 };

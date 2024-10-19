@@ -3,14 +3,10 @@ import { XStack, YStack } from "tamagui";
 import BlackButton from "../../components/BlackButton";
 import Header from "../../components/Header";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useGlobalState } from '../_layout';
-
+import { useGlobalState } from "../_layout";
 
 export default function Home() {
-
-
   const { globalState, setGlobalState } = useGlobalState();
-
 
   return (
     <SafeAreaView className="bg-background flex-1">
@@ -34,7 +30,7 @@ export default function Home() {
         </View>
         <XStack className="items-start justify-evenly w-[100%] h-[25%] px-3">
           <View className="w-[55%]">
-            <BlackButton href="/(pages)/SearchTripPage" variant={"secondary"}>
+            <BlackButton href="/(pages)/UserProfile" variant={"secondary"}>
               <Text className="text-[20px] font-qsemibold text-white">
                 Buscar viaje
               </Text>
@@ -43,7 +39,9 @@ export default function Home() {
           <View className="w-[55%]">
             <BlackButton
               href="/(pages)/PostTripPage"
-              className={`${globalState.isDriver ? '' : 'opacity-50 bg-gray-500'}`}
+              className={`${
+                globalState.isDriver ? "" : "opacity-50 bg-gray-500"
+              }`}
               disabled={!globalState.isDriver}
             >
               <Text className={`text-[20px] font-qsemibold text-white`}>
