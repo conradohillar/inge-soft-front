@@ -1,15 +1,23 @@
 
 import { Stack, SplashScreen } from 'expo-router';
 import { useFonts } from 'expo-font'
-import { useEffect } from 'react';
+import { useEffect, createContext, useContext, useState } from 'react';
 import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
-
+const GlobalStateContext = createContext();
 const RootLayout = () => {
+    const [globalState, setGlobalState] = useState({
+        fullName: "User",
+        firstName: "User",
+        email: "",
+        photoUrl: "",
+        isLogued: false,
+        isDriver: false
+    });
     const [fontsLoaded, error] = useFonts({
         "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
         "Quicksand-Light": require("../assets/fonts/Quicksand-Light.ttf"),
@@ -30,18 +38,21 @@ const RootLayout = () => {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <AutocompleteDropdownContextProvider>
-                <Stack>
-                    <Stack.Screen name="index" options={{ headerShown: false }} />
-                    <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                    <Stack.Screen name="(pages)" options={{ headerShown: false }} />
-                </Stack>
-            </AutocompleteDropdownContextProvider>
+            <GlobalStateContext.Provider value={{ globalState, setGlobalState }}>
+                <AutocompleteDropdownContextProvider>
+                    <Stack>
+                        <Stack.Screen name="index" options={{ headerShown: false }} />
+                        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+                        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                        <Stack.Screen name="(pages)" options={{ headerShown: false }} />
+                    </Stack>
+                </AutocompleteDropdownContextProvider>
+            </GlobalStateContext.Provider>
         </QueryClientProvider>
 
 
     )
 }
+export const useGlobalState = () => useContext(GlobalStateContext);
 
 export default RootLayout

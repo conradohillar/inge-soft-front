@@ -11,11 +11,14 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { sign_in } from '../../services/auth';
 import { signInSchema } from '../../validation/authSchemas';
+import { useGlobalState } from '../_layout';
+import { getUserData } from '../../services/users';
 
 
 
 
 export default function SignIn() {
+
   const {
     control,
     handleSubmit,
@@ -28,10 +31,22 @@ export default function SignIn() {
     },
   });
 
+  const { globalState, setGlobalState } = useGlobalState();
+
   const mutation = useMutation({
 
-    mutationFn: (formData) => sign_in(formData.email, formData.password),
-    onSuccess: () => {
+    mutationFn: (formData) => sign_in(formData.email, formData.password, setGlobalState),
+    onSuccess: async () => {
+      const user = await getUserData();
+      setGlobalState({
+        fullName: user.name,
+        firstName: user.name.split(' ')[0],
+        email: user.email,
+        photoUrl: user.photo_url,
+        isLogued: true,
+        isDriver: user.is_driver
+      });
+
       router.replace('../(tabs)/home');
     }
   });

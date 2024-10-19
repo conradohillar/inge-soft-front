@@ -6,7 +6,7 @@ const basicHeader = {
     'Content-Type': 'application/json',
 };
 
-export const sign_in = async (email: string, password: string) => {
+export const sign_in = async (email: string, password: string, setGlobalState) => {
     const url = `http://${LOCAL_IP}:8000/auth/token`;
     const headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -21,7 +21,7 @@ export const sign_in = async (email: string, password: string) => {
         const response = await axios.post(url,body, {headers: headers});
 
         await setToken(response.data.access_token.toString());
-        
+          
         return 0;
     }catch (error) {
         if (error.response == undefined) {
