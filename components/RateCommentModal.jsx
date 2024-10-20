@@ -58,7 +58,7 @@ const RateCommentModal = ({
                 ratingCount={5}
                 imageSize={35}
                 onFinishRating={handleRatingChange}
-                initialRating={0}
+                startingValue={initialRating}
               />
               <View className="w-full items-center justify-center">
                 <CustomInput
