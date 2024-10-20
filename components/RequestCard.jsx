@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Image, View, Text, Pressable } from "react-native";
 import { Button, XStack, YStack, Avatar } from "tamagui";
 import icons from "../constants/icons";
+import { Link } from "expo-router";
 
 export default function RequestCard({
   username,
@@ -39,9 +40,17 @@ export default function RequestCard({
             </Avatar>
             <YStack>
               <Text className="font-qbold text-base mb-1 mt-2">{username}</Text>
-              <Text className="font-qsemibold text-sm underline text-gray-500">
-                Ver perfil del pasajero
-              </Text>
+              <Link
+                href={{
+                  pathname: "/(pages)/UserProfile",
+                  params: { user_id: userId, category: "rider" },
+                }}
+                asChild
+              >
+                <Text className="font-qsemibold text-sm underline text-gray-500">
+                  Ver perfil del pasajero
+                </Text>
+              </Link>
             </YStack>
           </XStack>
           <YStack className="w-full items-start mb-8">

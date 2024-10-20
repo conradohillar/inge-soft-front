@@ -10,11 +10,16 @@ import icons from "../constants/icons";
 import { getUserOrDriverRides } from "../services/rides";
 import BlackButton from "./BlackButton";
 
-export default function TripList({ type, category }) {
+export default function TripList({ type, category, setError, setIsLoading }) {
   const { isLoading, error, data } = useQuery({
     queryKey: ["get", type, category],
     queryFn: () => getUserOrDriverRides(type, category),
   });
+
+  useEffect(() => {
+    setIsLoading(isLoading);
+    if (error) setError(error);
+  }, [isLoading, error]);
 
   const renderTripCard = ({ item }) => {
     const rounded = item.price.toFixed(2);
@@ -78,13 +83,7 @@ export default function TripList({ type, category }) {
     }
   };
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
-  if (error) {
-    return <ErrorPage />;
-  }
+  if (data === undefined || data === null) return null;
 
   if (data.length === 0) {
     return (

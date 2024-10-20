@@ -238,7 +238,7 @@ export default function TripSearchDetail() {
               <Link
                 href={{
                   pathname: "/(pages)/UserProfile",
-                  params: { user_id: data.driver_id },
+                  params: { user_id: data.driver_id, category: "driver" },
                 }}
                 asChild
               >

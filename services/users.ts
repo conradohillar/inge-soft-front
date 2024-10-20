@@ -61,8 +61,7 @@ export const newName = async (name) => {
     return handleRequest(() => axios.put(url, null, { headers }));
 };
 
-export const getProfileInfo = async (id) => {
-    const headers = await getHeaders();
-    const url = `${BASE_URL}/me?id=${id}`;
-    return handleRequest(() => axios.get(url, { headers }));
+export const getProfileInfo = async (id, category) => {
+    const url = `${BASE_URL}/profile/${category}/${id}`;
+    return handleRequest(() => axios.get(url));
 }
