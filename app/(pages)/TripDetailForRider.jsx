@@ -187,7 +187,13 @@ export default function TripDetailForRider() {
               </YStack>
             </XStack>
             <View className="w-full items-center mb-4">
-              <Link href={`/driver/${data.driver_id}`} asChild>
+              <Link
+                href={{
+                  pathname: "/(pages)/UserProfile",
+                  params: { user_id: data.driver_id },
+                }}
+                asChild
+              >
                 <Pressable
                   onPressIn={() => setPressed(true)}
                   onPressOut={() => setPressed(false)}

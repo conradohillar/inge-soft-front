@@ -1,11 +1,8 @@
-import { Stack } from 'expo-router'
-
-
+import { Stack } from "expo-router";
 
 const PagesLayout = () => {
   return (
     <>
-
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="FrontPage" />
         <Stack.Screen name="LoadingPage" />
@@ -27,11 +24,10 @@ const PagesLayout = () => {
         <Stack.Screen name="TripDetailForRider" />
         <Stack.Screen name="TripHistoryDetailForDriver" />
         <Stack.Screen name="TripUpcomingDetailForDriver" />
+        <Stack.Screen name="UserProfile" />
       </Stack>
-
     </>
   );
 };
 
-
-export default PagesLayout
+export default PagesLayout;
