@@ -8,7 +8,7 @@ import { getIndieNotificationInbox, deleteIndieNotificationInbox } from 'native-
 import { useGlobalState } from "../app/_layout";
 
 export default function Header() {
-    const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
+
     const { globalState } = useGlobalState();
     const [notifications, setNotifications] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
@@ -16,16 +16,17 @@ export default function Header() {
 
     useEffect(() => {
         const getNots = async () => {
-
             let not = await getIndieNotificationInbox(globalState.userId, 24233, 'SX3XOZEi4N2YNO4U2RkCfD');
-            console.log('not', not);
             setNotifications(not);
         };
         getNots();
 
     }, []);
-    // Esto no esta funcando, lo voy a revisar
 
+    const handleDeleteNotification = async (notificationId) => {
+        let not = await deleteIndieNotificationInbox(globalState.userId, notificationId, 24233, 'SX3XOZEi4N2YNO4U2RkCfD');
+        setNotifications(not);
+    }
 
     const toggleModal = () => {
         setModalVisible(!modalVisible);
@@ -35,7 +36,7 @@ export default function Header() {
         <XStack className="min-h-[8%] w-full items-center justify-between px-4 bg-background" style={{ borderBottomWidth: 2, borderBottomColor: '#ccc' }}>
             <View className="relative">
                 {/* Botón de notificación */}
-                <TouchableOpacity onPress={toggleModal}>
+                <TouchableOpacity onPress={toggleModal} asChild>
                     <Button className="w-10 h-10 rounded-2xl bg-background">
                         <Image source={icons.notification} className="h-8 w-8" resizeMode="contain" />
                     </Button>
@@ -63,19 +64,22 @@ export default function Header() {
                     <View style={{ width: '80%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
                         <Text style={{ fontSize: 20, marginBottom: 10 }}>Notificaciones</Text>
 
-                        {/* Lista de notificaciones */}
+
                         <FlatList
                             data={notifications}
-                            keyExtractor={(item) => item.id.toString()} // Cambia según la estructura de tus notificaciones
+                            keyExtractor={(item) => item.notification_id}
                             renderItem={({ item }) => (
                                 <View style={{ padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
                                     <Text style={{ fontWeight: 'bold' }}>{item.title}</Text>
                                     <Text>{item.message}</Text>
+                                    <Button onPress={() => { handleDeleteNotification(item.notification_id) }} style={{ marginTop: 10 }}>
+                                        Eliminar
+                                    </Button>
                                 </View>
                             )}
                         />
 
-                        {/* Botón para cerrar el modal */}
+
                         <Button onPress={toggleModal} style={{ marginTop: 20 }}>
                             Cerrar
                         </Button>

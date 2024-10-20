@@ -39,6 +39,7 @@ export default function SignUp2() {
     onSuccess: (user_id) => {
       registerIndieID(user_id.user_id, 24233, 'SX3XOZEi4N2YNO4U2RkCfD');
 
+
       router.push({
         pathname: "/(auth)/sign-in"
       });

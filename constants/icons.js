@@ -24,11 +24,8 @@ import accepted from "../assets/icons/accepted.png"
 import dismissed from "../assets/icons/dismissed.png"
 import tick from "../assets/icons/tick.png"
 import cross from "../assets/icons/cross.png"
-<<<<<<< HEAD
 import notification from "../assets/icons/notification.png"
-=======
 import star from "../assets/icons/star.png"
->>>>>>> fa09b2cccc939bdbbd537198d31522ca67ef0e3c
 
 export default {
     logo,

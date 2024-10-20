@@ -15,8 +15,6 @@ import { useGlobalState } from '../_layout';
 import { getUserData } from '../../services/users';
 
 
-
-
 export default function SignIn() {
 
   const {
@@ -45,7 +43,7 @@ export default function SignIn() {
         photoUrl: user.photo_url,
         isLogued: true,
         isDriver: user.is_driver,
-        userId: user.id,
+        userId: user.user_id,
       });
 
       router.replace('../(tabs)/home');
