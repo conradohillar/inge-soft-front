@@ -190,7 +190,7 @@ export default function TripDetailForRider() {
               <Link
                 href={{
                   pathname: "/(pages)/UserProfile",
-                  params: { user_id: data.driver_id },
+                  params: { user_id: data.driver_id, category: "driver" },
                 }}
                 asChild
               >
