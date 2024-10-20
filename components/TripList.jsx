@@ -18,7 +18,6 @@ export default function TripList({ type, category, setError, setIsLoading }) {
   });
 
   useEffect(() => {
-    console.log("isLoading", isLoading);
     setIsLoading(isLoading);
     if (error) setError(error);
   }, [isLoading, error]);

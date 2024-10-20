@@ -26,6 +26,8 @@ export default function UserProfile() {
     return <ErrorPage />;
   }
 
+  const listHeight = data.comments.length * 235;
+
   return (
     <SafeAreaView className="bg-background">
       <Header />
@@ -58,27 +60,27 @@ export default function UserProfile() {
             Calificación
           </Text>
           <YStack className="self-center items-center space-y-2">
-            <RatingStars rating={data.rating} />
+            <RatingStars rating={avgRating(data.comments)} />
             <Text className="text-gray-500 text-sm font-qsemibold">
               de {data.comments.length} opiniones
             </Text>
           </YStack>
         </YStack>
-        <YStack className="items-start justify-between w-full pb-8 pt-2 mb-1 border-t-2 border-t-[#eee]">
+        <YStack className="flex-1 items-start justify-between w-full pb-8 pt-2 mb-1 border-t-2 border-t-[#eee]">
           <XStack className="items-center w-full px-4 mb-5 mt-2 space-x-3">
             <Text className="text-sm font-qbold text-[#ccc] ">Comentarios</Text>
             <Text className="text-sm font-qbold text-[#999]">
               {`(${data.comments.length})`}
             </Text>
           </XStack>
-          <View className="flex-1">
+          <View className="w-full">
             <FlatList
               data={data.comments}
               keyExtractor={(item, index) => index.toString()}
               renderItem={renderComments}
               contentContainerStyle={{
-                paddingBottom: 130,
-                alignItems: "center",
+                paddingBottom: 150,
+                alignItems: "start",
                 width: "100%",
               }}
             />
@@ -96,9 +98,14 @@ const renderComments = ({ item }) => {
         photoUrl={item.photo_url}
         username={item.name}
         date={item.date}
-        body={item.body}
+        body={item.comment}
         rating={item.rating}
       />
     </View>
   );
+};
+
+const avgRating = (comments) => {
+  const sum = comments.reduce((acc, comment) => acc + comment.rating, 0);
+  return Math.round(sum / comments.length);
 };
