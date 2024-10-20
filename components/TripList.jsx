@@ -9,6 +9,7 @@ import { Link, useRouter } from "expo-router";
 import icons from "../constants/icons";
 import { getUserOrDriverRides } from "../services/rides";
 import BlackButton from "./BlackButton";
+import { useEffect } from "react";
 
 export default function TripList({ type, category, setError, setIsLoading }) {
   const { isLoading, error, data } = useQuery({
@@ -17,6 +18,7 @@ export default function TripList({ type, category, setError, setIsLoading }) {
   });
 
   useEffect(() => {
+    console.log("isLoading", isLoading);
     setIsLoading(isLoading);
     if (error) setError(error);
   }, [isLoading, error]);

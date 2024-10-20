@@ -30,7 +30,7 @@ export default function Home() {
         </View>
         <XStack className="items-start justify-evenly w-[100%] h-[25%] px-3">
           <View className="w-[55%]">
-            <BlackButton href="/(pages)/UserProfile" variant={"secondary"}>
+            <BlackButton href="/(pages)/SearchTripPage" variant={"secondary"}>
               <Text className="text-[20px] font-qsemibold text-white">
                 Buscar viaje
               </Text>
