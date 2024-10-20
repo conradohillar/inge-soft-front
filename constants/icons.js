@@ -26,10 +26,6 @@ import tick from "../assets/icons/tick.png"
 import cross from "../assets/icons/cross.png"
 import notification from "../assets/icons/notification.png"
 import star from "../assets/icons/star.png"
-<<<<<<< HEAD
-=======
-
->>>>>>> 2ce3d6c14e786736bbc0926145703b48eafb1930
 
 export default {
     logo,
