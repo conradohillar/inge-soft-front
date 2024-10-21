@@ -10,6 +10,7 @@ import { getProfileInfo } from "../../services/users";
 import LoadingPage from "./LoadingPage";
 import ErrorPage from "./ErrorPage";
 import { FlatList } from "react-native";
+import icons from "../../constants/icons";
 
 export default function UserProfile() {
   const { user_id, category } = useLocalSearchParams();
@@ -26,8 +27,6 @@ export default function UserProfile() {
     return <ErrorPage />;
   }
 
-  const listHeight = data.comments.length * 235;
-
   return (
     <SafeAreaView className="bg-background">
       <Header />
@@ -39,7 +38,9 @@ export default function UserProfile() {
                 <Avatar.Image
                   data-testid="profile-picture"
                   accessibilityLabel={data.name}
-                  src={data.photo_url}
+                  src={
+                    data.photo_url ? data.photo_url : icons.placeholder_profile
+                  }
                 />
               </Avatar>
             </View>
