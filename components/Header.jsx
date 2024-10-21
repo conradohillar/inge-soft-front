@@ -1,11 +1,12 @@
 import { Menu } from "@tamagui/lucide-icons";
 import { Link } from "expo-router";
-import { Image, View, Text, Modal, FlatList, TouchableOpacity } from "react-native";
+import { Image, View, Text, Modal, FlatList, TouchableOpacity, NativeEventEmitter, NativeModules } from "react-native";
 import { XStack, YStack, Button } from "tamagui";
 import icons from "../constants/icons"
 import React, { useState, useEffect } from "react";
 import { getIndieNotificationInbox, deleteIndieNotificationInbox } from 'native-notify';
 import { useGlobalState } from "../app/_layout";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 export default function Header() {
 
@@ -14,11 +15,19 @@ export default function Header() {
     const [modalVisible, setModalVisible] = useState(false);
 
 
+    const getNots = async () => {
+        let not = await getIndieNotificationInbox(globalState.userId, 24233, 'SX3XOZEi4N2YNO4U2RkCfD');
+        setNotifications(not);
+    };
+
     useEffect(() => {
-        const getNots = async () => {
-            let not = await getIndieNotificationInbox(globalState.userId, 24233, 'SX3XOZEi4N2YNO4U2RkCfD');
-            setNotifications(not);
-        };
+        const eventEmitter = new NativeEventEmitter(NativeModules.NativeNotifications);
+        const subscription = eventEmitter.addListener('notificationReceived', (notification) => {
+            getNots();
+        });
+    });
+
+    useEffect(() => {
         getNots();
 
     }, []);
