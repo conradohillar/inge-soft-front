@@ -33,8 +33,7 @@ export const getUserOrDriverRides = async (type, category) => {
     const headers = await getHeaderWithToken();
     const url = `${BASE_URL}/${type}/${category}`
 
-    return handleRequest(() => axios.get(url, { headers }));
-
+     return handleRequest(() => axios.get(url, { headers }));
 }
 
 
