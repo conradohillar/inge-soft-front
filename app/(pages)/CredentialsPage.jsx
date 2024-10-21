@@ -7,13 +7,20 @@ import ErrorPage from "./ErrorPage";
 import LoadingPage from "./LoadingPage";
 import { newCredential } from "../../services/users";
 import icons from "../../constants/icons";
+import { useGlobalState } from '../_layout';
+
 
 export default function CredentialsPage() {
   const router = useRouter();
+  const { globalState, setGlobalState } = useGlobalState();
 
   const mutation = useMutation({
     mutationFn: newCredential,
     onSuccess: () => {
+      setGlobalState({
+        ...globalState,
+        isDriver: true,
+      });
       router.push({
         pathname: "/(pages)/NewCredentialsSuccessful",
         params: {

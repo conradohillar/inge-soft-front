@@ -24,8 +24,10 @@ import EditNameModal from "../../components/EditNameModal";
 import { useGlobalState } from "../_layout";
 
 export default function Profile() {
-  const queryClient = useQueryClient();
+
   const { globalState, setGlobalState } = useGlobalState();
+
+  console.log("Global state: ", globalState);
 
   const [isProfilePictureModalVisible, setProfilePictureModalVisible] =
     useState(false);

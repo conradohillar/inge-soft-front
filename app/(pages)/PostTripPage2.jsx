@@ -60,7 +60,10 @@ export default function PostTripPage2() {
       setValue('defaultPriceSmallPackage', Math.round(data.prices.price_small_package));
       setValue('defaultPriceMediumPackage', Math.round(data.prices.price_medium_package));
       setValue('defaultPriceLargePackage', Math.round(data.prices.price_large_package));
-      setValue('car', data.cars[0].plate);
+      if (data.cars.length > 0) {
+        setValue('car', data.cars[0].plate);
+      }
+
     }
   }, [data]);
 

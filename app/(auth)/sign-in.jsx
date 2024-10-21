@@ -37,14 +37,21 @@ export default function SignIn() {
     onSuccess: async () => {
       const user = await getUserData();
       setGlobalState({
+        ...globalState,
         fullName: user.name,
         firstName: user.name.split(' ')[0],
         email: user.email,
-        photoUrl: user.photo_url,
         isLogued: true,
         isDriver: user.is_driver,
         userId: user.user_id,
       });
+
+      if (user.photo_url) {
+        setGlobalState({
+          ...globalState,
+          photoUrl: user.photo_url,
+        });
+      }
 
       router.replace('../(tabs)/home');
     }
