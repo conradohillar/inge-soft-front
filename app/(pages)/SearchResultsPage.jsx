@@ -96,8 +96,7 @@ export default function SearchResults() {
     );
   }
   return (
-    <SafeAreaView className="w-full h-full bg-background">
-      <Header />
+    <View className="w-full h-full bg-background">
       <XStack className="items-center justify-center mt-10 mb-7">
         <Text className="text-[22px] font-qbold text-secondary">
           Resultados{" "}
@@ -118,6 +117,6 @@ export default function SearchResults() {
           }}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 }

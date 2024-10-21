@@ -14,46 +14,41 @@ export default function NewCredentialsSuccessful() {
     returnToRef,
   } = useLocalSearchParams();
   return (
-    <SafeAreaView className="h-full w-full bg-background">
-      <YStack className="h-full items-center justify-center">
-        <Text className="text-6xl text-primary font-qbold">Genial!</Text>
-        <View className="mb-12 mt-12">
-          <Image source={icons.logo} style={{ height: 250, width: 250 }} />
-        </View>
-        <YStack className="items-center space-y-10">
-          <Text className="text-3xl text-black font-qbold">{title}</Text>
+    <YStack className="h-full items-center justify-center bg-background">
+      <Text className="text-6xl text-primary font-qbold">Genial!</Text>
+      <View className="mb-12 mt-12">
+        <Image source={icons.logo} style={{ height: 250, width: 250 }} />
+      </View>
+      <YStack className="items-center space-y-10">
+        <Text className="text-3xl text-black font-qbold">{title}</Text>
+        <Text className="text-xl text-gray-400 font-qbold">
+          Ya podés encontrarlo en la
+        </Text>
+        <XStack className="items-center space-x-3 mb-12">
           <Text className="text-xl text-gray-400 font-qbold">
-            Ya podés encontrarlo en la
+            sección
+            <Text className="text-xl text-primary font-qbold"> {section}</Text>
           </Text>
-          <XStack className="items-center space-x-3 mb-12">
-            <Text className="text-xl text-gray-400 font-qbold">
-              sección
-              <Text className="text-xl text-primary font-qbold">
-                {" "}
-                {section}
-              </Text>
+          <Image
+            source={sectionSource}
+            className="w-8 h-8"
+            tintColor="#59A58A"
+            resizeMode="contain"
+          />
+        </XStack>
+        <Link href={returnToRef} asChild>
+          <XStack className="items-center justify-center space-x-4 mt-5">
+            <Text className="text-black text-2xl font-qbold underline">
+              {returnTo}
             </Text>
             <Image
-              source={sectionSource}
-              className="w-8 h-8"
-              tintColor="#59A58A"
+              source={returnToSource}
+              className="w-10 h-10"
               resizeMode="contain"
             />
           </XStack>
-          <Link href={returnToRef} asChild>
-            <XStack className="items-center justify-center space-x-4 mt-5">
-              <Text className="text-black text-2xl font-qbold underline">
-                {returnTo}
-              </Text>
-              <Image
-                source={returnToSource}
-                className="w-10 h-10"
-                resizeMode="contain"
-              />
-            </XStack>
-          </Link>
-        </YStack>
+        </Link>
       </YStack>
-    </SafeAreaView>
+    </YStack>
   );
 }

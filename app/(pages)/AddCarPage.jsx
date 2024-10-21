@@ -17,8 +17,8 @@ import {
 } from "react-native";
 import { newCar } from "../../services/users";
 import { addCarSchema } from "../../validation/usersSchemas";
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function AddCarPage() {
   const queryClient = useQueryClient();
@@ -30,9 +30,9 @@ export default function AddCarPage() {
   } = useForm({
     resolver: yupResolver(addCarSchema),
     defaultValues: {
-      model: '',
-      plate: '',
-      color: '',
+      model: "",
+      plate: "",
+      color: "",
     },
   });
 
@@ -71,97 +71,105 @@ export default function AddCarPage() {
     return <LoadingPage />;
   }
 
-
-
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"} // "padding" para iOS, "height" para Android
-      style={{ flex: 1 }}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} className={"h-full"}>
-        <SafeAreaView className="bg-background h-full w-full">
-          <YStack className="h-full justify-evenly">
-            <YStack className="items-center justify-center">
-              <Text className="text-black text-4xl font-qbold">
-                Cargá los datos
-              </Text>
-              <Text className="text-black text-4xl font-qbold">
-                de
-                <Text className="text-primary text-4xl font-qbold">
-                  {" "}
-                  tu auto
-                </Text>
-              </Text>
-            </YStack>
-            <YStack className="items-center justify-center">
-              {mutation.isError && mutation.error.message == 408 && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
-              {mutation.isError && mutation.error.message == 403 && <Text className="text-red-500 text-base font-qsemibold pb-12">Aun no sos conductor.</Text>}
-              {mutation.isError && mutation.error.message == 402 && <Text className="text-red-500 text-base font-qsemibold pb-12">Ya tenes un auto con esta patente.</Text>}
+    <YStack className="h-full justify-evenly bg-background">
+      <YStack className="items-center justify-center">
+        <Text className="text-black text-4xl font-qbold">Cargá los datos</Text>
+        <Text className="text-black text-4xl font-qbold">
+          de
+          <Text className="text-primary text-4xl font-qbold"> tu auto</Text>
+        </Text>
+      </YStack>
+      <YStack className="items-center justify-center">
+        {mutation.isError && mutation.error.message == 408 && (
+          <Text className="text-red-500 text-base font-qsemibold pb-12">
+            Error de conexion, intente mas tarde.
+          </Text>
+        )}
+        {mutation.isError && mutation.error.message == 403 && (
+          <Text className="text-red-500 text-base font-qsemibold pb-12">
+            Aun no sos conductor.
+          </Text>
+        )}
+        {mutation.isError && mutation.error.message == 402 && (
+          <Text className="text-red-500 text-base font-qsemibold pb-12">
+            Ya tenes un auto con esta patente.
+          </Text>
+        )}
 
-              <Controller
-                control={control}
-                rules={{
-                  required: true,
-                }}
-                render={({ field: { onChange, value } }) => (
-                  <CustomInput
-                    title="Modelo"
-                    value={value}
-                    handleChangeText={onChange}
-                    placeholder={"Ej: Toyota etios"}
-                  />
-                )}
-                name="model"
-              />
-              {errors.model && <Text className="text-red-500 text-base font-qsemibold">{errors.model.message}</Text>}
-              <Controller
-                control={control}
-                rules={{
-                  required: true,
-                }}
-                render={({ field: { onChange, value } }) => (
-                  <CustomInput
-                    title="Patente"
-                    value={value}
-                    handleChangeText={onChange}
-                    placeholder={"Ej: abc-123"}
-                  />
-                )}
-                name="plate"
-              />
-              {errors.plate && <Text className="text-red-500 text-base font-qsemibold">{errors.plate.message}</Text>}
-              <Controller
-                control={control}
-                rules={{
-                  required: true,
-                }}
-                render={({ field: { onChange, value } }) => (
-                  <CustomInput
-                    title="Color"
-                    value={value}
-                    handleChangeText={onChange}
-                    placeholder={"Ej: Rojo"}
-                  />
-                )}
-                name="color"
-              />
-              {errors.color && <Text className="text-red-500 text-base font-qsemibold">{errors.color.message}</Text>}
-            </YStack>
-            <YStack className="items-center">
-              <ButtonNext onPress={handleSubmit(handleContinue)}>
-                <Text className="text-white text-xl font-qsemibold">
-                  Agregar auto
-                </Text>
-              </ButtonNext>
-              <Link href="/(pages)/MyCarsPage" asChild>
-                <Text className="text-base text-primary font-qsemibold underline">
-                  Volver
-                </Text>
-              </Link>
-            </YStack>
-          </YStack>
-        </SafeAreaView>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, value } }) => (
+            <CustomInput
+              title="Modelo"
+              value={value}
+              handleChangeText={onChange}
+              placeholder={"Ej: Toyota etios"}
+            />
+          )}
+          name="model"
+        />
+        {errors.model && (
+          <Text className="text-red-500 text-base font-qsemibold">
+            {errors.model.message}
+          </Text>
+        )}
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, value } }) => (
+            <CustomInput
+              title="Patente"
+              value={value}
+              handleChangeText={onChange}
+              placeholder={"Ej: abc-123"}
+            />
+          )}
+          name="plate"
+        />
+        {errors.plate && (
+          <Text className="text-red-500 text-base font-qsemibold">
+            {errors.plate.message}
+          </Text>
+        )}
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, value } }) => (
+            <CustomInput
+              title="Color"
+              value={value}
+              handleChangeText={onChange}
+              placeholder={"Ej: Rojo"}
+            />
+          )}
+          name="color"
+        />
+        {errors.color && (
+          <Text className="text-red-500 text-base font-qsemibold">
+            {errors.color.message}
+          </Text>
+        )}
+      </YStack>
+      <YStack className="items-center">
+        <ButtonNext onPress={handleSubmit(handleContinue)}>
+          <Text className="text-white text-xl font-qsemibold">
+            Agregar auto
+          </Text>
+        </ButtonNext>
+        <Link href="/(pages)/MyCarsPage" asChild>
+          <Text className="text-base text-primary font-qsemibold underline">
+            Volver
+          </Text>
+        </Link>
+      </YStack>
+    </YStack>
   );
 }
