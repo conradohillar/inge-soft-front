@@ -36,7 +36,7 @@ export default function SignIn() {
     mutationFn: (formData) => sign_in(formData.email, formData.password, setGlobalState),
     onSuccess: async () => {
       const user = await getUserData();
-      setGlobalState({
+      await setGlobalState({
         ...globalState,
         fullName: user.name,
         firstName: user.name.split(' ')[0],
@@ -47,7 +47,7 @@ export default function SignIn() {
       });
 
       if (user.photo_url) {
-        setGlobalState({
+        await setGlobalState({
           ...globalState,
           photoUrl: user.photo_url,
         });
