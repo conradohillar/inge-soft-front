@@ -57,7 +57,7 @@ export default function UserProfile() {
           Calificación
         </Text>
         <YStack className="self-center items-center space-y-2">
-          <RatingStars rating={avgRating(data.comments)} />
+          <RatingStars rating={data.rating} />
           <Text className="text-gray-500 text-sm font-qsemibold">
             de {data.comments.length} opiniones
           </Text>
@@ -99,9 +99,4 @@ const renderComments = ({ item }) => {
       />
     </View>
   );
-};
-
-const avgRating = (comments) => {
-  const sum = comments.reduce((acc, comment) => acc + comment.rating, 0);
-  return Math.round(sum / comments.length);
 };
