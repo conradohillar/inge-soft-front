@@ -25,7 +25,9 @@ export default function Header() {
         const subscription = eventEmitter.addListener('notificationReceived', (notification) => {
             getNots();
         });
-    });
+
+        return () => subscription.remove();
+    }, []);
 
     useEffect(() => {
         getNots();
