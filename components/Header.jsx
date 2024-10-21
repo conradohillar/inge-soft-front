@@ -6,7 +6,8 @@ import icons from "../constants/icons"
 import React, { useState, useEffect } from "react";
 import { getIndieNotificationInbox, deleteIndieNotificationInbox } from 'native-notify';
 import { useGlobalState } from "../app/_layout";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+import * as Notifications from 'expo-notifications';
+
 
 export default function Header() {
 
@@ -24,12 +25,12 @@ export default function Header() {
 
         getNots();
 
-        document.addEventListener('onNotificationReceived', (e) => {
+        const subscription = Notifications.addNotificationReceivedListener(() => {
             getNots();
         });
 
         return () => {
-            document.removeEventListener('onNotificationReceived', handleNotificationReceived);
+            subscription.remove();
         };
     }, []);
 
