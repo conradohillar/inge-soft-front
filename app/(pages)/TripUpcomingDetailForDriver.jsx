@@ -29,6 +29,24 @@ export default function TripUpcomingDetailForDriver() {
     });
   };
 
+  function isCurrentTimeGreaterOrEqual(date, time) {
+    const receivedDateTime = new Date(`${date}T${time}`);
+
+    const receivedDateTimeMinus30Min = new Date(
+      receivedDateTime.getTime() - 30 * 60000
+    );
+
+    let currentDateTime = new Date();
+    currentDateTime = new Date(currentDateTime.getTime() - 3 * 60 * 60000);
+
+    console.log(currentDateTime);
+    console.log(receivedDateTimeMinus30Min);
+
+    return currentDateTime >= receivedDateTimeMinus30Min;
+  }
+
+  const handleStartTrip = () => {};
+
   if (isLoading) {
     return <LoadingPage />;
   }
@@ -38,7 +56,7 @@ export default function TripUpcomingDetailForDriver() {
   }
 
   return (
-    <YStack className="w-full h-full items-start justify-start bg-background mb-12">
+    <YStack className="w-full h-full items-start justify-start bg-background">
       <View className="w-full h-[10%] items-center justify-center">
         <XStack className="w-full items-start justify-center ml-12">
           <Link
@@ -77,8 +95,8 @@ export default function TripUpcomingDetailForDriver() {
           </Text>
         </XStack>
       )}
-      <ScrollView className="h-full w-full">
-        <YStack className="items-start justify-between w-full px-4 pb-8 pt-2 mb-1 border-2 border-[#eee]">
+      <ScrollView className="w-full">
+        <YStack className="items-start justify-between w-full px-4 pb-8 pt-2 mb-1 border-b-2 border-b-[#eee]">
           <Text className="text-sm font-qbold text-[#ccc] mb-5">
             Logísticos
           </Text>
@@ -173,7 +191,7 @@ export default function TripUpcomingDetailForDriver() {
             </Text>
           </Text>
         </YStack>
-        <YStack className="items-start justify-between w-full px-4 pb-8 pt-3 mb-12 border-t-2 border-t-[#eee]">
+        <YStack className="items-start justify-between w-full px-4 pb-5 pt-3 mb-2 border-t-2 border-t-[#eee]">
           <Text className="text-sm font-qbold text-[#ccc] mb-5">
             Manejá las solicitudes de tus pasajeros
           </Text>
@@ -183,6 +201,18 @@ export default function TripUpcomingDetailForDriver() {
             </Text>
           </ButtonNext>
         </YStack>
+        {isCurrentTimeGreaterOrEqual(data.date, data.start_minimum_time) && (
+          <YStack className="items-start justify-between w-full px-4 pb-8 pt-3 border-t-2 border-t-[#eee]">
+            <Text className="text-sm font-qbold text-[#ccc] mb-2">
+              Es hora...
+            </Text>
+            <ButtonNext onPress={handleStartTrip} variant={"secondary"}>
+              <Text className="text-2xl font-qsemibold text-white">
+                Comenzar viaje!
+              </Text>
+            </ButtonNext>
+          </YStack>
+        )}
       </ScrollView>
     </YStack>
   );

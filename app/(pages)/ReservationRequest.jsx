@@ -74,12 +74,16 @@ export default function ReservationRequest() {
 
   if (data.length === 0) {
     return (
-      <XStack className="items-center justify-center mt-10 mb-7 bg-background">
-        <Text className="text-[22px] font-qbold text-secondary">
-          No hay solicitudes{" "}
-        </Text>
-        <Text className="text-[22px] font-qbold text-black">para tu viaje</Text>
-      </XStack>
+      <View className="bg-background h-full w-full">
+        <XStack className="items-center justify-center mt-10 mb-7 bg-background">
+          <Text className="text-[22px] font-qbold text-primary">
+            No hay solicitudes{" "}
+          </Text>
+          <Text className="text-[22px] font-qbold text-black">
+            para tu viaje
+          </Text>
+        </XStack>
+      </View>
     );
   }
   return (
