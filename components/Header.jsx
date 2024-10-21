@@ -1,6 +1,6 @@
 import { Menu } from "@tamagui/lucide-icons";
 import { Link } from "expo-router";
-import { Image, View, Text, Modal, FlatList, TouchableOpacity, NativeEventEmitter, NativeModules } from "react-native";
+import { Image, View, Text, Modal, FlatList, TouchableOpacity } from "react-native";
 import { XStack, YStack, Button } from "tamagui";
 import icons from "../constants/icons"
 import React, { useState, useEffect } from "react";
@@ -21,18 +21,19 @@ export default function Header() {
     };
 
     useEffect(() => {
-        const eventEmitter = new NativeEventEmitter(NativeModules.NativeNotifications);
-        const subscription = eventEmitter.addListener('notificationReceived', (notification) => {
+
+        getNots();
+
+        document.addEventListener('onNotificationReceived', (e) => {
             getNots();
         });
 
-        return () => subscription.remove();
+        return () => {
+            document.removeEventListener('onNotificationReceived', handleNotificationReceived);
+        };
     }, []);
 
-    useEffect(() => {
-        getNots();
 
-    }, []);
 
     const handleDeleteNotification = async (notificationId) => {
         let not = await deleteIndieNotificationInbox(globalState.userId, notificationId, 24233, 'SX3XOZEi4N2YNO4U2RkCfD');
