@@ -14,6 +14,7 @@ import * as ImagePicker from "expo-image-picker";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ProfilePictureModal from "../../components/PofilePictureModal";
 import RateCommentModal from "../../components/RateCommentModal";
+import AddCarModal from "../../components/AddCarModal";
 import {
   getUserData,
   deleteImage,
@@ -293,17 +294,19 @@ export default function Profile() {
         >
           <TouchableOpacity onPress={() => toggleRateCommentModal()}>
             <Text className="text-xl text-black font-qbold">
-              TEST RateCommentModal
+              TEST AddCarModal
             </Text>
           </TouchableOpacity>
-          <RateCommentModal
+          <AddCarModal
             isVisible={isRateCommentModalVisible}
-            onClose={toggleRateCommentModal}
-            commentPlaceholder={"Dejá un comentario"}
-            onSave={(rating, comment) => {
-              console.log("Rating: ", rating, "Comentario: ", comment);
+            onClose={() => {
+              toggleRateCommentModal();
             }}
-            title={"Califica tu viaje"}
+            // commentPlaceholder={"Dejá un comentario"}
+            // onSave={(rating, comment) => {
+            //   console.log("Rating: ", rating, "Comentario: ", comment);
+            // }}
+            // title={"Califica tu viaje"}
           />
         </View>
       </YStack>

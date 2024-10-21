@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, Image, ScrollView, Pressable } from "react-native";
 import { YStack, XStack, Button } from "tamagui";
@@ -16,8 +16,14 @@ import ErrorPage from "./ErrorPage";
 import icons from "../../constants/icons";
 import { getRideData, postTrip } from "../../services/rides";
 import { postTripDetailsSchema } from "../../validation/ridesSchemas";
+import AddCarModal from "../../components/AddCarModal";
 
 export default function PostTripPage2() {
+  const [isAddCarModalVisible, setIsAddCarModalVisible] = useState(false);
+  const toggleAddCarModal = () => {
+    setIsAddCarModalVisible(!isAddCarModalVisible);
+  };
+
   const { fromLocation, toLocation, formattedDate, departureTime } =
     useLocalSearchParams();
 
@@ -156,15 +162,21 @@ export default function PostTripPage2() {
         </Text>
       </View>
 
-      <YStack className="items-start justify-center">
-        <Text className="text-sm text-black font-qbold ml-10 mb-3">
+      <YStack className="items-center justify-center">
+        <Text className="text-sm text-black font-qbold ml-7 mb-3 w-[90%]">
           Seleccioná tu
           <Text className="text-sm text-primary font-qbold ml-10 mb-3">
             {" "}
             auto
           </Text>
         </Text>
-        <View className="w-full items-start ml-7">
+
+        <View
+          className="w-full items-center"
+          style={{
+            display: `${data.cars.length > 0 ? "" : "none"}`,
+          }}
+        >
           <Controller
             control={control}
             name="car"
@@ -183,6 +195,28 @@ export default function PostTripPage2() {
             <Text className="text-red-500">{errors.car.message}</Text>
           )}
         </View>
+
+        {data.cars.length > 0 ? (
+          <></>
+        ) : (
+          <View className="w-full items-center">
+            <AddCarModal
+              isVisible={isAddCarModalVisible}
+              onClose={toggleAddCarModal}
+            />
+            <Text className="text-sm text-red-500 font-qbold  mb-3">
+              No tenés autos registrados
+            </Text>
+            <Button
+              className="w-[50%] h-[42] rounded-2xl items-center pb-0.5"
+              onPress={toggleAddCarModal}
+            >
+              <Text className="text-lg font-qsemibold text-white">
+                Agregá un auto
+              </Text>
+            </Button>
+          </View>
+        )}
 
         <XStack className="mx-11 mb-5 mt-12">
           <Text className="text-sm font-qbold text-black">

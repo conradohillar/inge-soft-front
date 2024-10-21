@@ -1,6 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../components/Header";
 import { FlatList, View, Text, ScrollView, Image } from "react-native";
+import React, { useState } from "react";
 import CarCard from "../../components/CarCard";
 import { Button, XStack } from "tamagui";
 import { Link } from "expo-router";
@@ -9,8 +10,14 @@ import { useQuery } from "@tanstack/react-query";
 import LoadingPage from "../(pages)/LoadingPage";
 import ErrorPage from "./ErrorPage";
 import { getMyCars } from "../../services/users";
+import AddCarModal from "../../components/AddCarModal";
 
 export default function MyCarsPage() {
+  const [isAddCarModalVisible, setIsAddCarModalVisible] = useState(false);
+  const toggleAddCarModal = () => {
+    setIsAddCarModalVisible(!isAddCarModalVisible);
+  };
+
   const { isLoading, isError, data } = useQuery({
     queryKey: ["getCars"],
     queryFn: getMyCars,
@@ -52,18 +59,19 @@ export default function MyCarsPage() {
         />
       )}
       <XStack className="items-center justify-center my-10">
-        <Text className="text-lg text-gray-600 font-qsemibold">
-          Agregá un auto nuevo
-        </Text>
-        <Link href="/(pages)/AddCarPage" asChild>
-          <Button className="h-8 w-8 bg-background rounded-xl ml-3 mt-1">
-            <Image
-              source={icons.add}
-              className="h-6 w-6"
-              resizeMode="contain"
-            />
-          </Button>
-        </Link>
+        <AddCarModal
+          isVisible={isAddCarModalVisible}
+          onClose={toggleAddCarModal}
+        />
+        <Button
+          className="h-8 bg-background rounded-xl ml-3 mt-1"
+          onPress={toggleAddCarModal}
+        >
+          <Image source={icons.add} className="h-6 w-6" resizeMode="contain" />
+          <Text className="text-lg text-gray-600 font-qsemibold">
+            Agregá un auto nuevo
+          </Text>
+        </Button>
       </XStack>
     </View>
   );
