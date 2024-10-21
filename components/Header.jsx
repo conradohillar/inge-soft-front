@@ -47,12 +47,12 @@ export default function Header() {
     return (
         <XStack className="min-h-[8%] w-full items-center justify-between px-4 bg-background" style={{ borderBottomWidth: 2, borderBottomColor: '#ccc' }}>
             <View className="relative">
-                {/* Botón de notificación */}
+
                 <TouchableOpacity onPress={toggleModal} asChild>
                     <Button className="w-10 h-10 rounded-2xl bg-background">
                         <Image source={icons.notification} className="h-8 w-8" resizeMode="contain" />
                     </Button>
-                    {/* Mostrar el contador si hay notificaciones no leídas */}
+
                     {notifications.length > 0 && (
                         <View className="absolute top-0 right-0 bg-red-500 rounded-full h-4 w-4 flex items-center justify-center">
                             <Text className="text-white text-xs">{notifications.length}</Text>
@@ -60,12 +60,12 @@ export default function Header() {
                     )}
                 </TouchableOpacity>
             </View>
-            {/* Título de la app */}
+
             <Link href="/(tabs)/home" asChild>
                 <Text className="text-5xl font-qbold text-primary mt-2">rydio</Text>
             </Link>
 
-            {/* Modal para mostrar las notificaciones */}
+
             <Modal
                 animationType="slide"
                 transparent={true}

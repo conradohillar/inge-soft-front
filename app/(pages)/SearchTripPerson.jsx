@@ -55,8 +55,7 @@ export default function TripDetailsPage() {
   };
 
   return (
-    <SafeAreaView className="h-full w-full bg-background">
-      <Header />
+    <View className="bg-background w-full h-full">
       <YStack className="flex-1 items-center justify-evenly">
         <View className="items-center my-3">
           <Text className="text-2xl font-qbold text-black">
@@ -156,6 +155,6 @@ export default function TripDetailsPage() {
           </View>
         </XStack>
       </YStack>
-    </SafeAreaView>
+    </View>
   );
 }

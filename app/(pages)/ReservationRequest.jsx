@@ -19,22 +19,6 @@ export default function ReservationRequest() {
     queryFn: () => getReservationData(ride_id),
   });
 
-  // const router = useRouter()
-
-  // const handleDetail = (ride_id) => {
-
-  //     try {
-
-  //         router.push({
-  //           pathname: "/(pages)/TripSearchDetail",
-  //           params: { ride_id, people, smallPacks, mediumPacks, largePacks }
-  //         });
-  //       } catch (error) {
-  //         console.error("Error: ", error);
-  //       }
-
-  // }
-
   const renderItem = ({ item }) => {
     return (
       <RequestCard
@@ -90,22 +74,16 @@ export default function ReservationRequest() {
 
   if (data.length === 0) {
     return (
-      <SafeAreaView className="w-full h-full bg-background">
-        <Header />
-        <XStack className="items-center justify-center mt-10 mb-7">
-          <Text className="text-[22px] font-qbold text-secondary">
-            No hay solicitudes{" "}
-          </Text>
-          <Text className="text-[22px] font-qbold text-black">
-            para tu viaje
-          </Text>
-        </XStack>
-      </SafeAreaView>
+      <XStack className="items-center justify-center mt-10 mb-7 bg-background">
+        <Text className="text-[22px] font-qbold text-secondary">
+          No hay solicitudes{" "}
+        </Text>
+        <Text className="text-[22px] font-qbold text-black">para tu viaje</Text>
+      </XStack>
     );
   }
   return (
-    <SafeAreaView className="w-full h-full bg-background">
-      <Header />
+    <View className="bg-background h-full w-full">
       <YStack className="h-[90px] justify-center mb-6">
         <Link
           href={{
@@ -143,6 +121,6 @@ export default function ReservationRequest() {
           }}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
