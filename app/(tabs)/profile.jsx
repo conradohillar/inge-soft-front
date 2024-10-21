@@ -27,7 +27,6 @@ import { useGlobalState } from "../_layout";
 export default function Profile() {
   const { globalState, setGlobalState } = useGlobalState();
 
-  console.log("Global state: ", globalState);
 
   const [isProfilePictureModalVisible, setProfilePictureModalVisible] =
     useState(false);
@@ -297,16 +296,12 @@ export default function Profile() {
               TEST AddCarModal
             </Text>
           </TouchableOpacity>
-          <AddCarModal
+          <RateCommentModal
             isVisible={isRateCommentModalVisible}
-            onClose={() => {
-              toggleRateCommentModal();
-            }}
-            // commentPlaceholder={"Dejá un comentario"}
-            // onSave={(rating, comment) => {
-            //   console.log("Rating: ", rating, "Comentario: ", comment);
-            // }}
-            // title={"Califica tu viaje"}
+            setIsVisible={setRateCommentModalVisible}
+            category="driver"
+            receiverId={"da85e14c-c740-40b8-9351-f62a85957d44"}
+            rideId={"81619099-1829-4cbb-9786-0b5375561373"}
           />
         </View>
       </YStack>

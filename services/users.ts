@@ -65,3 +65,10 @@ export const getProfileInfo = async (id, category) => {
     const url = `${BASE_URL}/profile/${category}/${id}`;
     return handleRequest(() => axios.get(url));
 }
+
+export const addComment = async (receiverId, rideId, category, rating,comment) => {
+    const url = `${BASE_URL}/comment/${category}/${receiverId}?ride_id=${rideId}&comment=${comment}&rating=${rating}`;
+    const headers = await getHeaders();
+
+    return handleRequest(() => axios.post(url, null,{ headers }));
+}
