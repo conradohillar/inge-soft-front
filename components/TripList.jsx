@@ -1,26 +1,18 @@
 import { FlatList, SafeAreaView, Text, View, Image } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import TripCard from "./TripCard";
-import LoadingPage from "../app/(pages)/LoadingPage";
-import ErrorPage from "../app/(pages)/ErrorPage";
 import TripCardForDriver from "./TripCardForDriver";
-import { Button, XStack, YStack } from "tamagui";
+import { Button, Spinner, XStack, YStack } from "tamagui";
 import { Link, useRouter } from "expo-router";
 import icons from "../constants/icons";
 import { getUserOrDriverRides } from "../services/rides";
 import BlackButton from "./BlackButton";
-import { useEffect } from "react";
 
-export default function TripList({ type, category, setError, setIsLoading }) {
-  const { isLoading, error, data } = useQuery({
+export default function TripList({ type, category }) {
+  const { isLoading, isError, data } = useQuery({
     queryKey: ["get", type, category],
     queryFn: () => getUserOrDriverRides(type, category),
   });
-
-  useEffect(() => {
-    setIsLoading(isLoading);
-    if (error) setError(error);
-  }, [isLoading, error]);
 
   const renderTripCard = ({ item }) => {
     const rounded = item.price.toFixed(2);
@@ -83,6 +75,24 @@ export default function TripList({ type, category, setError, setIsLoading }) {
       });
     }
   };
+
+  if (isLoading)
+    return (
+      <YStack className="h-[65%] items-center justify-end">
+        <Text className="text-4xl text-red-600 font-qbold"></Text>
+        <Spinner size={55} color="$green10" />
+      </YStack>
+    );
+
+  if (isError)
+    return (
+      <YStack className="h-[65%] items-center justify-end">
+        <Text className="text-4xl text-red-600 font-qbold">
+          Ups... Hubo un error
+        </Text>
+        <Spinner size={55} color="red" />
+      </YStack>
+    );
 
   if (data === undefined || data === null) return null;
 
