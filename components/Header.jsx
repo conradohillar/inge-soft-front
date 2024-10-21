@@ -16,7 +16,7 @@ import {
   deleteIndieNotificationInbox,
 } from "native-notify";
 import { useGlobalState } from "../app/_layout";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+import * as Notifications from "expo-notifications";
 
 export default function Header() {
   const { globalState } = useGlobalState();
@@ -35,13 +35,13 @@ export default function Header() {
   useEffect(() => {
     getNots();
 
-    // document.addEventListener('onNotificationReceived', (e) => {
-    //     getNots();
-    // });
+    const subscription = Notifications.addNotificationReceivedListener(() => {
+      getNots();
+    });
 
-    // return () => {
-    //     document.removeEventListener('onNotificationReceived', handleNotificationReceived);
-    // };
+    return () => {
+      subscription.remove();
+    };
   }, []);
 
   const handleDeleteNotification = async (notificationId) => {
@@ -128,7 +128,7 @@ export default function Header() {
                     onPress={() => {
                       handleDeleteNotification(item.notification_id);
                     }}
-                    style={{ marginTop: 10, backgroundColor: "#ff5547" }}
+                    style={{ marginTop: 10 }}
                   >
                     Eliminar
                   </Button>
