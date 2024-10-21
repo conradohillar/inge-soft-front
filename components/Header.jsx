@@ -22,15 +22,16 @@ export default function Header() {
   const [notifications, setNotifications] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
+  const getNots = async () => {
+    let not = await getIndieNotificationInbox(
+      globalState.userId,
+      24233,
+      "SX3XOZEi4N2YNO4U2RkCfD"
+    );
+    setNotifications(not);
+  };
+
   useEffect(() => {
-    const getNots = async () => {
-      let not = await getIndieNotificationInbox(
-        globalState.userId,
-        24233,
-        "SX3XOZEi4N2YNO4U2RkCfD"
-      );
-      setNotifications(not);
-    };
     getNots();
   }, []);
 
