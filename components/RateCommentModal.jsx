@@ -4,66 +4,105 @@ import { View, Keyboard, TouchableOpacity, Text } from "react-native";
 
 import CustomInput from "./CustomInput";
 import { useState } from "react";
-import { set } from "date-fns";
+import { add, set } from "date-fns";
 import ModalTemplate from "./ModalTemplate";
+import { comment } from "postcss";
+import { commentSchema } from "../validation/usersSchemas";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useMutation } from "@tanstack/react-query";
+import { addComment } from "../services/users";
 
-const RateCommentModal = ({
-  isVisible,
-  onClose,
-  title,
-  onSave,
-  commentPlaceholder,
-  initialRating = 0,
-  commentTitle,
-}) => {
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
+const RateCommentModal = ({ isVisible, setIsVisible, category, receiverId, rideId }) => {
 
-  const handleRatingChange = (newRating) => {
-    setRating(newRating);
-  };
 
-  const handleCommentChange = (newComment) => {
-    setComment(newComment);
-  };
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(commentSchema),
+    defaultValues: {
+      rating: 0,
+      comment: "",
+    },
+  });
 
-  const handleSaveAndExit = () => {
-    onSave(rating, comment);
-    Keyboard.dismiss();
-    onClose();
-  };
+  const mutation = useMutation({
+    mutationFn: (formData) => addComment(receiverId, rideId, category, formData.rating, formData.comment),
+    onSuccess: async () => {
+      closeModal();
+    },
+  });
+
+  const handleContinue = async (formData) => {
+    mutation.mutate(formData);
+  }
+
+  const closeModal = () => {
+    setIsVisible(false);
+  }
+
 
   return (
-    <ModalTemplate isVisible={isVisible} onBackdropPress={onClose}>
+    <ModalTemplate isVisible={isVisible} onBackdropPress={closeModal}>
       <View className="justify-center items-center flex-1">
         <YStack className="bg-white py-5 rounded-xl items-center w-[100%] justify-center">
-          <Text className="text-2xl font-bold color-primary pb-4">{title}</Text>
-          <Rating
-            className="w-[80%] p-5"
-            type="star"
-            ratingCount={5}
-            imageSize={35}
-            onFinishRating={handleRatingChange}
-            startingValue={initialRating}
+          <Text className="text-2xl font-bold color-primary pb-4">Opina sobre tu {category == 'driver' ? 'conductor' : 'pasajero'}</Text>
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, value } }) => (
+              <Rating
+                className="w-[80%] p-5"
+                type="star"
+                ratingCount={5}
+                imageSize={35}
+                onFinishRating={onChange}
+                startingValue={0}
+              />
+            )}
+            name="rating"
           />
+          {errors.rating && (
+            <Text className="text-red-500 text-base font-qsemibold">
+              {errors.rating.message}
+            </Text>
+          )}
+
           <View className="w-full items-center justify-center">
-            <CustomInput
-              multiline="true"
-              placeholder={commentPlaceholder}
-              handleChangeText={handleCommentChange}
-              value={comment}
-              title={commentTitle}
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, value } }) => (
+                <CustomInput
+                  placeholder={"Deja un comentario"}
+                  handleChangeText={onChange}
+                  value={value}
+                  title={"Comentario"}
+                />
+              )}
+              name="comment"
             />
+            {errors.comment && (
+              <Text className="text-red-500 text-base font-qsemibold">
+                {errors.comment.message}
+              </Text>
+            )}
           </View>
           <Button
             className="w-[50%] h-[42] rounded-2xl items-center pb-0.5 mt-5"
-            onPress={handleSaveAndExit}
+            onPress={handleSubmit(handleContinue)}
           >
             <Text className="text-lg font-qsemibold text-white">Enviar</Text>
           </Button>
           <TouchableOpacity
             className={"w-[40%] items-center justify-center pt-4"}
-            onPress={onClose}
+            onPress={closeModal}
           >
             <Text className="font-qsemibold text-red-600 underline">
               Cancelar

@@ -57,7 +57,7 @@ export default function UserProfile() {
           Calificación
         </Text>
         <YStack className="self-center items-center space-y-2">
-          <RatingStars rating={data.rating} />
+          <RatingStars rating={data.avg_rating} />
           <Text className="text-gray-500 text-sm font-qsemibold">
             de {data.comments.length} opiniones
           </Text>
