@@ -2,20 +2,11 @@ import { Text, View, Pressable } from "react-native";
 import { H5, Separator, SizableText, Tabs } from "tamagui";
 import { useState } from "react";
 import TripList from "./TripList";
-import LoadingPage from "../app/(pages)/LoadingPage";
-import ErrorPage from "../app/(pages)/ErrorPage";
 
 export default function HorizontalTabs({ category }) {
   const [selectedTab, setSelectedTab] = useState("tab1");
 
   const tab1Title = category === "driver" ? "Publicados" : "Reservados";
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  if (isLoading) return <LoadingPage />;
-
-  if (error) return <ErrorPage />;
 
   return (
     <View className="h-full w-full">
@@ -60,21 +51,11 @@ export default function HorizontalTabs({ category }) {
         </Tabs.List>
         <Separator />
         <Tabs.Content value="tab1">
-          <TripList
-            type="upcoming"
-            category={category}
-            setError={setError}
-            setIsLoading={setIsLoading}
-          />
+          <TripList type="upcoming" category={category} />
         </Tabs.Content>
 
         <Tabs.Content value="tab2">
-          <TripList
-            type="history"
-            category={category}
-            setError={setError}
-            setIsLoading={setIsLoading}
-          />
+          <TripList type="history" category={category} />
         </Tabs.Content>
       </Tabs>
     </View>
