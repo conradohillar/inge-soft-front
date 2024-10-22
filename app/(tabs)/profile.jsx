@@ -27,7 +27,6 @@ import { useGlobalState } from "../_layout";
 export default function Profile() {
   const { globalState, setGlobalState } = useGlobalState();
 
-
   const [isProfilePictureModalVisible, setProfilePictureModalVisible] =
     useState(false);
   const [isEditNameModalVisible, setEditNameModalVisible] = useState(false);

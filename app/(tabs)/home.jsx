@@ -7,9 +7,17 @@ import { getUserOrDriverRides } from "../../services/rides";
 import { useQuery } from "@tanstack/react-query";
 import LoadingPage from "../(pages)/LoadingPage";
 import ErrorPage from "../(pages)/ErrorPage";
+import { useState } from "react";
+import TripEndedModal from "../../components/TripEndedModal";
 
 export default function Home() {
   const { globalState, setGlobalState } = useGlobalState();
+
+  const [isTripEndedModalVisible, setTripEndedModalVisible] = useState(false);
+
+  const toggleTripEndedModal = () => {
+    setTripEndedModalVisible(!isTripEndedModalVisible);
+  };
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["ridesUpcoming"],
@@ -34,7 +42,7 @@ export default function Home() {
   };
 
   const handleEndTrip = () => {
-    console.log("End trip");
+    toggleTripEndedModal();
   };
 
   const renderActiveTripCard = ({ item }) => {
@@ -111,6 +119,10 @@ export default function Home() {
           </BlackButton>
         </View>
       </XStack>
+      <TripEndedModal
+        isVisible={isTripEndedModalVisible}
+        setIsVisible={setTripEndedModalVisible}
+      />
     </YStack>
   );
 }

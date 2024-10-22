@@ -3,7 +3,6 @@ import { Text, Image, View } from "react-native";
 import icons from "../constants/icons";
 import VarButton from "./VarButton";
 import { useState } from "react";
-import { X } from "@tamagui/lucide-icons";
 
 const ActiveTripCard = ({
   from,
@@ -16,16 +15,19 @@ const ActiveTripCard = ({
 }) => {
   const [startOpacity, setStartOpacity] = useState(1);
   const [endOpacity, setEndOpacity] = useState(0.5);
+  const [isActive, setIsActive] = useState(false);
 
   handleStart = () => {
     setEndOpacity(1);
     setStartOpacity(0.5);
+    setIsActive(true);
     handleStartTrip();
   };
 
   handleEnd = () => {
     setEndOpacity(0.5);
     setStartOpacity(1);
+    setIsActive(false);
     handleEndTrip();
   };
 
@@ -96,6 +98,13 @@ const ActiveTripCard = ({
           </VarButton>
         </View>
       </XStack>
+      {isActive && (
+        <XStack className="w-[98%] items-center justify-center mt-2">
+          <Text className="text-base font-qsemibold text-gray-500">
+            Viaje en curso . . .
+          </Text>
+        </XStack>
+      )}
     </YStack>
   );
 };

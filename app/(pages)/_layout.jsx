@@ -4,9 +4,9 @@ import {
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
-  SafeAreaView,
   StatusBar,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const PagesLayout = () => {
   return (
