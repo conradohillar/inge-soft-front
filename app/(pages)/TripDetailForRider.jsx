@@ -10,11 +10,14 @@ import { Link } from "expo-router";
 import ErrorPage from "./ErrorPage";
 import icons from "../../constants/icons";
 import { useLocalSearchParams } from "expo-router";
+import ButtonNext from "../../components/ButtonNext";
+import RateCommentModal from "../../components/RateCommentModal";
 
 export default function TripDetailForRider() {
   const { ride_id } = useLocalSearchParams();
 
   const [pressed, setPressed] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["riderDetail", ride_id],
@@ -30,8 +33,8 @@ export default function TripDetailForRider() {
   }
 
   return (
-    <YStack className="h-full items-start justify-start bg-background mb-12 w-full flex-1">
-      <View className="w-full h-[10%] items-center justify-center flex-1">
+    <YStack className="h-full items-start justify-start bg-background mb-12 w-full">
+      <View className="w-full h-[10%] items-center justify-center">
         <XStack className="w-full items-start justify-center ml-12 mt-3">
           <Link
             href={{
@@ -57,11 +60,7 @@ export default function TripDetailForRider() {
         </XStack>
       </View>
       {data.state && <StatusMsg state={data.state} />}
-      <ScrollView
-        className="h-full w-full flex-1"
-        scrollEnabled="true"
-        nestedScrollEnabled="true"
-      >
+      <ScrollView className="h-full w-full">
         <Pressable>
           <YStack className="items-start justify-between w-full px-4 pb-8 pt-2 mb-1 border-2 border-[#eee]">
             <Text className="text-sm font-qbold text-[#ccc] mb-5">
@@ -213,8 +212,29 @@ export default function TripDetailForRider() {
               </Link>
             </View>
           </YStack>
+          <YStack className="items-start justify-between w-full px-4 pb-8 pt-3 border-t-2 border-t-[#eee]">
+            <Text className="text-sm font-qbold text-[#ccc] mb-2">
+              Calificá tu experiencia
+            </Text>
+            <ButtonNext
+              onPress={() => setIsModalVisible(true)}
+              variant={"secondary"}
+            >
+              <Text className="text-2xl font-qsemibold text-white">
+                Calificar
+              </Text>
+            </ButtonNext>
+          </YStack>
         </Pressable>
       </ScrollView>
+      <RateCommentModal
+        isVisible={isModalVisible}
+        onBackdropPress={() => setIsModalVisible(false)}
+        category={"driver"}
+        rideId={ride_id}
+        receiverId={data.driver_id}
+        setIsVisible={setIsModalVisible}
+      />
     </YStack>
   );
 }

@@ -1,5 +1,5 @@
 import { Rating } from "react-native-ratings";
-import { Button, YStack } from "tamagui";
+import { Button, YStack, Spinner } from "tamagui";
 import { View, Keyboard, TouchableOpacity, Text } from "react-native";
 
 import CustomInput from "./CustomInput";
@@ -31,7 +31,7 @@ const RateCommentModal = ({ isVisible, setIsVisible, category, receiverId, rideI
   const mutation = useMutation({
     mutationFn: (formData) => addComment(receiverId, rideId, category, formData.rating, formData.comment),
     onSuccess: async () => {
-      closeModal();
+      setIsVisible(false);
     },
   });
 
@@ -98,7 +98,7 @@ const RateCommentModal = ({ isVisible, setIsVisible, category, receiverId, rideI
             className="w-[50%] h-[42] rounded-2xl items-center pb-0.5 mt-5"
             onPress={handleSubmit(handleContinue)}
           >
-            <Text className="text-lg font-qsemibold text-white">Enviar</Text>
+            {(mutation.isPending && <Spinner size={40} color="$green10" className="mb-2 mr-2" />) || <Text className="text-lg font-qsemibold text-white">Enviar</Text>}
           </Button>
           <TouchableOpacity
             className={"w-[40%] items-center justify-center pt-4"}
