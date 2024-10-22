@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, Pressable, Image } from "react-native";
 import { useState } from "react";
-import { XStack, YStack, Avatar, Button } from "tamagui";
+import { XStack, YStack, Avatar, Button, Spinner } from "tamagui";
 import Header from "../../components/Header";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
@@ -209,7 +209,7 @@ export default function TripDetailForRider() {
           <Text className="text-sm font-qbold text-[#ccc] mb-2">
             Calificá tu experiencia
           </Text>
-          <ButtonNext onPress={setIsModalVisible(true)} variant={"secondary"}>
+          <ButtonNext onPress={() => setIsModalVisible(true)} variant={"secondary"}>
             <Text className="text-2xl font-qsemibold text-white">
               Calificar
             </Text>
@@ -222,6 +222,7 @@ export default function TripDetailForRider() {
         category={"driver"}
         rideId={ride_id}
         receiverId={data.driver_id}
+        setIsVisible={setIsModalVisible}
       />
     </YStack>
   );
@@ -232,8 +233,8 @@ const StatusMsg = ({ state }) => {
     state === "pending"
       ? "todavía no aceptó"
       : state === "accepted"
-      ? "ya aceptó"
-      : "rechazó";
+        ? "ya aceptó"
+        : "rechazó";
 
   return (
     <View className="w-full items-center">
@@ -247,8 +248,8 @@ const StatusMsg = ({ state }) => {
               state === "pending"
                 ? "#ff6633"
                 : state === "accepted"
-                ? "#008000"
-                : "#FF0000",
+                  ? "#008000"
+                  : "#FF0000",
           }}
         />
         <Text className="text-sm font-qbold text-gray-600">
