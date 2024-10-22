@@ -30,8 +30,8 @@ export default function TripDetailForRider() {
   }
 
   return (
-    <YStack className="h-full items-start justify-start bg-background mb-12 w-full">
-      <View className="w-full h-[10%] items-center justify-center">
+    <YStack className="h-full items-start justify-start bg-background mb-12 w-full flex-1">
+      <View className="w-full h-[10%] items-center justify-center flex-1">
         <XStack className="w-full items-start justify-center ml-12 mt-3">
           <Link
             href={{
@@ -57,151 +57,163 @@ export default function TripDetailForRider() {
         </XStack>
       </View>
       {data.state && <StatusMsg state={data.state} />}
-      <ScrollView className="h-full w-full">
-        <YStack className="items-start justify-between w-full px-4 pb-8 pt-2 mb-1 border-2 border-[#eee]">
-          <Text className="text-sm font-qbold text-[#ccc] mb-5">
-            Logísticos
-          </Text>
-          <Text className="text-base font-qsemibold text-gray-500">
-            Punto de
-            <Text className="text-base font-qbold text-primary"> partida:</Text>
-          </Text>
-          <Text className="text-base font-qbold text-black mb-5">
-            {data.city_from}
-          </Text>
-          <Text className="text-base font-qsemibold text-gray-500">
-            Punto de
-            <Text className="text-base font-qbold text-primary"> llegada:</Text>
-          </Text>
-          <Text className="text-base font-qbold text-black mb-5">
-            {data.city_to}
-          </Text>
-          <Text className="text-base font-qbold text-primary mb-3">
-            Fecha:
-            <Text className="text-base font-qbold text-black">
-              {" "}
-              {data.date}
+      <ScrollView
+        className="h-full w-full flex-1"
+        scrollEnabled="true"
+        nestedScrollEnabled="true"
+      >
+        <Pressable>
+          <YStack className="items-start justify-between w-full px-4 pb-8 pt-2 mb-1 border-2 border-[#eee]">
+            <Text className="text-sm font-qbold text-[#ccc] mb-5">
+              Logísticos
             </Text>
-          </Text>
-          <Text className="text-base font-qsemibold text-gray-500 mb-6">
-            Hora de
-            <Text className="text-base font-qbold text-primary">
-              {" "}
-              salida:
+            <Text className="text-base font-qsemibold text-gray-500">
+              Punto de
+              <Text className="text-base font-qbold text-primary">
+                {" "}
+                partida:
+              </Text>
+            </Text>
+            <Text className="text-base font-qbold text-black mb-5">
+              {data.city_from}
+            </Text>
+            <Text className="text-base font-qsemibold text-gray-500">
+              Punto de
+              <Text className="text-base font-qbold text-primary">
+                {" "}
+                llegada:
+              </Text>
+            </Text>
+            <Text className="text-base font-qbold text-black mb-5">
+              {data.city_to}
+            </Text>
+            <Text className="text-base font-qbold text-primary mb-3">
+              Fecha:
               <Text className="text-base font-qbold text-black">
                 {" "}
-                {data.start_minimum_time
-                  .split(":")
-                  .slice(0, 2)
-                  .join(":")} -{" "}
-                {data.start_maximum_time.split(":").slice(0, 2).join(":")}
+                {data.date}
               </Text>
             </Text>
-          </Text>
-          <Text className=" w-full pt-5 text-base font-qsemibold text-gray-500 mb-1 border-t-2 border-t-[#eee]">
-            Espacios
-            <Text className="text-base font-qbold text-primary">
-              {" "}
-              reservados:
-            </Text>
-          </Text>
-          <Text className="text-base font-qbold text-black mb-1">
-            Personas:
-            <Text className="text-base font-qbold text-black">
-              {" "}
-              {data.space_persons}
-            </Text>
-          </Text>
-          <Text className="text-base font-qbold text-black mb-1">
-            Paquetes
-            <Text className="text-base font-qbold text-primary">
-              {" "}
-              chicos:
-              <Text className="text-base font-qbold text-black">
+            <Text className="text-base font-qsemibold text-gray-500 mb-6">
+              Hora de
+              <Text className="text-base font-qbold text-primary">
                 {" "}
-                {data.space_small_package}
-              </Text>
-            </Text>
-          </Text>
-          <Text className="text-base font-qbold text-black mb-1">
-            Paquetes
-            <Text className="text-base font-qbold text-primary">
-              {" "}
-              medianos:
-              <Text className="text-base font-qbold text-black">
-                {" "}
-                {data.space_medium_package}
-              </Text>
-            </Text>
-          </Text>
-          <Text className="text-base font-qbold text-black">
-            Paquetes
-            <Text className="text-base font-qbold text-primary">
-              {" "}
-              grandes:
-              <Text className="text-base font-qbold text-black">
-                {" "}
-                {data.space_large_package}
-              </Text>
-            </Text>
-          </Text>
-          <View className="w-full items-start border-t-2 border-t-[#eee] mt-6 pt-4">
-            <Text className="text-xl font-qbold text-red-700 mb-3">
-              Costo: ${data.price.toFixed(2)}
-            </Text>
-          </View>
-        </YStack>
-        <YStack className="items-start justify-between w-full px-4 pb-6 pt-3 mb-12 border-2 border-[#eee]">
-          <Text className="text-sm font-qbold text-[#ccc] mb-5">
-            Sobre el conductor
-          </Text>
-          <XStack className="items-center justify-start w-full mb-5">
-            <Avatar circular size="$10" borderColor="$black" borderWidth={1}>
-              <Avatar.Image
-                src={
-                  data.driver_photo === ""
-                    ? icons.placeholder_profile
-                    : data.driver_photo
-                }
-              />
-              <Avatar.Fallback backgroundColor="$gray8" />
-            </Avatar>
-            <YStack className="items-start justify-start">
-              <Text className="text-xl font-qbold text-black ml-3 mb-1">
-                {data.driver_name}
-              </Text>
-              <Text className="text-sm font-qbold text-gray-500 ml-3">
-                Vehículo: {data.car_model}, {data.car_plate}
-              </Text>
-            </YStack>
-          </XStack>
-          <View className="w-full items-center mb-4">
-            <Link
-              href={{
-                pathname: "/(pages)/UserProfile",
-                params: { user_id: data.driver_id, category: "driver" },
-              }}
-              asChild
-            >
-              <Pressable
-                onPressIn={() => setPressed(true)}
-                onPressOut={() => setPressed(false)}
-                style={{
-                  backgroundColor: "#59A58A",
-                  opacity: pressed ? 0.7 : 1,
-                  alignItems: "center",
-                  paddingVertical: 8,
-                  borderRadius: 8,
-                  width: "60%",
-                }}
-              >
-                <Text className="text-sm font-qsemibold text-white">
-                  Ver perfil del conductor
+                salida:
+                <Text className="text-base font-qbold text-black">
+                  {" "}
+                  {data.start_minimum_time
+                    .split(":")
+                    .slice(0, 2)
+                    .join(":")} -{" "}
+                  {data.start_maximum_time.split(":").slice(0, 2).join(":")}
                 </Text>
-              </Pressable>
-            </Link>
-          </View>
-        </YStack>
+              </Text>
+            </Text>
+            <Text className=" w-full pt-5 text-base font-qsemibold text-gray-500 mb-1 border-t-2 border-t-[#eee]">
+              Espacios
+              <Text className="text-base font-qbold text-primary">
+                {" "}
+                reservados:
+              </Text>
+            </Text>
+            <Text className="text-base font-qbold text-black mb-1">
+              Personas:
+              <Text className="text-base font-qbold text-black">
+                {" "}
+                {data.space_persons}
+              </Text>
+            </Text>
+            <Text className="text-base font-qbold text-black mb-1">
+              Paquetes
+              <Text className="text-base font-qbold text-primary">
+                {" "}
+                chicos:
+                <Text className="text-base font-qbold text-black">
+                  {" "}
+                  {data.space_small_package}
+                </Text>
+              </Text>
+            </Text>
+            <Text className="text-base font-qbold text-black mb-1">
+              Paquetes
+              <Text className="text-base font-qbold text-primary">
+                {" "}
+                medianos:
+                <Text className="text-base font-qbold text-black">
+                  {" "}
+                  {data.space_medium_package}
+                </Text>
+              </Text>
+            </Text>
+            <Text className="text-base font-qbold text-black">
+              Paquetes
+              <Text className="text-base font-qbold text-primary">
+                {" "}
+                grandes:
+                <Text className="text-base font-qbold text-black">
+                  {" "}
+                  {data.space_large_package}
+                </Text>
+              </Text>
+            </Text>
+            <View className="w-full items-start border-t-2 border-t-[#eee] mt-6 pt-4">
+              <Text className="text-xl font-qbold text-red-700 mb-3">
+                Costo: ${data.price.toFixed(2)}
+              </Text>
+            </View>
+          </YStack>
+          <YStack className="items-start justify-between w-full px-4 pb-6 pt-3 mb-12 border-2 border-[#eee]">
+            <Text className="text-sm font-qbold text-[#ccc] mb-5">
+              Sobre el conductor
+            </Text>
+            <XStack className="items-center justify-start w-full mb-5">
+              <Avatar circular size="$10" borderColor="$black" borderWidth={1}>
+                <Avatar.Image
+                  src={
+                    data.driver_photo === ""
+                      ? icons.placeholder_profile
+                      : data.driver_photo
+                  }
+                />
+                <Avatar.Fallback backgroundColor="$gray8" />
+              </Avatar>
+              <YStack className="items-start justify-start">
+                <Text className="text-xl font-qbold text-black ml-3 mb-1">
+                  {data.driver_name}
+                </Text>
+                <Text className="text-sm font-qbold text-gray-500 ml-3">
+                  Vehículo: {data.car_model}, {data.car_plate}
+                </Text>
+              </YStack>
+            </XStack>
+            <View className="w-full items-center mb-4">
+              <Link
+                href={{
+                  pathname: "/(pages)/UserProfile",
+                  params: { user_id: data.driver_id, category: "driver" },
+                }}
+                asChild
+              >
+                <Pressable
+                  onPressIn={() => setPressed(true)}
+                  onPressOut={() => setPressed(false)}
+                  style={{
+                    backgroundColor: "#59A58A",
+                    opacity: pressed ? 0.7 : 1,
+                    alignItems: "center",
+                    paddingVertical: 8,
+                    borderRadius: 8,
+                    width: "60%",
+                  }}
+                >
+                  <Text className="text-sm font-qsemibold text-white">
+                    Ver perfil del conductor
+                  </Text>
+                </Pressable>
+              </Link>
+            </View>
+          </YStack>
+        </Pressable>
       </ScrollView>
     </YStack>
   );

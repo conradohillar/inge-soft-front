@@ -110,3 +110,10 @@ export const handleEndTripMut = async (id) => {
 
 //     return handleRequest(() => axios.put(url, data, { headers }));
 // }
+
+export const payRide = async (data) => {
+    const headers = await getHeaderWithToken();
+    const url = `http://${LOCAL_IP}:8000/payments/create?title=${data.title}&price=${data.price}&ride_id=${data.ride_id}`;
+
+    return handleRequest(() => axios.post(url, data, { headers }));
+}
