@@ -1,17 +1,21 @@
 import { View, Text, Image, ScrollView, FlatList } from "react-native";
-import { XStack, YStack } from "tamagui";
+import { Spinner, XStack, YStack } from "tamagui";
 import BlackButton from "../../components/BlackButton";
 import { useGlobalState } from "../_layout";
 import ActiveTripCard from "../../components/ActiveTripCard";
+import ActiveTripCardForRider from "../../components/ActiveTripCardForRider";
 import { getUserOrDriverRides } from "../../services/rides";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import LoadingPage from "../(pages)/LoadingPage";
 import ErrorPage from "../(pages)/ErrorPage";
 import { useState } from "react";
 import TripEndedModal from "../../components/TripEndedModal";
+import { handleStartTripMut, handleEndTripMut } from "../../services/rides";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Home() {
   const { globalState, setGlobalState } = useGlobalState();
+  const queryClient = useQueryClient();
 
   const [isTripEndedModalVisible, setTripEndedModalVisible] = useState(false);
 
@@ -22,6 +26,21 @@ export default function Home() {
   const { data, isError, isLoading } = useQuery({
     queryKey: ["ridesUpcoming"],
     queryFn: () => getUserOrDriverRides("upcoming", "driver"),
+  });
+
+  const start_mutation = useMutation({
+    mutationFn: (id) => handleStartTripMut(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["ridesUpcoming"] });
+    },
+  });
+
+  const end_mutation = useMutation({
+    mutationFn: (id) => handleEndTripMut(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["ridesUpcoming"] });
+      toggleTripEndedModal();
+    },
   });
 
   const noTripsProgrammed = () => {
@@ -37,12 +56,12 @@ export default function Home() {
     );
   };
 
-  const handleStartTrip = () => {
-    console.log("Start trip");
+  const handleStartTrip = (ride_id) => {
+    start_mutation.mutate(ride_id);
   };
 
-  const handleEndTrip = () => {
-    toggleTripEndedModal();
+  const handleEndTrip = (ride_id) => {
+    end_mutation.mutate(ride_id);
   };
 
   const renderActiveTripCard = ({ item }) => {
@@ -55,9 +74,10 @@ export default function Home() {
         to={sliced_to}
         passengers={item.persons}
         packages={item.packages}
-        departure={item.date}
-        handleStartTrip={handleStartTrip}
-        handleEndTrip={handleEndTrip}
+        departure={item.start_time.split(":").slice(0, 2).join(":")}
+        isActive={item.real_start_time !== null}
+        handleStartTrip={() => handleStartTrip(item.ride_id)}
+        handleEndTrip={() => handleEndTrip(item.ride_id)}
       />
     );
   };
@@ -84,17 +104,22 @@ export default function Home() {
           Viajes programados para hoy:
         </Text>
         <View className="flex-1 w-full items-center mb-10 bg-gray-100 rounded-2xl border-2 justify-center">
-          {(data.length === 0 && noTripsProgrammed()) || (
-            <FlatList
-              data={data}
-              keyExtractor={(item) => item.ride_id}
-              renderItem={renderActiveTripCard}
-              contentContainerStyle={{
-                alignItems: "center",
-                width: "99%",
-              }}
-            />
-          )}
+          {(data.length === 0 && noTripsProgrammed()) ||
+            ((start_mutation.isPending || end_mutation.isPending) && (
+              <Spinner size={40} color="$green10" className="mb-2 mr-2" />
+            )) || (
+              <>
+                <FlatList
+                  data={data}
+                  keyExtractor={(item) => item.ride_id}
+                  renderItem={renderActiveTripCard}
+                  contentContainerStyle={{
+                    alignItems: "center",
+                    width: "99%",
+                  }}
+                />
+              </>
+            )}
         </View>
       </YStack>
       <XStack className="items-start justify-evenly w-[100%] h-[18%] px-3">

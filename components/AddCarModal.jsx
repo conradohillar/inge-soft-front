@@ -59,15 +59,15 @@ const AddCarModal = ({ isVisible, onClose, onSave }) => {
       onBackdropPress={onClose}
       className="justify-center items-center h-full"
     >
-      <YStack className="justify-evenly bg-white rounded-xl h-[80%] w-full">
+      <YStack className="justify-evenly bg-white rounded-xl h-[90%] w-full">
         <ScrollView
           className="w-full h-full flex-1"
           centerContent="true"
           contentContainerStyle={{
-            paddingBottom: 40,
+            paddingBottom: 100,
           }}
         >
-          <YStack className="items-center justify-center h-[20%]">
+          <YStack className="items-center justify-center h-[28%]">
             <Text className="text-black text-4xl font-qbold">
               Cargá los datos
             </Text>
@@ -154,7 +154,7 @@ const AddCarModal = ({ isVisible, onClose, onSave }) => {
               </Text>
             )}
           </YStack>
-          <YStack className="items-center h-[20%] ">
+          <YStack className="items-center h-[20%] mt-4 ">
             <ButtonNext onPress={handleSubmit(handleContinue)}>
               {mutation.isPending ? (
                 <Spinner />

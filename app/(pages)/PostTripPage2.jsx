@@ -17,6 +17,7 @@ import icons from "../../constants/icons";
 import { getRideData, postTrip } from "../../services/rides";
 import { postTripDetailsSchema } from "../../validation/ridesSchemas";
 import AddCarModal from "../../components/AddCarModal";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function PostTripPage2() {
   const [isAddCarModalVisible, setIsAddCarModalVisible] = useState(false);
@@ -27,6 +28,7 @@ export default function PostTripPage2() {
   const { fromLocation, toLocation, formattedDate, departureTime } =
     useLocalSearchParams();
 
+  const queryClient = useQueryClient();
   const {
     control,
     handleSubmit,
@@ -93,6 +95,11 @@ export default function PostTripPage2() {
   const mutation = useMutation({
     mutationFn: ({ tripData, car }) => postTrip(tripData, car),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["ridesUpcoming"] });
+      queryClient.invalidateQueries({
+        queryKey: ["get", "upcoming", "driver"],
+      });
+
       const title = "Publicaste tu viaje";
       const section = "MIS VIAJES";
       const sectionSource = icons.car;

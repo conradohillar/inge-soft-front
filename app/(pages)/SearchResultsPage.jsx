@@ -85,7 +85,7 @@ export default function SearchResults() {
       <SafeAreaView className="w-full h-full bg-background">
         <Header />
         <XStack className="items-center justify-center mt-10 mb-7">
-          <Text className="text-[22px] font-qbold text-secondary">
+          <Text className="text-[22px] font-qbold text-primary">
             No hay resultados{" "}
           </Text>
           <Text className="text-[22px] font-qbold text-black">
@@ -98,9 +98,7 @@ export default function SearchResults() {
   return (
     <View className="w-full h-full bg-background">
       <XStack className="items-center justify-center mt-10 mb-7">
-        <Text className="text-[22px] font-qbold text-secondary">
-          Resultados{" "}
-        </Text>
+        <Text className="text-[22px] font-qbold text-primary">Resultados </Text>
         <Text className="text-[22px] font-qbold text-black">
           de tu búsqueda
         </Text>

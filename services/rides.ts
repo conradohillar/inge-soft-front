@@ -89,3 +89,24 @@ export const handleReservation = async (data) => {
 
     return handleRequest(() => axios.put(url, data, { headers }));
 }
+
+export const handleStartTripMut = async (id) => {
+    const headers = await getHeaderWithToken();
+    const url = `${BASE_URL}/start/${id}`;
+
+    return handleRequest(() => axios.post(url, null, { headers }));
+}
+
+export const handleEndTripMut = async (id) => {
+    const headers = await getHeaderWithToken();
+    const url = `${BASE_URL}/finish/${id}`;
+
+    return handleRequest(() => axios.post(url, null, { headers }));
+}
+
+// export const cancelReservation = async (data) => {
+//     const headers = await getHeaderWithToken();
+//     const url = `${BASE_URL}/requests/cancel`;
+
+//     return handleRequest(() => axios.put(url, data, { headers }));
+// }

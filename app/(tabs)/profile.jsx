@@ -285,24 +285,6 @@ export default function Profile() {
             )}
           </XStack>
         </View>
-        <View
-          className="w-full h-[20%] items-center justify-center"
-          borderTopColor="#ddd"
-          borderTopWidth={2}
-        >
-          <TouchableOpacity onPress={() => toggleRateCommentModal()}>
-            <Text className="text-xl text-black font-qbold">
-              TEST AddCarModal
-            </Text>
-          </TouchableOpacity>
-          <RateCommentModal
-            isVisible={isRateCommentModalVisible}
-            setIsVisible={setRateCommentModalVisible}
-            category="driver"
-            receiverId={"da85e14c-c740-40b8-9351-f62a85957d44"}
-            rideId={"81619099-1829-4cbb-9786-0b5375561373"}
-          />
-        </View>
       </YStack>
     </YStack>
   );

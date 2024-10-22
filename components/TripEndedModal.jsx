@@ -8,6 +8,19 @@ export default function TripEndedModal({ isVisible, setIsVisible }) {
     setIsVisible(false);
   };
 
+  const router = useRouter();
+
+  const handleToHistory = async (formData) => {
+    setIsVisible(false);
+
+    router.push({
+      pathname: "/(pages)/TripsPage",
+      params: {
+        category: "driver",
+      },
+    });
+  };
+
   return (
     <ModalTemplate
       isVisible={isVisible}
@@ -24,20 +37,16 @@ export default function TripEndedModal({ isVisible, setIsVisible }) {
           <Text className="text-lg font-semibold color-black">
             Ya podés encontrar el detalle
           </Text>
-          <Text className="text-lg font-semibold color-black">
-            del viaje en la sección{" "}
-            <Link
-              href={{
-                pathname: "/(pages)/TripsPage",
-                params: { category: "driver" },
-              }}
-              asChild
-            >
+          <XStack className="items-center">
+            <Text className="text-lg font-semibold color-black">
+              del viaje en la sección{" "}
+            </Text>
+            <TouchableOpacity onPress={handleToHistory}>
               <Text className="text-lg font-semibold color-black underline">
                 Historial
               </Text>
-            </Link>
-          </Text>
+            </TouchableOpacity>
+          </XStack>
         </YStack>
         <TouchableOpacity
           className={"w-[40%] items-center justify-center pt-4"}

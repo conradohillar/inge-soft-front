@@ -1,7 +1,6 @@
-import { XStack, YStack } from "tamagui";
+import { XStack, YStack, Button } from "tamagui";
 import { Text, Image, View } from "react-native";
 import icons from "../constants/icons";
-import VarButton from "./VarButton";
 import { useState } from "react";
 
 const ActiveTripCard = ({
@@ -10,10 +9,11 @@ const ActiveTripCard = ({
   passengers,
   packages,
   departure,
-  isActive,
-  handleStartTrip,
-  handleEndTrip,
+  handleCancel,
 }) => {
+  const [isPressed, setIsPressed] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+
   return (
     <YStack className="items-center justify-center bg-background border-2 border-[#ddd] rounded-2xl py-3 mb-1">
       <XStack className="w-[98%] items-center justify-between px-3">
@@ -56,30 +56,23 @@ const ActiveTripCard = ({
         </Text>
         <Text className="text-lg font-qbold text-gray-500"> {departure}</Text>
       </XStack>
-      <XStack className="w-[98%] items-center justify-evenly mr-3 ">
-        <View className="w-[50%]">
-          <VarButton
-            onPress={handleStartTrip}
-            variant={"secondary"}
-            opacity={isActive ? 0.5 : 1}
-            disabled={isActive}
-          >
-            <Text className="text-lg font-qsemibold text-white mb-1">
-              Comenzar
-            </Text>
-          </VarButton>
-        </View>
-        <View className="w-[50%]">
-          <VarButton
-            onPress={handleEndTrip}
-            opacity={isActive ? 1 : 0.5}
-            disabled={!isActive}
-          >
-            <Text className="text-lg font-qsemibold text-white mb-1">
-              Terminar
-            </Text>
-          </VarButton>
-        </View>
+      <XStack className=" w-full items-center">
+        <Button
+          title="Cancelar"
+          onPress={handleCancel}
+          onPressIn={() => setIsPressed(true)}
+          onPressOut={() => setIsPressed(false)}
+          style={{
+            backgroundColor: isPressed ? "#f55" : "#e00",
+            borderColor: "black",
+            borderWidth: 1,
+          }}
+          className="w-[50%] rounded-full items-center justify-center m-2"
+        >
+          <Text className="text-[20px] font-qsemibold text-white mb-1">
+            Cancelar
+          </Text>
+        </Button>
       </XStack>
       {isActive && (
         <XStack className="w-[98%] items-center justify-center mt-2">
@@ -90,7 +83,7 @@ const ActiveTripCard = ({
       )}
       <XStack className="self-end">
         <Text className="text-xs font-qsemibold italic text-gray-400 mr-5 mt-3">
-          Como conductor
+          Como pasajero
         </Text>
       </XStack>
     </YStack>
