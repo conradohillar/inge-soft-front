@@ -9,7 +9,7 @@ import { StatusBar } from "expo-status-bar";
 
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
-    <View className={"items-center justify-center gap-1 pt-2"}>
+    <View className={"items-center justify-center gap-1 w-10"}>
       <Image
         source={icon}
         resizeMode="contain"
@@ -19,6 +19,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
       <Text
         className={`${focused ? "font-qbold" : "font-qmedium"} text-xs`}
         style={{ color: color }}
+        numberOfLines={1}
       >
         {name}
       </Text>
@@ -28,77 +29,71 @@ const TabIcon = ({ icon, color, name, focused }) => {
 
 const TabsLayout = () => {
   return (
-    <>
-      <SafeAreaView className="flex-1 bg-background2">
-        <Header />
+    <SafeAreaView className="flex-1 bg-background2">
+      <Header />
 
-        <Tabs
-          screenOptions={{
-            tabBarShowLabel: false,
-            tabBarActiveTintColor: "#309090",
-            tabBarInactiveTintColor: "#999",
-            tabBarStyle: {
-              backgroundColor: "#f5f5f5",
-              borderTopWidth: 1,
-              borderTopColor: "#CDCDE0",
-              height: "7%",
-              display: "flex",
-              alignContent: "center",
-              justifyContent: "center",
-              paddingTop: 22,
-            },
+      <Tabs
+        screenOptions={{
+          tabBarShowLabel: false,
+          tabBarActiveTintColor: "#309090",
+          tabBarInactiveTintColor: "#999",
+          tabBarStyle: {
+            backgroundColor: "#fff",
+            borderTopColor: "#CDCDE0",
+            height: "75",
+            paddingBottom: 15,
+            paddingTop: 15,
+          },
+        }}
+      >
+        <Tabs.Screen
+          name="trips"
+          options={{
+            title: "trips",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon={icons.car}
+                color={color}
+                name="Viajes"
+                focused={focused}
+              />
+            ),
           }}
-        >
-          <Tabs.Screen
-            name="trips"
-            options={{
-              title: "trips",
-              headerShown: false,
-              tabBarIcon: ({ color, focused }) => (
-                <TabIcon
-                  icon={icons.car}
-                  color={color}
-                  name="Viajes"
-                  focused={focused}
-                />
-              ),
-            }}
-          />
-          <Tabs.Screen
-            name="home"
-            options={{
-              gestureEnabled: false,
-              title: "Home",
-              headerShown: false,
-              tabBarIcon: ({ color, focused }) => (
-                <TabIcon
-                  icon={icons.home}
-                  color={color}
-                  name="Inicio"
-                  focused={focused}
-                />
-              ),
-            }}
-          />
-          <Tabs.Screen
-            name="profile"
-            options={{
-              title: "Profile",
-              headerShown: false,
-              tabBarIcon: ({ color, focused }) => (
-                <TabIcon
-                  icon={icons.profile2}
-                  color={color}
-                  name="Perfil"
-                  focused={focused}
-                />
-              ),
-            }}
-          />
-        </Tabs>
-        <StatusBar style="dark" />
-      </SafeAreaView>
-    </>
+        />
+        <Tabs.Screen
+          name="home"
+          options={{
+            title: "Home",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon={icons.home}
+                color={color}
+                name="Inicio"
+                focused={focused}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="profile"
+          options={{
+            title: "Profile",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                icon={icons.profile2}
+                color={color}
+                name="Perfil"
+                focused={focused}
+              />
+            ),
+          }}
+        />
+      </Tabs>
+      <StatusBar style="dark" />
+    </SafeAreaView>
   );
 };
 
