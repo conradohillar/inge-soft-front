@@ -1,12 +1,4 @@
-import {
-  SafeAreaView,
-  TouchableWithoutFeedback,
-  Keyboard,
-  KeyboardAvoidingView,
-  Text,
-  Platform,
-} from "react-native";
-import React, { useState, useEffect } from "react";
+import { Text } from "react-native";
 import { YStack } from "tamagui";
 import CustomInput from "../../components/CustomInput";
 import ButtonNext from "../../components/ButtonNext";
@@ -66,98 +58,87 @@ export default function SignUp2() {
   }
 
   return (
-    <YStack className="h-full justify-evenly bg-background">
-      <YStack className="items-center">
-        <Text className="text-black text-4xl font-qbold">Detalles</Text>
-        <Text className="text-black text-3xl font-qsemibold">
-          de
-          <Text className="text-primary text-3xl font-qbold"> TU PERFIL</Text>
-        </Text>
-      </YStack>
+    <YStack className="h-full justify-center bg-background">
+      <YStack className="h-[92%] justify-evenly">
+        <YStack className="items-center">
+          <Text className="text-black text-4xl font-qbold">Detalles</Text>
+          <Text className="text-black text-3xl font-qsemibold">
+            de
+            <Text className="text-primary text-3xl font-qbold"> TU PERFIL</Text>
+          </Text>
+        </YStack>
 
-      <YStack className="items-center justify-center">
-        {mutation.isError && mutation.error.message == 408 && (
-          <Text className="text-red-500 text-base font-qsemibold pb-12">
-            Error de conexion, intente mas tarde.
-          </Text>
-        )}
-        <Controller
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
-            <>
-              <CustomInput
-                title="E-mail"
-                value={value}
-                handleChangeText={onChange}
-                placeholder="ejemplo@gmail.com"
-                keyboardType="email-address"
-              />
-            </>
+        <YStack className="items-center justify-center">
+          {mutation.isError && mutation.error.message == 408 && (
+            <Text className="text-red-500 text-base font-qsemibold pb-12">
+              Error de conexión, intente más tarde.
+            </Text>
           )}
-          name="email"
-        />
-        {errors.email && (
-          <Text className="text-red-500">{errors.email.message}</Text>
-        )}
-        <Controller
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
-            <>
-              <CustomInput
-                title="Contraseña"
-                value={value}
-                handleChangeText={onChange}
-                secureTextEntry={true}
-                autoComplete={"password"}
-                multiline={false}
-                inputMode={"password"}
-                placeholder={"Ingresa tu contraseña"}
-              />
-            </>
-          )}
-          name="password"
-        />
-        {errors.password && (
-          <Text className="text-red-500">{errors.password.message}</Text>
-        )}
-        <Controller
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
-            <>
-              <CustomInput
-                title="Confirmá tu contraseña"
-                value={value}
-                handleChangeText={onChange}
-                secureTextEntry={true}
-                autoComplete={"password"}
-                multiline={false}
-                inputMode={"password"}
-                placeholder={"Reingresá tu contraseña"}
-              />
-            </>
-          )}
-          name="confirmPassword"
-        />
-        {errors.confirmPassword && (
-          <Text className="text-red-500">{errors.confirmPassword.message}</Text>
-        )}
-      </YStack>
-      <YStack className="items-center">
-        <ButtonNext
-          height={90}
-          width={270}
-          onPress={handleSubmit(handleContinue)}
-        >
-          <Text className="text-2xl font-qsemibold text-white">Registrate</Text>
-        </ButtonNext>
-        <Link href="/(pages)/LandingPage" asChild>
-          <Text className="text-base text-red-500 font-qsemibold underline">
-            Cancelar
-          </Text>
-        </Link>
+          <Controller
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value } }) => (
+              <>
+                <CustomInput
+                  title="E-mail"
+                  value={value}
+                  handleChangeText={onChange}
+                  placeholder="Ingresá tu e-mail"
+                  keyboardType="email-address"
+                  hint={errors.email?.message}
+                />
+              </>
+            )}
+            name="email"
+          />
+          <Controller
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value } }) => (
+              <>
+                <CustomInput
+                  title="Contraseña"
+                  value={value}
+                  handleChangeText={onChange}
+                  secureTextEntry={true}
+                  autoComplete={"password"}
+                  multiline={false}
+                  inputMode={"password"}
+                  placeholder={"Ingresá tu contraseña"}
+                  hint={errors.password?.message}
+                />
+              </>
+            )}
+            name="password"
+          />
+          <Controller
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value } }) => (
+              <>
+                <CustomInput
+                  title="Confirmá tu contraseña"
+                  value={value}
+                  handleChangeText={onChange}
+                  secureTextEntry={true}
+                  autoComplete={"password"}
+                  multiline={false}
+                  inputMode={"password"}
+                  placeholder={"Reingresá tu contraseña"}
+                  hint={errors.confirmPassword?.message}
+                />
+              </>
+            )}
+            name="confirmPassword"
+          />
+        </YStack>
+        <YStack className="items-center">
+          <ButtonNext onPress={handleSubmit(handleContinue)}>
+            <Text className="text-2xl font-qsemibold text-white">
+              Registrarse
+            </Text>
+          </ButtonNext>
+        </YStack>
       </YStack>
     </YStack>
   );

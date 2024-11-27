@@ -34,16 +34,13 @@ export default function AutocompleteCityInput({
     } catch (e) {
       throw e;
     }
-
-
-
   }, []);
 
   const onClearPress = useCallback(() => {
     setSuggestionsList(null);
   }, []);
 
-  const onOpenSuggestionsList = useCallback((isOpened) => { }, []);
+  const onOpenSuggestionsList = useCallback((isOpened) => {}, []);
 
   return (
     <>
@@ -89,15 +86,15 @@ export default function AutocompleteCityInput({
             alignSelf: "center",
           }}
           inputContainerStyle={{
-            backgroundColor: "#eee",
-            height: 50,
+            backgroundColor: "#F5F5F5",
+            height: 55,
             width: "100%",
             borderRadius: 8,
             borderWidth: isFocused ? 2 : 1,
             borderColor: isFocused ? "#59A58A" : "#333",
           }}
           suggestionsListContainerStyle={{
-            backgroundColor: "#ddd",
+            backgroundColor: "#F5F5F5",
             borderWidth: 1,
             borderColor: "#000",
           }}
@@ -115,10 +112,8 @@ export default function AutocompleteCityInput({
               {item.title}
             </Text>
           )}
-          //   ChevronIconComponent={<Feather name="chevron-down" size={20} color="#fff" />}
-          //   ClearIconComponent={<Feather name="x-circle" size={18} color="#fff" />}
           inputHeight={50}
-          showChevron={true}
+          showChevron={false}
           closeOnBlur={true}
           showClear={false}
         />

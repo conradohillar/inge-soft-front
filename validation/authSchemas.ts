@@ -5,11 +5,11 @@ import * as yup from 'yup';
 export const signInSchema = yup.object().shape({
     email: yup
         .string()
-        .required('Se requiere un email')
-        .email('E-mail no es válido'),
+        .required('Campo requerido')
+        .email('E-mail inválido'),
     password: yup
         .string()
-        .required('Password is required')
+        .required('Campo requerido')
         .min(8, 'La contraseña debe tener al menos 8 caracteres'),
 });
 
@@ -17,27 +17,27 @@ export const signInSchema = yup.object().shape({
 export const signUpPart1Schema = yup.object().shape({
     userName: yup
         .string()
-        .required('User name is required'),
+        .required('Campo requerido'),
     dni: yup
         .string()
-        .required('DNI is required'),
+        .required('Campo requerido'),
     address: yup
         .string()
-        .required('Address is required'),
+        .required('Campo requerido'),
 });
 
 // Schema for Sign Up - Part 2
 export const signUpPart2Schema = yup.object().shape({
     email: yup
         .string()
-        .required('Email is required')
-        .email('Invalid email'),
+        .required('Campo requerido')
+        .email('E-mail inválido'),
     password: yup
         .string()
-        .required('Password is required')
-        .min(8, 'Password must contain at least 8 characters'),
+        .required('Campo requerido')
+        .min(8, 'La contraseña debe tener al menos 8 caracteres'),
     confirmPassword: yup
         .string()
-        .oneOf([yup.ref('password'), null], 'Passwords must match')
-        .required('Confirm password is required'),
+        .oneOf([yup.ref('password'), null], 'Las contraseñas deben coincidir')
+        .required('Campo requerido'),
 });
