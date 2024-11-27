@@ -53,6 +53,7 @@ export default function SignUp() {
                 handleChangeText={onChange}
                 placeholder="Ingresá tu nombre"
                 hint={errors.userName?.message}
+                borderColor={errors.userName ? "border-red-500" : undefined}
               />
             )}
             name="userName"
@@ -68,6 +69,7 @@ export default function SignUp() {
                 placeholder="Ingresá tu DNI"
                 keyboardType="numeric"
                 hint={errors.dni?.message}
+                borderColor={errors.dni ? "border-red-500" : undefined}
               />
             )}
             name="dni"
@@ -82,16 +84,11 @@ export default function SignUp() {
                 setValue={onChange}
                 value={value}
                 hint={errors.address?.message}
+                borderColor={errors.address ? "#FF0000" : undefined}
               />
             )}
             name="address"
           />
-          {errors.address && (
-            <Text className="text-red-500 text-sm font-qsemibold pt-2 px-12 self-start">
-              {" "}
-              {errors.address.message}
-            </Text>
-          )}
         </YStack>
         <YStack className="items-center">
           <ButtonNext onPress={handleSubmit(handleContinue)}>

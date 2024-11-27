@@ -8,6 +8,8 @@ export default function AutocompleteCityInput({
   title,
   placeholder,
   setValue,
+  hint,
+  borderColor,
 }) {
   const [isFocused, setIsFocused] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -59,6 +61,8 @@ export default function AutocompleteCityInput({
           }}
           direction={Platform.select({ ios: "down" })}
           dataSet={suggestionsList}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           onChangeText={getSuggestions}
           onSelectItem={(item) => {
             setValue(item ? item.title : "");
@@ -91,15 +95,19 @@ export default function AutocompleteCityInput({
             width: "100%",
             borderRadius: 8,
             borderWidth: isFocused ? 2 : 1,
-            borderColor: isFocused ? "#59A58A" : "#333",
+            borderColor: borderColor
+              ? borderColor
+              : isFocused
+              ? "#59A58A"
+              : "#333",
+          }}
+          containerStyle={{
+            width: "85%",
           }}
           suggestionsListContainerStyle={{
             backgroundColor: "#F5F5F5",
             borderWidth: 1,
             borderColor: "#000",
-          }}
-          containerStyle={{
-            width: "85%",
           }}
           renderItem={(item, text) => (
             <Text
@@ -117,6 +125,12 @@ export default function AutocompleteCityInput({
           closeOnBlur={true}
           showClear={false}
         />
+        {hint && (
+          <Text className="text-red-500 text-sm font-qsemibold pt-2 px-12 self-start">
+            {" "}
+            {hint}
+          </Text>
+        )}
       </YStack>
     </>
   );

@@ -86,6 +86,7 @@ export default function SignUp2() {
                   placeholder="Ingresá tu e-mail"
                   keyboardType="email-address"
                   hint={errors.email?.message}
+                  borderColor={errors.email ? "border-red-500" : undefined}
                 />
               </>
             )}
@@ -106,6 +107,7 @@ export default function SignUp2() {
                   inputMode={"password"}
                   placeholder={"Ingresá tu contraseña"}
                   hint={errors.password?.message}
+                  borderColor={errors.password ? "border-red-500" : undefined}
                 />
               </>
             )}
@@ -126,6 +128,9 @@ export default function SignUp2() {
                   inputMode={"password"}
                   placeholder={"Reingresá tu contraseña"}
                   hint={errors.confirmPassword?.message}
+                  borderColor={
+                    errors.confirmPassword ? "border-red-500" : undefined
+                  }
                 />
               </>
             )}
