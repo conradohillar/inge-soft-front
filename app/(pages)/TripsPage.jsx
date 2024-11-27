@@ -1,7 +1,7 @@
 import { SizableText, YStack, XStack } from "tamagui";
 import HorizontalTabs from "../../components/HorizontalTabs";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Image } from "react-native";
+import { Image, View } from "react-native";
 import icons from "../../constants/icons";
 
 export default function TripsPage() {
@@ -10,13 +10,15 @@ export default function TripsPage() {
 
   return (
     <YStack className="h-full justify-evenly bg-background">
-      <YStack className="py-5 pl-5">
-        <YStack>
-          <Image
-            source={icons.arrowleft}
-            className="h-7 w-7 mb-3"
-            onTouchEnd={router.back}
-          />
+      <YStack className="py-5 items-center">
+        <YStack className="w-full items-center">
+          <View className="pl-5 self-start">
+            <Image
+              source={icons.arrowleft}
+              className="h-7 w-7 mb-3"
+              onTouchEnd={router.back}
+            />
+          </View>
           <XStack className="space-x-2 items-center">
             <SizableText className="text-2xl text-black font-qbold pr-2">
               Tus viajes

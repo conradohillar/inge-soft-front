@@ -120,11 +120,11 @@ export default function TripList({ type, category }) {
   if (data.length === 0) {
     return (
       <SafeAreaView className="w-full bg-background">
-        <YStack className="h-[80%] w-full items-center justify-center">
+        <YStack className="h-[88%] w-full items-center justify-center">
           <View className="py-3">
             <View
               style={{
-                height: 218,
+                height: 260,
                 width: 350,
                 paddingVertical: 15,
                 paddingHorizontal: 18,
@@ -154,7 +154,8 @@ export default function TripList({ type, category }) {
                       ? "/(pages)/PostTripPage"
                       : "/(pages)/SearchTripPage"
                   }
-                  variant="primary"
+                  variant="secondary"
+                  height={60}
                 >
                   <Text className="text-xl font-qsemibold text-white text-center">
                     {category === "driver" ? "Publicar" : "Buscar"} viaje
