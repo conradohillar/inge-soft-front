@@ -1,5 +1,5 @@
-import { Text, View, Pressable } from "react-native";
-import { H5, Separator, SizableText, Tabs } from "tamagui";
+import { View } from "react-native";
+import { SizableText, Tabs } from "tamagui";
 import { useState } from "react";
 import TripList from "./TripList";
 
@@ -17,43 +17,56 @@ export default function HorizontalTabs({ category }) {
         width="100%"
         height="100%"
         borderRadius="$4"
-        borderWidth="$0.25"
         overflow="hidden"
-        borderColor="$borderColor"
         className="bg-background"
         onValueChange={(value) => setSelectedTab(value)}
       >
         <Tabs.List
-          separator={<Separator vertical />}
-          disablePassBorderRadius="bottom"
           aria-label="Manage your account"
+          justifyContent="space-between"
+          paddingHorizontal={16}
+          paddingVertical={8}
         >
           <Tabs.Tab
-            flex={1}
             value="tab1"
-            backgroundColor="#59A58A"
-            style={{ opacity: selectedTab === "tab1" ? 1 : 0.5 }}
+            backgroundColor={selectedTab === "tab1" ? "#000" : "#ddd"}
+            borderRadius={20}
+            paddingHorizontal={16}
+            paddingVertical={8}
+            flex={1}
+            marginHorizontal={4}
           >
-            <SizableText className="text-white font-qsemibold">
+            <SizableText
+              size="$5"
+              className={`font-qsemibold ${
+                selectedTab === "tab1" ? "text-white" : "text-black"
+              }`}
+            >
               {tab1Title}
             </SizableText>
           </Tabs.Tab>
           <Tabs.Tab
-            flex={1}
             value="tab2"
-            backgroundColor="#59A58A"
-            style={{ opacity: selectedTab === "tab2" ? 1 : 0.5 }}
+            backgroundColor={selectedTab === "tab2" ? "#000" : "#ddd"}
+            borderRadius={20}
+            paddingHorizontal={16}
+            paddingVertical={8}
+            flex={1}
+            marginHorizontal={4}
           >
-            <SizableText className="text-white font-qsemibold">
+            <SizableText
+              size="$5"
+              className={`font-qsemibold ${
+                selectedTab === "tab2" ? "text-white" : "text-black"
+              }`}
+            >
               Historial
             </SizableText>
           </Tabs.Tab>
         </Tabs.List>
-        <Separator />
         <Tabs.Content value="tab1">
           <TripList type="upcoming" category={category} />
         </Tabs.Content>
-
         <Tabs.Content value="tab2">
           <TripList type="history" category={category} />
         </Tabs.Content>
