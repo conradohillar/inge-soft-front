@@ -1,71 +1,71 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Header from "../../components/Header";
-import { XStack, YStack } from "tamagui";
-import { Link } from "expo-router";
-import icons from "../../constants/icons";
+import { Text, View } from "react-native";
+import { YStack, XStack, SizableText, Separator } from "tamagui";
+import { useRouter } from "expo-router";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function Trips() {
+  const router = useRouter();
+
   return (
-    <YStack className="h-full items-center justify-evenly bg-background">
-      <View className="w-full items-center justify-center">
-        <Text className="text-3xl font-qbold">
-          {" "}
-          MIS
-          <Text className="text-3xl font-qbold text-primary"> VIAJES</Text>
-        </Text>
+    <YStack className="h-full items-start justify-evenly bg-background">
+      <View className="w-full pl-8">
+        <SizableText className="text-3xl font-qbold text-black">
+          Mis viajes
+        </SizableText>
       </View>
+
       <YStack className="w-full h-[70%]">
-        <View
-          className="w-full h-[20%] items-center justify-center"
-          borderTopColor="#ddd"
-          borderTopWidth={2}
-        >
-          <Link
-            href={{
-              pathname: "/(pages)/TripsPage",
-              params: { category: "rider" },
-            }}
-            asChild
+        <XStack className="w-full justify-center items-center">
+          <Separator className="w-[90%] bg-gray-200" />
+        </XStack>
+
+        <View className="w-full h-[20%] items-start justify-center pl-8">
+          <XStack
+            className="w-[80%] items-center justify-between"
+            onPress={() =>
+              router.push({
+                pathname: "/(pages)/TripsPage",
+                params: { category: "rider" },
+              })
+            }
           >
-            <XStack className="w-[80%] items-center justify-start space-x-5">
-              <Image
-                source={icons.profile2}
-                className="h-6 w-6"
-                tintColor="#aaa"
-                resizeMode="contain"
-              />
+            <XStack className="items-center space-x-5">
+              <MaterialIcons name="person" size={24} color="#aaa" />
               <Text className="text-xl text-black font-qbold">
                 Como pasajero
               </Text>
             </XStack>
-          </Link>
+            <MaterialIcons name="chevron-right" size={24} color="#aaa" />
+          </XStack>
         </View>
-        <View
-          className="w-full h-[20%] items-center justify-center"
-          borderTopColor="#ddd"
-          borderTopWidth={2}
-        >
-          <Link
-            href={{
-              pathname: "/(pages)/TripsPage",
-              params: { category: "driver" },
-            }}
-            asChild
+
+        <XStack className="w-full justify-center items-center">
+          <Separator className="w-[90%] bg-gray-200" />
+        </XStack>
+
+        <View className="w-full h-[20%] items-start justify-center pl-8">
+          <XStack
+            className="w-[80%] items-center justify-between"
+            onPress={() =>
+              router.push({
+                pathname: "/(pages)/TripsPage",
+                params: { category: "driver" },
+              })
+            }
           >
-            <XStack className="w-[80%] items-center justify-start space-x-5">
-              <Image
-                source={icons.wheel}
-                className="h-6 w-6"
-                tintColor="#aaa"
-                resizeMode="contain"
-              />
+            <XStack className="items-center space-x-5">
+              <MaterialIcons name="drive-eta" size={24} color="#aaa" />
               <Text className="text-xl text-black font-qbold">
                 Como conductor
               </Text>
             </XStack>
-          </Link>
+            <MaterialIcons name="chevron-right" size={24} color="#aaa" />
+          </XStack>
         </View>
+
+        <XStack className="w-full justify-center items-center">
+          <Separator className="w-[90%] bg-gray-200" />
+        </XStack>
       </YStack>
     </YStack>
   );
