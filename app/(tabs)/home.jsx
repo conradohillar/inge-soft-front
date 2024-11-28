@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView, FlatList } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import { Spinner, XStack, YStack } from "tamagui";
 import BlackButton from "../../components/BlackButton";
 import { useGlobalState } from "../_layout";
@@ -12,6 +12,7 @@ import { useState } from "react";
 import TripEndedModal from "../../components/TripEndedModal";
 import { handleStartTripMut, handleEndTripMut } from "../../services/rides";
 import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "expo-router";
 
 export default function Home() {
   const { globalState, setGlobalState } = useGlobalState();
@@ -82,6 +83,8 @@ export default function Home() {
     );
   };
 
+  const router = useRouter();
+
   if (isLoading) {
     return <LoadingPage />;
   }
@@ -100,6 +103,9 @@ export default function Home() {
         </Text>
       </XStack>
       <YStack className="flex-1 w-[90%] items-start">
+        <BlackButton href="/(pages)/ChatPage" variant="secondary">
+          <Text className="text-lg text-white font-qbold">Chat</Text>
+        </BlackButton>
         <Text className="text-lg text-black font-qbold mb-2 ml-3">
           Viajes programados para hoy:
         </Text>

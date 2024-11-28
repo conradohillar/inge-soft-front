@@ -1,7 +1,7 @@
-import { Button, XStack, YStack } from "tamagui";
+import { Button, XStack, YStack, ScrollView as TScrollView } from "tamagui";
 import { User } from "@tamagui/lucide-icons";
 import Counter from "../../components/Counter";
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, Image, Pressable } from "react-native";
 import { Link } from "expo-router";
 import icons from "../../constants/icons";
 import { useState } from "react";
@@ -53,111 +53,123 @@ export default function TripDetailsPage() {
 
   return (
     <View className="bg-background h-full w-full">
-      <YStack className="items-center justify-evenly h-full">
-        <View className="items-center mb-3 mt-10">
-          <Text className="text-2xl font-qbold text-black">
-            Últimos
-            <Text className="text-2xl font-qbold text-primary">
-              {" "}
-              detalles
-              <Text className="text-2xl font-qbold text-black"> del viaje</Text>
-            </Text>
-          </Text>
-        </View>
-        <YStack className="w-full items-center justify-evenly flex-1">
-          <Window height={160} width={"88%"}>
-            <XStack className="items-center ml-2 mb-3">
-              <Text className="text-black text-base font-qbold">Asientos</Text>
-            </XStack>
-            <XStack className="items-center justify-evenly ml-4">
-              <User size="3" color="black" />
-              <Counter
-                maxCount={4}
-                count={formData.people}
-                handleChangeCount={setPeople}
-                bgColor="#eee"
-              />
-            </XStack>
-          </Window>
-          <Window height={175} width={"88%"}>
-            <XStack className="items-start ml-2 mb-4">
-              <Text className="text-black text-base font-qbold">
-                Equipaje chico/mediano
+      <TScrollView>
+        <Pressable>
+          <YStack className="items-center justify-evenly min-h-full pb-6">
+            <View className="items-center mb-3 mt-10">
+              <Text className="text-2xl font-qbold text-black">
+                Últimos
+                <Text className="text-2xl font-qbold text-primary">
+                  {" "}
+                  detalles
+                  <Text className="text-2xl font-qbold text-black">
+                    {" "}
+                    del viaje
+                  </Text>
+                </Text>
               </Text>
-            </XStack>
-            <XStack className="items-center justify-evenly ml-4">
-              <Image source={icons.bag} className="w-12 h-12" />
-              <Counter
-                maxCount={4}
-                count={formData.mediumPacks}
-                handleChangeCount={setMediumPacks}
-                bgColor="#eee"
-              />
-            </XStack>
-            <XStack className="w-full items-center justify-center mt-4">
-              <Text className="text-gray-400 text-xs font-qbold ">
-                Medidas: hasta{" "}
+            </View>
+            <YStack
+              space="$4"
+              className="w-full items-center justify-evenly flex-1"
+            >
+              <Window height={160} width={"88%"}>
+                <XStack className="items-center ml-2 mb-3">
+                  <Text className="text-black text-base font-qbold">
+                    Asientos
+                  </Text>
+                </XStack>
+                <XStack className="items-center justify-evenly ml-4">
+                  <User size="3" color="black" />
+                  <Counter
+                    maxCount={4}
+                    count={formData.people}
+                    handleChangeCount={setPeople}
+                    bgColor="#eee"
+                  />
+                </XStack>
+              </Window>
+              <Window height={175} width={"88%"}>
+                <XStack className="items-start ml-2 mb-4">
+                  <Text className="text-black text-base font-qbold">
+                    Equipaje chico/mediano
+                  </Text>
+                </XStack>
+                <XStack className="items-center justify-evenly ml-4">
+                  <Image source={icons.bag} className="w-12 h-12" />
+                  <Counter
+                    maxCount={4}
+                    count={formData.mediumPacks}
+                    handleChangeCount={setMediumPacks}
+                    bgColor="#eee"
+                  />
+                </XStack>
+                <XStack className="w-full items-center justify-center mt-4">
+                  <Text className="text-gray-400 text-xs font-qbold ">
+                    Medidas: hasta{" "}
+                  </Text>
+                  <Text className="text-primary text-xs font-qbold opacity-70">
+                    60cm
+                  </Text>
+                </XStack>
+              </Window>
+              <Window height={175} width={"88%"}>
+                <XStack className="items-center ml-2 mb-3">
+                  <Text className="text-black text-base font-qbold">
+                    Equipaje grande
+                  </Text>
+                </XStack>
+                <XStack className="items-center justify-evenly ml-4">
+                  <Image source={icons.suitcase} className="w-12 h-12" />
+                  <Counter
+                    maxCount={4}
+                    count={formData.largePacks}
+                    handleChangeCount={setLargePacks}
+                    bgColor="#eee"
+                  />
+                </XStack>
+                <XStack className="w-full items-center justify-center mt-4">
+                  <Text className="text-gray-400 text-xs font-qbold">
+                    Medidas: a partir de{" "}
+                  </Text>
+                  <Text className="text-primary text-xs font-qbold opacity-70">
+                    60cm
+                  </Text>
+                </XStack>
+              </Window>
+            </YStack>
+            <View className="px-8 py-4">
+              <Text className="text-sm text-primary font-qsemibold">
+                Nota:
+                <Text className="text-sm text-gray-400 font-qsemibold">
+                  {" "}
+                  te recordamos que podés llevar un bolso/mochila sin costo
+                  adicional.
+                </Text>
               </Text>
-              <Text className="text-primary text-xs font-qbold opacity-70">
-                60cm
-              </Text>
-            </XStack>
-          </Window>
-          <Window height={175} width={"88%"}>
-            <XStack className="items-center ml-2 mb-3">
-              <Text className="text-black text-base font-qbold">
-                Equipaje grande
-              </Text>
-            </XStack>
-            <XStack className="items-center justify-evenly ml-4">
-              <Image source={icons.suitcase} className="w-12 h-12" />
-              <Counter
-                maxCount={4}
-                count={formData.largePacks}
-                handleChangeCount={setLargePacks}
-                bgColor="#eee"
-              />
-            </XStack>
-            <XStack className="w-full items-center justify-center mt-4">
-              <Text className="text-gray-400 text-xs font-qbold">
-                Medidas: a partir de{" "}
-              </Text>
-              <Text className="text-primary text-xs font-qbold opacity-70">
-                60cm
-              </Text>
-            </XStack>
-          </Window>
-        </YStack>
-        <View className="px-8 py-4">
-          <Text className="text-sm text-primary font-qsemibold">
-            Nota:
-            <Text className="text-sm text-gray-400 font-qsemibold">
-              {" "}
-              te recordamos que podés llevar un bolso/mochila sin costo
-              adicional.
-            </Text>
-          </Text>
-        </View>
+            </View>
 
-        <XStack className="items-center mb-6">
-          <Link href="/(pages)/SearchTripPage" asChild>
-            <Button className="w-6 h-6 bg-background">
-              <Image
-                source={icons.arrowleft}
-                className="w-7 h-7"
-                resizeMode="contain"
-              />
-            </Button>
-          </Link>
-          <View className="w-3/4 items-center justify-center">
-            <ButtonNext onPress={handleSearch}>
-              <Text className="text-2xl font-qsemibold text-white">
-                Buscar viajes
-              </Text>
-            </ButtonNext>
-          </View>
-        </XStack>
-      </YStack>
+            <XStack className="items-center mb-6">
+              <Link href="/(pages)/SearchTripPage" asChild>
+                <Button className="w-6 h-6 bg-background">
+                  <Image
+                    source={icons.arrowleft}
+                    className="w-7 h-7"
+                    resizeMode="contain"
+                  />
+                </Button>
+              </Link>
+              <View className="w-3/4 items-center justify-center">
+                <ButtonNext onPress={handleSearch}>
+                  <Text className="text-2xl font-qsemibold text-white">
+                    Buscar viajes
+                  </Text>
+                </ButtonNext>
+              </View>
+            </XStack>
+          </YStack>
+        </Pressable>
+      </TScrollView>
     </View>
   );
 }
