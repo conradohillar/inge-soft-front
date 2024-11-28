@@ -94,7 +94,7 @@ export default function Home() {
   }
 
   return (
-    <YStack className="h-full items-center justify-evenly bg-background">
+    <YStack className="h-full w-full items-center justify-evenly bg-background">
       <XStack className="items-center h-[18%] mt-4">
         <Text className="text-3xl text-black font-qsemibold">Bienvenido,</Text>
         <Text className="text-3xl text-primary font-qbold">
@@ -103,13 +103,10 @@ export default function Home() {
         </Text>
       </XStack>
       <YStack className="flex-1 w-[90%] items-start">
-        <BlackButton href="/(pages)/ChatPage" variant="secondary">
-          <Text className="text-lg text-white font-qbold">Chat</Text>
-        </BlackButton>
         <Text className="text-lg text-black font-qbold mb-2 ml-3">
           Viajes programados para hoy:
         </Text>
-        <View className="flex-1 w-full items-center mb-10 bg-gray-100 rounded-2xl border-2 justify-center">
+        <View className="flex-1 w-full items-center mb-10 bg-gray-100 rounded-t-2xl border-2 justify-center">
           {(data.length === 0 && noTripsProgrammed()) ||
             ((start_mutation.isPending || end_mutation.isPending) && (
               <Spinner size={40} color="$green10" className="mb-2 mr-2" />
@@ -128,21 +125,26 @@ export default function Home() {
             )}
         </View>
       </YStack>
-      <XStack className="items-start justify-evenly w-[100%] h-[18%] px-3">
-        <View className="w-[55%]">
-          <BlackButton href="/(pages)/SearchTripPage" variant={"secondary"}>
+      <XStack className="items-start justify-center w-[98%] h-[18%]">
+        <View className="flex-1">
+          <BlackButton
+            href="/(pages)/SearchTripPage"
+            variant={"secondary"}
+            width={"90%"}
+          >
             <Text className="text-[20px] font-qsemibold text-white">
               Buscar viaje
             </Text>
           </BlackButton>
         </View>
-        <View className="w-[55%]">
+        <View className="flex-1">
           <BlackButton
             href="/(pages)/PostTripPage"
             className={`${
               globalState.isDriver ? "" : "opacity-50 bg-gray-500"
             }`}
             disabled={!globalState.isDriver}
+            width={"90%"}
           >
             <Text className={`text-[20px] font-qsemibold text-white`}>
               Publicar viaje
