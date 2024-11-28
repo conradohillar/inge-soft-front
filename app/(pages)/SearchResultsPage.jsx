@@ -1,20 +1,15 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import Header from "../../components/Header";
 import { FlatList, View, Text } from "react-native";
 import TripCard from "../../components/TripCard";
-import { XStack } from "tamagui";
+import { XStack, YStack } from "tamagui";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-  useMutation,
-} from "@tanstack/react-query";
-import { LOCAL_IP } from "@env";
-import axios from "axios";
 import LoadingPage from "./LoadingPage";
 import ErrorPage from "./ErrorPage";
 import { searchRides } from "../../services/rides";
+import { useQuery } from "@tanstack/react-query";
+import Window from "../../components/Window";
+import ButtonNext from "../../components/ButtonNext";
+import BlackButton from "../../components/BlackButton";
 
 export default function SearchResults() {
   const {
@@ -83,25 +78,31 @@ export default function SearchResults() {
   if (data.length === 0) {
     return (
       <SafeAreaView className="w-full h-full bg-background">
-        <Header />
-        <XStack className="items-center justify-center mt-10 mb-7">
-          <Text className="text-[22px] font-qbold text-primary">
-            No hay resultados{" "}
-          </Text>
-          <Text className="text-[22px] font-qbold text-black">
-            para tu búsqueda
-          </Text>
-        </XStack>
+        <YStack className="items-center justify-center h-[95%]">
+          <Window height={250} width={"90%"}>
+            <YStack className="items-center justify-center my-5">
+              <Text className="text-3xl font-qbold text-black">
+                No hay resultados
+              </Text>
+              <Text className="text-3xl font-qbold text-black mb-8">
+                para tu búsqueda
+              </Text>
+              <BlackButton href="/(pages)/SearchTripPage" variant="secondary">
+                <Text className="text-xl font-qsemibold text-white">
+                  Buscá otro viaje
+                </Text>
+              </BlackButton>
+            </YStack>
+          </Window>
+        </YStack>
       </SafeAreaView>
     );
   }
   return (
     <View className="w-full h-full bg-background">
       <XStack className="items-center justify-center mt-10 mb-7">
-        <Text className="text-[22px] font-qbold text-primary">Resultados </Text>
-        <Text className="text-[22px] font-qbold text-black">
-          de tu búsqueda
-        </Text>
+        <Text className="text-3xl font-qbold text-primary">Resultados </Text>
+        <Text className="text-3xl font-qbold text-black">de tu búsqueda</Text>
       </XStack>
       <View className="flex-1">
         <FlatList

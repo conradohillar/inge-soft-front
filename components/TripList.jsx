@@ -7,6 +7,7 @@ import { Link, useRouter } from "expo-router";
 import icons from "../constants/icons";
 import { getUserOrDriverRides } from "../services/rides";
 import BlackButton from "./BlackButton";
+import Window from "./Window";
 
 export default function TripList({ type, category }) {
   const router = useRouter();
@@ -122,27 +123,7 @@ export default function TripList({ type, category }) {
       <SafeAreaView className="w-full bg-background">
         <YStack className="h-[88%] w-full items-center justify-center">
           <View className="py-3">
-            <View
-              style={{
-                height: 260,
-                width: 350,
-                paddingVertical: 15,
-                paddingHorizontal: 18,
-                marginHorizontal: 6,
-                borderWidth: 2,
-                borderColor: "#ccc",
-                borderRadius: 40,
-                backgroundColor: "#eee",
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-                elevation: 5,
-              }}
-            >
+            <Window height={260} width={350}>
               <YStack className="items-center justify-center h-full">
                 <Text className="text-2xl font-qbold text-black mb-8 text-center">
                   No tenés viajes{" "}
@@ -162,7 +143,7 @@ export default function TripList({ type, category }) {
                   </Text>
                 </BlackButton>
               </YStack>
-            </View>
+            </Window>
           </View>
         </YStack>
       </SafeAreaView>

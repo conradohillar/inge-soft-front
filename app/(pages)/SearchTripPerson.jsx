@@ -152,7 +152,7 @@ export default function TripDetailsPage() {
           <View className="w-3/4 items-center justify-center">
             <ButtonNext onPress={handleSearch}>
               <Text className="text-2xl font-qsemibold text-white">
-                Buscar viaje
+                Buscar viajes
               </Text>
             </ButtonNext>
           </View>
