@@ -1,6 +1,7 @@
 import { Input, YStack, Label, XStack } from "tamagui";
 import { useState } from "react";
-import { TouchableOpacity, View, Text } from "react-native";
+import { TouchableOpacity, View, Text, Image } from "react-native";
+import icons from "../constants/icons";
 
 export default function CustomInput({
   title,
