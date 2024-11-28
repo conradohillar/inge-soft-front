@@ -8,11 +8,24 @@ let wc: WebSocket;
 
 
 export const connect = async (chat_id:String) => {
-    console.log(`ws://0.0.0.0:8000/chat/${chat_id}`);
-
+    
     wc = new WebSocket(`ws://${LOCAL_IP}:8000/chat/${chat_id}?token=${await getToken()}`);
     wc.onmessage = (event) => {
-        console.log(event.data);
+        const messageData = JSON.parse(event.data);
+        switch (messageData.action) {
+            case 'new_message':
+                //editar la data la cache de tanstack
+                break;
+            case 'edit_message':
+                //editar la data la cache de tanstack
+                break;
+            case 'remove_message':
+                //editar la data la cache de tanstack
+                break;
+            default:
+                console.error("Si llega aca revisar el back, algo esta mal, siempre deberia caer en uno de los casos de arriba")
+        }
+        
     }
 };
 
@@ -31,10 +44,20 @@ export const getMessages = async (chat_id: string, limit: Number = 20, before: D
     else
         url = `${BASE_URL}/messages/${chat_id}?limit=${limit}`;
   
-    const ans = await handleRequest(() => axios.get(url, { headers }));
-    console.log(ans);
-    return ans;
-}   
+    return await handleRequest(() => axios.get(url, { headers }));
+}
 
+export const updateMessage = async (message_id: string, message: string) => {
+    const headers = await getHeaderWithToken();
+    const url = `${BASE_URL}/message/${message_id}?new_message=${message}`;
+    return await handleRequest(() => axios.put(url, { headers }));
+
+}
+
+export const removeMessage = async (message_id: string) => {
+    const headers = await getHeaderWithToken();
+    const url = `${BASE_URL}/message/${message_id}`;
+    return await handleRequest(() => axios.delete(url, { headers }));
+}
 
 
