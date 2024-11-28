@@ -11,10 +11,6 @@ import {
 import { XStack, YStack, Button } from "tamagui";
 import icons from "../constants/icons";
 import React, { useState, useEffect } from "react";
-import {
-  getIndieNotificationInbox,
-  deleteIndieNotificationInbox,
-} from "native-notify";
 import { useGlobalState } from "../app/_layout";
 import * as Notifications from "expo-notifications";
 
@@ -34,14 +30,6 @@ export default function Header() {
 
   useEffect(() => {
     getNots();
-
-    const subscription = Notifications.addNotificationReceivedListener(() => {
-      getNots();
-    });
-
-    return () => {
-      subscription.remove();
-    };
   }, []);
 
   const handleDeleteNotification = async (notificationId) => {

@@ -8,7 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 SplashScreen.preventAutoHideAsync();
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 const GlobalStateContext = createContext();
 const RootLayout = () => {
   const [globalState, setGlobalState] = useState({
