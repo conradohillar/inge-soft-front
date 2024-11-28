@@ -1,7 +1,6 @@
 import { Input, YStack, Label, XStack } from "tamagui";
 import { useState } from "react";
-import { Image, Text, TouchableOpacity } from "react-native";
-import icons from "../constants/icons";
+import { TouchableOpacity, View, Text } from "react-native";
 
 export default function CustomInput({
   title,
@@ -18,6 +17,7 @@ export default function CustomInput({
   multiline = true,
   hint,
   borderColor,
+  prependIcon,
 }) {
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -28,6 +28,18 @@ export default function CustomInput({
         {title}
       </Label>
       <XStack width="100%" alignItems="center" position="relative">
+        {prependIcon && (
+          <View
+            style={{
+              position: "absolute",
+              left: 10,
+              zIndex: 1,
+              padding: 5,
+            }}
+          >
+            {prependIcon}
+          </View>
+        )}
         <Input
           keyboardType={keyboardType}
           inputMode={inputMode}
@@ -47,6 +59,7 @@ export default function CustomInput({
           fontFamily="Quicksand-Semibold"
           placeholderTextColor="#999"
           width="100%"
+          paddingLeft={prependIcon ? 45 : 16}
           className={`${
             borderColor
               ? borderColor
