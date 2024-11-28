@@ -1,15 +1,23 @@
-import { useState } from 'react';
-import { XStack, YStack } from 'tamagui';
-import { Pressable, Text, View } from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { ChevronDown } from '@tamagui/lucide-icons';
-import CustomInput from './CustomInput';
+import { useState } from "react";
+import { XStack, YStack } from "tamagui";
+import { Pressable, Text, View } from "react-native";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { ChevronDown } from "@tamagui/lucide-icons";
 
-export default function DatePicker({ style, className, placeholderTextColor, value, onChangeDate, title, ...props }) {
+export default function DatePicker({
+  style,
+  className,
+  value,
+  onChangeDate,
+  title,
+  hint,
+  borderColor,
+  ...props
+}) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const [placeholderText, setPlaceholderText] = useState("Seleccionar fecha");
-  const [placeholderColor, setPlaceholderColor] = useState(placeholderTextColor);
+  const [placeholderColor, setPlaceholderColor] = useState("#999");
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -21,9 +29,9 @@ export default function DatePicker({ style, className, placeholderTextColor, val
 
   const handleConfirm = (selectedDate) => {
     onChangeDate(selectedDate);
-    const formatDate = selectedDate.toLocaleDateString('es-ES');  // Formato en español (España)
-    setPlaceholderText(formatDate)
-    setPlaceholderColor("#000")
+    const formatDate = selectedDate.toLocaleDateString("es-ES"); // Formato en español (España)
+    setPlaceholderText(formatDate);
+    setPlaceholderColor("#000");
     hideDatePicker();
   };
 
@@ -32,19 +40,35 @@ export default function DatePicker({ style, className, placeholderTextColor, val
       <YStack className="items-start justify-center w-[85%] m-2">
         <View className="w-full items-center">
           <View className="w-[95%]">
-            <Text className="text-m font-qbold text-gray-600 mb-2">{title}</Text>
+            <Text className="text-m font-qbold text-gray-600 mb-2">
+              {title}
+            </Text>
           </View>
         </View>
         <Pressable
           onPress={showDatePicker}
-          style={style}
-          className={`justify-center items-center rounded-lg ${isDatePickerVisible ? 'border-2 border-primary' : 'border border-gray-900'} h-[50px] w-full ${className}`}
+          style={{ backgroundColor: "#F5F5F5" }}
+          className={`justify-center items-center rounded-lg ${
+            borderColor
+              ? borderColor
+              : isDatePickerVisible
+              ? "border-2 border-primary"
+              : "border border-gray-900"
+          } h-[55px] w-full ${className}`}
         >
           <XStack className="items-center w-[93%] justify-between">
-            <Text className={`text-sm font-qsemibold text-[${placeholderColor}]`}>{placeholderText}</Text>
-            <ChevronDown size={20} color="#777" />
+            <Text
+              className="text-sm font-qsemibold"
+              style={{ color: placeholderColor }}
+            >
+              {placeholderText}
+            </Text>
+            <ChevronDown size={20} color="#999" />
           </XStack>
         </Pressable>
+        <Text className="text-red-500 text-sm font-qsemibold pt-2 px-6 self-start">
+          {hint}
+        </Text>
       </YStack>
 
       <DateTimePickerModal
@@ -56,5 +80,4 @@ export default function DatePicker({ style, className, placeholderTextColor, val
       />
     </View>
   );
-
 }

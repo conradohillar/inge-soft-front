@@ -1,56 +1,56 @@
 import * as yup from 'yup';
 
 export const postTripSchema = yup.object().shape({
-    fromLocation: yup.string().required('El campo "Desde" es obligatorio.'),
-    toLocation: yup.string().required('El campo "Hasta" es obligatorio.'),
+    fromLocation: yup.string().required('Campo obligatorio.'),
+    toLocation: yup.string().required('Campo obligatorio.'),
     date: yup
         .string()
-        .required('El campo "Fecha de salida" es obligatorio.')
-        .test('is-valid-date', 'El campo "Fecha de salida" debe ser una fecha válida.', value => !isNaN(Date.parse(value))),
-    time: yup.string().required('El campo "Hora de salida" es obligatorio.')
+        .required('Campo obligatorio.')
+        .test('is-valid-date', 'Fecha inválida.', value => !isNaN(Date.parse(value))),
+    time: yup.string().required('Campo obligatorio.')
 });
 
 export const postTripDetailsSchema = yup.object().shape({
-    car: yup.string().required('El campo "Auto" es obligatorio.'),
+    car: yup.string().required('Campo obligatorio.'),
     availableSeats: yup
         .number()
         .min(0, 'Debe haber al menos un asiento disponible.')
-        .required('El campo "Asientos disponibles" es obligatorio.'),
+        .required('Campo obligatorio.'),
     spacesSmallPackage: yup
         .number()
         .min(0, 'El número de espacios para paquetes pequeños no puede ser negativo.')
-        .required('El campo "Espacios para paquetes pequeños" es obligatorio.'),
+        .required('Campo obligatorio.'),
     spacesMediumPackage: yup
         .number()
         .min(0, 'El número de espacios para paquetes medianos no puede ser negativo.')
-        .required('El campo "Espacios para paquetes medianos" es obligatorio.'),
+        .required('Campo obligatorio.'),
     spacesLargePackage: yup
         .number()
         .min(0, 'El número de espacios para paquetes grandes no puede ser negativo.')
-        .required('El campo "Espacios para paquetes grandes" es obligatorio.'),
+        .required('Campo obligatorio.'),
     pricePerson: yup
         .number()
-        .min(yup.ref('defaultPricePerson'), 'El precio por persona no puede ser menor que el valor mínimo.')
-        .required('El campo "Precio por persona" es obligatorio.'),
+        .min(yup.ref('defaultPricePerson'), 'El precio no puede ser menor que el mínimo.')
+        .required('Campo obligatorio.'),
     priceSmallPackage: yup
         .number()
-        .min(yup.ref('defaultPriceSmallPackage'), 'El precio por paquete pequeño no puede ser menor que el valor mínimo.')
-        .required('El campo "Precio por paquete pequeño" es obligatorio.'),
+        .min(yup.ref('defaultPriceSmallPackage'), 'El precio no puede ser menor que el mínimo.')
+        .required('Campo obligatorio.'),
     priceMediumPackage: yup
         .number()
-        .min(yup.ref('defaultPriceMediumPackage'), 'El precio por paquete mediano no puede ser menor que el valor mínimo.')
-        .required('El campo "Precio por paquete mediano" es obligatorio.'),
+        .min(yup.ref('defaultPriceMediumPackage'), 'El precio no puede ser menor que el mínimo.')
+        .required('Campo obligatorio.'),
     priceLargePackage: yup
         .number()
-        .min(yup.ref('defaultPriceLargePackage'), 'El precio por paquete grande no puede ser menor que el valor mínimo.')
-        .required('El campo "Precio por paquete grande" es obligatorio.'),
+        .min(yup.ref('defaultPriceLargePackage'), 'El precio no puede ser menor que el mínimo.')
+        .required('Campo obligatorio.'),
 });
 
 export const searchTripSchema = yup.object().shape({
-    fromLocation: yup.string().required('El campo "Desde" es obligatorio.'),
-    toLocation: yup.string().required('El campo "Hasta" es obligatorio.'),
+    fromLocation: yup.string().required('Campo obligatorio.'),
+    toLocation: yup.string().required('Campo obligatorio.'),
     date: yup
         .string()
-        .required('El campo "Fecha de salida" es obligatorio.')
-        .test('is-valid-date', 'El campo "Fecha de salida" debe ser una fecha válida.', value => !isNaN(Date.parse(value))),
+        .required('Campo obligatorio.')
+        .test('is-valid-date', 'Fecha inválida.', value => !isNaN(Date.parse(value))),
 });
