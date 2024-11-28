@@ -18,9 +18,13 @@ import { getRideData, postTrip } from "../../services/rides";
 import { postTripDetailsSchema } from "../../validation/ridesSchemas";
 import AddCarModal from "../../components/AddCarModal";
 import { useQueryClient } from "@tanstack/react-query";
+import Window from "../../components/Window";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function PostTripPage2() {
   const [isAddCarModalVisible, setIsAddCarModalVisible] = useState(false);
+  const [priceErrors, setPriceErrors] = useState(0);
+
   const toggleAddCarModal = () => {
     setIsAddCarModalVisible(!isAddCarModalVisible);
   };
@@ -91,6 +95,22 @@ export default function PostTripPage2() {
       }
     }
   }, [data]);
+
+  useEffect(() => {
+    const errorCount = [
+      errors.pricePerson,
+      errors.priceSmallPackage,
+      errors.priceMediumPackage,
+      errors.priceLargePackage,
+    ].filter(Boolean).length;
+
+    setPriceErrors(errorCount);
+  }, [
+    errors.pricePerson,
+    errors.priceSmallPackage,
+    errors.priceMediumPackage,
+    errors.priceLargePackage,
+  ]);
 
   const mutation = useMutation({
     mutationFn: ({ tripData, car }) => postTrip(tripData, car),
@@ -163,271 +183,294 @@ export default function PostTripPage2() {
 
   return (
     <ScrollView className="bg-background">
-      <YStack className=" justify-center items-center h-[10%]">
-        <Text className="text-[27px] font-qbold text-primary">
-          Detalles{" "}
-          <Text className="text-[27px] font-qbold text-black">
-            de la publicación
-          </Text>
-        </Text>
-      </YStack>
-      <Pressable>
-        <YStack className="items-center justify-center mb-10">
-          <Text className="text-sm text-black font-qbold ml-7 mb-3 w-[90%]">
-            Seleccioná tu
-            <Text className="text-sm text-primary font-qbold ml-10 mb-3">
-              {" "}
-              auto
+      <YStack className="h-full mb-12">
+        <YStack className=" justify-center items-center h-[10%]">
+          <Text className="text-[27px] font-qbold text-primary">
+            Detalles{" "}
+            <Text className="text-[27px] font-qbold text-black">
+              de la publicación
             </Text>
           </Text>
+        </YStack>
+        <Pressable>
+          <YStack className="items-center justify-center mb-12">
+            <Text className="text-sm text-black font-qbold ml-8 mb-3 w-[90%]">
+              Seleccioná tu
+              <Text className="text-sm text-primary font-qbold ml-10 mb-3">
+                {" "}
+                auto
+              </Text>
+            </Text>
 
-          <View
-            className="w-full items-center"
-            style={{
-              display: `${data.cars.length > 0 ? "" : "none"}`,
-            }}
-          >
-            <Controller
-              control={control}
-              name="car"
-              render={({ field: { onChange, value } }) => (
-                <DropdownComponent
-                  data={data.cars.map((car) => ({
-                    label: `${car.model} - ${car.plate}`,
-                    value: car.plate,
-                  }))}
-                  value={value}
-                  setValue={onChange}
+            <View
+              className="w-full items-center"
+              style={{
+                display: `${data.cars.length > 0 ? "" : "none"}`,
+              }}
+            >
+              <Controller
+                control={control}
+                name="car"
+                render={({ field: { onChange, value } }) => (
+                  <DropdownComponent
+                    data={data.cars.map((car) => ({
+                      label: `${car.model} - ${car.plate}`,
+                      value: car.plate,
+                    }))}
+                    value={value}
+                    setValue={onChange}
+                  />
+                )}
+              />
+              {errors.car && (
+                <Text className="text-red-500">{errors.car.message}</Text>
+              )}
+            </View>
+
+            {data.cars.length > 0 ? (
+              <></>
+            ) : (
+              <View className="w-full items-center">
+                <AddCarModal
+                  isVisible={isAddCarModalVisible}
+                  onClose={toggleAddCarModal}
                 />
-              )}
-            />
-            {errors.car && (
-              <Text className="text-red-500">{errors.car.message}</Text>
+                <Text className="text-sm text-red-500 font-qbold  mb-3">
+                  No tenés autos registrados
+                </Text>
+                <Button
+                  className="w-[50%] h-[42] rounded-2xl items-center pb-0.5"
+                  onPress={toggleAddCarModal}
+                >
+                  <Text className="text-lg font-qsemibold text-white">
+                    Agregá un auto
+                  </Text>
+                </Button>
+              </View>
             )}
-          </View>
 
-          {data.cars.length > 0 ? (
-            <></>
-          ) : (
-            <View className="w-full items-center">
-              <AddCarModal
-                isVisible={isAddCarModalVisible}
-                onClose={toggleAddCarModal}
-              />
-              <Text className="text-sm text-red-500 font-qbold  mb-3">
-                No tenés autos registrados
-              </Text>
-              <Button
-                className="w-[50%] h-[42] rounded-2xl items-center pb-0.5"
-                onPress={toggleAddCarModal}
-              >
-                <Text className="text-lg font-qsemibold text-white">
-                  Agregá un auto
+            <XStack className="self-start mt-8 mb-3 ml-10">
+              <Text className="text-sm font-qbold text-black">
+                Indicá tus{" "}
+                <Text className="text-sm font-qbold text-primary">
+                  espacios disponibles
                 </Text>
-              </Button>
-            </View>
-          )}
-
-          <XStack className="mx-11 mb-5 mt-12">
-            <Text className="text-sm font-qbold text-black">
-              Indicá los
-              <Text className="text-sm font-qbold text-primary">
-                {" "}
-                espacios disponibles
-                <Text className="text-sm font-qbold text-black">
+              </Text>
+            </XStack>
+            <Window height={340}>
+              <YStack className="w-full items-start justify-center h-full">
+                <XStack className="w-full items-center justify-around px-5 ml-2 mb-3">
+                  <Image
+                    source={icons.profile2}
+                    className="w-8 h-8"
+                    resizeMode="contain"
+                  />
+                  <Controller
+                    control={control}
+                    name="availableSeats"
+                    render={({ field: { onChange, value } }) => (
+                      <Counter
+                        maxCount={4}
+                        count={value}
+                        handleChangeCount={onChange}
+                        bgColor="#eee"
+                      />
+                    )}
+                  />
+                  {errors.availableSeats && (
+                    <Text className="text-red-500">
+                      {errors.availableSeats.message}
+                    </Text>
+                  )}
+                </XStack>
+                <XStack className="w-full items-center justify-around px-5 ml-2 mb-3">
+                  <Image
+                    source={icons.mypackage}
+                    className="w-8 h-8"
+                    resizeMode="contain"
+                  />
+                  <Controller
+                    control={control}
+                    name="spacesSmallPackage"
+                    render={({ field: { onChange, value } }) => (
+                      <Counter
+                        maxCount={4}
+                        count={value}
+                        handleChangeCount={onChange}
+                        bgColor="#eee"
+                      />
+                    )}
+                  />
+                  {errors.spacesSmallPackage && (
+                    <Text className="text-red-500">
+                      {errors.spacesSmallPackage.message}
+                    </Text>
+                  )}
+                </XStack>
+                <XStack className="w-full items-center justify-around px-5 ml-2 mb-3">
+                  <Image
+                    source={icons.mypackage}
+                    className="w-10 h-10"
+                    resizeMode="contain"
+                  />
+                  <Controller
+                    control={control}
+                    name="spacesMediumPackage"
+                    render={({ field: { onChange, value } }) => (
+                      <Counter
+                        maxCount={4}
+                        count={value}
+                        handleChangeCount={onChange}
+                        bgColor="#eee"
+                      />
+                    )}
+                  />
+                  {errors.spacesMediumPackage && (
+                    <Text className="text-red-500">
+                      {errors.spacesMediumPackage.message}
+                    </Text>
+                  )}
+                </XStack>
+                <XStack className="w-full items-center justify-around px-5 ml-2">
+                  <Image
+                    source={icons.mypackage}
+                    className="w-12 h-12"
+                    resizeMode="contain"
+                  />
+                  <Controller
+                    control={control}
+                    name="spacesLargePackage"
+                    render={({ field: { onChange, value } }) => (
+                      <Counter
+                        maxCount={4}
+                        count={value}
+                        handleChangeCount={onChange}
+                        bgColor="#eee"
+                      />
+                    )}
+                  />
+                  {errors.spacesLargePackage && (
+                    <Text className="text-red-500">
+                      {errors.spacesLargePackage.message}
+                    </Text>
+                  )}
+                </XStack>
+              </YStack>
+            </Window>
+            <XStack className="self-start mt-8 ml-10 mb-3">
+              <Text className="text-sm font-qbold text-black">
+                Indicá los
+                <Text className="text-sm font-qbold text-primary">
                   {" "}
-                  en tu auto:
+                  precios
+                  <Text className="text-sm font-qbold text-black">
+                    {" "}
+                    que querés asignar:
+                  </Text>
                 </Text>
               </Text>
-            </Text>
-          </XStack>
-          <YStack className="w-full items-start justify-center mb-10">
-            <XStack className="w-full items-center justify-around px-10 ml-2 mb-3">
-              <Image
-                source={icons.profile2}
-                className="w-8 h-8"
-                resizeMode="contain"
-              />
-              <Controller
-                control={control}
-                name="availableSeats"
-                render={({ field: { onChange, value } }) => (
-                  <Counter
-                    maxCount={4}
-                    count={value}
-                    handleChangeCount={onChange}
-                  />
-                )}
-              />
-              {errors.availableSeats && (
-                <Text className="text-red-500">
-                  {errors.availableSeats.message}
-                </Text>
-              )}
             </XStack>
-            <XStack className="w-full items-center justify-around px-10 ml-2 mb-3">
-              <Image
-                source={icons.mypackage}
-                className="w-8 h-8"
-                resizeMode="contain"
-              />
-              <Controller
-                control={control}
-                name="spacesSmallPackage"
-                render={({ field: { onChange, value } }) => (
-                  <Counter
-                    maxCount={4}
-                    count={value}
-                    handleChangeCount={onChange}
-                  />
-                )}
-              />
-              {errors.spacesSmallPackage && (
-                <Text className="text-red-500">
-                  {errors.spacesSmallPackage.message}
-                </Text>
-              )}
-            </XStack>
-            <XStack className="w-full items-center justify-around px-10 ml-2 mb-3">
-              <Image
-                source={icons.mypackage}
-                className="w-10 h-10"
-                resizeMode="contain"
-              />
-              <Controller
-                control={control}
-                name="spacesMediumPackage"
-                render={({ field: { onChange, value } }) => (
-                  <Counter
-                    maxCount={4}
-                    count={value}
-                    handleChangeCount={onChange}
-                  />
-                )}
-              />
-              {errors.spacesMediumPackage && (
-                <Text className="text-red-500">
-                  {errors.spacesMediumPackage.message}
-                </Text>
-              )}
-            </XStack>
-            <XStack className="w-full items-center justify-around px-10 ml-2">
-              <Image
-                source={icons.mypackage}
-                className="w-12 h-12"
-                resizeMode="contain"
-              />
-              <Controller
-                control={control}
-                name="spacesLargePackage"
-                render={({ field: { onChange, value } }) => (
-                  <Counter
-                    maxCount={4}
-                    count={value}
-                    handleChangeCount={onChange}
-                  />
-                )}
-              />
-              {errors.spacesLargePackage && (
-                <Text className="text-red-500">
-                  {errors.spacesLargePackage.message}
-                </Text>
-              )}
-            </XStack>
-          </YStack>
-          <XStack className="mx-11 my-5 ">
-            <Text className="text-sm font-qbold text-black">
-              Indicá los
-              <Text className="text-sm font-qbold text-primary">
-                {" "}
-                precios
-                <Text className="text-sm font-qbold text-black">
-                  {" "}
-                  que querés asignar:
-                </Text>
-              </Text>
-            </Text>
-          </XStack>
-          <YStack className="w-full items-start mb-10 space-y-3">
-            <View className="w-full items-center justify-between">
-              <Controller
-                control={control}
-                name="pricePerson"
-                render={({ field: { onChange, value } }) => (
-                  <CustomInput
-                    keyboardType="numeric"
-                    title="Precio por persona"
-                    value={String(value)}
-                    handleChangeText={onChange}
-                  />
-                )}
-              />
-              {errors.pricePerson && (
-                <Text className="text-red-500">
-                  {errors.pricePerson.message}
-                </Text>
-              )}
-            </View>
-            <View className="w-full items-center justify-between">
-              <Controller
-                control={control}
-                name="priceSmallPackage"
-                render={({ field: { onChange, value } }) => (
-                  <CustomInput
-                    keyboardType="numeric"
-                    title="Precio por paquete chico"
-                    value={String(value)}
-                    handleChangeText={onChange}
-                  />
-                )}
-              />
-              {errors.priceSmallPackage && (
-                <Text className="text-red-500">
-                  {errors.priceSmallPackage.message}
-                </Text>
-              )}
-            </View>
-            <View className="w-full items-center justify-between">
-              <Controller
-                control={control}
-                name="priceMediumPackage"
-                render={({ field: { onChange, value } }) => (
-                  <CustomInput
-                    keyboardType="numeric"
-                    title="Precio por paquete mediano"
-                    value={String(value)}
-                    handleChangeText={onChange}
-                  />
-                )}
-              />
-              {errors.priceMediumPackage && (
-                <Text className="text-red-500">
-                  {errors.priceMediumPackage.message}
-                </Text>
-              )}
-            </View>
-            <View className="w-full items-center justify-between">
-              <Controller
-                control={control}
-                name="priceLargePackage"
-                render={({ field: { onChange, value } }) => (
-                  <CustomInput
-                    keyboardType="numeric"
-                    title="Precio por paquete grande"
-                    value={String(value)}
-                    handleChangeText={onChange}
-                  />
-                )}
-              />
-              {errors.priceLargePackage && (
-                <Text className="text-red-500">
-                  {errors.priceLargePackage.message}
-                </Text>
-              )}
-            </View>
-          </YStack>
-          <View className="items-center space-y-5 mx-12 mb-8">
-            <XStack className="items-center">
+            <Window height={520 + priceErrors * 50}>
+              <YStack className="h-full w-full items-start justify-start">
+                <Controller
+                  control={control}
+                  name="pricePerson"
+                  render={({ field: { onChange, value } }) => (
+                    <CustomInput
+                      width={"92%"}
+                      keyboardType="numeric"
+                      title="Precio por persona"
+                      value={String(value)}
+                      handleChangeText={onChange}
+                      hint={errors.pricePerson?.message}
+                      borderColor={
+                        errors.pricePerson ? "border-red-500" : undefined
+                      }
+                      prependIcon={
+                        <MaterialIcons
+                          name="attach-money"
+                          size={16}
+                          color="#808080"
+                        />
+                      }
+                    />
+                  )}
+                />
+                <Controller
+                  control={control}
+                  name="priceSmallPackage"
+                  render={({ field: { onChange, value } }) => (
+                    <CustomInput
+                      width={"92%"}
+                      keyboardType="numeric"
+                      title="Precio por paquete chico"
+                      value={String(value)}
+                      handleChangeText={onChange}
+                      hint={errors.priceSmallPackage?.message}
+                      borderColor={
+                        errors.priceSmallPackage ? "border-red-500" : undefined
+                      }
+                      prependIcon={
+                        <MaterialIcons
+                          name="attach-money"
+                          size={16}
+                          color="#808080"
+                        />
+                      }
+                    />
+                  )}
+                />
+                <Controller
+                  control={control}
+                  name="priceMediumPackage"
+                  render={({ field: { onChange, value } }) => (
+                    <CustomInput
+                      width={"92%"}
+                      keyboardType="numeric"
+                      title="Precio por paquete mediano"
+                      value={String(value)}
+                      handleChangeText={onChange}
+                      hint={errors.priceMediumPackage?.message}
+                      borderColor={
+                        errors.priceMediumPackage ? "border-red-500" : undefined
+                      }
+                      prependIcon={
+                        <MaterialIcons
+                          name="attach-money"
+                          size={16}
+                          color="#808080"
+                        />
+                      }
+                    />
+                  )}
+                />
+                <Controller
+                  control={control}
+                  name="priceLargePackage"
+                  render={({ field: { onChange, value } }) => (
+                    <CustomInput
+                      width={"92%"}
+                      keyboardType="numeric"
+                      title="Precio por paquete grande"
+                      value={String(value)}
+                      handleChangeText={onChange}
+                      hint={errors.priceLargePackage?.message}
+                      borderColor={
+                        errors.priceLargePackage ? "border-red-500" : undefined
+                      }
+                      prependIcon={
+                        <MaterialIcons
+                          name="attach-money"
+                          size={16}
+                          color="#808080"
+                        />
+                      }
+                    />
+                  )}
+                />
+              </YStack>
+            </Window>
+            <XStack className="items-center mx-12 mt-10 mb-12">
               <Link href="/(pages)/PostTripPage" asChild>
                 <Button className="w-8 h-8 bg-background">
                   <Image
@@ -438,23 +481,17 @@ export default function PostTripPage2() {
                 </Button>
               </Link>
               <ButtonNext
-                height={90}
-                width={270}
                 onPress={handleSubmit(handleContinue)}
+                variant="secondary"
               >
                 <Text className="text-2xl font-qsemibold text-white">
                   Publicar Viaje
                 </Text>
               </ButtonNext>
             </XStack>
-            <Link href="/(tabs)/home" asChild>
-              <Text className="text-base font-qsemibold text-red-500">
-                Cancelar publicación
-              </Text>
-            </Link>
-          </View>
-        </YStack>
-      </Pressable>
+          </YStack>
+        </Pressable>
+      </YStack>
     </ScrollView>
   );
 }

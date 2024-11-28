@@ -37,7 +37,7 @@ export default function DatePicker({
 
   return (
     <View className="w-full items-center">
-      <YStack className="items-start justify-center w-[85%] m-2">
+      <YStack className="items-start justify-center w-[85%]">
         <View className="w-full items-center">
           <View className="w-[95%]">
             <Text className="text-m font-qbold text-gray-600 mb-2">
@@ -66,9 +66,11 @@ export default function DatePicker({
             <ChevronDown size={20} color="#999" />
           </XStack>
         </Pressable>
-        <Text className="text-red-500 text-sm font-qsemibold pt-2 px-6 self-start">
-          {hint}
-        </Text>
+        {hint && (
+          <Text className="text-red-500 text-sm font-qsemibold pt-2 px-6 self-start">
+            {hint}
+          </Text>
+        )}
       </YStack>
 
       <DateTimePickerModal
