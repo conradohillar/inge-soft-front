@@ -100,7 +100,7 @@ export default function SearchTripPage() {
             )}
             name="toLocation"
           />
-          <View className="w-full items-start justify-center mt-3">
+          <View className="w-full items-start justify-center mt-4">
             <Controller
               control={control}
               rules={{ required: true }}

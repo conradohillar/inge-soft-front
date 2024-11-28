@@ -1,15 +1,4 @@
-import React, { useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Header from "../../components/Header";
-import {
-  View,
-  Text,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { View, Text } from "react-native";
 import { YStack, XStack } from "tamagui";
 import { useRouter } from "expo-router";
 import AutocompleteCityInput from "../../components/AutocompleteCityInput";
@@ -61,115 +50,100 @@ export default function PostTripPage() {
   };
 
   return (
-    <ScrollView className="h-full bg-background">
-      <XStack className="items-center justify-center mt-8 mb-3">
-        <Text className="text-[27px] font-qbold text-primary">Publicá</Text>
-        <Text className="text-[27px] font-qsemibold text-black"> tu viaje</Text>
-      </XStack>
-      <YStack className="mb-6">
-        <Controller
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
-            <AutocompleteCityInput
-              title="Desde"
-              placeholder="i.e: Tigre"
-              setValue={onChange}
-              value={value}
-            />
-          )}
-          name="fromLocation"
-        />
-        {errors.fromLocation && (
-          <Text className="text-red-500 text-center pt-3">
-            {errors.fromLocation.message}
-          </Text>
-        )}
-
-        <Controller
-          control={control}
-          rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
-            <AutocompleteCityInput
-              title="Hasta"
-              placeholder="i.e: Mar del Plata"
-              setValue={onChange}
-              value={value}
-            />
-          )}
-          name="toLocation"
-        />
-        {errors.toLocation && (
-          <Text className="text-red-500 text-center pt-3">
-            {errors.toLocation.message}
-          </Text>
-        )}
-
-        <View className="w-full items-start justify-center mt-3">
-          <Controller
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <DatePicker
-                style={{ backgroundColor: "#EEEEEE" }}
-                placeholderTextColor="#777"
-                value={value}
-                onChangeDate={onChange}
-                title={"Fecha de salida"}
-              />
-            )}
-            name="date"
-          />
-        </View>
-        {errors.date && (
-          <Text className="text-red-500 text-center pt-3">
-            {errors.date.message}
-          </Text>
-        )}
-
-        <View className="w-full items-start justify-center pt-3">
-          <Controller
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <TimePicker
-                style={{ backgroundColor: "#EEEEEE" }}
-                placeholderTextColor="#777"
-                value={value}
-                onChangeTime={onChange}
-                minuteInterval={30}
-                title={"Hora de salida"}
-              />
-            )}
-            name="time"
-          />
-        </View>
-        {errors.time && (
-          <Text className="text-red-500 text-center pt-3">
-            {errors.time.message}
-          </Text>
-        )}
-        <XStack className="items-center mt-3 px-12">
-          <Text className="text-sm text-gray-400 font-qsemibold">
-            Nota: se asignará automáticamente una franja de
-            <Text className="text-sm text-primary font-qbold"> 1 hora.</Text>
-          </Text>
+    <View className="h-full w-full bg-background items-center justify-center">
+      <YStack className="h-[92%] w-full items-center justify-evenly">
+        <XStack className="items-center justify-center">
+          <Text className="text-3xl font-qbold text-primary">Publicá</Text>
+          <Text className="text-3xl font-qsemibold text-black"> tu viaje</Text>
         </XStack>
-      </YStack>
-      <View className="items-center space-y-2">
-        <View className="w-[92%]">
+        <YStack className="items-center w-full">
+          <Controller
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value } }) => (
+              <AutocompleteCityInput
+                title="Desde"
+                placeholder="i.e: Tigre"
+                setValue={onChange}
+                value={value}
+                hint={errors.fromLocation?.message}
+                borderColor={errors.fromLocation ? "#FF0000" : undefined}
+              />
+            )}
+            name="fromLocation"
+          />
+          <Controller
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value } }) => (
+              <AutocompleteCityInput
+                title="Hasta"
+                placeholder="i.e: Mar del Plata"
+                setValue={onChange}
+                value={value}
+                hint={errors.toLocation?.message}
+                borderColor={errors.toLocation ? "#FF0000" : undefined}
+              />
+            )}
+            name="toLocation"
+          />
+          <View className="w-full items-start justify-center mt-4">
+            <Controller
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { onChange, value } }) => (
+                <DatePicker
+                  placeholderTextColor="#999"
+                  value={value}
+                  onChangeDate={onChange}
+                  title={"Fecha de salida"}
+                  hint={errors.date?.message}
+                  borderColor={
+                    errors.date ? "border border-red-500" : undefined
+                  }
+                />
+              )}
+              name="date"
+            />
+          </View>
+          <View className="w-full items-start justify-center mt-4">
+            <Controller
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { onChange, value } }) => (
+                <TimePicker
+                  placeholderTextColor="#999"
+                  value={value}
+                  onChangeTime={onChange}
+                  minuteInterval={30}
+                  title={"Hora de salida"}
+                  hint={errors.time?.message}
+                  borderColor={
+                    errors.time ? "border border-red-500" : undefined
+                  }
+                />
+              )}
+              name="time"
+            />
+            <XStack className="items-center px-12 mt-3">
+              <Text className="text-sm text-gray-400 font-qsemibold">
+                Nota: se asignará automáticamente una franja de
+                <Text className="text-sm text-primary font-qbold">
+                  {" "}
+                  1 hora.
+                </Text>
+              </Text>
+            </XStack>
+          </View>
+        </YStack>
+        <View className="w-[92%] items-center mt-3">
           <ButtonNext onPress={handleSubmit(handleContinue)}>
             <Text className="text-2xl font-qsemibold text-white">
               Continuar
             </Text>
           </ButtonNext>
         </View>
-        <Link href="/(tabs)/home" asChild>
-          <Text className="text-base font-qsemibold text-red-500">
-            Cancelar publicación
-          </Text>
-        </Link>
-      </View>
-    </ScrollView>
+      </YStack>
+    </View>
   );
 }
