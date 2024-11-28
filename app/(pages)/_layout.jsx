@@ -12,8 +12,9 @@ const PagesLayout = () => {
   return (
     <>
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"} // "padding" para iOS, "height" para Android
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -100}
       >
         <TouchableWithoutFeedback
           onPress={Keyboard.dismiss}

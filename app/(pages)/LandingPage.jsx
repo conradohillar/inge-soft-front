@@ -13,14 +13,18 @@ export default function LandingPage() {
       </View>
       <YStack className="items-center justify-center w-full h-[50%] space-y-2">
         <View className="w-[90%]">
-          <BlackButton href="/(auth)/sign-in">
+          <BlackButton href="/(auth)/sign-in" height={75}>
             <Text className="text-[22px] font-qsemibold text-white">
               Iniciar sesión
             </Text>
           </BlackButton>
         </View>
         <View className="w-[90%]">
-          <BlackButton href="/(tabs)/home" variant={"secondary"}>
+          <BlackButton
+            href="/(pages)/SearchTripPerson"
+            variant={"secondary"}
+            height={75}
+          >
             <XStack className="items-center justify-center flex-row space-x-3">
               <Text className="text-[22px] font-qsemibold text-white">
                 Continuar sin cuenta
