@@ -40,9 +40,6 @@ export default function TripUpcomingDetailForDriver() {
     let currentDateTime = new Date();
     currentDateTime = new Date(currentDateTime.getTime() - 3 * 60 * 60000);
 
-    console.log(currentDateTime);
-    console.log(receivedDateTimeMinus30Min);
-
     return currentDateTime >= receivedDateTimeMinus30Min;
   }
 

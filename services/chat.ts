@@ -14,8 +14,6 @@ export const connect = async (chat_id:String, user_id:String) => {
     wc.onmessage = (event) => {
         const messageData = JSON.parse(event.data);
         const previousMessages : [] = queryClient.getQueryData(["getMessages", chat_id]) || [];
-        console.log("previousMessages", previousMessages);
-        console.log("messageData", messageData);
         switch (messageData.action) {
             case 'new_message':
                 if(messageData.writer_id == user_id)
