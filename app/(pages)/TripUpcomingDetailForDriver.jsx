@@ -99,7 +99,6 @@ export default function TripUpcomingDetailForDriver() {
       <ScrollView className="w-full">
         <Pressable>
           <YStack className="items-start justify-between w-full px-6 pb-8 pt-4 mb-1 border-b-2 border-b-[#eee]">
-            {/* Sección Origen y Destino - Rediseñada */}
             <YStack space="$4" className="w-full mb-8">
               <YStack space="$2" className="w-full mb-3">
                 <Text className="text-sm font-qsemibold text-primary">
