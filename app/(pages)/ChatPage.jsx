@@ -27,30 +27,6 @@ import LoadingPage from "./LoadingPage";
 import ErrorPage from "./ErrorPage";
 import { queryClient } from "../_layout";
 
-const MessageBubble = ({ message, time, isOwnMessage, children }) => (
-  <View
-    className={`max-w-[80%] rounded-2xl px-4 py-2 mb-2 ${
-      isOwnMessage ? "bg-primary self-end" : "bg-gray-200 self-start"
-    }`}
-  >
-    <Text
-      className={`text-base font-qsemibold ${
-        isOwnMessage ? "text-white" : "text-black"
-      }`}
-    >
-      {message}
-    </Text>
-    <Text
-      className={`text-xs font-qregular ${
-        isOwnMessage ? "text-white" : "text-gray-500"
-      }`}
-    >
-      {time ? time : <Send size={12} color={isOwnMessage ? "white" : "gray"} />}
-    </Text>
-    {children}
-  </View>
-);
-
 export default function ChatPage() {
   const chatId = "superchar123";
   const { globalState } = useGlobalState();
@@ -130,6 +106,7 @@ export default function ChatPage() {
           return {
             ...message,
             msg: newMessage,
+            edited: true,
           };
         }
         return message;
@@ -143,7 +120,7 @@ export default function ChatPage() {
   const getMessageDate = (sent_at) => {
     if (!sent_at) return null;
     const date = new Date(sent_at);
-    // Convert to Argentina timezone (UTC-3)
+
     date.setHours(date.getHours() - 3);
     return date.toISOString().slice(0, 10);
   };
@@ -166,7 +143,44 @@ export default function ChatPage() {
       </Text>
     </View>
   );
-
+  const MessageBubble = ({ message, time, isOwnMessage, children, edited }) => (
+    <View
+      className={`max-w-[80%] rounded-2xl px-4 py-2 mb-2 ${
+        isOwnMessage ? "bg-primary self-end" : "bg-gray-200 self-start"
+      }`}
+    >
+      <Text
+        className={`text-base font-qsemibold ${
+          isOwnMessage ? "text-white" : "text-black"
+        }`}
+      >
+        {message}
+      </Text>
+      <XStack className="justify-between items-center">
+        <Text
+          className={`text-xs font-qregular ${
+            isOwnMessage ? "text-white" : "text-gray-500"
+          }`}
+        >
+          {time ? (
+            time
+          ) : (
+            <Send size={12} color={isOwnMessage ? "white" : "gray"} />
+          )}
+        </Text>
+        {edited && (
+          <Text
+            className={`text-xs font-qregular italic ${
+              isOwnMessage ? "text-white" : "text-gray-500"
+            }`}
+          >
+            modificado
+          </Text>
+        )}
+      </XStack>
+      {children}
+    </View>
+  );
   const renderMessage = ({ item, index }) => {
     const currentDate = getMessageDate(item.sent_at);
     const prevDate =
@@ -184,6 +198,7 @@ export default function ChatPage() {
             message={item.msg}
             time={getMessageTime(item.sent_at)}
             isOwnMessage={item.writer_id === globalState.userId}
+            edited={item.edited}
           />
         </Pressable>
         {showDateSeparator && renderDateSeparator(currentDate)}
@@ -194,6 +209,14 @@ export default function ChatPage() {
   if (isLoading || loadingOtherUser) return <LoadingPage />;
 
   if (error || errorOtherUser) return <ErrorPage />;
+
+  const isRecentMessage = (sent_at) => {
+    console.log(sent_at);
+    if (!sent_at) return false;
+    const messageTime = new Date(sent_at).getTime();
+    const currentTime = new Date().getTime();
+    return currentTime - messageTime <= 10 * 60 * 1000; // 10 minutes in milliseconds
+  };
 
   return (
     <View className="flex-1 bg-background">
@@ -211,11 +234,10 @@ export default function ChatPage() {
         <FlatList
           data={data}
           renderItem={renderMessage}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.msg_id}
           contentContainerStyle={{ padding: 16 }}
           inverted={true}
           className="flex-1"
-          // REVISARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
           onEndReached={() => {
             if (data.length > 0) {
               setLimit(limit + 20);
@@ -316,27 +338,32 @@ export default function ChatPage() {
                       Copiar mensaje
                     </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    className="flex-row items-center p-4"
-                    onPress={handleDeleteMessage}
-                  >
-                    <Trash size={20} color="#FF0000" />
-                    <Text className="ml-3 font-qmedium text-red-500">
-                      Eliminar mensaje
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    className="flex-row items-center p-4"
-                    onPress={() => {
-                      setEditingMessage(selectedMessage.msg);
-                      setIsEditing(true);
-                    }}
-                  >
-                    <Pencil size={20} color="#309090" />
-                    <Text className="ml-3 font-qmedium" color="#309090">
-                      Editar mensaje
-                    </Text>
-                  </TouchableOpacity>
+                  {selectedMessage !== null &&
+                    isRecentMessage(selectedMessage.sent_at) && (
+                      <>
+                        <TouchableOpacity
+                          className="flex-row items-center p-4"
+                          onPress={handleDeleteMessage}
+                        >
+                          <Trash size={20} color="#FF0000" />
+                          <Text className="ml-3 font-qmedium text-red-500">
+                            Eliminar mensaje
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          className="flex-row items-center p-4"
+                          onPress={() => {
+                            setEditingMessage(selectedMessage.msg);
+                            setIsEditing(true);
+                          }}
+                        >
+                          <Pencil size={20} color="#309090" />
+                          <Text className="ml-3 font-qmedium" color="#309090">
+                            Editar mensaje
+                          </Text>
+                        </TouchableOpacity>
+                      </>
+                    )}
                 </>
               )}
             </YStack>
