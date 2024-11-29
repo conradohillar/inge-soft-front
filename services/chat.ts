@@ -1,7 +1,6 @@
 import { LOCAL_IP } from '@env';
 import { getToken, getHeaderWithToken, handleRequest } from './utils';
 import axios from 'axios';
-import { useQueryClient } from '@tanstack/react-query';
 import { queryClient } from '../app/_layout';
 
 
@@ -10,29 +9,29 @@ const BASE_URL = `http://${LOCAL_IP}:8000/chat`;
 let wc: WebSocket;
 
 
-export const connect = async (chat_id:String) => {
+export const connect = async (chat_id:String, user_id:String) => {
     wc = new WebSocket(`ws://${LOCAL_IP}:8000/chat/${chat_id}?token=${await getToken()}`);
     wc.onmessage = (event) => {
         const messageData = JSON.parse(event.data);
         const previousMessages : [] = queryClient.getQueryData(["getMessages", chat_id]) || [];
+        console.log("previousMessages", previousMessages);
+        console.log("messageData", messageData);
         switch (messageData.action) {
             case 'new_message':
-                queryClient.setQueryData(["getMessages", chat_id], [messageData, ...previousMessages]);
+                if(messageData.writer_id == user_id)
+                    queryClient.setQueryData(["getMessages", chat_id], [messageData, ...previousMessages.slice(1)]);
+                else
+                    queryClient.setQueryData(["getMessages", chat_id], [messageData, ...previousMessages]);
                 break;
             case 'edit_message':
-                queryClient.setQueryData(["getMessages", chat_id], previousMessages.map((message: any) => {
-                    if (message.msg_id === messageData.msg_id) {
-                        return { ...message, msg: messageData.msg };
-                    }
+                queryClient.setQueryData(["getMessages", chat_id], previousMessages.map((message:any) => {
+                    if(message.msg_id == messageData.msg_id)
+                        return {...message, msg: messageData.msg};
                     return message;
                 }));
-                
                 break;
             case 'remove_message':
-                queryClient.setQueryData(["getMessages", chat_id], (previousMessages: []) => {
-                    return previousMessages.filter((message: any) => message.msg_id !== messageData.msg_id);
-                }
-                );
+                queryClient.setQueryData(["getMessages", chat_id], previousMessages.filter((message:any) => message.msg_id != messageData.msg_id));
                 break;
             default:
                 console.error("Si llega aca revisar el back, algo esta mal, siempre deberia caer en uno de los casos de arriba")
@@ -68,7 +67,7 @@ export const getMessages = async (chat_id: string, limit: Number = 20, before: D
 export const updateMessage = async (message_id: string, message: string) => {
     const headers = await getHeaderWithToken();
     const url = `${BASE_URL}/message/${message_id}?new_message=${message}`;
-    return await handleRequest(() => axios.put(url, { headers }));
+    return await handleRequest(() => axios.put(url, null,{ headers }));
 
 }
 

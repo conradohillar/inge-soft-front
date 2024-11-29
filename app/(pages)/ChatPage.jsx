@@ -23,7 +23,7 @@ import {
 import { useGlobalState } from "../_layout";
 import LoadingPage from "./LoadingPage";
 import ErrorPage from "./ErrorPage";
-import ButtonNext from "../../components/VarButton";
+import { queryClient } from "../_layout";
 
 export default function ChatPage() {
   const chatId = "superchar123";
@@ -49,7 +49,7 @@ export default function ChatPage() {
   });
 
   useEffect(() => {
-    connect(chatId);
+    connect(chatId, globalState.userId);
 
     return () => {
       disconnect(chatId);
@@ -57,24 +57,54 @@ export default function ChatPage() {
   }, [chatId]);
 
   const handleSendMessage = async () => {
+    if (!message) return;
+    queryClient.setQueryData(["getMessages", chatId], (oldData) => [
+      {
+        id: "",
+        msg: message,
+        writer_id: globalState.userId,
+        sent_at: null,
+      },
+      ...oldData,
+    ]);
     await sendMessage(message);
     setMessage("");
   };
 
   const handleLongPress = (item) => {
     if (item.writer_id === globalState.userId) {
-      setSelectedMessage(item.msg_id);
+      setSelectedMessage(item);
     }
   };
 
   const handleCopyMessage = () => {};
 
-  const handleDeleteMessage = () => {
-    removeMessage(selectedMessage.msg_id);
+  const handleDeleteMessage = async () => {
+    queryClient.setQueryData(["getMessages", chatId], (previousMessages) => {
+      return previousMessages.filter(
+        (message) => message.msg_id !== selectedMessage.msg_id
+      );
+    });
+    const aux = selectedMessage.msg_id;
+    setSelectedMessage(null);
+    await removeMessage(aux);
   };
 
-  const handleUpdateMessage = () => {
-    updateMessage(selectedMessage.msg_id, "Nuevo mensaje"); //cuando tocan en el lapiz de editar deberiamos abrir un modal con un input para editar el mensaje y aca enviar el valor de ese input
+  const handleUpdateMessage = async (newMessage) => {
+    queryClient.setQueryData(["getMessages", chatId], (previousMessages) => {
+      return previousMessages.map((message) => {
+        if (message.msg_id === selectedMessage.msg_id) {
+          return {
+            ...message,
+            msg: newMessage,
+          };
+        }
+        return message;
+      });
+    });
+    const aux = selectedMessage.msg_id;
+    setSelectedMessage(null);
+    await updateMessage(aux, newMessage);
   };
 
   const renderMessage = ({ item }) => (
@@ -100,7 +130,14 @@ export default function ChatPage() {
               : "text-gray-500"
           }`}
         >
-          {item.sent_at}
+          {item.sent_at ? (
+            item.sent_at
+          ) : (
+            <Send
+              size={12}
+              color={item.writer_id === globalState.userId ? "white" : "gray"}
+            />
+          )}
         </Text>
       </View>
     </Pressable>
@@ -118,7 +155,7 @@ export default function ChatPage() {
             <ArrowLeft size={24} color="black" />
           </Pressable>
           <Text className="text-xl font-qbold text-black flex-1 text-center">
-            {dataOtherUser.name}
+            {dataOtherUser.username}
           </Text>
           <View style={{ width: 24 }} />
         </XStack>
@@ -178,7 +215,7 @@ export default function ChatPage() {
             </TouchableOpacity>
             <TouchableOpacity
               className="flex-row items-center p-4"
-              onPress={handleUpdateMessage}
+              onPress={() => handleUpdateMessage("Hola mundooooooooooooooo")}
             >
               <Pencil size={20} color="#FF0000" />
               <Text className="ml-3 font-qmedium text-red-500">
