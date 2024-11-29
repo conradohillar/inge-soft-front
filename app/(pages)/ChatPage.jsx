@@ -15,10 +15,12 @@ import {
   connect,
   disconnect,
   getMessages,
+  getOtherUser,
   sendMessage,
 } from "../../services/chat";
 import { useGlobalState } from "../_layout";
 import LoadingPage from "./LoadingPage";
+import ErrorPage from "./ErrorPage";
 
 export default function ChatPage() {
   const chatId = "superchar123";
@@ -32,6 +34,15 @@ export default function ChatPage() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["getMessages", chatId],
     queryFn: () => getMessages(chatId),
+  });
+
+  const {
+    isLoading: loadingOtherUser,
+    error: errorOtherUser,
+    data: dataOtherUser,
+  } = useQuery({
+    queryKey: ["getOtherUser", chatId],
+    queryFn: () => getOtherUser(chatId),
   });
 
   useEffect(() => {
@@ -88,7 +99,9 @@ export default function ChatPage() {
     </Pressable>
   );
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading || loadingOtherUser) return <LoadingPage />;
+
+  if (error || errorOtherUser) return <ErrorPage />;
 
   return (
     <View className="flex-1 bg-background">

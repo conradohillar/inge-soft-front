@@ -67,4 +67,9 @@ export const removeMessage = async (message_id: string) => {
     return await handleRequest(() => axios.delete(url, { headers }));
 }
 
+export const getOtherUser = async (chat_id: string) => {
+    const headers = await getHeaderWithToken();
+    const url = `${BASE_URL}/other_user/${chat_id}`;
+    return await handleRequest(() => axios.get(url, { headers }));
+}
 
