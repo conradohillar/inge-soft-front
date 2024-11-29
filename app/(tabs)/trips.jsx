@@ -2,7 +2,6 @@ import { Text, View } from "react-native";
 import { YStack, XStack, SizableText, Separator, YGroup } from "tamagui";
 import { useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
-import icons from "../../constants/icons";
 import { CustomListItem } from "../../components/CustomListItem";
 
 export default function Trips() {
@@ -29,12 +28,10 @@ export default function Trips() {
           Mis viajes
         </SizableText>
       </View>
-      <YGroup alignSelf="center" width={"100%"} height={"70%"}>
+      <YGroup alignSelf="center" width={"100%"} height={"60%"}>
         <Separator />
         <YGroup.Item>
           <CustomListItem
-            hoverTheme
-            pressTheme
             icon={<MaterialIcons name="person" size={32} color="#666666" />}
             iconAfter={
               <MaterialIcons name="chevron-right" size={32} color="#666666" />
@@ -49,8 +46,6 @@ export default function Trips() {
         <Separator />
         <YGroup.Item>
           <CustomListItem
-            hoverTheme
-            pressTheme
             icon={<MaterialIcons name="drive-eta" size={32} color="#666666" />}
             iconAfter={
               <MaterialIcons name="chevron-right" size={32} color="#666666" />

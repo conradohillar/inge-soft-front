@@ -1,13 +1,13 @@
-import { forwardRef } from "react";
-import { ListItemFrame, Text, styled, themeable, useListItem } from "tamagui";
+import { ListItemFrame, styled, useListItem } from "tamagui";
 
 const CustomListItemFrame = styled(ListItemFrame, {
-  backgroundColor: "#FFFFFF",
   height: 100,
-  pressStyle: {
-    backgroundColor: "#F5F5F5",
-  },
   alignItems: "center",
+  paddingStart: 30,
+  backgroundColor: "#F7F7F7",
+  pressStyle: {
+    backgroundColor: "#d0d0d0",
+  },
 });
 
 export const CustomListItem = CustomListItemFrame.styleable((propsIn, ref) => {

@@ -10,6 +10,7 @@ import ErrorPage from "./ErrorPage";
 import { getReservationData } from "../../services/rides";
 import icons from "../../constants/icons";
 import { handleReservation } from "../../services/rides";
+import Window from "../../components/Window";
 
 export default function ReservationRequest() {
   const { ride_id } = useLocalSearchParams();
@@ -74,15 +75,17 @@ export default function ReservationRequest() {
 
   if (data.length === 0) {
     return (
-      <View className="bg-background h-full w-full">
-        <XStack className="items-center justify-center mt-10 mb-7 bg-background">
-          <Text className="text-[22px] font-qbold text-primary">
-            No hay solicitudes{" "}
-          </Text>
-          <Text className="text-[22px] font-qbold text-black">
-            para tu viaje
-          </Text>
-        </XStack>
+      <View className="bg-background h-full w-full items-center justify-center">
+        <Window height={200} width={"90%"}>
+          <YStack className="items-center justify-center h-full">
+            <Text className="text-2xl font-qbold text-primary">
+              No hay solicitudes{" "}
+            </Text>
+            <Text className="text-2xl font-qbold text-black">
+              para tu viaje
+            </Text>
+          </YStack>
+        </Window>
       </View>
     );
   }
