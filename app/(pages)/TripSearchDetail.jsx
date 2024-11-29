@@ -330,7 +330,7 @@ export default function TripSearchDetail() {
               </Link>
             </View>
           </YStack>
-          <YStack className="items-center justify-between w-full px-4 pb-8 pt-3 mb-12 border-t-2 border-t-[#eee]">
+          <YStack className="items-center justify-between w-full px-4 pb-8 pt-3 mb-5 border-t-2 border-t-[#eee]">
             <Text className="self-start text-sm font-qbold text-[#ccc] mb-6">
               Confirmá tu reserva
             </Text>
@@ -391,7 +391,7 @@ export default function TripSearchDetail() {
               </YStack>
             </Window>
             <View className="w-full items-center justify-center my-6">
-              <Text className="text-xl font-qbold text-grey-800 mb-3">
+              <Text className="text-2xl font-qbold text-red-600 mb-3">
                 Costo: ${price}
               </Text>
             </View>

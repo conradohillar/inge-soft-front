@@ -3,6 +3,7 @@ import { Image, View, Text, Pressable } from "react-native";
 import { Button, XStack, YStack, Avatar } from "tamagui";
 import icons from "../constants/icons";
 import { Link } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function RequestCard({
   username,
@@ -19,42 +20,58 @@ export default function RequestCard({
     <View className="py-3">
       <Pressable
         style={({ pressed }) => ({
-          height: 270,
-          width: 350,
-          paddingVertical: 15,
-          paddingHorizontal: 18,
-          marginHorizontal: 6,
-          borderWidth: 2,
-          borderColor: "#ccc",
-          borderRadius: 40,
-          backgroundColor: "#eee",
+          transform: [{ scale: pressed ? 0.98 : 1 }],
         })}
       >
-        <YStack className="w-full">
-          <XStack className="w-full items-center justify-start ml-4 space-x-3 mb-6">
-            <Avatar circular size="$7" borderColor="$black" borderWidth={1}>
-              <Avatar.Image
-                src={photo === "" ? icons.placeholder_profile : photo}
-              />
-              <Avatar.Fallback backgroundColor="$gray8" />
-            </Avatar>
-            <YStack>
-              <Text className="font-qbold text-base mb-1 mt-2">{username}</Text>
-              <Link
-                href={{
-                  pathname: "/(pages)/UserProfile",
-                  params: { user_id: userId, category: "rider" },
-                }}
-                asChild
-              >
-                <Text className="font-qsemibold text-sm underline text-gray-500">
-                  Ver perfil del pasajero
+        <View
+          className="h-[300px] w-[350px] mx-1.5 rounded-[32px] bg-[#fafafa] border border-gray-100 overflow-hidden"
+          style={{
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.08,
+            shadowRadius: 8,
+            elevation: 3,
+          }}
+        >
+          <LinearGradient
+            colors={["#59A58A", "#7AB5A0"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{
+              paddingVertical: 15,
+              paddingHorizontal: 18,
+            }}
+          >
+            <XStack className="items-center space-x-3">
+              <Avatar circular size="$8" borderColor="white" borderWidth={2}>
+                <Avatar.Image
+                  src={photo === "" ? icons.placeholder_profile : photo}
+                />
+                <Avatar.Fallback backgroundColor="$gray8" />
+              </Avatar>
+              <YStack space="$1">
+                <Text className="font-qbold text-lg text-white">
+                  {username}
                 </Text>
-              </Link>
-            </YStack>
-          </XStack>
-          <YStack className="w-full items-start mb-8">
-            <Text className="font-qsemibold text-gray-600 text-base mb-1 ml-3">
+                <Link
+                  href={{
+                    pathname: "/(pages)/UserProfile",
+                    params: { user_id: userId, category: "rider" },
+                  }}
+                  asChild
+                >
+                  <Text className="font-qsemibold text-sm text-white/80 underline">
+                    Ver perfil del pasajero
+                  </Text>
+                </Link>
+              </YStack>
+            </XStack>
+          </LinearGradient>
+          <YStack className="w-full items-start mb-8 bg-[#fafafa]">
+            <Text className="font-qsemibold text-gray-600 text-base my-3 ml-3">
               Espacios reservados:
             </Text>
             <XStack className="w-full justify-evenly items-center">
@@ -100,29 +117,51 @@ export default function RequestCard({
               </XStack>
             </XStack>
           </YStack>
-          <XStack className="w-full justify-evenly">
+          <XStack className="w-full justify-evenly bg-[#fafafa]">
             <Button
               onPress={() => handleAccept(userId)}
-              className="w-20 h-11 bg-green-400 rounded-3xl border-1 border-black"
+              className="w-20 h-11 bg-green-400 rounded-3xl"
+              pressStyle={{ opacity: 0.8 }}
+              style={{
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.1,
+                shadowRadius: 6,
+                elevation: 2,
+              }}
             >
               <Image
                 source={icons.tick}
-                className="h-8 w-8"
+                className="h-6 w-6"
                 resizeMode="contain"
               />
             </Button>
             <Button
               onPress={() => handleDismiss(userId)}
-              className="w-30 h-11 bg-red-400 rounded-3xl border-1 border-black"
+              className="w-20 h-11 bg-red-400 rounded-3xl"
+              pressStyle={{ opacity: 0.8 }}
+              style={{
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.1,
+                shadowRadius: 6,
+                elevation: 2,
+              }}
             >
               <Image
                 source={icons.cross}
-                className="h-10 w-10"
+                className="h-7 w-7"
                 resizeMode="contain"
               />
             </Button>
           </XStack>
-        </YStack>
+        </View>
       </Pressable>
     </View>
   );

@@ -14,7 +14,7 @@ const Comment = ({ photoUrl, username, date, body, rating }) => {
         </View>
         <Text className="text-black text-base font-qsemibold">{username}</Text>
       </XStack>
-      <XStack className="items-center ml-2 space-x-3 mb-2">
+      <XStack className="items-center ml-2 space-x-3 mb-3">
         <RatingStars rating={rating} size={20} />
         <Text className="text-gray-500 text-xs font-qsemibold">{date}</Text>
       </XStack>
