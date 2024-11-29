@@ -99,53 +99,51 @@ export default function TripUpcomingDetailForDriver() {
       <ScrollView className="w-full">
         <Pressable>
           <YStack className="items-start justify-between w-full px-6 pb-8 pt-4 mb-1 border-b-2 border-b-[#eee]">
-            <Text className="text-sm font-qbold text-[#ccc] mb-6">
-              Logísticos
-            </Text>
-
-            {/* Sección Origen y Destino */}
-            <XStack className="w-full justify-between items-start mb-8">
-              <YStack space="$2" className="flex-1">
-                <Text className="text-sm font-qsemibold text-gray-500">
+            {/* Sección Origen y Destino - Rediseñada */}
+            <YStack space="$4" className="w-full mb-8">
+              <YStack space="$2" className="w-full mb-3">
+                <Text className="text-sm font-qsemibold text-primary">
                   Origen
                 </Text>
-                <Text className="text-lg font-qbold text-black">
-                  {data.city_from}
-                </Text>
+                <XStack className="items-center space-x-3">
+                  <MaterialIcons name="trip-origin" size={24} color="#00AA00" />
+                  <Text className="text-lg font-qbold text-black flex-1 flex-wrap">
+                    {data.city_from}
+                  </Text>
+                </XStack>
               </YStack>
 
-              <Image
-                source={icons.arrowright}
-                className="h-6 w-6 mt-6 mx-4"
-                resizeMode="contain"
-                tintColor="#666666"
-              />
-
-              <YStack space="$2" className="flex-1">
-                <Text className="text-sm font-qsemibold text-gray-500">
+              <YStack space="$2" className="w-full mb-2">
+                <Text className="text-sm font-qsemibold text-primary">
                   Destino
                 </Text>
-                <Text className="text-lg font-qbold text-black">
-                  {data.city_to}
-                </Text>
+                <XStack className="items-center space-x-3">
+                  <MaterialIcons name="place" size={24} color="#DD0000" />
+                  <Text className="text-lg font-qbold text-black flex-1 flex-wrap">
+                    {data.city_to}
+                  </Text>
+                </XStack>
               </YStack>
-            </XStack>
+            </YStack>
 
             {/* Sección Fecha y Hora */}
-            <YStack space="$4" className="w-full mb-8">
+            <YStack space="$3.5" className="w-full mb-8">
+              <Text className="text-sm font-qsemibold text-primary">
+                Fecha y hora
+              </Text>
               <XStack className="items-center space-x-3">
                 <MaterialIcons
                   name="calendar-today"
                   size={24}
-                  color="#666666"
+                  color="#AA00FF"
                 />
                 <Text className="text-lg font-qbold text-black">
                   {data.date}
                 </Text>
               </XStack>
 
-              <XStack className="items-center space-x-3">
-                <MaterialIcons name="access-time" size={24} color="#666666" />
+              <XStack className="items-end space-x-3">
+                <MaterialIcons name="access-time" size={24} color="#EEB800" />
                 <Text className="text-lg font-qbold text-black">
                   {data.start_minimum_time.split(":").slice(0, 2).join(":")} -{" "}
                   {data.start_maximum_time.split(":").slice(0, 2).join(":")}
@@ -154,8 +152,8 @@ export default function TripUpcomingDetailForDriver() {
             </YStack>
 
             {/* Sección Vehículo */}
-            <YStack space="$2" className="w-full mb-8">
-              <Text className="text-sm font-qsemibold text-gray-500">
+            <YStack space="$2" className="w-full mb-6">
+              <Text className="text-sm font-qsemibold text-primary">
                 Vehículo
               </Text>
               <XStack className="items-center space-x-3">
@@ -164,7 +162,7 @@ export default function TripUpcomingDetailForDriver() {
                   size={24}
                   color="#666666"
                 />
-                <Text className="text-lg font-qbold text-black">
+                <Text className="text-lg font-qbold text-black pl-1">
                   {data.car_model}
                 </Text>
                 <Text className="text-base font-qsemibold text-gray-500">
@@ -173,14 +171,16 @@ export default function TripUpcomingDetailForDriver() {
               </XStack>
             </YStack>
 
-            {/* Sección Espacios Disponibles */}
-            <Text className="text-sm font-qsemibold text-gray-500 mb-4">
+            {/* Sección Espacios Disponibles - Ajustada */}
+            <Text className="text-sm font-qsemibold text-primary my-4">
               Espacios disponibles
             </Text>
-            <YStack space="$3" className="w-full">
+            <YStack space="$4" className="w-full pr-2">
               <XStack className="items-center justify-between w-full">
-                <XStack className="items-center space-x-3">
-                  <MaterialIcons name="person" size={24} color="#666666" />
+                <XStack className="items-center space-x-3 flex-1">
+                  <View className="w-7 items-center mr-2">
+                    <MaterialIcons name="person" size={24} color="#666666" />
+                  </View>
                   <Text className="text-base font-qsemibold text-gray-500">
                     Personas
                   </Text>
@@ -189,10 +189,15 @@ export default function TripUpcomingDetailForDriver() {
                   {data.available_space_persons}
                 </Text>
               </XStack>
-
               <XStack className="items-center justify-between w-full">
-                <XStack className="items-center space-x-3">
-                  <MaterialIcons name="work" size={20} color="#666666" />
+                <XStack className="items-center space-x-3 flex-1">
+                  <View className="w-7 items-center mr-2">
+                    <Image
+                      source={icons.mypackage}
+                      className="h-7 w-7"
+                      resizeMode="contain"
+                    />
+                  </View>
                   <Text className="text-base font-qsemibold text-gray-500">
                     Paquetes chicos
                   </Text>
@@ -201,10 +206,15 @@ export default function TripUpcomingDetailForDriver() {
                   {data.available_space_small_package}
                 </Text>
               </XStack>
-
               <XStack className="items-center justify-between w-full">
-                <XStack className="items-center space-x-3">
-                  <MaterialIcons name="work" size={24} color="#666666" />
+                <XStack className="items-center space-x-3 flex-1">
+                  <View className="w-7 items-center mr-2">
+                    <Image
+                      source={icons.mypackage}
+                      className="h-8 w-8"
+                      resizeMode="contain"
+                    />
+                  </View>
                   <Text className="text-base font-qsemibold text-gray-500">
                     Paquetes medianos
                   </Text>
@@ -213,10 +223,15 @@ export default function TripUpcomingDetailForDriver() {
                   {data.available_space_medium_package}
                 </Text>
               </XStack>
-
               <XStack className="items-center justify-between w-full">
-                <XStack className="items-center space-x-3">
-                  <MaterialIcons name="work" size={28} color="#666666" />
+                <XStack className="items-center space-x-3 flex-1">
+                  <View className="w-7 items-center mr-2">
+                    <Image
+                      source={icons.mypackage}
+                      className="h-9 w-9"
+                      resizeMode="contain"
+                    />
+                  </View>
                   <Text className="text-base font-qsemibold text-gray-500">
                     Paquetes grandes
                   </Text>
