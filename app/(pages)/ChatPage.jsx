@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { XStack, YStack, Text } from "tamagui";
+import { XStack, YStack, Text, Spinner } from "tamagui";
 import { useEffect, useState } from "react";
 import { Send, ArrowLeft, Trash, Copy, Pencil } from "@tamagui/lucide-icons";
 import { useRouter } from "expo-router";
@@ -35,10 +35,11 @@ export default function ChatPage() {
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [editingMessage, setEditingMessage] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [limit, setLimit] = useState(20);
 
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["getMessages", chatId],
     queryFn: () => getMessages(chatId, limit),
   });
@@ -174,7 +175,7 @@ export default function ChatPage() {
               isOwnMessage ? "text-white" : "text-gray-500"
             }`}
           >
-            modificado
+            editado
           </Text>
         )}
       </XStack>
@@ -206,7 +207,7 @@ export default function ChatPage() {
     );
   };
 
-  if (isLoading || loadingOtherUser) return <LoadingPage />;
+  if (loadingOtherUser) return <LoadingPage />;
 
   if (error || errorOtherUser) return <ErrorPage />;
 
@@ -228,9 +229,10 @@ export default function ChatPage() {
           <Text className="text-xl font-qbold text-black flex-1 text-center">
             {dataOtherUser.username}
           </Text>
+
           <View style={{ width: 24 }} />
         </XStack>
-
+        {loading && <Spinner />}
         <FlatList
           data={data}
           renderItem={renderMessage}
@@ -238,10 +240,12 @@ export default function ChatPage() {
           contentContainerStyle={{ padding: 16 }}
           inverted={true}
           className="flex-1"
-          onEndReached={() => {
+          onEndReached={async () => {
             if (data.length > 0) {
+              setLoading(true);
               setLimit(limit + 20);
-              queryClient.invalidateQueries(["getMessages", chatId]);
+              await refetch();
+              setLoading(false);
             }
           }}
         />
