@@ -32,11 +32,11 @@ export default function ChatPage() {
   const [message, setMessage] = useState("");
   const [selectedMessage, setSelectedMessage] = useState(null);
 
-  const [before, setBefore] = useState(null);
+  const [limit, setLimit] = useState(20);
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["getMessages", chatId],
-    queryFn: () => getMessages(chatId),
+    queryFn: () => getMessages(chatId, limit),
   });
 
   const {
@@ -77,7 +77,11 @@ export default function ChatPage() {
     }
   };
 
-  const handleCopyMessage = () => {};
+  const handleCopyMessage = async () => {
+    if (selectedMessage) {
+      setSelectedMessage(null);
+    }
+  };
 
   const handleDeleteMessage = async () => {
     queryClient.setQueryData(["getMessages", chatId], (previousMessages) => {
@@ -167,6 +171,13 @@ export default function ChatPage() {
           contentContainerStyle={{ padding: 16 }}
           inverted={true}
           className="flex-1"
+          // REVISARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+          onEndReached={() => {
+            if (data.length > 0) {
+              setLimit(limit + 20);
+              queryClient.invalidateQueries(["getMessages", chatId]);
+            }
+          }}
         />
         <Spacer />
         <XStack className="px-4 py-2 border-t border-gray-200">
