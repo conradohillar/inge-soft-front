@@ -103,6 +103,9 @@ export default function Home() {
           {globalState.firstName}
         </Text>
       </XStack>
+      <Link href="/(pages)/ChatPage">
+        <Text>Link al CHAT</Text>
+      </Link>
       <YStack className="flex-1 w-[90%] items-start">
         <Text className="text-lg text-black font-qbold mb-2 ml-3">
           Viajes programados para hoy:

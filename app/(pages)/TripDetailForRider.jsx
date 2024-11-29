@@ -12,7 +12,7 @@ import icons from "../../constants/icons";
 import { useLocalSearchParams } from "expo-router";
 import ButtonNext from "../../components/ButtonNext";
 import RateCommentModal from "../../components/RateCommentModal";
-
+import { MaterialIcons } from "@expo/vector-icons";
 export default function TripDetailForRider() {
   const { ride_id } = useLocalSearchParams();
 
@@ -62,106 +62,155 @@ export default function TripDetailForRider() {
       {data.state && <StatusMsg state={data.state} />}
       <ScrollView className="h-full w-full">
         <Pressable>
-          <YStack className="items-start justify-between w-full px-4 pb-8 pt-2 mb-1 border-2 border-[#eee]">
-            <Text className="text-sm font-qbold text-[#ccc] mb-5">
-              Logísticos
-            </Text>
-            <Text className="text-base font-qsemibold text-gray-500">
-              Punto de
-              <Text className="text-base font-qbold text-primary">
-                {" "}
-                partida:
+          <YStack className="items-start justify-between w-full px-6 pb-6 pt-4 mb-1 border-b-2 border-b-[#eee]">
+            <YStack space="$4" className="w-full mb-8">
+              <YStack space="$2" className="w-full mb-3">
+                <Text className="text-sm font-qsemibold text-primary">
+                  Origen
+                </Text>
+                <XStack className="items-center space-x-3">
+                  <MaterialIcons name="trip-origin" size={24} color="#00AA00" />
+                  <Text className="text-lg font-qbold text-black flex-1 flex-wrap">
+                    {data.city_from}
+                  </Text>
+                </XStack>
+              </YStack>
+
+              <YStack space="$2" className="w-full mb-2">
+                <Text className="text-sm font-qsemibold text-primary">
+                  Destino
+                </Text>
+                <XStack className="items-center space-x-3">
+                  <MaterialIcons name="place" size={24} color="#DD0000" />
+                  <Text className="text-lg font-qbold text-black flex-1 flex-wrap">
+                    {data.city_to}
+                  </Text>
+                </XStack>
+              </YStack>
+            </YStack>
+
+            {/* Sección Fecha y Hora */}
+            <YStack space="$3.5" className="w-full mb-8">
+              <Text className="text-sm font-qsemibold text-primary">
+                Fecha y hora
               </Text>
-            </Text>
-            <Text className="text-base font-qbold text-black mb-5">
-              {data.city_from}
-            </Text>
-            <Text className="text-base font-qsemibold text-gray-500">
-              Punto de
-              <Text className="text-base font-qbold text-primary">
-                {" "}
-                llegada:
-              </Text>
-            </Text>
-            <Text className="text-base font-qbold text-black mb-5">
-              {data.city_to}
-            </Text>
-            <Text className="text-base font-qbold text-primary mb-3">
-              Fecha:
-              <Text className="text-base font-qbold text-black">
-                {" "}
-                {data.date}
-              </Text>
-            </Text>
-            <Text className="text-base font-qsemibold text-gray-500 mb-6">
-              Hora de
-              <Text className="text-base font-qbold text-primary">
-                {" "}
-                salida:
-                <Text className="text-base font-qbold text-black">
-                  {" "}
-                  {data.start_minimum_time
-                    .split(":")
-                    .slice(0, 2)
-                    .join(":")} -{" "}
+              <XStack className="items-center space-x-3">
+                <MaterialIcons
+                  name="calendar-today"
+                  size={24}
+                  color="#AA00FF"
+                />
+                <Text className="text-lg font-qbold text-black">
+                  {data.date}
+                </Text>
+              </XStack>
+
+              <XStack className="items-end space-x-3">
+                <MaterialIcons name="access-time" size={24} color="#EEB800" />
+                <Text className="text-lg font-qbold text-black">
+                  {data.start_minimum_time.split(":").slice(0, 2).join(":")} -{" "}
                   {data.start_maximum_time.split(":").slice(0, 2).join(":")}
                 </Text>
+              </XStack>
+            </YStack>
+
+            {/* Sección Vehículo */}
+            <YStack space="$2" className="w-full mb-6">
+              <Text className="text-sm font-qsemibold text-primary">
+                Vehículo
               </Text>
+              <XStack className="items-center space-x-3">
+                <MaterialIcons
+                  name="directions-car"
+                  size={24}
+                  color="#666666"
+                />
+                <Text className="text-lg font-qbold text-black pl-1">
+                  {data.car_model}
+                </Text>
+                <Text className="text-base font-qsemibold text-gray-500">
+                  {data.car_plate}
+                </Text>
+              </XStack>
+            </YStack>
+
+            {/* Sección Espacios Disponibles - Ajustada */}
+            <Text className="text-sm font-qsemibold text-primary my-4">
+              Espacios disponibles
             </Text>
-            <Text className=" w-full pt-5 text-base font-qsemibold text-gray-500 mb-1 border-t-2 border-t-[#eee]">
-              Espacios
-              <Text className="text-base font-qbold text-primary">
-                {" "}
-                reservados:
-              </Text>
-            </Text>
-            <Text className="text-base font-qbold text-black mb-1">
-              Personas:
-              <Text className="text-base font-qbold text-black">
-                {" "}
-                {data.space_persons}
-              </Text>
-            </Text>
-            <Text className="text-base font-qbold text-black mb-1">
-              Paquetes
-              <Text className="text-base font-qbold text-primary">
-                {" "}
-                chicos:
-                <Text className="text-base font-qbold text-black">
-                  {" "}
+            <YStack space="$4" className="w-full pr-2">
+              <XStack className="items-center justify-between w-full">
+                <XStack className="items-center space-x-3 flex-1">
+                  <View className="w-7 items-center mr-2">
+                    <MaterialIcons name="person" size={24} color="#666666" />
+                  </View>
+                  <Text className="text-base font-qsemibold text-gray-500">
+                    Personas
+                  </Text>
+                </XStack>
+                <Text className="text-lg font-qbold text-black">
+                  {data.space_persons}
+                </Text>
+              </XStack>
+              <XStack className="items-center justify-between w-full">
+                <XStack className="items-center space-x-3 flex-1">
+                  <View className="w-7 items-center mr-2">
+                    <Image
+                      source={icons.mypackage}
+                      className="h-7 w-7"
+                      resizeMode="contain"
+                    />
+                  </View>
+                  <Text className="text-base font-qsemibold text-gray-500">
+                    Paquetes chicos
+                  </Text>
+                </XStack>
+                <Text className="text-lg font-qbold text-black">
                   {data.space_small_package}
                 </Text>
-              </Text>
-            </Text>
-            <Text className="text-base font-qbold text-black mb-1">
-              Paquetes
-              <Text className="text-base font-qbold text-primary">
-                {" "}
-                medianos:
-                <Text className="text-base font-qbold text-black">
-                  {" "}
+              </XStack>
+              <XStack className="items-center justify-between w-full">
+                <XStack className="items-center space-x-3 flex-1">
+                  <View className="w-7 items-center mr-2">
+                    <Image
+                      source={icons.mypackage}
+                      className="h-8 w-8"
+                      resizeMode="contain"
+                    />
+                  </View>
+                  <Text className="text-base font-qsemibold text-gray-500">
+                    Paquetes medianos
+                  </Text>
+                </XStack>
+                <Text className="text-lg font-qbold text-black">
                   {data.space_medium_package}
                 </Text>
-              </Text>
-            </Text>
-            <Text className="text-base font-qbold text-black">
-              Paquetes
-              <Text className="text-base font-qbold text-primary">
-                {" "}
-                grandes:
-                <Text className="text-base font-qbold text-black">
-                  {" "}
+              </XStack>
+              <XStack className="items-center justify-between w-full">
+                <XStack className="items-center space-x-3 flex-1">
+                  <View className="w-7 items-center mr-2">
+                    <Image
+                      source={icons.mypackage}
+                      className="h-9 w-9"
+                      resizeMode="contain"
+                    />
+                  </View>
+                  <Text className="text-base font-qsemibold text-gray-500">
+                    Paquetes grandes
+                  </Text>
+                </XStack>
+                <Text className="text-lg font-qbold text-black">
                   {data.space_large_package}
                 </Text>
-              </Text>
-            </Text>
-            <View className="w-full items-start border-t-2 border-t-[#eee] mt-6 pt-4">
-              <Text className="text-xl font-qbold text-red-700 mb-3">
+              </XStack>
+            </YStack>
+            <View className="w-full items-start border-t-2 border-t-[#eee] mt-10 pt-4">
+              <Text className="text-xl font-qbold text-red-700 my-3">
                 Costo: ${data.price.toFixed(2)}
               </Text>
             </View>
           </YStack>
-          <YStack className="items-start justify-between w-full px-4 pb-6 pt-3 mb-12 border-2 border-[#eee]">
+          <YStack className="items-start justify-between w-full px-4 pb-6 pt-3 mb-1 border-2 border-[#eee]">
             <Text className="text-sm font-qbold text-[#ccc] mb-5">
               Sobre el conductor
             </Text>
@@ -213,7 +262,7 @@ export default function TripDetailForRider() {
             </View>
           </YStack>
           <YStack className="items-start justify-between w-full px-4 pb-8 pt-3 border-t-2 border-t-[#eee]">
-            <Text className="text-sm font-qbold text-[#ccc] mb-2">
+            <Text className="text-sm font-qbold text-[#ccc] mb-4">
               Calificá tu experiencia
             </Text>
             <ButtonNext
