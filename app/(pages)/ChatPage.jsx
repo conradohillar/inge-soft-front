@@ -111,7 +111,7 @@ export default function ChatPage() {
             <ArrowLeft size={24} color="black" />
           </Pressable>
           <Text className="text-xl font-qbold text-black flex-1 text-center">
-            Juan Pérez
+            {dataOtherUser.name}
           </Text>
           <View style={{ width: 24 }} /> {/* Spacer for centering */}
         </XStack>
