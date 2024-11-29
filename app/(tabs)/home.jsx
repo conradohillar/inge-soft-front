@@ -12,7 +12,7 @@ import { useState } from "react";
 import TripEndedModal from "../../components/TripEndedModal";
 import { handleStartTripMut, handleEndTripMut } from "../../services/rides";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 
 export default function Home() {
   const { globalState, setGlobalState } = useGlobalState();
@@ -102,6 +102,9 @@ export default function Home() {
           {globalState.firstName}
         </Text>
       </XStack>
+      <Link href="/(pages)/ChatPage">
+        <Text>Link al CHAT</Text>
+      </Link>
       <YStack className="flex-1 w-[90%] items-start">
         <Text className="text-lg text-black font-qbold mb-2 ml-3">
           Viajes programados para hoy:
