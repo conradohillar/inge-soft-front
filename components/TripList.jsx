@@ -127,7 +127,11 @@ export default function TripList({ type, category }) {
               <YStack className="items-center justify-center h-full">
                 <Text className="text-2xl font-qbold text-black mb-8 text-center">
                   No tenés viajes{" "}
-                  {type === "upcoming" ? "reservados" : "en el historial"}
+                  {type === "upcoming"
+                    ? category === "rider"
+                      ? "reservados"
+                      : "publicados"
+                    : "en el historial"}
                 </Text>
                 <BlackButton
                   href={
