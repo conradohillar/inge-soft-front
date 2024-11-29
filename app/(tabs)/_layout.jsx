@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 
 const TabIcon = ({ icon, color, name, focused }) => (
-  <View className="items-center justify-center gap-1 w-10">
+  <View className="items-center justify-center gap-1 w-16">
     <Image
       source={icon}
       resizeMode="contain"
