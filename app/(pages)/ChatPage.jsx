@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { XStack, YStack, Text, Spacer } from "tamagui";
 import { useEffect, useState } from "react";
-import { Send, ArrowLeft, Trash, Copy } from "@tamagui/lucide-icons";
+import { Send, ArrowLeft, Trash, Copy, Pencil } from "@tamagui/lucide-icons";
 import { useRouter } from "expo-router";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import {
@@ -16,11 +16,14 @@ import {
   disconnect,
   getMessages,
   getOtherUser,
+  removeMessage,
   sendMessage,
+  updateMessage,
 } from "../../services/chat";
 import { useGlobalState } from "../_layout";
 import LoadingPage from "./LoadingPage";
 import ErrorPage from "./ErrorPage";
+import ButtonNext from "../../components/VarButton";
 
 export default function ChatPage() {
   const chatId = "superchar123";
@@ -66,9 +69,13 @@ export default function ChatPage() {
 
   const handleCopyMessage = () => {};
 
-  const handleDeleteMessage = () => {};
+  const handleDeleteMessage = () => {
+    removeMessage(selectedMessage.msg_id);
+  };
 
-  const handleUpdateMessage = () => {};
+  const handleUpdateMessage = () => {
+    updateMessage(selectedMessage.msg_id, "Nuevo mensaje"); //cuando tocan en el lapiz de editar deberiamos abrir un modal con un input para editar el mensaje y aca enviar el valor de ese input
+  };
 
   const renderMessage = ({ item }) => (
     <Pressable onLongPress={() => handleLongPress(item)} delayLongPress={200}>
@@ -113,7 +120,7 @@ export default function ChatPage() {
           <Text className="text-xl font-qbold text-black flex-1 text-center">
             {dataOtherUser.name}
           </Text>
-          <View style={{ width: 24 }} /> {/* Spacer for centering */}
+          <View style={{ width: 24 }} />
         </XStack>
 
         <FlatList
@@ -167,6 +174,15 @@ export default function ChatPage() {
               <Trash size={20} color="#FF0000" />
               <Text className="ml-3 font-qmedium text-red-500">
                 Eliminar mensaje
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              className="flex-row items-center p-4"
+              onPress={handleUpdateMessage}
+            >
+              <Pencil size={20} color="#FF0000" />
+              <Text className="ml-3 font-qmedium text-red-500">
+                Editar mensaje
               </Text>
             </TouchableOpacity>
           </View>

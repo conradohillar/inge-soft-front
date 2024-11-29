@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryClient } from '../app/_layout';
 
+
+
 const BASE_URL = `http://${LOCAL_IP}:8000/chat`;
 let wc: WebSocket;
 
@@ -12,16 +14,25 @@ export const connect = async (chat_id:String) => {
     wc = new WebSocket(`ws://${LOCAL_IP}:8000/chat/${chat_id}?token=${await getToken()}`);
     wc.onmessage = (event) => {
         const messageData = JSON.parse(event.data);
+        const previousMessages : [] = queryClient.getQueryData(["getMessages", chat_id]) || [];
         switch (messageData.action) {
             case 'new_message':
-                const previousMessages : [] = queryClient.getQueryData(["getMessages", chat_id]) || [];
                 queryClient.setQueryData(["getMessages", chat_id], [messageData, ...previousMessages]);
                 break;
             case 'edit_message':
-                //editar la data la cache de tanstack
+                queryClient.setQueryData(["getMessages", chat_id], previousMessages.map((message: any) => {
+                    if (message.msg_id === messageData.msg_id) {
+                        return { ...message, msg: messageData.msg };
+                    }
+                    return message;
+                }));
+                
                 break;
             case 'remove_message':
-                //editar la data la cache de tanstack
+                queryClient.setQueryData(["getMessages", chat_id], (previousMessages: []) => {
+                    return previousMessages.filter((message: any) => message.msg_id !== messageData.msg_id);
+                }
+                );
                 break;
             default:
                 console.error("Si llega aca revisar el back, algo esta mal, siempre deberia caer en uno de los casos de arriba")
