@@ -1,10 +1,25 @@
 import { Text, View } from "react-native";
-import { YStack, XStack, SizableText, Separator } from "tamagui";
+import { YStack, XStack, SizableText, Separator, YGroup } from "tamagui";
 import { useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
+import { CustomListItem } from "../../components/CustomListItem";
 
 export default function Trips() {
   const router = useRouter();
+
+  const handleRiderPress = () => {
+    router.push({
+      pathname: "/(pages)/TripsPage",
+      params: { category: "rider" },
+    });
+  };
+
+  const handleDriverPress = () => {
+    router.push({
+      pathname: "/(pages)/TripsPage",
+      params: { category: "driver" },
+    });
+  };
 
   return (
     <YStack className="h-full items-start justify-evenly bg-background">
@@ -13,60 +28,37 @@ export default function Trips() {
           Mis viajes
         </SizableText>
       </View>
-
-      <YStack className="w-full h-[70%]">
-        <XStack className="w-full justify-center items-center">
-          <Separator className="w-[90%] bg-gray-200" />
-        </XStack>
-
-        <View className="w-full h-[20%] items-start justify-center pl-8">
-          <XStack
-            className="w-[80%] items-center justify-between"
-            onPress={() =>
-              router.push({
-                pathname: "/(pages)/TripsPage",
-                params: { category: "rider" },
-              })
+      <YGroup alignSelf="center" width={"100%"} height={"60%"}>
+        <Separator />
+        <YGroup.Item>
+          <CustomListItem
+            icon={<MaterialIcons name="person" size={32} color="#666666" />}
+            iconAfter={
+              <MaterialIcons name="chevron-right" size={32} color="#666666" />
             }
+            onPress={handleRiderPress}
           >
-            <XStack className="items-center space-x-5">
-              <MaterialIcons name="person" size={24} color="#aaa" />
-              <Text className="text-xl text-black font-qbold">
-                Como pasajero
-              </Text>
-            </XStack>
-            <MaterialIcons name="chevron-right" size={24} color="#aaa" />
-          </XStack>
-        </View>
-
-        <XStack className="w-full justify-center items-center">
-          <Separator className="w-[90%] bg-gray-200" />
-        </XStack>
-
-        <View className="w-full h-[20%] items-start justify-center pl-8">
-          <XStack
-            className="w-[80%] items-center justify-between"
-            onPress={() =>
-              router.push({
-                pathname: "/(pages)/TripsPage",
-                params: { category: "driver" },
-              })
+            <Text className="text-xl font-qbold text-black flex-1 ml-4">
+              Como pasajero
+            </Text>
+          </CustomListItem>
+        </YGroup.Item>
+        <Separator />
+        <YGroup.Item>
+          <CustomListItem
+            icon={<MaterialIcons name="drive-eta" size={32} color="#666666" />}
+            iconAfter={
+              <MaterialIcons name="chevron-right" size={32} color="#666666" />
             }
+            onPress={handleDriverPress}
           >
-            <XStack className="items-center space-x-5">
-              <MaterialIcons name="drive-eta" size={24} color="#aaa" />
-              <Text className="text-xl text-black font-qbold">
-                Como conductor
-              </Text>
-            </XStack>
-            <MaterialIcons name="chevron-right" size={24} color="#aaa" />
-          </XStack>
-        </View>
-
-        <XStack className="w-full justify-center items-center">
-          <Separator className="w-[90%] bg-gray-200" />
-        </XStack>
-      </YStack>
+            <Text className="text-xl font-qbold text-black flex-1 ml-4">
+              Como conductor
+            </Text>
+          </CustomListItem>
+        </YGroup.Item>
+        <Separator />
+      </YGroup>
     </YStack>
   );
 }

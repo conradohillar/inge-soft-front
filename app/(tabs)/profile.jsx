@@ -23,8 +23,13 @@ import {
 } from "../../services/users";
 import EditNameModal from "../../components/EditNameModal";
 import { useGlobalState } from "../_layout";
+import { CustomListItem } from "../../components/CustomListItem";
+import { MaterialIcons } from "@expo/vector-icons";
+import { YGroup, Separator } from "tamagui";
+import { useRouter } from "expo-router";
 
 export default function Profile() {
+  const router = useRouter();
   const { globalState, setGlobalState } = useGlobalState();
 
   const [isProfilePictureModalVisible, setProfilePictureModalVisible] =
@@ -155,9 +160,9 @@ export default function Profile() {
 
   return (
     <YStack className="h-full items-center justify-evenly bg-background">
-      <YStack className="h-[15%] items-center justify-evenly">
+      <YStack className="h-[25%] w-full items-center justify-center pt-4">
         <XStack className="w-[90%] items-center justify-start">
-          <View className="flex-1 justify-center items-center pt-4">
+          <View className="items-center justify-center mr-4">
             <TouchableOpacity onPress={toggleProfilePictureModal}>
               <Avatar circular size="$12" borderColor="$black" borderWidth={1}>
                 <Avatar.Image
@@ -175,19 +180,20 @@ export default function Profile() {
               />
             </TouchableOpacity>
           </View>
-          <YStack className="items-start justify-evenly ml-5">
-            <XStack className="items-center">
-              <Text className="text-black text-lg font-qbold">
+
+          <YStack space="$2" className="flex-1">
+            <XStack className="items-center space-x-3 flex-wrap">
+              <Text
+                className="text-xl font-qbold text-black flex-shrink"
+                numberOfLines={2}
+              >
                 {globalState.fullName}
               </Text>
-              <TouchableOpacity
-                onPress={toggleEditNameModal}
-                className={"px-2"}
-              >
+              <TouchableOpacity onPress={toggleEditNameModal}>
                 <Image
                   source={icons.pencil}
-                  className="h-4 w-4"
-                  tintColor="#aaa"
+                  className="h-5 w-5"
+                  tintColor="#666666"
                   resizeMode="contain"
                 />
                 <EditNameModal
@@ -201,91 +207,80 @@ export default function Profile() {
                 />
               </TouchableOpacity>
             </XStack>
-            <Text className="text-gray-600 text-base font-qsemibold">
+            <Text
+              className="text-gray-600 text-base font-qsemibold pr-4"
+              numberOfLines={2}
+            >
               {globalState.email}
             </Text>
           </YStack>
         </XStack>
-        {removeImage.isError && removeImage.error.message == 408 && (
-          <Text className="text-red-500 text-base font-qsemibold pb-12">
-            Error de conexion, intente mas tarde.
-          </Text>
-        )}
-        {saveNewName.isError && saveNewName.error.message == 408 && (
-          <Text className="text-red-500 text-base font-qsemibold pb-12">
-            Error de conexion, intente mas tarde.
-          </Text>
-        )}
-        {editImage.isError && editImage.error.message == 408 && (
-          <Text className="text-red-500 text-base font-qsemibold pb-12">
-            Error de conexion, intente mas tarde.
-          </Text>
-        )}
 
-        {/* {removeImage.isError && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>}
-          {saveNewName.isError && saveNewName.error.message == 400 && <Text className="text-red-500 text-base font-qsemibold pb-12">El nombre no puede estar vacio.</Text>}
-          {editImage.isError && <Text className="text-red-500 text-base font-qsemibold pb-12">Error de conexion, intente mas tarde.</Text>} */}
+        <YStack className="items-center mt-4">
+          {removeImage.isError && removeImage.error.message == 408 && (
+            <Text className="text-red-500 text-base font-qsemibold">
+              Error de conexión, intente más tarde.
+            </Text>
+          )}
+          {saveNewName.isError && saveNewName.error.message == 408 && (
+            <Text className="text-red-500 text-base font-qsemibold">
+              Error de conexion, intente mas tarde.
+            </Text>
+          )}
+          {editImage.isError && editImage.error.message == 408 && (
+            <Text className="text-red-500 text-base font-qsemibold">
+              Error de conexion, intente mas tarde.
+            </Text>
+          )}
+        </YStack>
       </YStack>
-      <YStack className="w-full h-[70%]">
-        <View
-          className="w-full h-[20%] items-center justify-center"
-          borderTopColor="#ddd"
-          borderTopWidth={2}
-        >
-          <XStack className="w-[80%] items-center justify-start space-x-5">
-            <Image
-              source={icons.car}
-              className="h-6 w-6"
-              tintColor="#aaa"
-              resizeMode="contain"
-            />
-            {globalState.isDriver ? (
-              <Link href="/(pages)/MyCarsPage" asChild>
-                <Text className="text-xl text-black font-qbold">Mis autos</Text>
-              </Link>
-            ) : (
-              <TouchableOpacity
-                onPress={() =>
-                  handleRestrictedAccess(
-                    "Primero tenes que convertirte en conductor."
-                  )
-                }
-              >
-                <Text className="text-xl text-black font-qbold">Mis autos</Text>
-              </TouchableOpacity>
-            )}
-          </XStack>
-        </View>
-        <View
-          className="w-full h-[20%] items-center justify-center "
-          borderTopColor="#ddd"
-          borderTopWidth={2}
-        >
-          <XStack className="w-[80%] items-center justify-start space-x-5">
-            <Image
-              source={icons.id_card}
-              className="h-6 w-6"
-              tintColor="#aaa"
-              resizeMode="contain"
-            />
-            {!globalState.isDriver ? (
-              <Link href="/(pages)/CredentialsPage" asChild>
-                <Text className="text-xl text-black font-qbold">
-                  Credenciales
-                </Text>
-              </Link>
-            ) : (
-              <TouchableOpacity
-                onPress={() => handleRestrictedAccess("Ya sos conductor.")}
-              >
-                <Text className="text-xl text-black font-qbold">
-                  Credenciales
-                </Text>
-              </TouchableOpacity>
-            )}
-          </XStack>
-        </View>
-      </YStack>
+
+      <YGroup alignSelf="center" width={"100%"} height={"70%"} size="$1">
+        <Separator />
+        <YGroup.Item>
+          <CustomListItem
+            icon={
+              <MaterialIcons name="directions-car" size={32} color="#666666" />
+            }
+            iconAfter={
+              <MaterialIcons name="chevron-right" size={32} color="#666666" />
+            }
+            onPress={
+              globalState.isDriver
+                ? () => router.push("/(pages)/MyCarsPage")
+                : () =>
+                    handleRestrictedAccess(
+                      "Primero tenés que convertirte en conductor."
+                    )
+            }
+          >
+            <Text className="text-xl font-qbold text-black flex-1 ml-4">
+              Mis autos
+            </Text>
+          </CustomListItem>
+        </YGroup.Item>
+        <Separator />
+        <YGroup.Item>
+          <CustomListItem
+            icon={
+              <MaterialIcons name="credit-card" size={32} color="#666666" />
+            }
+            iconAfter={
+              <MaterialIcons name="chevron-right" size={32} color="#666666" />
+            }
+            onPress={
+              !globalState.isDriver
+                ? () => router.push("/(pages)/CredentialsPage")
+                : () => handleRestrictedAccess("Ya sos conductor.")
+            }
+          >
+            <Text className="text-xl font-qbold text-black flex-1 ml-4">
+              Credenciales
+            </Text>
+          </CustomListItem>
+        </YGroup.Item>
+        <Separator />
+      </YGroup>
     </YStack>
   );
 }
