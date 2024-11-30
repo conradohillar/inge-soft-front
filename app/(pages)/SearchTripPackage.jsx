@@ -1,13 +1,13 @@
+import { LinearGradient } from "expo-linear-gradient";
 import { Button, View, XStack, YStack } from "tamagui";
 import { Package } from "@tamagui/lucide-icons";
 import Counter from "../../components/Counter";
-import { Text, Image } from "react-native";
+import { Text, Image, ScrollView, Pressable } from "react-native";
 import { Link } from "expo-router";
 import icons from "../../constants/icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import ButtonNext from "../../components/ButtonNext";
 import { useState } from "react";
-import Window from "../../components/Window";
 
 export default function SendPackagePage() {
   const { fromLocation, toLocation, formattedDate } = useLocalSearchParams();
@@ -52,110 +52,139 @@ export default function SendPackagePage() {
   };
 
   return (
-    <View className="bg-background w-full h-full">
-      <YStack className="items-center justify-evenly h-full w-full">
-        <XStack className="items-center mt-10 mb-4 justify-center w-full">
-          <Text className="text-3xl font-qsemibold text-primary">
-            Detalles
-            <Text className="text-3xl font-qsemibold text-black">
-              {" "}
-              de tu envío
+    <ScrollView className="flex-1 bg-background">
+      <Pressable className="mb-10">
+        <LinearGradient
+          colors={["#59A58A", "#7AB5A0"]}
+          style={{
+            width: "100%",
+            paddingTop: 60,
+            paddingBottom: 80,
+            borderBottomLeftRadius: 32,
+            borderBottomRightRadius: 32,
+          }}
+        >
+          <View className="px-6 items-center">
+            <Text className="text-4xl font-qbold text-white">
+              Detalles{" "}
+              <Text className="text-4xl font-qbold text-white/90">
+                del envío
+              </Text>
             </Text>
-          </Text>
-        </XStack>
-        <YStack className="items-center justify-evenly flex-1 w-full">
-          <Window height={165} width={"88%"}>
-            <XStack className="items-center ml-2 mb-2">
-              <Text className="text-black text-base font-qbold">
-                Paquetes chicos:
+          </View>
+        </LinearGradient>
+
+        <View className="px-6 -mt-12">
+          <YStack space="$4">
+            <View
+              className="bg-white rounded-3xl p-6"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.08,
+                shadowRadius: 12,
+                elevation: 3,
+              }}
+            >
+              <Text className="text-lg font-qbold text-black mb-4">
+                Paquetes chicos
               </Text>
-            </XStack>
-            <XStack className=" w-[350px] items-center justify-evenly">
-              <Package size="3" color="black" />
-              <Counter
-                maxCount={4}
-                count={formData.smallPacks}
-                handleChangeCount={setSmallPacks}
-                bgColor="#eee"
-              />
-            </XStack>
-            <XStack className="w-full items-center justify-center mt-2">
-              <Text className="text-gray-400 text-xs font-qbold ">
-                Medidas: hasta{" "}
+              <XStack className="items-center justify-between px-8">
+                <View className="w-12 items-center">
+                  <Package size={24} color="black" />
+                </View>
+                <Counter
+                  maxCount={4}
+                  count={formData.smallPacks}
+                  handleChangeCount={setSmallPacks}
+                />
+              </XStack>
+              <XStack className="w-full items-center justify-center mt-4">
+                <Text className="text-gray-400 text-xs font-qbold">
+                  Medidas: hasta{" "}
+                </Text>
+                <Text className="text-primary text-xs font-qbold opacity-70 mr-2">
+                  30cm
+                </Text>
+              </XStack>
+            </View>
+
+            <View
+              className="bg-white rounded-3xl p-6"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.08,
+                shadowRadius: 12,
+                elevation: 3,
+              }}
+            >
+              <Text className="text-lg font-qbold text-black mb-4">
+                Paquetes medianos
               </Text>
-              <Text className="text-primary text-xs font-qbold opacity-70">
-                30cm
+              <XStack className="items-center justify-between px-8">
+                <View className="w-12 items-center">
+                  <Package size={32} color="black" />
+                </View>
+                <Counter
+                  maxCount={4}
+                  count={formData.mediumPacks}
+                  handleChangeCount={setMediumPacks}
+                />
+              </XStack>
+              <XStack className="w-full items-center justify-center mt-4">
+                <Text className="text-gray-400 text-xs font-qbold">
+                  Medidas: entre{" "}
+                </Text>
+                <Text className="text-primary text-xs font-qbold opacity-70">
+                  30cm y 60cm
+                </Text>
+              </XStack>
+            </View>
+
+            <View
+              className="bg-white rounded-3xl p-6"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.08,
+                shadowRadius: 12,
+                elevation: 3,
+              }}
+            >
+              <Text className="text-lg font-qbold text-black mb-4">
+                Paquetes grandes
               </Text>
-            </XStack>
-          </Window>
-          <Window height={170} width={"88%"}>
-            <XStack className="items-center ml-2 mb-3">
-              <Text className="text-black text-base font-qbold">
-                Paquetes medianos:
-              </Text>
-            </XStack>
-            <XStack className=" w-[350px]  items-center justify-evenly">
-              <Package size="4.5" color="$gray6" />
-              <Counter
-                maxCount={4}
-                count={formData.mediumPacks}
-                handleChangeCount={setMediumPacks}
-                bgColor="#eee"
-              />
-            </XStack>
-            <XStack className="w-full items-center justify-center mt-3">
-              <Text className="text-gray-400 text-xs font-qbold ">
-                Medidas: entre{" "}
-              </Text>
-              <Text className="text-primary text-xs font-qbold opacity-70">
-                30cm y 60cm
-              </Text>
-            </XStack>
-          </Window>
-          <Window height={175} width={"88%"}>
-            <XStack className="items-center ml-2 mb-5">
-              <Text className="text-black text-base font-qbold">
-                Paquetes grandes:
-              </Text>
-            </XStack>
-            <XStack className=" w-[350px]  items-center justify-evenly">
-              <Package size="6" color="$gray5" />
-              <Counter
-                maxCount={4}
-                count={formData.largePacks}
-                handleChangeCount={setLargePacks}
-                bgColor="#eee"
-              />
-            </XStack>
-            <XStack className="w-full items-center justify-center mt-3">
-              <Text className="text-gray-400 text-xs font-qbold">
-                Medidas: a partir de{" "}
-              </Text>
-              <Text className="text-primary text-xs font-qbold opacity-70">
-                60cm
-              </Text>
-            </XStack>
-          </Window>
-        </YStack>
-        <XStack className="w-full items-center justify-center mb-6 mt-4">
-          <Link href="/(pages)/SearchTripPage" asChild>
-            <Button className="w-7 h-7 bg-background">
-              <Image
-                source={icons.arrowleft}
-                className="w-8 h-8"
-                resizeMode="contain"
-              />
-            </Button>
-          </Link>
-          <View className="w-[75%]">
+              <XStack className="items-center justify-between px-8">
+                <View className="w-12 items-center">
+                  <Package size={40} color="black" />
+                </View>
+                <Counter
+                  maxCount={4}
+                  count={formData.largePacks}
+                  handleChangeCount={setLargePacks}
+                />
+              </XStack>
+              <XStack className="w-full items-center justify-center mt-4">
+                <Text className="text-gray-400 text-xs font-qbold">
+                  Medidas: a partir de{" "}
+                </Text>
+                <Text className="text-primary text-xs font-qbold opacity-70 mr-2">
+                  60cm
+                </Text>
+              </XStack>
+            </View>
+          </YStack>
+
+          <XStack className="justify-center items-center mt-10">
             <ButtonNext onPress={handleSearch} variant="secondary">
               <Text className="text-2xl font-qsemibold text-white">
                 Buscar viajes
               </Text>
             </ButtonNext>
-          </View>
-        </XStack>
-      </YStack>
-    </View>
+          </XStack>
+        </View>
+      </Pressable>
+    </ScrollView>
   );
 }

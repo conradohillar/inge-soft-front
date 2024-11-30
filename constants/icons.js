@@ -28,7 +28,7 @@ import notification from "../assets/icons/notification.png";
 import star from "../assets/icons/star.png";
 import eye from "../assets/icons/eye.png";
 import eyeOff from "../assets/icons/eye-off.png";
-
+import filledPackage from "../assets/icons/filled-package.png";
 export default {
   logo,
   home,
@@ -60,4 +60,5 @@ export default {
   star,
   eye,
   eyeOff,
+  filledPackage,
 };

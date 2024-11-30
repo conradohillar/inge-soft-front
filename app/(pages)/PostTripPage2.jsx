@@ -20,6 +20,7 @@ import AddCarModal from "../../components/AddCarModal";
 import { useQueryClient } from "@tanstack/react-query";
 import Window from "../../components/Window";
 import { MaterialIcons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function PostTripPage2() {
   const [isAddCarModalVisible, setIsAddCarModalVisible] = useState(false);
@@ -183,88 +184,110 @@ export default function PostTripPage2() {
 
   return (
     <ScrollView className="bg-background">
-      <YStack className="h-full mb-12">
-        <YStack className=" justify-center items-center h-[10%]">
-          <Text className="text-[27px] font-qbold text-primary">
-            Detalles{" "}
-            <Text className="text-[27px] font-qbold text-black">
+      <Pressable className="mb-10">
+        <LinearGradient
+          colors={["#59A58A", "#7AB5A0"]}
+          style={{
+            width: "100%",
+            paddingTop: 60,
+            paddingBottom: 80,
+            borderBottomLeftRadius: 32,
+            borderBottomRightRadius: 32,
+          }}
+        >
+          <View className="px-6">
+            <Text className="text-4xl font-qbold text-white">Detalles</Text>
+            <Text className="text-4xl font-qbold text-white/90">
               de la publicación
             </Text>
-          </Text>
-        </YStack>
-        <Pressable>
-          <YStack className="items-center justify-center mb-12">
-            <Text className="text-sm text-black font-qbold ml-8 mb-3 w-[90%]">
-              Seleccioná tu
-              <Text className="text-sm text-primary font-qbold ml-10 mb-3">
-                {" "}
-                auto
-              </Text>
-            </Text>
+          </View>
+        </LinearGradient>
 
+        <View className="px-6">
+          <View className="-mt-12 mb-6">
             <View
-              className="w-full items-center"
+              className="bg-white rounded-3xl p-6"
               style={{
-                display: `${data.cars.length > 0 ? "" : "none"}`,
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.08,
+                shadowRadius: 12,
+                elevation: 3,
               }}
             >
-              <Controller
-                control={control}
-                name="car"
-                render={({ field: { onChange, value } }) => (
-                  <DropdownComponent
-                    data={data.cars.map((car) => ({
-                      label: `${car.model} - ${car.plate}`,
-                      value: car.plate,
-                    }))}
-                    value={value}
-                    setValue={onChange}
-                  />
+              <Text className="text-lg font-qbold text-black mb-4">
+                Seleccioná tu <Text className="text-primary">auto</Text>
+              </Text>
+
+              <View
+                style={{
+                  display: `${data.cars.length > 0 ? "" : "none"}`,
+                }}
+              >
+                <Controller
+                  control={control}
+                  name="car"
+                  render={({ field: { onChange, value } }) => (
+                    <DropdownComponent
+                      data={data.cars.map((car) => ({
+                        label: `${car.model} - ${car.plate}`,
+                        value: car.plate,
+                      }))}
+                      value={value}
+                      setValue={onChange}
+                    />
+                  )}
+                />
+                {errors.car && (
+                  <Text className="text-red-500 mt-2">
+                    {errors.car.message}
+                  </Text>
                 )}
-              />
-              {errors.car && (
-                <Text className="text-red-500">{errors.car.message}</Text>
+              </View>
+
+              {data.cars.length === 0 && (
+                <View className="items-center">
+                  <Text className="text-sm text-red-500 font-qbold mb-3">
+                    No tenés autos registrados
+                  </Text>
+                  <Button
+                    className="w-[50%] h-[42] rounded-2xl items-center pb-0.5"
+                    onPress={toggleAddCarModal}
+                  >
+                    <Text className="text-lg font-qsemibold text-white">
+                      Agregá un auto
+                    </Text>
+                  </Button>
+                </View>
               )}
             </View>
+          </View>
 
-            {data.cars.length > 0 ? (
-              <></>
-            ) : (
-              <View className="w-full items-center">
-                <AddCarModal
-                  isVisible={isAddCarModalVisible}
-                  onClose={toggleAddCarModal}
-                />
-                <Text className="text-sm text-red-500 font-qbold  mb-3">
-                  No tenés autos registrados
-                </Text>
-                <Button
-                  className="w-[50%] h-[42] rounded-2xl items-center pb-0.5"
-                  onPress={toggleAddCarModal}
-                >
-                  <Text className="text-lg font-qsemibold text-white">
-                    Agregá un auto
-                  </Text>
-                </Button>
-              </View>
-            )}
-
-            <XStack className="self-start mt-8 mb-3 ml-10">
-              <Text className="text-sm font-qbold text-black">
+          <View className="mb-6">
+            <View
+              className="bg-white rounded-3xl p-6"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.08,
+                shadowRadius: 12,
+                elevation: 3,
+              }}
+            >
+              <Text className="text-lg font-qbold text-black mb-5">
                 Indicá tus{" "}
-                <Text className="text-sm font-qbold text-primary">
-                  espacios disponibles
-                </Text>
+                <Text className="text-primary">espacios disponibles</Text>
               </Text>
-            </XStack>
-            <Window height={340}>
-              <YStack className="w-full items-start justify-center h-full">
-                <XStack className="w-full items-center justify-around px-5 ml-2 mb-3">
-                  <Image
-                    source={icons.profile2}
-                    className="w-8 h-8"
-                    resizeMode="contain"
-                  />
+
+              <YStack space="$4" className="px-8">
+                <XStack className="items-center justify-between">
+                  <View className="w-12 items-center">
+                    <Image
+                      source={icons.profile2}
+                      className="w-8 h-8"
+                      resizeMode="contain"
+                    />
+                  </View>
                   <Controller
                     control={control}
                     name="availableSeats"
@@ -273,22 +296,19 @@ export default function PostTripPage2() {
                         maxCount={4}
                         count={value}
                         handleChangeCount={onChange}
-                        bgColor="#eee"
                       />
                     )}
                   />
-                  {errors.availableSeats && (
-                    <Text className="text-red-500">
-                      {errors.availableSeats.message}
-                    </Text>
-                  )}
                 </XStack>
-                <XStack className="w-full items-center justify-around px-5 ml-2 mb-3">
-                  <Image
-                    source={icons.mypackage}
-                    className="w-8 h-8"
-                    resizeMode="contain"
-                  />
+
+                <XStack className="items-center justify-between">
+                  <View className="w-12 items-center">
+                    <Image
+                      source={icons.mypackage}
+                      className="w-8 h-8"
+                      resizeMode="contain"
+                    />
+                  </View>
                   <Controller
                     control={control}
                     name="spacesSmallPackage"
@@ -297,22 +317,19 @@ export default function PostTripPage2() {
                         maxCount={4}
                         count={value}
                         handleChangeCount={onChange}
-                        bgColor="#eee"
                       />
                     )}
                   />
-                  {errors.spacesSmallPackage && (
-                    <Text className="text-red-500">
-                      {errors.spacesSmallPackage.message}
-                    </Text>
-                  )}
                 </XStack>
-                <XStack className="w-full items-center justify-around px-5 ml-2 mb-3">
-                  <Image
-                    source={icons.mypackage}
-                    className="w-10 h-10"
-                    resizeMode="contain"
-                  />
+
+                <XStack className="items-center justify-between">
+                  <View className="w-12 items-center">
+                    <Image
+                      source={icons.mypackage}
+                      className="w-10 h-10"
+                      resizeMode="contain"
+                    />
+                  </View>
                   <Controller
                     control={control}
                     name="spacesMediumPackage"
@@ -321,22 +338,19 @@ export default function PostTripPage2() {
                         maxCount={4}
                         count={value}
                         handleChangeCount={onChange}
-                        bgColor="#eee"
                       />
                     )}
                   />
-                  {errors.spacesMediumPackage && (
-                    <Text className="text-red-500">
-                      {errors.spacesMediumPackage.message}
-                    </Text>
-                  )}
                 </XStack>
-                <XStack className="w-full items-center justify-around px-5 ml-2">
-                  <Image
-                    source={icons.mypackage}
-                    className="w-12 h-12"
-                    resizeMode="contain"
-                  />
+
+                <XStack className="items-center justify-between">
+                  <View className="w-12 items-center">
+                    <Image
+                      source={icons.mypackage}
+                      className="w-12 h-12"
+                      resizeMode="contain"
+                    />
+                  </View>
                   <Controller
                     control={control}
                     name="spacesLargePackage"
@@ -345,39 +359,36 @@ export default function PostTripPage2() {
                         maxCount={4}
                         count={value}
                         handleChangeCount={onChange}
-                        bgColor="#eee"
                       />
                     )}
                   />
-                  {errors.spacesLargePackage && (
-                    <Text className="text-red-500">
-                      {errors.spacesLargePackage.message}
-                    </Text>
-                  )}
                 </XStack>
               </YStack>
-            </Window>
-            <XStack className="self-start mt-8 ml-10 mb-3">
-              <Text className="text-sm font-qbold text-black">
-                Indicá los
-                <Text className="text-sm font-qbold text-primary">
-                  {" "}
-                  precios
-                  <Text className="text-sm font-qbold text-black">
-                    {" "}
-                    que querés asignar:
-                  </Text>
-                </Text>
+            </View>
+          </View>
+
+          <View className="mb-6">
+            <View
+              className="bg-white rounded-3xl p-6"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.08,
+                shadowRadius: 12,
+                elevation: 3,
+              }}
+            >
+              <Text className="text-lg font-qbold text-black mb-4">
+                Indicá los <Text className="text-primary">precios</Text>
               </Text>
-            </XStack>
-            <Window height={520 + priceErrors * 50}>
-              <YStack className="h-full w-full items-start justify-start">
+
+              <YStack space="$2" className="pr-6">
                 <Controller
                   control={control}
                   name="pricePerson"
                   render={({ field: { onChange, value } }) => (
                     <CustomInput
-                      width={"92%"}
+                      width={"100%"}
                       keyboardType="numeric"
                       title="Precio por persona"
                       value={String(value)}
@@ -401,7 +412,7 @@ export default function PostTripPage2() {
                   name="priceSmallPackage"
                   render={({ field: { onChange, value } }) => (
                     <CustomInput
-                      width={"92%"}
+                      width={"100%"}
                       keyboardType="numeric"
                       title="Precio por paquete chico"
                       value={String(value)}
@@ -425,7 +436,7 @@ export default function PostTripPage2() {
                   name="priceMediumPackage"
                   render={({ field: { onChange, value } }) => (
                     <CustomInput
-                      width={"92%"}
+                      width={"100%"}
                       keyboardType="numeric"
                       title="Precio por paquete mediano"
                       value={String(value)}
@@ -449,7 +460,7 @@ export default function PostTripPage2() {
                   name="priceLargePackage"
                   render={({ field: { onChange, value } }) => (
                     <CustomInput
-                      width={"92%"}
+                      width={"100%"}
                       keyboardType="numeric"
                       title="Precio por paquete grande"
                       value={String(value)}
@@ -469,29 +480,26 @@ export default function PostTripPage2() {
                   )}
                 />
               </YStack>
-            </Window>
-            <XStack className="items-center mx-12 mt-10 mb-12">
-              <Link href="/(pages)/PostTripPage" asChild>
-                <Button className="w-8 h-8 bg-background">
-                  <Image
-                    source={icons.arrowleft}
-                    className="w-8 h-8"
-                    resizeMode="contain"
-                  />
-                </Button>
-              </Link>
-              <ButtonNext
-                onPress={handleSubmit(handleContinue)}
-                variant="secondary"
-              >
-                <Text className="text-2xl font-qsemibold text-white">
-                  Publicar Viaje
-                </Text>
-              </ButtonNext>
-            </XStack>
-          </YStack>
-        </Pressable>
-      </YStack>
+            </View>
+          </View>
+
+          <XStack className="justify-center items-center mb-6 mt-6">
+            <ButtonNext
+              onPress={handleSubmit(handleContinue)}
+              variant="secondary"
+            >
+              <Text className="text-2xl font-qsemibold text-white">
+                Publicar Viaje
+              </Text>
+            </ButtonNext>
+          </XStack>
+        </View>
+
+        <AddCarModal
+          isVisible={isAddCarModalVisible}
+          onClose={toggleAddCarModal}
+        />
+      </Pressable>
     </ScrollView>
   );
 }

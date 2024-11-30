@@ -46,7 +46,7 @@ export default function AutocompleteCityInput({
 
   return (
     <>
-      <YStack className="w-full items-center justify-center mt-4">
+      <YStack className="w-full items-center justify-center">
         <View className="w-full items-center px-2">
           <View className="w-[85%]">
             <Text className="text-m font-qbold text-gray-600 mb-2">

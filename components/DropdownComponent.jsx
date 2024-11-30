@@ -24,7 +24,7 @@ export default function DropdownComponent({
 
   return (
     <Dropdown
-      className={`w-[85%] bg-[#EEE] rounded-lg text-black p-4 ${
+      className={`w-[98%] bg-[#EEE] rounded-lg text-black p-4 ${
         isFocused ? "border-2 border-primary" : "border border-gray-900"
       }`}
       placeholderStyle="text-lg"
