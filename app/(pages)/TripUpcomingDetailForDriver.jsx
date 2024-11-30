@@ -240,14 +240,14 @@ export default function TripUpcomingDetailForDriver() {
           </YStack>
           <YStack className="items-start justify-between w-full px-6 pb-8 pt-4 mb-1 border-b-2 border-b-[#eee]">
             <Text className="text-sm font-qbold text-[#ccc] mb-5">
-              Pasajeros
+              Pasajeros anotados
             </Text>
             {(data.riders && (
               <>
                 {data.riders.map((rider) => (
                   <XStack
-                    key={rider.id}
-                    className="w-full items-center justify-between py-3 border-b border-gray-100"
+                    key={rider.user_id}
+                    className="w-full items-center justify-between py-3"
                   >
                     <XStack className="items-center space-x-3 flex-1">
                       <Avatar
@@ -261,14 +261,17 @@ export default function TripUpcomingDetailForDriver() {
                         />
                       </Avatar>
 
-                      <YStack space="$1" className="flex-1">
+                      <YStack space="$1" className="flex-1 ml-3">
                         <Text className="font-qbold text-base text-black">
                           {rider.name}
                         </Text>
                         <Link
                           href={{
                             pathname: "/(pages)/UserProfile",
-                            params: { user_id: rider.id, category: "rider" },
+                            params: {
+                              user_id: rider.user_id,
+                              category: "rider",
+                            },
                           }}
                           asChild
                         >
@@ -280,18 +283,18 @@ export default function TripUpcomingDetailForDriver() {
 
                       <Link
                         href={{
-                          pathname: "/(pages)/ChatDetail",
+                          pathname: "/(pages)/ChatPage",
                           params: { chat_id: rider.chat_id },
                         }}
                         asChild
                       >
                         <Button
-                          className="h-10 w-10 bg-primary/10 rounded-full items-center justify-center"
+                          className="h-16 w-16 bg-primary/10 rounded-full items-center justify-center"
                           pressStyle={{ opacity: 0.7 }}
                         >
                           <MaterialCommunityIcons
                             name="message-text-outline"
-                            size={20}
+                            size={22}
                             color="#59A58A"
                           />
                         </Button>

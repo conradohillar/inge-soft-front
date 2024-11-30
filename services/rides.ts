@@ -55,7 +55,8 @@ export const getRiderDetail = async (rideId) => {
 export const getDriverUpcomingDetail = async (rideId) => {
 
     const url = `${BASE_URL}/driver/detail/${rideId}`;
-    return handleRequest(() => axios.get(url));
+    const headers = await getHeaderWithToken();
+    return handleRequest(() => axios.get(url, { headers }));
     
 }
 
