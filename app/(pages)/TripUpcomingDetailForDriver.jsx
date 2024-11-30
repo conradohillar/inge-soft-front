@@ -11,7 +11,7 @@ import ErrorPage from "./ErrorPage";
 import icons from "../../constants/icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import ButtonNext from "../../components/ButtonNext";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function TripUpcomingDetailForDriver() {
   const { ride_id } = useLocalSearchParams();
@@ -241,7 +241,81 @@ export default function TripUpcomingDetailForDriver() {
               </XStack>
             </YStack>
           </YStack>
-          <YStack className="items-start justify-between w-full px-4 pb-5 pt-3 mb-2 border-t-2 border-t-[#eee]">
+          <YStack className="items-start justify-between w-full px-6 pb-8 pt-4 mb-1 border-b-2 border-b-[#eee]">
+            <Text className="text-sm font-qbold text-[#ccc] mb-5">
+              Pasajeros
+            </Text>
+            {(data.riders && (
+              <>
+                {data.riders.map((rider) => (
+                  <XStack
+                    key={rider.id}
+                    className="w-full items-center justify-between py-3 border-b border-gray-100"
+                  >
+                    <XStack className="items-center space-x-3 flex-1">
+                      <Avatar
+                        circular
+                        size="$8"
+                        borderColor="$gray5"
+                        borderWidth={1}
+                      >
+                        <Avatar.Image
+                          src={rider.photo_url || icons.placeholder_profile}
+                        />
+                      </Avatar>
+
+                      <YStack space="$1" className="flex-1">
+                        <Text className="font-qbold text-base text-black">
+                          {rider.name}
+                        </Text>
+                        <Link
+                          href={{
+                            pathname: "/(pages)/UserProfile",
+                            params: { user_id: rider.id, category: "rider" },
+                          }}
+                          asChild
+                        >
+                          <Text className="font-qsemibold text-sm text-primary underline">
+                            Ver perfil
+                          </Text>
+                        </Link>
+                      </YStack>
+
+                      <Link
+                        href={{
+                          pathname: "/(pages)/ChatDetail",
+                          params: { chat_id: rider.chat_id },
+                        }}
+                        asChild
+                      >
+                        <Button
+                          className="h-10 w-10 bg-primary/10 rounded-full items-center justify-center"
+                          pressStyle={{ opacity: 0.7 }}
+                        >
+                          <MaterialCommunityIcons
+                            name="message-text-outline"
+                            size={20}
+                            color="#59A58A"
+                          />
+                        </Button>
+                      </Link>
+                    </XStack>
+                  </XStack>
+                ))}
+
+                {data.riders.length === 0 && (
+                  <Text className="text-base font-qregular text-gray-500 italic">
+                    Aún no hay pasajeros en este viaje
+                  </Text>
+                )}
+              </>
+            )) || (
+              <Text className="self-center text-base font-qregular text-gray-300 italic">
+                Aún no hay pasajeros en este viaje
+              </Text>
+            )}
+          </YStack>
+          <YStack className="items-start justify-between w-full px-6 pb-5 pt-4 mb-2 border-t-2 border-t-[#eee]">
             <Text className="text-sm font-qbold text-[#ccc] mb-5">
               Manejá las solicitudes de tus pasajeros
             </Text>
