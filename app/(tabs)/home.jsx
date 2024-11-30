@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, Pressable } from "react-native";
 import { Spinner, XStack, YStack } from "tamagui";
 import BlackButton from "../../components/BlackButton";
 import { useGlobalState } from "../_layout";
@@ -13,6 +13,8 @@ import TripEndedModal from "../../components/TripEndedModal";
 import { handleStartTripMut, handleEndTripMut } from "../../services/rides";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link, useRouter } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function Home() {
   const { globalState, setGlobalState } = useGlobalState();
@@ -94,72 +96,126 @@ export default function Home() {
   }
 
   return (
-    <YStack className="h-full w-full items-center justify-evenly bg-background">
-      <Link href="/(pages)/ChatPage">Chatttt</Link>
-      <XStack className="items-center h-[18%] mt-4">
-        <Text className="text-3xl text-black font-qsemibold">Bienvenido,</Text>
-        <Text className="text-3xl text-primary font-qbold">
-          {" "}
-          {globalState.firstName}
+    <View className="flex-1 bg-background">
+      <LinearGradient
+        colors={["#59A58A", "#7AB5A0"]}
+        style={{
+          width: "100%",
+          paddingTop: 60,
+          paddingBottom: 80,
+          borderBottomLeftRadius: 32,
+          borderBottomRightRadius: 32,
+        }}
+      >
+        <YStack className="px-6 items-center">
+          <Text className="text-4xl font-qbold text-white mb-2">
+            ¡Bienvenido,
+          </Text>
+          <Text className="text-4xl font-qbold text-white/90">
+            {globalState.firstName}!
+          </Text>
+        </YStack>
+      </LinearGradient>
+
+      <View className="px-4 -mt-12">
+        <XStack space="$4">
+          <Link href="/(pages)/SearchTripPage" className="flex-1" asChild>
+            <Pressable
+              style={({ pressed }) => ({
+                transform: [{ scale: pressed ? 0.98 : 1 }],
+              })}
+            >
+              <View
+                className="bg-white rounded-3xl py-6 px-4"
+                style={{
+                  shadowColor: "#000",
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.08,
+                  shadowRadius: 12,
+                  elevation: 3,
+                  minHeight: 200, // Aumentamos la altura mínima
+                }}
+              >
+                <View className="bg-primary/10 h-14 w-14 rounded-2xl items-center justify-center mb-4">
+                  <MaterialIcons name="search" size={28} color="#59A58A" />
+                </View>
+                <View className="flex-1 justify-center">
+                  <Text className="text-xl font-qbold text-black mb-2">
+                    Buscar viaje
+                  </Text>
+                  <Text className="text-sm font-qregular text-gray-500">
+                    Encontrá tu próximo destino
+                  </Text>
+                </View>
+              </View>
+            </Pressable>
+          </Link>
+
+          <Link href="/(pages)/PostTripPage" className="flex-1" asChild>
+            <Pressable
+              style={({ pressed }) => ({
+                transform: [{ scale: pressed ? 0.98 : 1 }],
+              })}
+              disabled={!globalState.isDriver}
+            >
+              <View
+                className={`bg-white rounded-3xl py-6 px-4 ${
+                  !globalState.isDriver ? "opacity-50" : ""
+                }`}
+                style={{
+                  shadowColor: "#000",
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.08,
+                  shadowRadius: 12,
+                  elevation: 3,
+                  minHeight: 200, // Aumentamos la altura mínima
+                }}
+              >
+                <View className="bg-primary/10 h-14 w-14 rounded-2xl items-center justify-center mb-4">
+                  <MaterialIcons
+                    name="add-circle-outline"
+                    size={28}
+                    color="#59A58A"
+                  />
+                </View>
+                <View className="flex-1 justify-start">
+                  <Text className="text-xl font-qbold text-black mb-2">
+                    Publicar viaje
+                  </Text>
+                  <Text className="text-sm font-qregular text-gray-500">
+                    Compartí tu ruta
+                  </Text>
+                </View>
+              </View>
+            </Pressable>
+          </Link>
+        </XStack>
+      </View>
+
+      <View className="flex-1 px-6 mt-8">
+        <Text className="text-lg font-qbold text-black mb-4">
+          Viajes programados para hoy
         </Text>
-      </XStack>
-      <Link href="/(pages)/ChatPage">
-        <Text>Link al CHAT</Text>
-      </Link>
-      <YStack className="flex-1 w-[90%] items-start">
-        <Text className="text-lg text-black font-qbold mb-2 ml-3">
-          Viajes programados para hoy:
-        </Text>
-        <View className="flex-1 w-full items-center mb-10 bg-gray-100 rounded-t-2xl border-2 justify-center">
-          {(data.length === 0 && noTripsProgrammed()) ||
-            ((start_mutation.isPending || end_mutation.isPending) && (
-              <Spinner size={40} color="$green10" className="mb-2 mr-2" />
-            )) || (
-              <>
-                <FlatList
-                  data={data}
-                  keyExtractor={(item) => item.ride_id}
-                  renderItem={renderActiveTripCard}
-                  contentContainerStyle={{
-                    alignItems: "center",
-                    width: "99%",
-                  }}
-                />
-              </>
-            )}
-        </View>
-      </YStack>
-      <XStack className="items-start justify-center w-[98%] h-[18%]">
-        <View className="flex-1">
-          <BlackButton
-            href="/(pages)/SearchTripPage"
-            variant={"secondary"}
-            width={"90%"}
-          >
-            <Text className="text-[20px] font-qsemibold text-white">
-              Buscar viaje
+
+        {data && data.length > 0 ? (
+          <FlatList
+            data={data}
+            keyExtractor={(item) => item.ride_id}
+            renderItem={renderActiveTripCard}
+            contentContainerStyle={{
+              paddingBottom: 100,
+            }}
+            showsVerticalScrollIndicator={false}
+          />
+        ) : (
+          <View className="flex-1 items-center justify-center bg-gray-50 rounded-3xl">
+            <MaterialIcons name="event-busy" size={48} color="#ccc" />
+            <Text className="text-lg font-qsemibold text-gray-400 mt-4 text-center">
+              No tenés ningún viaje{"\n"}programado para hoy
             </Text>
-          </BlackButton>
-        </View>
-        <View className="flex-1">
-          <BlackButton
-            href="/(pages)/PostTripPage"
-            className={`${
-              globalState.isDriver ? "" : "opacity-50 bg-gray-500"
-            }`}
-            disabled={!globalState.isDriver}
-            width={"90%"}
-          >
-            <Text className={`text-[20px] font-qsemibold text-white`}>
-              Publicar viaje
-            </Text>
-          </BlackButton>
-        </View>
-      </XStack>
-      <TripEndedModal
-        isVisible={isTripEndedModalVisible}
-        setIsVisible={setTripEndedModalVisible}
-      />
-    </YStack>
+          </View>
+        )}
+      </View>
+    </View>
   );
 }
