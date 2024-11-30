@@ -1,13 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import { useColorScheme } from 'react-native';
-import { TamaguiProvider, Theme, } from "tamagui";
+import { StatusBar } from "expo-status-bar";
+import { useColorScheme } from "react-native";
+import { TamaguiProvider, Theme } from "tamagui";
 import config from "../tamagui.config";
-import { useEffect, useState } from 'react';
-import * as SplashScreen from 'expo-splash-screen';
-import FrontPage from './(pages)/FrontPage';
-import LandingPage from './(pages)/LandingPage';
-import { useFonts } from 'expo-font';
-import registerNNPushToken from 'native-notify';
+import { useEffect, useState } from "react";
+import * as SplashScreen from "expo-splash-screen";
+import FrontPage from "./(pages)/FrontPage";
+import LandingPage from "./(pages)/LandingPage";
+import { useFonts } from "expo-font";
 
 export default function App() {
   const colorScheme = useColorScheme();
@@ -15,17 +14,16 @@ export default function App() {
   const [isReady, setIsReady] = useState(false);
 
   const [fontsLoaded] = useFonts({
-    'Inter': require('../assets/fonts/Inter_18pt-Regular.ttf'), // No se usa para nada, pero si no se carga tira warning
-    'Quicksand-Semibold': require('../assets/fonts/Quicksand-SemiBold.ttf'),
+    Inter: require("../assets/fonts/Inter_18pt-Regular.ttf"),
+    "Quicksand-Semibold": require("../assets/fonts/Quicksand-SemiBold.ttf"),
   });
-  registerNNPushToken(24233, 'SX3XOZEi4N2YNO4U2RkCfD');
+
   useEffect(() => {
     const prepare = async () => {
       try {
-        // Evita que se oculte la pantalla de carga automáticamente
         await SplashScreen.preventAutoHideAsync();
-        // Aquí puedes cargar cualquier recurso necesario
-        await new Promise(resolve => setTimeout(resolve, 3000)); // Simulación de carga
+
+        await new Promise((resolve) => setTimeout(resolve, 3000));
       } catch (e) {
         console.warn(e);
       } finally {
@@ -47,14 +45,11 @@ export default function App() {
   }
 
   return (
-
     <TamaguiProvider config={config}>
       <Theme name={colorScheme === "dark" ? "dark" : "light"}>
         <LandingPage />
         <StatusBar theme="dark" />
       </Theme>
     </TamaguiProvider>
-
-
   );
 }

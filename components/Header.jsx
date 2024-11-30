@@ -1,4 +1,3 @@
-import { Menu } from "@tamagui/lucide-icons";
 import { Link } from "expo-router";
 import {
   Image,
@@ -12,7 +11,6 @@ import { XStack, YStack, Button } from "tamagui";
 import icons from "../constants/icons";
 import React, { useState, useEffect } from "react";
 import { useGlobalState } from "../app/_layout";
-import * as Notifications from "expo-notifications";
 
 export default function Header() {
   const { globalState } = useGlobalState();
@@ -20,12 +18,7 @@ export default function Header() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const getNots = async () => {
-    let not = await getIndieNotificationInbox(
-      globalState.userId,
-      24233,
-      "SX3XOZEi4N2YNO4U2RkCfD"
-    );
-    setNotifications(not);
+    setNotifications([]);
   };
 
   useEffect(() => {
@@ -33,13 +26,7 @@ export default function Header() {
   }, []);
 
   const handleDeleteNotification = async (notificationId) => {
-    let not = await deleteIndieNotificationInbox(
-      globalState.userId,
-      notificationId,
-      24233,
-      "SX3XOZEi4N2YNO4U2RkCfD"
-    );
-    setNotifications(not);
+    setNotifications([]);
   };
 
   const toggleModal = () => {

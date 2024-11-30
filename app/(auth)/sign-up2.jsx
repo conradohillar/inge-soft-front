@@ -9,7 +9,6 @@ import { sign_up } from "../../services/auth";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signUpPart2Schema } from "../../validation/authSchemas";
-import { registerIndieID } from "native-notify";
 
 export default function SignUp2() {
   const { dni, userName, address } = useLocalSearchParams();
@@ -32,8 +31,6 @@ export default function SignUp2() {
   const mutation = useMutation({
     mutationFn: (userData) => sign_up(userData),
     onSuccess: (user_id) => {
-      registerIndieID(user_id.user_id, 24233, "SX3XOZEi4N2YNO4U2RkCfD");
-
       router.push({
         pathname: "/(auth)/sign-in",
       });
