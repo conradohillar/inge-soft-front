@@ -369,7 +369,7 @@ export default function PostTripPage2() {
 
           <View className="mb-6">
             <View
-              className="bg-white rounded-3xl p-6"
+              className="bg-white rounded-3xl px-6 pt-6 pb-8"
               style={{
                 shadowColor: "#000",
                 shadowOffset: { width: 0, height: 2 },
