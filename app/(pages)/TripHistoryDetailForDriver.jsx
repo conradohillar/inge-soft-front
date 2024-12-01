@@ -1,13 +1,12 @@
 import { View, Text, ScrollView, Image, Pressable } from "react-native";
-import { XStack, YStack, Avatar, Button } from "tamagui";
+import { XStack, YStack } from "tamagui";
 import { MaterialIcons } from "@expo/vector-icons";
-import Header from "../../components/Header";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
 import { getDriverHistoryDetail } from "../../services/rides";
 import LoadingPage from "./LoadingPage";
-import { Link, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import ErrorPage from "./ErrorPage";
+import { LinearGradient } from "expo-linear-gradient";
 import icons from "../../constants/icons";
 
 export default function TripHistoryDetailForDriver() {
@@ -18,46 +17,47 @@ export default function TripHistoryDetailForDriver() {
     queryFn: () => getDriverHistoryDetail(ride_id),
   });
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
-  if (isError) {
-    return <ErrorPage />;
-  }
+  if (isLoading) return <LoadingPage />;
+  if (isError) return <ErrorPage />;
 
   return (
-    <YStack className="w-full h-full items-start justify-start bg-background mb-12">
-      <View className="w-full h-[10%] items-center justify-center">
-        <XStack className="w-full items-start justify-center ml-12">
-          <Link
-            href={{
-              pathname: "/(pages)/TripsPage",
-              params: { category: "driver" },
-            }}
-            asChild
-          >
-            <Button className="h-9 w-9 bg-background rounded-xl ml-12">
-              <Image
-                source={icons.arrowleft}
-                className="h-7 w-7"
-                resizeMode="contain"
-              />
-            </Button>
-          </Link>
-          <View className="w-full items-start ml-8">
-            <Text className="text-3xl font-qbold text-primary">
-              Detalle
-              <Text className="text-3xl font-qbold text-black"> del viaje</Text>
+    <ScrollView className="flex-1 bg-background">
+      <Pressable className="mb-4">
+        {/* Header con gradiente */}
+        <LinearGradient
+          colors={["#59A58A", "#7AB5A0"]}
+          style={{
+            width: "100%",
+            paddingTop: 60,
+            paddingBottom: 80,
+            borderBottomLeftRadius: 32,
+            borderBottomRightRadius: 32,
+          }}
+        >
+          <View className="px-6 items-center">
+            <Text className="text-4xl font-qbold text-white">
+              Detalle{" "}
+              <Text className="text-4xl font-qbold text-white/90">
+                del viaje
+              </Text>
             </Text>
           </View>
-        </XStack>
-      </View>
-      <ScrollView className="h-full">
-        <Pressable>
-          <YStack className="items-start justify-between w-full px-6 pb-8 pt-4">
-            <YStack space="$4" className="w-full mb-8">
-              <YStack space="$2" className="w-full mb-3">
+        </LinearGradient>
+
+        <View className="flex-1 -mt-12 px-6">
+          {/* Origen y Destino */}
+          <View
+            className="bg-white rounded-3xl p-6 mb-4"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.08,
+              shadowRadius: 12,
+              elevation: 3,
+            }}
+          >
+            <YStack space="$4">
+              <YStack space="$2">
                 <Text className="text-sm font-qsemibold text-primary">
                   Origen
                 </Text>
@@ -69,7 +69,7 @@ export default function TripHistoryDetailForDriver() {
                 </XStack>
               </YStack>
 
-              <YStack space="$2" className="w-full mb-2">
+              <YStack space="$2">
                 <Text className="text-sm font-qsemibold text-primary">
                   Destino
                 </Text>
@@ -81,12 +81,23 @@ export default function TripHistoryDetailForDriver() {
                 </XStack>
               </YStack>
             </YStack>
+          </View>
 
-            {/* Sección Fecha y Hora */}
-            <YStack space="$3.5" className="w-full mb-8">
-              <Text className="text-sm font-qsemibold text-primary">
-                Fecha y hora
-              </Text>
+          {/* Fecha y Hora */}
+          <View
+            className="bg-white rounded-3xl p-6 mb-4"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.08,
+              shadowRadius: 12,
+              elevation: 3,
+            }}
+          >
+            <Text className="text-sm font-qsemibold text-primary mb-4">
+              Fecha y hora
+            </Text>
+            <YStack space="$3.5">
               <XStack className="items-center space-x-3">
                 <MaterialIcons
                   name="calendar-today"
@@ -97,8 +108,7 @@ export default function TripHistoryDetailForDriver() {
                   {data.date}
                 </Text>
               </XStack>
-
-              <XStack className="items-end space-x-3">
+              <XStack className="items-center space-x-3">
                 <MaterialIcons name="access-time" size={24} color="#EEB800" />
                 <Text className="text-lg font-qbold text-black">
                   {data.start_minimum_time.split(":").slice(0, 2).join(":")} -{" "}
@@ -106,35 +116,51 @@ export default function TripHistoryDetailForDriver() {
                 </Text>
               </XStack>
             </YStack>
+          </View>
 
-            {/* Sección Vehículo */}
-            <YStack space="$2" className="w-full mb-6">
-              <Text className="text-sm font-qsemibold text-primary">
-                Vehículo
+          {/* Vehículo */}
+          <View
+            className="bg-white rounded-3xl p-6 mb-4"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.08,
+              shadowRadius: 12,
+              elevation: 3,
+            }}
+          >
+            <Text className="text-sm font-qsemibold text-primary mb-4">
+              Vehículo
+            </Text>
+            <XStack className="items-center space-x-3">
+              <MaterialIcons name="directions-car" size={24} color="#666666" />
+              <Text className="text-lg font-qbold text-black">
+                {data.car_model}
               </Text>
-              <XStack className="items-center space-x-3">
-                <MaterialIcons
-                  name="directions-car"
-                  size={24}
-                  color="#666666"
-                />
-                <Text className="text-lg font-qbold text-black pl-1">
-                  {data.car_model}
-                </Text>
-                <Text className="text-base font-qsemibold text-gray-500">
-                  {data.car_plate}
-                </Text>
-              </XStack>
-            </YStack>
+              <Text className="text-base font-qsemibold text-gray-500">
+                {data.car_plate}
+              </Text>
+            </XStack>
+          </View>
 
-            {/* Sección Espacios Disponibles - Ajustada */}
-            <Text className="text-sm font-qsemibold text-primary my-4">
+          {/* Espacios Utilizados */}
+          <View
+            className="bg-white rounded-3xl py-6 pl-6 pr-8 mb-4"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.08,
+              shadowRadius: 12,
+              elevation: 3,
+            }}
+          >
+            <Text className="text-sm font-qsemibold text-primary mb-4">
               Trasladaste
             </Text>
-            <YStack space="$4" className="w-full pr-2">
-              <XStack className="items-center justify-between w-full">
-                <XStack className="items-center space-x-3 flex-1">
-                  <View className="w-7 items-center mr-2">
+            <YStack space="$4">
+              <XStack className="items-center justify-between">
+                <XStack className="items-center space-x-3">
+                  <View className="w-7 items-center">
                     <MaterialIcons name="person" size={24} color="#666666" />
                   </View>
                   <Text className="text-base font-qsemibold text-gray-500">
@@ -145,9 +171,10 @@ export default function TripHistoryDetailForDriver() {
                   {data.persons}
                 </Text>
               </XStack>
-              <XStack className="items-center justify-between w-full">
-                <XStack className="items-center space-x-3 flex-1">
-                  <View className="w-7 items-center mr-2">
+
+              <XStack className="items-center justify-between">
+                <XStack className="items-center space-x-3">
+                  <View className="w-7 items-center">
                     <Image
                       source={icons.mypackage}
                       className="h-7 w-7"
@@ -162,9 +189,10 @@ export default function TripHistoryDetailForDriver() {
                   {data.small_package}
                 </Text>
               </XStack>
-              <XStack className="items-center justify-between w-full">
-                <XStack className="items-center space-x-3 flex-1">
-                  <View className="w-7 items-center mr-2">
+
+              <XStack className="items-center justify-between">
+                <XStack className="items-center space-x-3">
+                  <View className="w-7 items-center">
                     <Image
                       source={icons.mypackage}
                       className="h-8 w-8"
@@ -179,9 +207,10 @@ export default function TripHistoryDetailForDriver() {
                   {data.medium_package}
                 </Text>
               </XStack>
-              <XStack className="items-center justify-between w-full">
-                <XStack className="items-center space-x-3 flex-1">
-                  <View className="w-7 items-center mr-2">
+
+              <XStack className="items-center justify-between">
+                <XStack className="items-center space-x-3">
+                  <View className="w-7 items-center">
                     <Image
                       source={icons.mypackage}
                       className="h-9 w-9"
@@ -197,16 +226,27 @@ export default function TripHistoryDetailForDriver() {
                 </Text>
               </XStack>
             </YStack>
-            <View className="w-full items-start border-t-2 border-t-[#eee] mt-6 pt-4">
-              <XStack className="items-center my-2">
-                <Text className="text-xl font-qbold text-primary ml-2">
-                  Ganancia: ${data.price}
-                </Text>
-              </XStack>
-            </View>
-          </YStack>
-        </Pressable>
-      </ScrollView>
-    </YStack>
+          </View>
+
+          {/* Ganancia */}
+          <View
+            className="bg-white rounded-3xl p-6 mb-8"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.08,
+              shadowRadius: 12,
+              elevation: 3,
+            }}
+          >
+            <XStack className="items-center">
+              <Text className="text-xl font-qbold text-primary">
+                Ganancia: ${data.price}
+              </Text>
+            </XStack>
+          </View>
+        </View>
+      </Pressable>
+    </ScrollView>
   );
 }

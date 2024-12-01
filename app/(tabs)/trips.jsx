@@ -35,7 +35,7 @@ export default function Trips() {
         }}
       >
         <View className="px-6 items-center">
-          <Text className="text-4xl font-qbold text-white">Mis viajes</Text>
+          <Text className="text-4xl font-qbold text-white">Tus viajes</Text>
         </View>
       </LinearGradient>
 

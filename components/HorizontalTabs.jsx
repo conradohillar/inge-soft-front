@@ -18,7 +18,7 @@ export default function HorizontalTabs({ category }) {
         height="100%"
         borderRadius="$4"
         overflow="hidden"
-        className="bg-background"
+        className="bg-background pt-3"
         onValueChange={(value) => setSelectedTab(value)}
       >
         <Tabs.List

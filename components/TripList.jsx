@@ -19,7 +19,7 @@ export default function TripList({ type, category }) {
   const handleRiderTrips = (ride_id) => {
     router.push({
       pathname: "/(pages)/TripDetailForRider",
-      params: { ride_id },
+      params: { ride_id, type },
     });
   };
 
@@ -166,9 +166,10 @@ export default function TripList({ type, category }) {
             category === "rider" ? renderTripCard : renderTripCardForDriver
           }
           contentContainerStyle={{
-            paddingBottom: 130,
-            alignItems: "center",
-            width: "100%",
+            paddingHorizontal: 24,
+            paddingTop: 12,
+            paddingBottom: 24,
+            gap: 12,
           }}
         />
       </View>

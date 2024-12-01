@@ -1,37 +1,39 @@
-import { SizableText, YStack, XStack, Spacer } from "tamagui";
+import { SizableText, YStack, XStack } from "tamagui";
 import HorizontalTabs from "../../components/HorizontalTabs";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { View, TouchableOpacity } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import { useLocalSearchParams } from "expo-router";
+import { View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function TripsPage() {
   const { category } = useLocalSearchParams();
-  const router = useRouter();
 
   return (
-    <YStack className="h-full justify-evenly bg-background">
-      <YStack className="py-5 items-center">
-        <YStack className="w-full items-center">
-          <View className="pl-5 self-start">
-            <TouchableOpacity
-              onPress={router.back}
-              className="p-1 rounded-xl border border-gray-300"
-            >
-              <MaterialIcons name="chevron-left" size={28} color="black" />
-            </TouchableOpacity>
-          </View>
-          <Spacer />
-          <XStack className="space-x-2 items-center">
-            <SizableText className="text-2xl text-black font-qbold pr-2">
-              Tus viajes
-            </SizableText>
-            <SizableText className="text-2xl text-primary font-qbold">
-              como {category === "rider" ? "pasajero" : "conductor"}
-            </SizableText>
-          </XStack>
-        </YStack>
-      </YStack>
-      <HorizontalTabs category={category} />
-    </YStack>
+    <View className="flex-1 bg-background">
+      {/* Header con gradiente */}
+      <LinearGradient
+        colors={["#59A58A", "#7AB5A0"]}
+        style={{
+          width: "100%",
+          paddingTop: 50,
+          paddingBottom: 80,
+          borderBottomLeftRadius: 32,
+          borderBottomRightRadius: 32,
+        }}
+      >
+        <View className="px-6">
+          <SizableText className="text-4xl font-qbold text-white">
+            Tus viajes
+          </SizableText>
+          <SizableText className="text-4xl font-qbold text-white/90">
+            como {category === "rider" ? "pasajero" : "conductor"}
+          </SizableText>
+        </View>
+      </LinearGradient>
+
+      {/* Contenido de los tabs */}
+      <View className="-mt-12 flex-1">
+        <HorizontalTabs category={category} />
+      </View>
+    </View>
   );
 }

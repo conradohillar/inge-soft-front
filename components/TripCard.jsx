@@ -1,7 +1,6 @@
 import { Image, View, Text, Pressable } from "react-native";
 import { Avatar, XStack, YStack } from "tamagui";
 import icons from "../constants/icons";
-
 const getStateIcon = (state) => {
   const icons = {
     pending: {
@@ -32,71 +31,71 @@ export default function TripCard({
   ride_id,
 }) {
   return (
-    <View className="py-3">
-      <Pressable
-        style={({ pressed }) => ({
-          height: 218,
-          width: 350,
-          paddingVertical: 15,
-          paddingHorizontal: 18,
-          marginHorizontal: 6,
-          borderWidth: 2,
-          borderColor: "#ccc",
-          borderRadius: 40,
-          opacity: pressed ? 0.7 : 1,
-          backgroundColor: pressed ? "#cdddcd" : "#eee",
+    <Pressable
+      onPress={() => handleOpenDetail(ride_id)}
+      style={({ pressed }) => ({
+        opacity: pressed ? 0.9 : 1,
+        transform: [{ scale: pressed ? 0.995 : 1 }],
+      })}
+    >
+      <View
+        className="bg-white rounded-3xl p-6 w-full"
+        style={{
           shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 5,
-        })}
-        onPress={() => handleOpenDetail(ride_id)}
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.08,
+          shadowRadius: 12,
+          elevation: 3,
+        }}
       >
-        <YStack>
-          <XStack className="items-center justify-between mb-2">
-            <XStack className="items-center">
-              <Text className="text-2xl font-qbold text-black">{from} </Text>
-              <Image
-                source={icons.arrowright}
-                className="w-4 h-4"
-                tintColor="#000"
-                resizeMode="contain"
-              />
-              <Text className="text-2xl font-qbold text-black"> {to}</Text>
-            </XStack>
-            <Avatar circular size="$7" borderColor="$black" borderWidth={1}>
+        {/* Header: Conductor y Fecha */}
+        <XStack className="items-start justify-between mb-5">
+          <XStack className="items-center space-x-3">
+            <Avatar circular size="$6" borderColor="$gray200" borderWidth={1}>
               <Avatar.Image src={url || icons.placeholder_profile} />
               <Avatar.Fallback backgroundColor="$gray8" />
             </Avatar>
+            <YStack>
+              <Text className="text-sm font-qsemibold text-gray-500">
+                Conductor
+              </Text>
+              <Text className="text-xl font-qbold text-black">{driver}</Text>
+            </YStack>
           </XStack>
+          <XStack className="items-center">
+            <Text className="text-sm font-qsemibold text-gray-400">
+              {date}{" "}
+            </Text>
+          </XStack>
+        </XStack>
 
-          <YStack>
-            <Text className="text-base font-qsemibold text-grey-100">
-              Conductor: {driver}
-            </Text>
-            <Text className="text-base font-qsemibold text-grey-100 mb-3">
-              {date}
-            </Text>
-            <XStack className="items-center justify-between">
-              <Text className="text-xl font-qbold text-grey-800">${price}</Text>
-              {state && (
-                <Image
-                  source={getStateIcon(state).source}
-                  className="w-10 h-10 mr-4"
-                  resizeMode="contain"
-                  style={{
-                    tintColor: getStateIcon(state).color,
-                  }}
-                />
-              )}
-            </XStack>
-          </YStack>
+        {/* Contenido: Ruta y Precio */}
+        <YStack space="$3">
+          <XStack className="items-center space-x-2">
+            <Text className="text-2xl font-qbold text-primary">{from}</Text>
+            <Image
+              source={icons.arrowright}
+              className="w-5 h-5 mx-1"
+              tintColor="#59A58A"
+              resizeMode="contain"
+            />
+            <Text className="text-2xl font-qbold text-primary">{to}</Text>
+          </XStack>
+          <XStack className="items-end justify-between">
+            <Text className="text-2xl font-qbold text-black">${price}</Text>
+            {state && (
+              <Image
+                source={getStateIcon(state).source}
+                className="w-7 h-7 mr-2"
+                resizeMode="contain"
+                style={{
+                  tintColor: getStateIcon(state).color,
+                }}
+              />
+            )}
+          </XStack>
         </YStack>
-      </Pressable>
-    </View>
+      </View>
+    </Pressable>
   );
 }

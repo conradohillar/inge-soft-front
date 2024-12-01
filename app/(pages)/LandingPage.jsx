@@ -9,6 +9,7 @@ export default function LandingPage() {
       <View className="justify-end ml-2 flex">
         <Text className="text-[95px] font-qsemibold text-primary">rydio</Text>
       </View>
+
       <YStack className="items-center justify-center w-full h-[50%] space-y-2">
         <View className="w-[90%]">
           <BlackButton href="/(auth)/sign-in" height={75}>
@@ -17,15 +18,15 @@ export default function LandingPage() {
             </Text>
           </BlackButton>
         </View>
+
         <View className="w-[90%]">
-          <BlackButton href="/(tabs)/home" variant={"secondary"} height={75}>
-            <XStack className="items-center justify-center flex-row space-x-3">
-              <Text className="text-[22px] font-qsemibold text-white">
-                Continuar sin cuenta
-              </Text>
-            </XStack>
+          <BlackButton href="/(tabs)/home" variant="secondary" height={75}>
+            <Text className="text-[22px] font-qsemibold text-white">
+              Continuar sin cuenta
+            </Text>
           </BlackButton>
         </View>
+
         <XStack className="w-full items-center justify-center mt-5">
           <Text className="text-[18px] text-black font-qsemibold">
             No tenés cuenta?{" "}
@@ -37,6 +38,7 @@ export default function LandingPage() {
           </Link>
         </XStack>
       </YStack>
+
       <View className="justify-start">
         <Image
           source={require("../../assets/icons/logo.png")}

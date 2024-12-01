@@ -2,31 +2,25 @@ import {
   View,
   Text,
   ScrollView,
-  Pressable,
   Image,
+  Pressable,
   Linking,
 } from "react-native";
-import { useEffect, useState } from "react";
-import { XStack, YStack, Avatar, Button } from "tamagui";
-import Header from "../../components/Header";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { XStack, YStack, Avatar } from "tamagui";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { getRideSearchDetail, payRide } from "../../services/rides";
+import { getRideSearchDetail, payRide, joinRide } from "../../services/rides";
 import LoadingPage from "./LoadingPage";
-import { Link } from "expo-router";
 import ErrorPage from "./ErrorPage";
 import Counter from "../../components/Counter";
-import icons from "../../constants/icons";
-import { useLocalSearchParams } from "expo-router";
-import ButtonNext from "../../components/ButtonNext";
-import { joinRide } from "../../services/rides";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, Link, useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
-import Window from "../../components/Window";
+import { LinearGradient } from "expo-linear-gradient";
+import { useState } from "react";
+import ButtonNext from "../../components/ButtonNext";
+import icons from "../../constants/icons";
 export default function TripSearchDetail() {
   const { ride_id, people, smallPacks, mediumPacks, largePacks } =
     useLocalSearchParams();
-
   const [pressed, setPressed] = useState(false);
 
   const [seats, setSeats] = useState(parseInt(people, 10));
@@ -98,13 +92,8 @@ export default function TripSearchDetail() {
     paymentMutation.mutate(data);
   };
 
-  if (isLoading || mutation.isPending) {
-    return <LoadingPage />;
-  }
-
-  if (isError || mutation.isError) {
-    return <ErrorPage />;
-  }
+  if (isLoading || mutation.isPending) return <LoadingPage />;
+  if (isError || mutation.isError) return <ErrorPage />;
 
   const price = (
     data.price_person * seats +
@@ -114,301 +103,274 @@ export default function TripSearchDetail() {
   ).toFixed(2);
 
   return (
-    <YStack className="w-full h-full items-start justify-start bg-background mb-12">
-      <View className="w-full h-[10%] items-center justify-center">
-        <XStack className="w-full items-start justify-center ml-12">
-          <Link href={"/(pages)/SearchResultsPage"} asChild>
-            <Button className="h-9 w-9 bg-background rounded-xl ml-12">
-              <Image
-                source={icons.arrowleft}
-                className="h-7 w-7"
-                resizeMode="contain"
-              />
-            </Button>
-          </Link>
-          <View className="w-full items-start ml-8">
-            <Text className="text-3xl font-qbold text-primary">
-              Detalle
-              <Text className="text-3xl font-qbold text-black"> del viaje</Text>
+    <ScrollView className="flex-1 bg-background">
+      <Pressable className="mb-4">
+        <LinearGradient
+          colors={["#59A58A", "#7AB5A0"]}
+          style={{
+            width: "100%",
+            paddingTop: 60,
+            paddingBottom: 80,
+            borderBottomLeftRadius: 32,
+            borderBottomRightRadius: 32,
+          }}
+        >
+          <View className="px-6 items-center">
+            <Text className="text-4xl font-qbold text-white">
+              Detalle{" "}
+              <Text className="text-4xl font-qbold text-white/90">
+                del viaje
+              </Text>
             </Text>
           </View>
-        </XStack>
-      </View>
-      <ScrollView className="h-full w-full">
-        <Pressable>
-          <YStack className="items-start justify-between w-full px-6 pb-8 pt-4 mb-1 border-b-2 border-b-[#eee]">
-            <YStack space="$4" className="w-full mb-8">
-              <YStack space="$2" className="w-full mb-3">
-                <Text className="text-sm font-qsemibold text-primary">
-                  Origen
-                </Text>
-                <XStack className="items-center space-x-3">
-                  <MaterialIcons name="trip-origin" size={24} color="#00AA00" />
-                  <Text className="text-lg font-qbold text-black flex-1 flex-wrap">
-                    {data.city_from}
-                  </Text>
-                </XStack>
-              </YStack>
+        </LinearGradient>
 
-              <YStack space="$2" className="w-full mb-2">
-                <Text className="text-sm font-qsemibold text-primary">
-                  Destino
-                </Text>
-                <XStack className="items-center space-x-3">
-                  <MaterialIcons name="place" size={24} color="#DD0000" />
-                  <Text className="text-lg font-qbold text-black flex-1 flex-wrap">
-                    {data.city_to}
+        <View className="-mt-12 flex-1">
+          {/* Origen y Destino */}
+          <View className="px-6 mb-4">
+            <View
+              className="bg-white rounded-3xl p-6"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.08,
+                shadowRadius: 12,
+                elevation: 3,
+              }}
+            >
+              <YStack space="$4">
+                <YStack space="$2">
+                  <Text className="text-sm font-qsemibold text-primary">
+                    Origen
                   </Text>
-                </XStack>
-              </YStack>
-            </YStack>
+                  <XStack className="items-center space-x-3">
+                    <MaterialIcons
+                      name="trip-origin"
+                      size={24}
+                      color="#00AA00"
+                    />
+                    <Text className="text-lg font-qbold text-black flex-1 flex-wrap">
+                      {data.city_from}
+                    </Text>
+                  </XStack>
+                </YStack>
 
-            {/* Sección Fecha y Hora */}
-            <YStack space="$3.5" className="w-full mb-8">
-              <Text className="text-sm font-qsemibold text-primary">
+                <YStack space="$2">
+                  <Text className="text-sm font-qsemibold text-primary">
+                    Destino
+                  </Text>
+                  <XStack className="items-center space-x-3">
+                    <MaterialIcons name="place" size={24} color="#DD0000" />
+                    <Text className="text-lg font-qbold text-black flex-1 flex-wrap">
+                      {data.city_to}
+                    </Text>
+                  </XStack>
+                </YStack>
+              </YStack>
+            </View>
+          </View>
+
+          {/* Fecha y Hora */}
+          <View className="px-6 mb-4">
+            <View
+              className="bg-white rounded-3xl p-6"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.08,
+                shadowRadius: 12,
+                elevation: 3,
+              }}
+            >
+              <Text className="text-sm font-qsemibold text-primary mb-4">
                 Fecha y hora
               </Text>
-              <XStack className="items-center space-x-3">
-                <MaterialIcons
-                  name="calendar-today"
-                  size={24}
-                  color="#AA00FF"
-                />
-                <Text className="text-lg font-qbold text-black">
-                  {data.date}
-                </Text>
-              </XStack>
-
-              <XStack className="items-end space-x-3">
-                <MaterialIcons name="access-time" size={24} color="#EEB800" />
-                <Text className="text-lg font-qbold text-black">
-                  {data.start_minimum_time.split(":").slice(0, 2).join(":")} -{" "}
-                  {data.start_maximum_time.split(":").slice(0, 2).join(":")}
-                </Text>
-              </XStack>
-            </YStack>
-
-            {/* Sección Vehículo */}
-            <YStack space="$2" className="w-full mb-6">
-              <Text className="text-sm font-qsemibold text-primary">
-                Vehículo
-              </Text>
-              <XStack className="items-center space-x-3">
-                <MaterialIcons
-                  name="directions-car"
-                  size={24}
-                  color="#666666"
-                />
-                <Text className="text-lg font-qbold text-black pl-1">
-                  {data.car_model}
-                </Text>
-                <Text className="text-base font-qsemibold text-gray-500">
-                  {data.car_plate}
-                </Text>
-              </XStack>
-            </YStack>
-
-            {/* Sección Espacios Disponibles - Ajustada */}
-            <Text className="text-sm font-qsemibold text-primary my-4">
-              Espacios disponibles
-            </Text>
-            <YStack space="$4" className="w-full pr-2">
-              <XStack className="items-center justify-between w-full">
-                <XStack className="items-center space-x-3 flex-1">
-                  <View className="w-7 items-center mr-2">
-                    <MaterialIcons name="person" size={24} color="#666666" />
-                  </View>
-                  <Text className="text-base font-qsemibold text-gray-500">
-                    Personas
+              <YStack space="$3.5">
+                <XStack className="items-center space-x-3">
+                  <MaterialIcons
+                    name="calendar-today"
+                    size={24}
+                    color="#AA00FF"
+                  />
+                  <Text className="text-lg font-qbold text-black">
+                    {data.date}
                   </Text>
                 </XStack>
-                <Text className="text-lg font-qbold text-black">
-                  {data.available_space_persons}
-                </Text>
+                <XStack className="items-center space-x-3">
+                  <MaterialIcons name="access-time" size={24} color="#EEB800" />
+                  <Text className="text-lg font-qbold text-black">
+                    {data.start_minimum_time.split(":").slice(0, 2).join(":")} -{" "}
+                    {data.start_maximum_time.split(":").slice(0, 2).join(":")}
+                  </Text>
+                </XStack>
+              </YStack>
+            </View>
+          </View>
+
+          {/* Conductor */}
+          <View className="px-6 mb-4">
+            <View
+              className="bg-white rounded-3xl p-6"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.08,
+                shadowRadius: 12,
+                elevation: 3,
+              }}
+            >
+              <Text className="text-sm font-qsemibold text-primary mb-4">
+                Conductor
+              </Text>
+              <XStack className="items-center justify-between">
+                <XStack className="items-center space-x-3">
+                  <Avatar
+                    circular
+                    size="$10"
+                    borderColor="$black"
+                    borderWidth={1}
+                  >
+                    <Avatar.Image
+                      src={
+                        data.driver_photo === ""
+                          ? icons.placeholder_profile
+                          : data.driver_photo
+                      }
+                    />
+                    <Avatar.Fallback backgroundColor="$gray8" />
+                  </Avatar>
+                  <YStack>
+                    <Text className="text-xl font-qbold text-black">
+                      {data.driver_name}
+                    </Text>
+                    <Text className="text-sm font-qsemibold text-gray-500">
+                      {data.car_model} • {data.car_plate}
+                    </Text>
+                  </YStack>
+                </XStack>
+                <Link
+                  href={{
+                    pathname: "/(pages)/UserProfile",
+                    params: { user_id: data.driver_id, category: "driver" },
+                  }}
+                  asChild
+                >
+                  <Pressable
+                    onPressIn={() => setPressed(true)}
+                    onPressOut={() => setPressed(false)}
+                    className="bg-white rounded-2xl pl-4 py-10 pr-2"
+                    style={({ pressed }) => ({
+                      opacity: pressed ? 0.8 : 1,
+                    })}
+                  >
+                    <MaterialIcons
+                      name="chevron-right"
+                      size={28}
+                      color="#59A58A"
+                    />
+                  </Pressable>
+                </Link>
               </XStack>
-              <XStack className="items-center justify-between w-full">
-                <XStack className="items-center space-x-3 flex-1">
-                  <View className="w-7 items-center mr-2">
+            </View>
+          </View>
+
+          {/* Reserva */}
+          <View className="px-6 mb-8">
+            <View
+              className="bg-white rounded-3xl p-6"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.08,
+                shadowRadius: 12,
+                elevation: 3,
+              }}
+            >
+              <Text className="text-sm font-qsemibold text-primary mb-4">
+                Tu reserva
+              </Text>
+              <YStack space="$4">
+                <XStack className="items-center justify-between pr-4 pl-8">
+                  <View className="w-12 items-center">
                     <Image
-                      source={icons.mypackage}
-                      className="h-7 w-7"
+                      source={icons.profile2}
+                      className="h-8 w-8"
                       resizeMode="contain"
                     />
                   </View>
-                  <Text className="text-base font-qsemibold text-gray-500">
-                    Paquetes chicos
-                  </Text>
+                  <Counter
+                    maxCount={data.available_space_persons}
+                    count={seats}
+                    handleChangeCount={setSeats}
+                  />
                 </XStack>
-                <Text className="text-lg font-qbold text-black">
-                  {data.available_space_small_package}
-                </Text>
-              </XStack>
-              <XStack className="items-center justify-between w-full">
-                <XStack className="items-center space-x-3 flex-1">
-                  <View className="w-7 items-center mr-2">
+
+                <XStack className="items-center justify-between pr-4 pl-8">
+                  <View className="w-12 items-center">
                     <Image
                       source={icons.mypackage}
                       className="h-8 w-8"
                       resizeMode="contain"
                     />
                   </View>
-                  <Text className="text-base font-qsemibold text-gray-500">
-                    Paquetes medianos
-                  </Text>
-                </XStack>
-                <Text className="text-lg font-qbold text-black">
-                  {data.available_space_medium_package}
-                </Text>
-              </XStack>
-              <XStack className="items-center justify-between w-full">
-                <XStack className="items-center space-x-3 flex-1">
-                  <View className="w-7 items-center mr-2">
-                    <Image
-                      source={icons.mypackage}
-                      className="h-9 w-9"
-                      resizeMode="contain"
-                    />
-                  </View>
-                  <Text className="text-base font-qsemibold text-gray-500">
-                    Paquetes grandes
-                  </Text>
-                </XStack>
-                <Text className="text-lg font-qbold text-black">
-                  {data.available_space_large_package}
-                </Text>
-              </XStack>
-            </YStack>
-          </YStack>
-          <YStack className="items-start justify-between w-full px-4 pb-6 pt-3 mb-1 border-2 border-[#eee]">
-            <Text className="text-sm font-qbold text-[#ccc] mb-5">
-              Sobre el conductor
-            </Text>
-            <XStack className="items-center justify-start w-full mb-5">
-              <Avatar circular size="$10" borderColor="$black" borderWidth={1}>
-                <Avatar.Image
-                  src={
-                    data.driver_photo === ""
-                      ? icons.placeholder_profile
-                      : data.driver_photo
-                  }
-                />
-                <Avatar.Fallback backgroundColor="$gray8" />
-              </Avatar>
-              <YStack className="items-start justify-start">
-                <Text className="text-xl font-qbold text-black ml-3 mb-1">
-                  {data.driver_name}
-                </Text>
-                <Text className="text-sm font-qbold text-gray-500 ml-3">
-                  Vehículo: {data.car_model}, {data.car_plate}
-                </Text>
-              </YStack>
-            </XStack>
-            <View className="w-full items-center mb-4">
-              <Link
-                href={{
-                  pathname: "/(pages)/UserProfile",
-                  params: { user_id: data.driver_id, category: "driver" },
-                }}
-                asChild
-              >
-                <Pressable
-                  onPressIn={() => setPressed(true)}
-                  onPressOut={() => setPressed(false)}
-                  style={{
-                    backgroundColor: "#59A58A",
-                    opacity: pressed ? 0.7 : 1,
-                    alignItems: "center",
-                    paddingVertical: 8,
-                    borderRadius: 8,
-                    width: "60%",
-                  }}
-                >
-                  <Text className="text-sm font-qsemibold text-white">
-                    Ver perfil del conductor
-                  </Text>
-                </Pressable>
-              </Link>
-            </View>
-          </YStack>
-          <YStack className="items-center justify-between w-full px-4 pb-8 pt-3 mb-5 border-t-2 border-t-[#eee]">
-            <Text className="self-start text-sm font-qbold text-[#ccc] mb-6">
-              Confirmá tu reserva
-            </Text>
-            <Window height={310} width={"90%"}>
-              <YStack className="w-full items-center justify-center">
-                <XStack className="w-full items-center justify-around px-5 ml-2 mb-1">
-                  <Image
-                    source={icons.profile2}
-                    className="w-8 h-8"
-                    resizeMode="contain"
-                  />
-                  <Counter
-                    maxCount={data.available_space_persons}
-                    count={seats}
-                    handleChangeCount={setSeats}
-                    bgColor={"#eee"}
-                  />
-                </XStack>
-                <XStack className="w-full items-center justify-around px-5 ml-2 mb-1">
-                  <Image
-                    source={icons.mypackage}
-                    className="w-8 h-8"
-                    resizeMode="contain"
-                  />
                   <Counter
                     maxCount={data.available_space_small_package}
                     count={spacesSmallPackage}
                     handleChangeCount={setSmallPackage}
-                    bgColor={"#eee"}
                   />
                 </XStack>
-                <XStack className="w-full items-center justify-around px-5 ml-2 mb-1">
-                  <Image
-                    source={icons.mypackage}
-                    className="w-10 h-10"
-                    resizeMode="contain"
-                  />
+
+                <XStack className="items-center justify-between pr-4 pl-8">
+                  <View className="w-12 items-center">
+                    <Image
+                      source={icons.mypackage}
+                      className="h-10 w-10"
+                      resizeMode="contain"
+                    />
+                  </View>
                   <Counter
                     maxCount={data.available_space_medium_package}
                     count={spacesMediumPackage}
                     handleChangeCount={setMediumPackage}
-                    bgColor={"#eee"}
                   />
                 </XStack>
-                <XStack className="w-full items-center justify-around px-5 ml-2">
-                  <Image
-                    source={icons.mypackage}
-                    className="w-12 h-12"
-                    resizeMode="contain"
-                  />
+
+                <XStack className="items-center justify-between pr-4 pl-8">
+                  <View className="w-12 items-center">
+                    <Image
+                      source={icons.mypackage}
+                      className="h-12 w-12"
+                      resizeMode="contain"
+                    />
+                  </View>
                   <Counter
                     maxCount={data.available_space_large_package}
                     count={spacesLargePackage}
                     handleChangeCount={setLargePackage}
-                    bgColor={"#eee"}
                   />
                 </XStack>
+
+                <YStack className="items-center pt-6 mb-2">
+                  <Text className="text-2xl font-qbold text-black mb-8">
+                    Total: ${price}
+                  </Text>
+                  <ButtonNext
+                    onPress={() => {
+                      handlePayment();
+                      handleJoin();
+                    }}
+                    variant="secondary"
+                  >
+                    <Text className="text-xl font-qsemibold text-white">
+                      Reservar viaje
+                    </Text>
+                  </ButtonNext>
+                </YStack>
               </YStack>
-            </Window>
-            <View className="w-full items-center justify-center my-6">
-              <Text className="text-2xl font-qbold text-red-600 mb-3">
-                Costo: ${price}
-              </Text>
             </View>
-            <ButtonNext
-              onPress={() => {
-                handlePayment();
-                handleJoin();
-              }}
-              variant="secondary"
-            >
-              <Text className="text-2xl font-qsemibold text-white">
-                Reservar viaje
-              </Text>
-            </ButtonNext>
-          </YStack>
-        </Pressable>
-      </ScrollView>
-    </YStack>
+          </View>
+        </View>
+      </Pressable>
+    </ScrollView>
   );
 }
