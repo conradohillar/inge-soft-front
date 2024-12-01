@@ -1,19 +1,18 @@
-import { SafeAreaView } from "react-native-safe-area-context";
-import Header from "../../components/Header";
-import { FlatList, View, Text, ScrollView, Image } from "react-native";
-import React, { useState } from "react";
-import CarCard from "../../components/CarCard";
-import { Button, XStack } from "tamagui";
-import { Link } from "expo-router";
-import icons from "../../constants/icons";
+import { View, Text, FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
+import CarCard from "../../components/CarCard";
 import LoadingPage from "../(pages)/LoadingPage";
 import ErrorPage from "./ErrorPage";
 import { getMyCars } from "../../services/users";
 import AddCarModal from "../../components/AddCarModal";
+import { useState } from "react";
+import { LinearGradient } from "expo-linear-gradient";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Button } from "tamagui";
 
 export default function MyCarsPage() {
   const [isAddCarModalVisible, setIsAddCarModalVisible] = useState(false);
+
   const toggleAddCarModal = () => {
     setIsAddCarModalVisible(!isAddCarModalVisible);
   };
@@ -23,56 +22,77 @@ export default function MyCarsPage() {
     queryFn: getMyCars,
   });
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
+  if (isLoading) return <LoadingPage />;
+  if (isError) return <ErrorPage />;
 
-  if (isError) {
-    return <ErrorPage />;
-  }
-
-  const renderItem = ({ item }) => {
-    return <CarCard model={item.model} plate={item.plate} />;
-  };
   return (
-    <View className="bg-background h-full w-full">
-      <View className="items-start mt-5 ml-4">
-        <Link href="/(tabs)/profile" asChild>
-          <Button className="h-9 w-9 bg-background rounded-xl">
-            <Image
-              source={icons.arrowleft}
-              className="h-7 w-7"
-              resizeMode="contain"
-            />
-          </Button>
-        </Link>
+    <View className="flex-1 bg-background">
+      {/* Header con gradiente */}
+      <LinearGradient
+        colors={["#59A58A", "#7AB5A0"]}
+        style={{
+          width: "100%",
+          paddingTop: 60,
+          paddingBottom: 80,
+          borderBottomLeftRadius: 32,
+          borderBottomRightRadius: 32,
+        }}
+      >
+        <View className="px-6 items-center">
+          <Text className="text-4xl font-qbold text-white">Mis autos</Text>
+        </View>
+      </LinearGradient>
+
+      {/* Lista de autos */}
+      <View className="px-6 -mt-12 flex-1">
+        {data && data.length > 0 ? (
+          <FlatList
+            data={data}
+            keyExtractor={(item) => item.plate}
+            renderItem={({ item }) => (
+              <CarCard model={item.model} plate={item.plate} />
+            )}
+            contentContainerStyle={{
+              gap: 12,
+              paddingTop: 12,
+              paddingBottom: 12,
+            }}
+            showsVerticalScrollIndicator={false}
+          />
+        ) : (
+          <View className="items-center justify-center flex-1">
+            <Text className="text-lg font-qsemibold text-gray-400 text-center mb-4">
+              No tenés autos registrados
+            </Text>
+          </View>
+        )}
       </View>
-      <XStack className="items-center justify-center mb-7">
-        <Text className="text-4xl font-qbold text-black">MIS AUTOS</Text>
-      </XStack>
-      {data != undefined && (
-        <FlatList
-          className="w-full"
-          data={data}
-          keyExtractor={(item) => item.plate}
-          renderItem={renderItem}
-        />
-      )}
-      <XStack className="items-center justify-center my-10">
-        <AddCarModal
-          isVisible={isAddCarModalVisible}
-          onClose={toggleAddCarModal}
-        />
+
+      {/* Botón de agregar auto */}
+      <View className="px-6 py-6">
         <Button
-          className="h-8 bg-background rounded-xl ml-3 mt-1"
+          className="bg-white rounded-2xl h-14 flex-row items-center justify-center"
+          pressStyle={{ opacity: 0.8 }}
           onPress={toggleAddCarModal}
+          style={{
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.08,
+            shadowRadius: 12,
+            elevation: 3,
+          }}
         >
-          <Image source={icons.add} className="h-6 w-6" resizeMode="contain" />
-          <Text className="text-lg text-gray-600 font-qsemibold">
+          <MaterialIcons name="add" size={24} color="#59A58A" />
+          <Text className="text-lg font-qsemibold text-primary ml-2">
             Agregá un auto nuevo
           </Text>
         </Button>
-      </XStack>
+      </View>
+
+      <AddCarModal
+        isVisible={isAddCarModalVisible}
+        onClose={toggleAddCarModal}
+      />
     </View>
   );
 }

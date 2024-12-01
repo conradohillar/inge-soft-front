@@ -28,6 +28,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { YGroup, Separator } from "tamagui";
 import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
+import CustomAlert from "../../components/CustomAlert";
 
 export default function Profile() {
   const router = useRouter();
@@ -39,6 +40,12 @@ export default function Profile() {
 
   const [isRateCommentModalVisible, setRateCommentModalVisible] =
     useState(false);
+
+  const [alertConfig, setAlertConfig] = useState({
+    visible: false,
+    message: "",
+    title: "",
+  });
 
   const toggleRateCommentModal = () => {
     setRateCommentModalVisible(!isRateCommentModalVisible);
@@ -156,7 +163,11 @@ export default function Profile() {
   };
 
   const handleRestrictedAccess = (message) => {
-    alert(message);
+    setAlertConfig({
+      visible: true,
+      message,
+      title: globalState.isDriver ? "Estás acreditado" : "Acceso restringido",
+    });
   };
 
   return (
@@ -335,6 +346,13 @@ export default function Profile() {
           </Text>
         )}
       </YStack>
+
+      <CustomAlert
+        isVisible={alertConfig.visible}
+        onClose={() => setAlertConfig({ ...alertConfig, visible: false })}
+        title={alertConfig.title}
+        message={alertConfig.message}
+      />
     </View>
   );
 }

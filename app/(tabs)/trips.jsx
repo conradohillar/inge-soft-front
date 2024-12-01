@@ -58,7 +58,7 @@ export default function Trips() {
                 elevation: 3,
               }}
             >
-              <View className="flex-row items-center space-x-4">
+              <View className="flex-row items-center space-x-4 mb-6">
                 <View className="bg-primary/10 h-14 w-14 rounded-2xl items-center justify-center">
                   <MaterialIcons name="person" size={28} color="#59A58A" />
                 </View>

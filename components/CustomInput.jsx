@@ -25,9 +25,11 @@ export default function CustomInput({
 
   return (
     <YStack className={`w-[${width ? width : "85%"}] m-2 items-center`}>
-      <Label className="text-m font-qbold text-gray-600 px-2 self-start">
-        {title}
-      </Label>
+      {title && (
+        <Label className="text-m font-qbold text-gray-600 px-2 self-start">
+          {title}
+        </Label>
+      )}
       <XStack width="100%" alignItems="center" position="relative">
         {prependIcon && (
           <View

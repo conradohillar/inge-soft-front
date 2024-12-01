@@ -3,38 +3,53 @@ import { Button, XStack, YStack } from "tamagui";
 import CustomInput from "./CustomInput";
 import { View, Text, TouchableOpacity } from "react-native";
 import ModalTemplate from "./ModalTemplate";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const EditNameModal = ({ isVisible, onClose, onSave, onTextChange, value }) => {
   return (
     <ModalTemplate isVisible={isVisible} onBackdropPress={onClose}>
-      <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-        <YStack className="bg-gray-100 p-5 rounded-xl items-center w-full">
-          <Text className="text-2xl font-bold color-primary">
-            Cambiar nombre
-          </Text>
-          <CustomInput
-            placeholder="Ingresá tu nuevo nombre"
-            value={value}
-            handleChangeText={onTextChange}
-            height={50}
-          />
-          <YStack className="w-full pt-4 items-center justify-around">
+      <View className="px-6 justify-center flex-1">
+        <View
+          className="bg-white rounded-3xl p-6"
+          style={{
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.08,
+            shadowRadius: 12,
+            elevation: 3,
+          }}
+        >
+          {/* Header */}
+          <XStack className="items-center justify-between">
+            <Text className="text-2xl font-qbold text-black">
+              Cambiar nombre
+            </Text>
+            <TouchableOpacity onPress={onClose}>
+              <MaterialIcons name="close" size={24} color="#666" />
+            </TouchableOpacity>
+          </XStack>
+
+          {/* Input */}
+          <View className="items-center my-6">
+            <CustomInput
+              placeholder="Ingresá tu nuevo nombre"
+              value={value}
+              handleChangeText={onTextChange}
+              width="95%"
+            />
+          </View>
+
+          {/* Botones */}
+          <YStack className="mt-2">
             <Button
-              className="w-[50%] h-[42] rounded-2xl items-center pb-0.5"
+              className="bg-primary h-[42] rounded-2xl items-center justify-center"
+              pressStyle={{ opacity: 0.8 }}
               onPress={onSave}
             >
               <Text className="text-lg font-qsemibold text-white">Guardar</Text>
             </Button>
-            <TouchableOpacity
-              className={"w-[40%] items-center justify-center pt-4"}
-              onPress={onClose}
-            >
-              <Text className="font-qsemibold text-red-600 underline">
-                Cancelar
-              </Text>
-            </TouchableOpacity>
           </YStack>
-        </YStack>
+        </View>
       </View>
     </ModalTemplate>
   );
