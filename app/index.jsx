@@ -10,7 +10,6 @@ import { useFonts } from "expo-font";
 
 export default function App() {
   const colorScheme = useColorScheme();
-
   const [isReady, setIsReady] = useState(false);
 
   const [fontsLoaded] = useFonts({
@@ -41,7 +40,12 @@ export default function App() {
   }, [isReady]);
 
   if (!isReady) {
-    return <FrontPage />;
+    return (
+      <>
+        <FrontPage />;
+        <StatusBar theme="dark" />;
+      </>
+    );
   }
 
   return (

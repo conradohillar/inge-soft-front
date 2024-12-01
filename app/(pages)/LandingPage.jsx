@@ -1,9 +1,7 @@
 import { Image, Text, View } from "react-native";
 import { Link } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { XStack, YStack } from "tamagui";
 import BlackButton from "../../components/BlackButton";
-import { StatusBar } from "expo-status-bar";
 
 export default function LandingPage() {
   return (

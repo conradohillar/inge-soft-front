@@ -1,18 +1,13 @@
-import { View, Text, Image } from "react-native";
+import { View, Text } from "react-native";
 import { Tabs } from "expo-router";
 import Header from "../../components/Header";
-import { icons } from "../../constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import { MaterialIcons } from "@expo/vector-icons";
 
-const TabIcon = ({ icon, color, name, focused }) => (
+const TabIcon = ({ iconName, color, name, focused }) => (
   <View className="items-center justify-center gap-1 w-16">
-    <Image
-      source={icon}
-      resizeMode="contain"
-      tintColor={color}
-      className="w-7 h-7"
-    />
+    <MaterialIcons name={iconName} size={28} color={color} />
     <Text
       className={`${focused ? "font-qbold" : "font-qmedium"} text-xs`}
       style={{ color }}
@@ -33,9 +28,9 @@ const TabsLayout = () => (
         tabBarActiveTintColor: "#309090",
         tabBarInactiveTintColor: "#999",
         tabBarStyle: {
-          backgroundColor: "#fff",
+          backgroundColor: "#F5F5F5",
           borderTopColor: "#CDCDE0",
-          height: "75",
+          height: 55,
           paddingBottom: 15,
           paddingTop: 15,
         },
@@ -48,7 +43,7 @@ const TabsLayout = () => (
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <TabIcon
-              icon={icons.car}
+              iconName="directions-car"
               color={color}
               name="Viajes"
               focused={focused}
@@ -63,7 +58,7 @@ const TabsLayout = () => (
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <TabIcon
-              icon={icons.home}
+              iconName="home"
               color={color}
               name="Inicio"
               focused={focused}
@@ -78,7 +73,7 @@ const TabsLayout = () => (
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <TabIcon
-              icon={icons.profile2}
+              iconName="person"
               color={color}
               name="Perfil"
               focused={focused}

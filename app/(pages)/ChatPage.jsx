@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { XStack, YStack, Text, Spinner } from "tamagui";
+import { XStack, YStack, Text, Spinner, Spacer } from "tamagui";
 import { useEffect, useState } from "react";
 import { Send, ArrowLeft, Trash, Copy, Pencil } from "@tamagui/lucide-icons";
 import { useRouter } from "expo-router";
@@ -68,7 +68,7 @@ export default function ChatPage() {
         id: "",
         msg: message,
         writer_id: globalState.userId,
-        sent_at: null,
+        sent_at: new Date().toISOString(),
       },
       ...oldData,
     ]);
@@ -171,7 +171,7 @@ export default function ChatPage() {
         </Text>
         {edited && (
           <Text
-            className={`text-xs font-qregular italic ${
+            className={`text-xs italic ml-2 ${
               isOwnMessage ? "text-white" : "text-gray-500"
             }`}
           >
@@ -186,11 +186,11 @@ export default function ChatPage() {
     const currentDate = getMessageDate(item.sent_at);
     const prevDate =
       index < data.length - 1 ? getMessageDate(data[index + 1].sent_at) : null;
-    const showDateSeparator =
-      currentDate !== prevDate && currentDate && prevDate;
+    const showDateSeparator = currentDate !== prevDate && currentDate;
 
     return (
       <View>
+        {showDateSeparator && renderDateSeparator(currentDate)}
         <Pressable
           onLongPress={() => handleLongPress(item)}
           delayLongPress={200}
@@ -202,7 +202,6 @@ export default function ChatPage() {
             edited={item.edited}
           />
         </Pressable>
-        {showDateSeparator && renderDateSeparator(currentDate)}
       </View>
     );
   };
@@ -232,7 +231,13 @@ export default function ChatPage() {
 
           <View style={{ width: 24 }} />
         </XStack>
-        {loading && <Spinner />}
+        {loading && (
+          <View>
+            <Spacer size={30} />
+            <Spinner size="medium" />
+            <Spacer size={30} />
+          </View>
+        )}
         <FlatList
           data={data}
           renderItem={renderMessage}

@@ -1,5 +1,5 @@
 import { KeyboardAvoidingView, Platform, Text } from "react-native";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import { useMutation } from "@tanstack/react-query";
 import CustomInput from "../../components/CustomInput";
 import ButtonNext from "../../components/ButtonNext";
@@ -12,7 +12,6 @@ import { signInSchema } from "../../validation/authSchemas";
 import { useGlobalState } from "../_layout";
 import { getUserData } from "../../services/users";
 import icons from "../../constants/icons";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SignIn() {
   const {
@@ -125,14 +124,15 @@ export default function SignIn() {
               Ir al Inicio
             </Text>
           </ButtonNext>
-          <Link href="/(auth)/sign-up" asChild>
-            <Text className="text-base font-qsemibold mt-6">
-              No tenés cuenta?{"  "}
-              <Text className="text-base text-primary font-qsemibold underline">
-                Registrate
-              </Text>
+          <Text className="text-base font-qsemibold mt-6">
+            No tenés cuenta?{"  "}
+            <Text
+              className="text-base text-primary font-qsemibold underline"
+              onPress={() => router.replace("/(auth)/sign-up")}
+            >
+              Registrate
             </Text>
-          </Link>
+          </Text>
         </YStack>
       </YStack>
     </YStack>

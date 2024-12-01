@@ -1,4 +1,10 @@
-import { View, Text, FlatList, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import { Spinner, XStack, YStack } from "tamagui";
 import BlackButton from "../../components/BlackButton";
 import { useGlobalState } from "../_layout";
@@ -114,6 +120,9 @@ export default function Home() {
           <Text className="text-4xl font-qbold text-white/90">
             {globalState.firstName}!
           </Text>
+          <TouchableOpacity onPress={() => router.push("/(pages)/ChatPage")}>
+            <Text className="text-white font-qregular text-sm">CHAT</Text>
+          </TouchableOpacity>
         </YStack>
       </LinearGradient>
 

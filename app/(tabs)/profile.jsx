@@ -1,33 +1,17 @@
 import { Image, TouchableOpacity, Text, View, Pressable } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Header from "../../components/Header";
-import { Avatar, Button, XStack, YStack } from "tamagui";
+import { Avatar, XStack, YStack } from "tamagui";
 import icons from "../../constants/icons";
-import { History } from "@tamagui/lucide-icons";
-import { Link } from "expo-router";
-import { LOCAL_IP } from "@env";
-import LoadingPage from "../(pages)/LoadingPage";
-import ErrorPage from "../(pages)/ErrorPage";
+import { useMutation } from "@tanstack/react-query";
 import * as FileSystem from "expo-file-system";
-import { useState, useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import ProfilePictureModal from "../../components/PofilePictureModal";
-import RateCommentModal from "../../components/RateCommentModal";
-import AddCarModal from "../../components/AddCarModal";
-import {
-  getUserData,
-  deleteImage,
-  newImage,
-  newName,
-} from "../../services/users";
-import EditNameModal from "../../components/EditNameModal";
-import { useGlobalState } from "../_layout";
-import { CustomListItem } from "../../components/CustomListItem";
-import { MaterialIcons } from "@expo/vector-icons";
-import { YGroup, Separator } from "tamagui";
+import { useState } from "react";
 import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
+import { MaterialIcons } from "@expo/vector-icons";
+import { deleteImage, newImage, newName } from "../../services/users";
+import { useGlobalState } from "../_layout";
+import ProfilePictureModal from "../../components/PofilePictureModal";
+import EditNameModal from "../../components/EditNameModal";
 import CustomAlert from "../../components/CustomAlert";
 
 export default function Profile() {
@@ -37,19 +21,11 @@ export default function Profile() {
   const [isProfilePictureModalVisible, setProfilePictureModalVisible] =
     useState(false);
   const [isEditNameModalVisible, setEditNameModalVisible] = useState(false);
-
-  const [isRateCommentModalVisible, setRateCommentModalVisible] =
-    useState(false);
-
   const [alertConfig, setAlertConfig] = useState({
     visible: false,
     message: "",
     title: "",
   });
-
-  const toggleRateCommentModal = () => {
-    setRateCommentModalVisible(!isRateCommentModalVisible);
-  };
 
   const toggleProfilePictureModal = () => {
     setProfilePictureModalVisible(!isProfilePictureModalVisible);
@@ -62,22 +38,21 @@ export default function Profile() {
   const uploadImage = async (mode) => {
     try {
       let result = {};
+      const options = {
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.5,
+      };
 
       if (mode === "gallery") {
         await ImagePicker.requestMediaLibraryPermissionsAsync();
-        result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: true,
-          aspect: [1, 1],
-          quality: 0.5,
-        });
+        result = await ImagePicker.launchImageLibraryAsync(options);
       } else {
         await ImagePicker.requestCameraPermissionsAsync();
         result = await ImagePicker.launchCameraAsync({
+          ...options,
           cameraType: ImagePicker.CameraType.front,
-          allowsEditing: true,
-          aspect: [1, 1],
-          quality: 0.5,
         });
       }
 
@@ -96,7 +71,6 @@ export default function Profile() {
       const base64Image = await FileSystem.readAsStringAsync(imageUri, {
         encoding: FileSystem.EncodingType.Base64,
       });
-
       editImage.mutate(base64Image);
     } catch (error) {
       throw error;
@@ -104,7 +78,7 @@ export default function Profile() {
   };
 
   const editImage = useMutation({
-    mutationFn: (base64Image) => newImage(base64Image),
+    mutationFn: newImage,
     onSuccess: (data) => {
       setGlobalState({
         ...globalState,
@@ -116,19 +90,6 @@ export default function Profile() {
     },
   });
 
-  const handleDeletePicture = () => {
-    removeImage.mutate();
-    setProfilePictureModalVisible(false);
-  };
-
-  const handleChooseFromLibrary = () => {
-    uploadImage("gallery");
-  };
-
-  const handleTakePicture = () => {
-    uploadImage();
-  };
-
   const removeImage = useMutation({
     mutationFn: deleteImage,
     onSuccess: () => {
@@ -137,13 +98,10 @@ export default function Profile() {
         photoUrl: icons.placeholder_profile,
       });
     },
-    onError: (error) => {
-      throw error;
-    },
   });
 
   const saveNewName = useMutation({
-    mutationFn: (name) => newName(name),
+    mutationFn: newName,
     onSuccess: (data) => {
       setGlobalState({
         ...globalState,
@@ -153,8 +111,13 @@ export default function Profile() {
     },
   });
 
-  const handleSaveName = async () => {
-    if (globalState.fullName === "") {
+  const handleDeletePicture = () => {
+    removeImage.mutate();
+    setProfilePictureModalVisible(false);
+  };
+
+  const handleSaveName = () => {
+    if (!globalState.fullName) {
       alert("El nombre no puede estar vacio.");
       return;
     }
@@ -184,38 +147,60 @@ export default function Profile() {
       >
         <View className="px-6">
           <XStack className="items-center space-x-4">
-            <TouchableOpacity onPress={toggleProfilePictureModal}>
-              <Avatar circular size="$12" borderColor="white" borderWidth={2}>
+            <View>
+              <Avatar circular size="$10" borderColor="white" borderWidth={2}>
                 <Avatar.Image
                   data-testid="profile-picture"
                   accessibilityLabel="Cam"
                   src={globalState.photoUrl}
                 />
-                <ProfilePictureModal
-                  isVisible={isProfilePictureModalVisible}
-                  onClose={toggleProfilePictureModal}
-                  onChooseFromLibrary={handleChooseFromLibrary}
-                  onTakePicture={handleTakePicture}
-                  onDeletePicture={handleDeletePicture}
-                />
               </Avatar>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={toggleProfilePictureModal}
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  right: 0,
+                  backgroundColor: "#458A6F",
+                  borderRadius: 12,
+                  padding: 4,
+                  borderWidth: 2,
+                  borderColor: "white",
+                }}
+              >
+                <MaterialIcons name="edit" size={16} color="white" />
+              </TouchableOpacity>
+              <ProfilePictureModal
+                isVisible={isProfilePictureModalVisible}
+                onClose={toggleProfilePictureModal}
+                onChooseFromLibrary={() => uploadImage("gallery")}
+                onTakePicture={() => uploadImage()}
+                onDeletePicture={handleDeletePicture}
+              />
+            </View>
 
-            <YStack space="$2" className="flex-1 ml-2">
-              <XStack className="items-center space-x-3 flex-wrap">
-                <Text
-                  className="text-xl font-qbold text-white flex-shrink"
-                  numberOfLines={2}
+            <YStack gap="$2" className="flex-1 ml-2">
+              <XStack className="items-center space-x-3">
+                <View className="flex-1 flex-row items-center">
+                  <Text
+                    className="text-xl font-qbold text-white"
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    {globalState.fullName}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  onPress={toggleEditNameModal}
+                  style={{
+                    backgroundColor: "#458A6F",
+                    borderRadius: 12,
+                    padding: 4,
+                    borderWidth: 2,
+                    borderColor: "white",
+                  }}
                 >
-                  {globalState.fullName}
-                </Text>
-                <TouchableOpacity onPress={toggleEditNameModal}>
-                  <Image
-                    source={icons.pencil}
-                    className="h-5 w-5"
-                    tintColor="white"
-                    resizeMode="contain"
-                  />
+                  <MaterialIcons name="edit" size={16} color="white" />
                   <EditNameModal
                     onTextChange={(text) =>
                       setGlobalState({ ...globalState, fullName: text })
@@ -228,8 +213,9 @@ export default function Profile() {
                 </TouchableOpacity>
               </XStack>
               <Text
-                className="text-base font-qsemibold text-white/80"
-                numberOfLines={2}
+                className="text-m font-qsemibold text-white/80"
+                numberOfLines={1}
+                ellipsizeMode="tail"
               >
                 {globalState.email}
               </Text>
@@ -239,7 +225,7 @@ export default function Profile() {
       </LinearGradient>
 
       <View className="px-6 -mt-12">
-        <YStack space="$4">
+        <YStack gap="$4">
           <Pressable
             onPress={
               globalState.isDriver

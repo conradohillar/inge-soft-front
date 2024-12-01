@@ -2,7 +2,7 @@ import { Text } from "react-native";
 import { YStack } from "tamagui";
 import CustomInput from "../../components/CustomInput";
 import ButtonNext from "../../components/ButtonNext";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import AutocompleteCityInput from "../../components/AutocompleteCityInput";
 import { signUpPart1Schema } from "../../validation/authSchemas";
 import { useForm, Controller } from "react-hook-form";
@@ -40,7 +40,7 @@ export default function SignUp() {
       <YStack className="h-[92%] justify-evenly">
         <YStack className="items-center">
           <Text className="text-black text-5xl font-qbold mb-3">Registrá</Text>
-          <Text className="text-primary text-4xl font-qbold">TU CUENTA</Text>
+          <Text className="text-primary text-4xl font-qbold">tu cuenta</Text>
         </YStack>
         <YStack className="items-center justify-center">
           <Controller
@@ -96,14 +96,15 @@ export default function SignUp() {
               Continuar
             </Text>
           </ButtonNext>
-          <Link href="/(auth)/sign-in" asChild>
-            <Text className="text-base font-qsemibold mt-5">
-              Ya tenés una cuenta?{"  "}
-              <Text className="text-base text-primary font-qsemibold underline">
-                Iniciá sesión
-              </Text>
+          <Text className="text-base font-qsemibold mt-5">
+            Ya tenés una cuenta?{"  "}
+            <Text
+              className="text-base text-primary font-qsemibold underline"
+              onPress={() => router.replace("/(auth)/sign-in")}
+            >
+              Iniciá sesión
             </Text>
-          </Link>
+          </Text>
         </YStack>
       </YStack>
     </YStack>

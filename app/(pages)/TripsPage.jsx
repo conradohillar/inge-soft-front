@@ -1,8 +1,8 @@
-import { SizableText, YStack, XStack } from "tamagui";
+import { SizableText, YStack, XStack, Spacer } from "tamagui";
 import HorizontalTabs from "../../components/HorizontalTabs";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Image, View } from "react-native";
-import icons from "../../constants/icons";
+import { View, TouchableOpacity } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function TripsPage() {
   const { category } = useLocalSearchParams();
@@ -13,12 +13,14 @@ export default function TripsPage() {
       <YStack className="py-5 items-center">
         <YStack className="w-full items-center">
           <View className="pl-5 self-start">
-            <Image
-              source={icons.arrowleft}
-              className="h-7 w-7 mb-3"
-              onTouchEnd={router.back}
-            />
+            <TouchableOpacity
+              onPress={router.back}
+              className="p-1 rounded-xl border border-gray-300"
+            >
+              <MaterialIcons name="chevron-left" size={28} color="black" />
+            </TouchableOpacity>
           </View>
+          <Spacer />
           <XStack className="space-x-2 items-center">
             <SizableText className="text-2xl text-black font-qbold pr-2">
               Tus viajes
