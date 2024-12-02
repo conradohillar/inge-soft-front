@@ -83,7 +83,6 @@ export default function SignIn() {
           {/* Formulario */}
           <Card
             elevate
-            size="$4"
             bordered
             className="bg-white rounded-3xl"
             style={{
@@ -97,7 +96,7 @@ export default function SignIn() {
               elevation: 3,
             }}
           >
-            <YStack className="p-6 space-y-6 h-[52%]">
+            <YStack className="p-6">
               {mutation.isError && (
                 <XStack className="items-center justify-center space-x-2 bg-red-50 rounded-2xl py-3">
                   <Image
@@ -115,7 +114,7 @@ export default function SignIn() {
               )}
 
               <YStack
-                space="$4"
+                space="$2"
                 className={`${mutation.isError ? "" : "mb-8"}`}
               >
                 <Controller
@@ -162,7 +161,7 @@ export default function SignIn() {
                 />
               </YStack>
 
-              <View className="items-center justify-center">
+              <View className="items-center justify-center mt-4">
                 <ButtonNext
                   onPress={handleSubmit(handleContinue)}
                   variant="secondary"
