@@ -83,7 +83,7 @@ const ActiveTripCard = ({
                   size={20}
                   color="white"
                 />
-                <Text className="text-base font-qsemibold text-white">
+                <Text className="text-base font-qsemibold text-white mb-1">
                   Comenzar
                 </Text>
               </XStack>
@@ -97,7 +97,7 @@ const ActiveTripCard = ({
             >
               <XStack className="items-center justify-center space-x-2">
                 <MaterialIcons name="stop-circle" size={20} color="white" />
-                <Text className="text-base font-qsemibold text-white">
+                <Text className="text-base font-qsemibold text-white mb-1">
                   Terminar
                 </Text>
               </XStack>
@@ -108,7 +108,7 @@ const ActiveTripCard = ({
 
       {/* Estado del viaje */}
       {isActive && (
-        <XStack className="items-center justify-center bg-primary/10 py-2 mb-2 rounded-xl">
+        <XStack className="items-center justify-center bg-primary/10 py-2 mb-4 rounded-xl">
           <MaterialIcons name="directions-car" size={20} color="#59A58A" />
           <Text className="ml-2 text-base font-qsemibold text-primary">
             Viaje en curso

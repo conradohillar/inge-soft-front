@@ -1,7 +1,7 @@
 import {
   View,
   Text,
-  FlatList,
+  ScrollView,
   Pressable,
   TouchableOpacity,
 } from "react-native";
@@ -102,7 +102,7 @@ export default function Home() {
   }
 
   return (
-    <View className="flex-1 bg-background">
+    <ScrollView className="flex-1 bg-background">
       <LinearGradient
         colors={["#59A58A", "#7AB5A0"]}
         style={{
@@ -201,23 +201,46 @@ export default function Home() {
         </XStack>
       </View>
 
-      <View className="flex-1 px-6 mt-8">
+      <View className="px-6 mt-10">
         <Text className="text-lg font-qbold text-black mb-4">
           Viajes programados para hoy
         </Text>
 
         {data && data.length > 0 ? (
-          <FlatList
-            data={data}
-            keyExtractor={(item) => item.ride_id}
-            renderItem={renderActiveTripCard}
-            contentContainerStyle={{
-              paddingBottom: 100,
-            }}
-            showsVerticalScrollIndicator={false}
-          />
+          <YStack space="$2" className="mb-6">
+            {data.map((item) => {
+              const sliced_from = item.city_from.slice(0, 3).toUpperCase();
+              const sliced_to = item.city_to.slice(0, 3).toUpperCase();
+
+              return (
+                <ActiveTripCard
+                  key={item.ride_id}
+                  from={sliced_from}
+                  to={sliced_to}
+                  passengers={item.persons}
+                  packages={item.packages}
+                  departure={item.start_time.split(":").slice(0, 2).join(":")}
+                  isActive={item.real_start_time !== null}
+                  handleStartTrip={() => handleStartTrip(item.ride_id)}
+                  handleEndTrip={() => handleEndTrip(item.ride_id)}
+                />
+              );
+            })}
+          </YStack>
         ) : (
-          <View className="flex-1 items-center justify-center bg-gray-50 rounded-3xl">
+          <View
+            className="items-center justify-center bg-gray-50 rounded-3xl py-12 mb-6"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.08,
+              shadowRadius: 12,
+              elevation: 3,
+            }}
+          >
             <MaterialIcons name="event-busy" size={48} color="#ccc" />
             <Text className="text-lg font-qsemibold text-gray-400 mt-4 text-center">
               No tenés ningún viaje{"\n"}programado para hoy
@@ -225,6 +248,6 @@ export default function Home() {
           </View>
         )}
       </View>
-    </View>
+    </ScrollView>
   );
 }
