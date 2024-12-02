@@ -194,9 +194,9 @@ export default function Profile() {
               />
             </View>
 
-            <YStack gap="$2" className="flex-1 ml-2">
-              <XStack className="items-center space-x-3">
-                <View className="flex-1 flex-row items-center">
+            <YStack gap="$2" className="flex-1 ml-3">
+              <XStack className="items-center space-x-4">
+                <View className="flex-row items-center pr-1">
                   <Text
                     className="text-xl font-qbold text-white"
                     numberOfLines={1}
@@ -255,7 +255,7 @@ export default function Profile() {
               subtitle: "Administrá tus vehículos",
             },
             {
-              onPress: () => router.push("/(pages)/AboutPage"),
+              onPress: () => router.push("/(pages)/ChatListPage"),
               icon: "chat-bubble",
               title: "Mis chats",
               subtitle: "Accedé a la lista de tus chats",

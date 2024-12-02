@@ -11,7 +11,7 @@ import {
 import { XStack, YStack, Text, Spinner, Spacer } from "tamagui";
 import { useEffect, useState } from "react";
 import { Send, ArrowLeft, Trash, Copy, Pencil } from "@tamagui/lucide-icons";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import {
   connect,
@@ -28,7 +28,7 @@ import ErrorPage from "./ErrorPage";
 import { queryClient } from "../_layout";
 
 export default function ChatPage() {
-  const chatId = "superchar123";
+  const { chatId } = useLocalSearchParams();
   const { globalState } = useGlobalState();
   const router = useRouter();
   const [message, setMessage] = useState("");

@@ -86,7 +86,7 @@ export default function PostTripPage() {
               elevation: 3,
             }}
           >
-            <YStack space="$5">
+            <YStack space="$5" className="w-full items-center">
               <Controller
                 control={control}
                 rules={{ required: true }}

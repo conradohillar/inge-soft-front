@@ -10,6 +10,7 @@ export default function AutocompleteCityInput({
   setValue,
   hint,
   borderColor,
+  width,
 }) {
   const [isFocused, setIsFocused] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -46,10 +47,12 @@ export default function AutocompleteCityInput({
 
   return (
     <>
-      <YStack className="w-full items-center justify-center">
-        <Label className="text-m font-qbold text-gray-600 px-2 self-start">
+      <YStack
+        className={`w-[${width ? width : "85%"}] items-center justify-center`}
+      >
+        <Text className="text-m font-qbold text-gray-600 px-2 mb-2 self-start">
           {title}
-        </Label>
+        </Text>
         <AutocompleteDropdown
           ref={searchRef}
           controller={(controller) => {
@@ -98,7 +101,7 @@ export default function AutocompleteCityInput({
               : "#333",
           }}
           containerStyle={{
-            width: "85%",
+            width: "100%",
           }}
           suggestionsListContainerStyle={{
             backgroundColor: "#F5F5F5",
