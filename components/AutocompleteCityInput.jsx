@@ -2,7 +2,7 @@ import { autocomplete } from "../services/utils";
 import React, { memo, useCallback, useRef, useState } from "react";
 import { Button, Dimensions, Text, View, Platform } from "react-native";
 import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
-import { YStack } from "tamagui";
+import { YStack, Label } from "tamagui";
 
 export default function AutocompleteCityInput({
   title,
@@ -47,13 +47,9 @@ export default function AutocompleteCityInput({
   return (
     <>
       <YStack className="w-full items-center justify-center">
-        <View className="w-full items-center px-2">
-          <View className="w-[85%]">
-            <Text className="text-m font-qbold text-gray-600 mb-2">
-              {title}
-            </Text>
-          </View>
-        </View>
+        <Label className="text-m font-qbold text-gray-600 px-2 self-start">
+          {title}
+        </Label>
         <AutocompleteDropdown
           ref={searchRef}
           controller={(controller) => {
