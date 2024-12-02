@@ -1,9 +1,8 @@
-import { SafeAreaView, Text } from "react-native";
+import { TouchableOpacity, Text } from "react-native";
 import ButtonNext from "../../components/ButtonNext";
 import { YStack } from "tamagui";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useMutation } from "@tanstack/react-query";
-import ErrorPage from "./ErrorPage";
 import LoadingPage from "./LoadingPage";
 import { newCredential } from "../../services/users";
 import icons from "../../constants/icons";
@@ -60,11 +59,11 @@ export default function CredentialsPage() {
           Quiero ser conductor
         </Text>
       </ButtonNext>
-      <Link href="/(tabs)/profile" asChild>
+      <TouchableOpacity onPress={() => router.back()}>
         <Text className="text-primary text-lg font-qsemibold underline">
           Volver
         </Text>
-      </Link>
+      </TouchableOpacity>
     </YStack>
   );
 }
