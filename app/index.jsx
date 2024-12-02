@@ -42,8 +42,8 @@ export default function App() {
   if (!isReady) {
     return (
       <>
-        <FrontPage />;
-        <StatusBar theme="dark" />;
+        <FrontPage />
+        <StatusBar theme="dark" />
       </>
     );
   }

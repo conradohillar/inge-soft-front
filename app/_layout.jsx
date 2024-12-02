@@ -4,12 +4,12 @@ import { useEffect, createContext, useContext, useState } from "react";
 import { AutocompleteDropdownContextProvider } from "react-native-autocomplete-dropdown";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import icons from "../constants/icons";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 SplashScreen.preventAutoHideAsync();
 
 export const queryClient = new QueryClient();
 const GlobalStateContext = createContext();
+
 const RootLayout = () => {
   const [globalState, setGlobalState] = useState({
     fullName: "User",
@@ -20,6 +20,7 @@ const RootLayout = () => {
     isDriver: false,
     userId: null,
   });
+
   const [fontsLoaded, error] = useFonts({
     "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
     "Quicksand-Light": require("../assets/fonts/Quicksand-Light.ttf"),
@@ -30,7 +31,6 @@ const RootLayout = () => {
 
   useEffect(() => {
     if (error) throw error;
-
     if (fontsLoaded) SplashScreen.hideAsync();
   }, [fontsLoaded, error]);
 
@@ -51,6 +51,7 @@ const RootLayout = () => {
     </QueryClientProvider>
   );
 };
+
 export const useGlobalState = () => useContext(GlobalStateContext);
 
 export default RootLayout;

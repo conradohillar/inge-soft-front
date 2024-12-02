@@ -11,6 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "expo-router";
 import { postTripSchema } from "../../validation/ridesSchemas";
 import { LinearGradient } from "expo-linear-gradient";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function PostTripPage() {
   const {
@@ -52,7 +53,7 @@ export default function PostTripPage() {
 
   return (
     <ScrollView className="flex-1 bg-background">
-      <Pressable className="mb-10">
+      <Pressable className="mb-4">
         <LinearGradient
           colors={["#59A58A", "#7AB5A0"]}
           style={{
@@ -174,6 +175,31 @@ export default function PostTripPage() {
               Continuar
             </Text>
           </ButtonNext>
+        </View>
+
+        {/* Botón inferior */}
+        <View className="px-6 pb-2 pt-4 bg-background">
+          <Link href="/(tabs)/home" asChild>
+            <Pressable
+              className="flex-row items-center justify-center pb-3 bg-white rounded-2xl"
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.7 : 1,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.1,
+                shadowRadius: 4,
+                elevation: 3,
+              })}
+            >
+              <MaterialIcons name="home" size={24} color="#59A58A" />
+              <Text className="ml-2 text-primary font-qsemibold text-lg">
+                Volver al inicio
+              </Text>
+            </Pressable>
+          </Link>
         </View>
       </Pressable>
     </ScrollView>

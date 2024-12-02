@@ -1,10 +1,17 @@
-import { KeyboardAvoidingView, Platform, Text } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Text,
+  Image,
+  Pressable,
+  View,
+} from "react-native";
 import { router } from "expo-router";
 import { useMutation } from "@tanstack/react-query";
 import CustomInput from "../../components/CustomInput";
 import ButtonNext from "../../components/ButtonNext";
 import LoadingPage from "../(pages)/LoadingPage";
-import { YStack } from "tamagui";
+import { YStack, XStack, Card } from "tamagui";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { sign_in } from "../../services/auth";
@@ -57,84 +64,143 @@ export default function SignIn() {
   }
 
   return (
-    <YStack className="h-full justify-center bg-background">
-      <YStack className="h-[92%] justify-evenly bg-background">
-        <YStack className="items-center justify-center">
-          <Text className="text-black text-5xl font-qbold">Iniciá sesión</Text>
-          <Text className="text-black text-4xl font-qbold">
-            con
-            <Text className="text-primary text-4xl font-qbold"> tu cuenta</Text>
-          </Text>
-        </YStack>
-
-        <YStack className="items-center justify-center">
-          {mutation.isError && (
-            <Text className="text-red-500 text-base font-qsemibold pb-12">
-              {mutation.error.message == 408
-                ? "Error de conexión, intentá más tarde."
-                : "E-mail o contraseña inválidos."}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      className="flex-1 bg-background"
+    >
+      <YStack className="flex-1 px-6">
+        <YStack className="h-full w-full items-center justify-center">
+          {/* Header */}
+          <YStack className="items-center pt-16 pb-12">
+            <Text className="text-4xl font-qbold text-primary mb-2">
+              ¡Bienvenido!
             </Text>
-          )}
+            <Text className="text-base font-qregular text-gray-500 text-center">
+              Ingresá tus datos para continuar
+            </Text>
+          </YStack>
 
-          <Controller
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <CustomInput
-                title="E-mail"
-                value={value}
-                handleChangeText={onChange}
-                placeholder="Ingresá tu e-mail"
-                autoComplete="email"
-                inputMode="email"
-                multiline={false}
-                hint={errors.email?.message}
-                borderColor={errors.email ? "border-red-500" : undefined}
-              />
-            )}
-            name="email"
-          />
-
-          <Controller
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <CustomInput
-                title="Contraseña"
-                value={value}
-                secureTextEntry={true}
-                handleChangeText={onChange}
-                placeholder="Ingresá tu contraseña"
-                autoComplete="password"
-                multiline={false}
-                inputMode="text"
-                hint={errors.password?.message}
-                borderColor={errors.password ? "border-red-500" : undefined}
-              />
-            )}
-            name="password"
-          />
-        </YStack>
-        <YStack className="items-center">
-          <ButtonNext
-            onPress={handleSubmit(handleContinue)}
-            variant="secondary"
+          {/* Formulario */}
+          <Card
+            elevate
+            size="$4"
+            bordered
+            className="bg-white rounded-3xl"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.08,
+              shadowRadius: 12,
+              elevation: 3,
+            }}
           >
-            <Text className="text-white text-xl font-qsemibold">
-              Ir al Inicio
-            </Text>
-          </ButtonNext>
-          <Text className="text-base font-qsemibold mt-6">
-            No tenés cuenta?{"  "}
-            <Text
-              className="text-base text-primary font-qsemibold underline"
-              onPress={() => router.replace("/(auth)/sign-up")}
-            >
-              Registrate
-            </Text>
-          </Text>
+            <YStack className="p-6 space-y-6 h-[52%]">
+              {mutation.isError && (
+                <XStack className="items-center justify-center space-x-2 bg-red-50 rounded-2xl py-3">
+                  <Image
+                    source={icons.alert}
+                    className="h-6 w-6"
+                    resizeMode="contain"
+                    tintColor="#ef4444"
+                  />
+                  <Text className="text-sm font-qbold text-red-500">
+                    {mutation.error.message == 408
+                      ? "Error de conexión, intentá más tarde."
+                      : "E-mail o contraseña inválidos."}
+                  </Text>
+                </XStack>
+              )}
+
+              <YStack
+                space="$4"
+                className={`${mutation.isError ? "" : "mb-8"}`}
+              >
+                <Controller
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { onChange, value } }) => (
+                    <CustomInput
+                      title="E-mail"
+                      value={value}
+                      handleChangeText={onChange}
+                      placeholder="Ingresá tu e-mail"
+                      autoComplete="email"
+                      inputMode="email"
+                      multiline={false}
+                      hint={errors.email?.message}
+                      borderColor={errors.email ? "border-red-500" : undefined}
+                      width="92%"
+                    />
+                  )}
+                  name="email"
+                />
+
+                <Controller
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { onChange, value } }) => (
+                    <CustomInput
+                      title="Contraseña"
+                      value={value}
+                      secureTextEntry={true}
+                      handleChangeText={onChange}
+                      placeholder="Ingresá tu contraseña"
+                      autoComplete="password"
+                      multiline={false}
+                      inputMode="text"
+                      hint={errors.password?.message}
+                      borderColor={
+                        errors.password ? "border-red-500" : undefined
+                      }
+                      width="92%"
+                    />
+                  )}
+                  name="password"
+                />
+              </YStack>
+
+              <View className="items-center justify-center">
+                <ButtonNext
+                  onPress={handleSubmit(handleContinue)}
+                  variant="secondary"
+                >
+                  <Text className="text-white text-xl font-qsemibold">
+                    Iniciar sesión
+                  </Text>
+                </ButtonNext>
+              </View>
+            </YStack>
+          </Card>
+
+          {/* Footer con logo */}
+          <YStack className="items-center mt-8 mb-4 space-y-6">
+            <XStack className="items-center justify-center space-x-2 mb-2">
+              <Text className="text-base font-qsemibold text-gray-600">
+                ¿No tenés cuenta?
+              </Text>
+              <Pressable
+                onPress={() => router.replace("/(auth)/sign-up")}
+                style={({ pressed }) => ({
+                  opacity: pressed ? 0.8 : 1,
+                })}
+              >
+                <Text className="text-base text-primary font-qbold underline">
+                  Registrate
+                </Text>
+              </Pressable>
+            </XStack>
+
+            <Image
+              source={require("../../assets/icons/logo.png")}
+              className="h-16 w-16"
+              resizeMode="contain"
+            />
+          </YStack>
         </YStack>
       </YStack>
-    </YStack>
+    </KeyboardAvoidingView>
   );
 }

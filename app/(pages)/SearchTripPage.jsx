@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { YStack, XStack } from "tamagui";
 import AutocompleteCityInput from "../../components/AutocompleteCityInput";
@@ -61,123 +61,150 @@ export default function SearchTripPage() {
   };
 
   return (
-    <ScrollView className="flex-1 bg-background">
-      <Pressable className="mb-10">
-        {/* Header con gradiente */}
-        <LinearGradient
-          colors={["#59A58A", "#7AB5A0"]}
-          style={{
-            width: "100%",
-            paddingTop: 60,
-            paddingBottom: 80,
-            borderBottomLeftRadius: 32,
-            borderBottomRightRadius: 32,
-          }}
-        >
-          <View className="px-6">
-            <Text className="text-4xl font-qbold text-white">Buscá</Text>
-            <Text className="text-4xl font-qbold text-white/90">
-              tu próximo viaje
-            </Text>
-          </View>
-        </LinearGradient>
-
-        {/* Formulario de búsqueda */}
-        <View className="px-6 -mt-12">
-          <View
-            className="bg-white rounded-3xl pt-8 pb-10"
+    <View className="flex-1 bg-background">
+      <ScrollView>
+        <Pressable className="mb-10">
+          {/* Header con gradiente */}
+          <LinearGradient
+            colors={["#59A58A", "#7AB5A0"]}
             style={{
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.08,
-              shadowRadius: 12,
-              elevation: 3,
+              width: "100%",
+              paddingTop: 60,
+              paddingBottom: 80,
+              borderBottomLeftRadius: 32,
+              borderBottomRightRadius: 32,
             }}
           >
-            <YStack space="$5">
-              <Controller
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { onChange, value } }) => (
-                  <AutocompleteCityInput
-                    title="Desde"
-                    placeholder="i.e: Tigre"
-                    setValue={onChange}
-                    value={value}
-                    hint={errors.fromLocation && errors.fromLocation.message}
-                    borderColor={errors.fromLocation ? "#FF0000" : undefined}
-                  />
-                )}
-                name="fromLocation"
-              />
+            <View className="px-6">
+              <Text className="text-4xl font-qbold text-white">Buscá</Text>
+              <Text className="text-4xl font-qbold text-white/90">
+                tu próximo viaje
+              </Text>
+            </View>
+          </LinearGradient>
 
-              <Controller
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { onChange, value } }) => (
-                  <AutocompleteCityInput
-                    title="Hasta"
-                    placeholder="i.e: Mar del Plata"
-                    setValue={onChange}
-                    value={value}
-                    hint={errors.toLocation && errors.toLocation.message}
-                    borderColor={errors.toLocation ? "#FF0000" : undefined}
-                  />
-                )}
-                name="toLocation"
-              />
+          {/* Formulario de búsqueda */}
+          <View className="px-6 -mt-12">
+            <View
+              className="bg-white rounded-3xl pt-8 pb-10"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.08,
+                shadowRadius: 12,
+                elevation: 3,
+              }}
+            >
+              <YStack space="$5">
+                <Controller
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { onChange, value } }) => (
+                    <AutocompleteCityInput
+                      title="Desde"
+                      placeholder="i.e: Tigre"
+                      setValue={onChange}
+                      value={value}
+                      hint={errors.fromLocation && errors.fromLocation.message}
+                      borderColor={errors.fromLocation ? "#FF0000" : undefined}
+                    />
+                  )}
+                  name="fromLocation"
+                />
 
-              <Controller
-                control={control}
-                rules={{ required: true }}
-                render={({ field: { onChange, value } }) => (
-                  <DatePicker
-                    value={value}
-                    onChangeDate={onChange}
-                    title={"Fecha de salida"}
-                    hint={errors.date && errors.date.message}
-                    borderColor={
-                      errors.date ? "border border-red-500" : undefined
-                    }
+                <Controller
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { onChange, value } }) => (
+                    <AutocompleteCityInput
+                      title="Hasta"
+                      placeholder="i.e: Mar del Plata"
+                      setValue={onChange}
+                      value={value}
+                      hint={errors.toLocation && errors.toLocation.message}
+                      borderColor={errors.toLocation ? "#FF0000" : undefined}
+                    />
+                  )}
+                  name="toLocation"
+                />
+
+                <Controller
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { onChange, value } }) => (
+                    <DatePicker
+                      value={value}
+                      onChangeDate={onChange}
+                      title={"Fecha de salida"}
+                      hint={errors.date && errors.date.message}
+                      borderColor={
+                        errors.date ? "border border-red-500" : undefined
+                      }
+                    />
+                  )}
+                  name="date"
+                />
+              </YStack>
+            </View>
+          </View>
+
+          {/* Botones de acción */}
+          <View className="px-6 mt-10">
+            <YStack space="$3">
+              <ButtonNext
+                onPress={handleSubmit(handleViajoYo)}
+                variant="secondary"
+              >
+                <XStack space="$2" alignItems="center">
+                  <MaterialIcons name="person" size={24} color="white" />
+                  <Text className="text-xl font-qsemibold text-white ml-2 mr-6">
+                    Viajo yo
+                  </Text>
+                </XStack>
+              </ButtonNext>
+
+              <ButtonNext onPress={handleSubmit(handleEnviarPaquete)}>
+                <XStack space="$2" alignItems="center">
+                  <Image
+                    source={icons.filledPackage}
+                    className="w-6 h-6 mt-1"
+                    resizeMode="contain"
+                    tintColor="white"
                   />
-                )}
-                name="date"
-              />
+                  <Text className="text-xl font-qsemibold text-white ml-2">
+                    Enviar un paquete
+                  </Text>
+                </XStack>
+              </ButtonNext>
             </YStack>
           </View>
-        </View>
 
-        {/* Botones de acción */}
-        <View className="px-6 mt-10">
-          <YStack space="$3">
-            <ButtonNext
-              onPress={handleSubmit(handleViajoYo)}
-              variant="secondary"
-            >
-              <XStack space="$2" alignItems="center">
-                <MaterialIcons name="person" size={24} color="white" />
-                <Text className="text-xl font-qsemibold text-white ml-2 mr-6">
-                  Viajo yo
+          {/* Botón inferior */}
+          <View className="px-6 pb-2 pt-4 bg-background">
+            <Link href="/(tabs)/home" asChild>
+              <Pressable
+                className="flex-row items-center justify-center py-3 bg-white rounded-2xl"
+                style={({ pressed }) => ({
+                  opacity: pressed ? 0.7 : 1,
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.1,
+                  shadowRadius: 4,
+                  elevation: 3,
+                })}
+              >
+                <MaterialIcons name="home" size={24} color="#59A58A" />
+                <Text className="ml-2 text-primary font-qsemibold text-lg">
+                  Volver al inicio
                 </Text>
-              </XStack>
-            </ButtonNext>
-
-            <ButtonNext onPress={handleSubmit(handleEnviarPaquete)}>
-              <XStack space="$2" alignItems="center">
-                <Image
-                  source={icons.filledPackage}
-                  className="w-6 h-6 mt-1"
-                  resizeMode="contain"
-                  tintColor="white"
-                />
-                <Text className="text-xl font-qsemibold text-white ml-2">
-                  Enviar un paquete
-                </Text>
-              </XStack>
-            </ButtonNext>
-          </YStack>
-        </View>
-      </Pressable>
-    </ScrollView>
+              </Pressable>
+            </Link>
+          </View>
+        </Pressable>
+      </ScrollView>
+    </View>
   );
 }
