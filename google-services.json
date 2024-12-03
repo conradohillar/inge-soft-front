@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "895702785307",
+    "project_id": "test-d5c59",
+    "storage_bucket": "test-d5c59.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:895702785307:android:158fa3dea2e2dfa3d447be",
+        "android_client_info": {
+          "package_name": "com.rydio.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "895702785307-1r4si72gu3kero5qtmjr9os0und7cd9p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxwBWu9uLylHXX-yXtjz7naWlVv1ynpFo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "895702785307-1r4si72gu3kero5qtmjr9os0und7cd9p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
