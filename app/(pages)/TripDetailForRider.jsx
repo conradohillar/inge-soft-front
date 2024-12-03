@@ -11,11 +11,12 @@ import RateCommentModal from "../../components/RateCommentModal";
 import { useState } from "react";
 import ButtonNext from "../../components/ButtonNext";
 import icons from "../../constants/icons";
+import PaymentModal from "../../components/PaymentModal";
 
 export default function TripDetailForRider() {
   const { ride_id, type } = useLocalSearchParams();
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(false);
   const { data, isError, isLoading } = useQuery({
     queryKey: ["riderDetail", ride_id],
     queryFn: () => getRiderDetail(ride_id),
@@ -331,13 +332,7 @@ export default function TripDetailForRider() {
           {/* Botón de cancelar solo para viajes upcoming */}
           {type === "upcoming" && (
             <View className="px-6 mb-8 mt-4">
-              <ButtonNext
-                onPress={
-                  {
-                    /* TODO */
-                  }
-                }
-              >
+              <ButtonNext onPress={() => setIsPaymentModalVisible(true)}>
                 <Text className="text-xl font-qsemibold text-white">
                   Cancelar reserva
                 </Text>
@@ -353,6 +348,14 @@ export default function TripDetailForRider() {
           rideId={ride_id}
           receiverId={data.driver_id}
           setIsVisible={setIsModalVisible}
+        />
+
+        <PaymentModal
+          isVisible={isPaymentModalVisible}
+          onClose={() => setIsPaymentModalVisible(false)}
+          onPay={() => {
+            /* TODO */
+          }}
         />
       </Pressable>
     </ScrollView>

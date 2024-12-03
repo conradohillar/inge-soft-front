@@ -1,4 +1,4 @@
-import { Image, TouchableOpacity, Text, View, Pressable } from "react-native";
+import { Image, TouchableOpacity, Text, View } from "react-native";
 import { Avatar, XStack, YStack } from "tamagui";
 import icons from "../../constants/icons";
 import { useMutation } from "@tanstack/react-query";
@@ -13,6 +13,8 @@ import { useGlobalState } from "../_layout";
 import ProfilePictureModal from "../../components/PofilePictureModal";
 import EditNameModal from "../../components/EditNameModal";
 import CustomAlert from "../../components/CustomAlert";
+import PressableCard from "../../components/PressableCard.jsx";
+import { FlatList } from "react-native";
 
 export default function Profile() {
   const router = useRouter();
@@ -133,6 +135,19 @@ export default function Profile() {
     });
   };
 
+  const handleLogout = () => {
+    setAlertConfig({
+      visible: true,
+      title: "Cerrar sesión",
+      message: "¿Estás seguro que querés cerrar sesión?",
+      onConfirm: () => {
+        setGlobalState({ ...globalState, isLoggedIn: false });
+        router.dismissAll();
+        router.replace("/(pages)/LandingPage");
+      },
+    });
+  };
+
   return (
     <View className="flex-1 bg-background">
       <LinearGradient
@@ -179,9 +194,9 @@ export default function Profile() {
               />
             </View>
 
-            <YStack gap="$2" className="flex-1 ml-2">
-              <XStack className="items-center space-x-3">
-                <View className="flex-1 flex-row items-center">
+            <YStack gap="$2" className="flex-1 ml-3">
+              <XStack className="items-center space-x-4">
+                <View className="flex-row items-center pr-1">
                   <Text
                     className="text-xl font-qbold text-white"
                     numberOfLines={1}
@@ -224,95 +239,63 @@ export default function Profile() {
         </View>
       </LinearGradient>
 
-      <View className="px-6 -mt-12">
-        <YStack gap="$4">
-          <Pressable
-            onPress={
-              globalState.isDriver
+      <View className="-mt-12 h-full">
+        <FlatList
+          data={[
+            {
+              onPress: globalState.isDriver
                 ? () => router.push("/(pages)/MyCarsPage")
                 : () =>
                     handleRestrictedAccess(
                       "Primero tenés que convertirte en conductor."
-                    )
-            }
-            style={({ pressed }) => ({
-              transform: [{ scale: pressed ? 0.98 : 1 }],
-            })}
-          >
-            <View
-              className={`bg-white rounded-3xl p-6 ${
-                !globalState.isDriver ? "opacity-50" : ""
-              }`}
-              style={{
-                shadowColor: "#000",
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.08,
-                shadowRadius: 12,
-                elevation: 3,
-              }}
-            >
-              <View className="flex-row items-center space-x-4">
-                <View className="bg-primary/10 h-14 w-14 rounded-2xl items-center justify-center">
-                  <MaterialIcons
-                    name="directions-car"
-                    size={28}
-                    color="#59A58A"
-                  />
-                </View>
-                <View className="flex-1">
-                  <Text className="text-xl font-qbold text-black mb-2">
-                    Mis autos
-                  </Text>
-                  <Text className="text-sm font-qregular text-gray-500">
-                    Administrá tus vehículos
-                  </Text>
-                </View>
-                <MaterialIcons name="chevron-right" size={28} color="#59A58A" />
-              </View>
-            </View>
-          </Pressable>
-
-          <Pressable
-            onPress={
-              !globalState.isDriver
+                    ),
+              disabled: !globalState.isDriver,
+              icon: "directions-car",
+              title: "Mis autos",
+              subtitle: "Administrá tus vehículos",
+            },
+            {
+              onPress: () => router.push("/(pages)/ChatListPage"),
+              icon: "chat-bubble",
+              title: "Mis chats",
+              subtitle: "Accedé a la lista de tus chats",
+            },
+            {
+              onPress: !globalState.isDriver
                 ? () => router.push("/(pages)/CredentialsPage")
-                : () => handleRestrictedAccess("Ya sos conductor.")
-            }
-            style={({ pressed }) => ({
-              transform: [{ scale: pressed ? 0.98 : 1 }],
-            })}
-          >
-            <View
-              className={`bg-white rounded-3xl p-6 ${
-                globalState.isDriver ? "opacity-50" : ""
-              }`}
-              style={{
-                shadowColor: "#000",
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.08,
-                shadowRadius: 12,
-                elevation: 3,
-              }}
-            >
-              <View className="flex-row items-center space-x-4">
-                <View className="bg-primary/10 h-14 w-14 rounded-2xl items-center justify-center">
-                  <MaterialIcons name="credit-card" size={28} color="#59A58A" />
-                </View>
-                <View className="flex-1">
-                  <Text className="text-xl font-qbold text-black mb-2">
-                    Credenciales
-                  </Text>
-                  <Text className="text-sm font-qregular text-gray-500">
-                    {globalState.isDriver
-                      ? "Ya sos conductor"
-                      : "Convertite en conductor"}
-                  </Text>
-                </View>
-                <MaterialIcons name="chevron-right" size={28} color="#59A58A" />
-              </View>
-            </View>
-          </Pressable>
-        </YStack>
+                : () => handleRestrictedAccess("Ya sos conductor."),
+              disabled: globalState.isDriver,
+              icon: "credit-card",
+              title: "Credenciales",
+              subtitle: globalState.isDriver
+                ? "Ya sos conductor"
+                : "Convertite en conductor",
+            },
+            {
+              onPress: () => router.push("/(pages)/ValidatePage"),
+              icon: "badge",
+              title: "Validar mi cuenta",
+              subtitle: "Verificá tu identidad",
+            },
+            {
+              onPress: handleLogout,
+              icon: "logout",
+              title: "Cerrar sesión",
+              subtitle: "Salir de la aplicación",
+            },
+          ]}
+          renderItem={({ item }) => (
+            <PressableCard
+              onPress={item.onPress}
+              disabled={item.disabled}
+              icon={item.icon}
+              title={item.title}
+              subtitle={item.subtitle}
+            />
+          )}
+          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+          showsVerticalScrollIndicator={false}
+        />
       </View>
 
       <YStack className="items-center mt-4">
@@ -338,6 +321,7 @@ export default function Profile() {
         onClose={() => setAlertConfig({ ...alertConfig, visible: false })}
         title={alertConfig.title}
         message={alertConfig.message}
+        onConfirm={alertConfig.onConfirm}
       />
     </View>
   );

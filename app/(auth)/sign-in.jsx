@@ -45,12 +45,12 @@ export default function SignIn() {
         fullName: user.name,
         firstName: user.name.split(" ")[0],
         email: user.email,
-        isLogued: true,
+        isLoggedIn: true,
         isDriver: user.is_driver,
         userId: user.user_id,
         photoUrl: user.photo_url ? user.photo_url : icons.placeholder_profile,
       });
-
+      router.dismissAll();
       router.replace("../(tabs)/home");
     },
   });

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import ModalTemplate from "./ModalTemplate";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const CustomAlert = ({
   isVisible,
@@ -8,7 +9,15 @@ const CustomAlert = ({
   title = "Atención",
   message,
   confirmText = "Aceptar",
+  onConfirm,
 }) => {
+  const handleConfirm = () => {
+    if (onConfirm) {
+      onConfirm();
+    }
+    onClose();
+  };
+
   return (
     <ModalTemplate isVisible={isVisible} onBackdropPress={onClose}>
       <View className="px-6 justify-center flex-1">
@@ -22,10 +31,15 @@ const CustomAlert = ({
             elevation: 3,
           }}
         >
-          {/* Título */}
-          <Text className="text-2xl font-qbold text-black text-center mb-4">
-            {title}
-          </Text>
+          {/* Header */}
+          <View className="flex-row justify-between items-center mb-4">
+            <Text className="text-2xl font-qbold text-black flex-1 text-center">
+              {title}
+            </Text>
+            <TouchableOpacity onPress={onClose} className="absolute right-0">
+              <MaterialIcons name="close" size={24} color="#666" />
+            </TouchableOpacity>
+          </View>
 
           {/* Mensaje */}
           <Text className="text-base font-qregular text-gray-600 text-center mb-6">
@@ -35,7 +49,7 @@ const CustomAlert = ({
           {/* Botón */}
           <TouchableOpacity
             className="bg-primary h-[42] rounded-2xl items-center justify-center"
-            onPress={onClose}
+            onPress={handleConfirm}
             style={({ pressed }) => ({
               opacity: pressed ? 0.8 : 1,
             })}

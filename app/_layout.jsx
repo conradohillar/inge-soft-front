@@ -4,7 +4,6 @@ import { useEffect, createContext, useContext, useState } from "react";
 import { AutocompleteDropdownContextProvider } from "react-native-autocomplete-dropdown";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import icons from "../constants/icons";
-
 SplashScreen.preventAutoHideAsync();
 
 export const queryClient = new QueryClient();
@@ -16,7 +15,7 @@ const RootLayout = () => {
     firstName: "User",
     email: "",
     photoUrl: icons.placeholder_profile,
-    isLogued: false,
+    isLoggedIn: false,
     isDriver: false,
     userId: null,
   });

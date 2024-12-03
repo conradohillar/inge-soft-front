@@ -7,11 +7,12 @@ import * as SplashScreen from "expo-splash-screen";
 import FrontPage from "./(pages)/FrontPage";
 import LandingPage from "./(pages)/LandingPage";
 import { useFonts } from "expo-font";
-
+import { useGlobalState } from "./_layout";
+import Home from "./(tabs)/home";
 export default function App() {
   const colorScheme = useColorScheme();
   const [isReady, setIsReady] = useState(false);
-
+  const { globalState } = useGlobalState();
   const [fontsLoaded] = useFonts({
     Inter: require("../assets/fonts/Inter_18pt-Regular.ttf"),
     "Quicksand-Semibold": require("../assets/fonts/Quicksand-SemiBold.ttf"),
@@ -48,11 +49,14 @@ export default function App() {
     );
   }
 
+  if (globalState.isLoggedIn) {
+    return <Home />;
+  }
+
   return (
     <TamaguiProvider config={config}>
       <Theme name={colorScheme === "dark" ? "dark" : "light"}>
         <LandingPage />
-        <StatusBar theme="dark" />
       </Theme>
     </TamaguiProvider>
   );

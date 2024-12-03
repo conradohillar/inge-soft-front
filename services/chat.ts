@@ -81,3 +81,9 @@ export const getOtherUser = async (chat_id: string) => {
     return await handleRequest(() => axios.get(url, { headers }));
 }
 
+export const getUserChats = async () => {
+    const headers = await getHeaderWithToken();
+    const url = `${BASE_URL}/list`;
+    return await handleRequest(() => axios.get(url, { headers }));
+}   
+
