@@ -8,7 +8,7 @@ import { useLocalSearchParams, Link, useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import RateCommentModal from "../../components/RateCommentModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ButtonNext from "../../components/ButtonNext";
 import icons from "../../constants/icons";
 import PaymentModal from "../../components/PaymentModal";
@@ -21,6 +21,23 @@ export default function TripDetailForRider() {
     queryKey: ["riderDetail", ride_id],
     queryFn: () => getRiderDetail(ride_id),
   });
+
+  // Sincronizar isPaymentModalVisible con data.paid
+  useEffect(() => {
+    if (data) {
+      setIsPaymentModalVisible(!data.paid && data.state === "accepted");
+    }
+  }, [data]);
+
+  const router = useRouter();
+
+  const handlePaymentModalClose = () => {
+    if (!data.paid && data.state === "accepted") {
+      router.back();
+    } else {
+      setIsPaymentModalVisible(false);
+    }
+  };
 
   if (isLoading) return <LoadingPage />;
   if (isError) return <ErrorPage />;
@@ -330,9 +347,13 @@ export default function TripDetailForRider() {
           </View>
 
           {/* Botón de cancelar solo para viajes upcoming */}
-          {type === "upcoming" && (
+          {type === "upcoming" && data.state !== "accepted" && (
             <View className="px-6 mb-8 mt-4">
-              <ButtonNext onPress={() => setIsPaymentModalVisible(true)}>
+              <ButtonNext
+                onPress={() => {
+                  /* TODO */
+                }}
+              >
                 <Text className="text-xl font-qsemibold text-white">
                   Cancelar reserva
                 </Text>
@@ -352,7 +373,7 @@ export default function TripDetailForRider() {
 
         <PaymentModal
           isVisible={isPaymentModalVisible}
-          onClose={() => setIsPaymentModalVisible(false)}
+          onClose={handlePaymentModalClose}
           onPay={() => {
             /* TODO */
           }}
