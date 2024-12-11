@@ -115,7 +115,7 @@ export default function ChatListPage() {
         <XStack className="px-6">
           {/* Botón flotante para volver */}
           <Pressable
-            onPress={() => router.push("/(tabs)/profile")}
+            onPress={() => router.back()}
             className="bg-white/20 rounded-full p-2 mr-6"
             style={({ pressed }) => ({
               opacity: pressed ? 0.7 : 1,
@@ -132,7 +132,7 @@ export default function ChatListPage() {
             <MaterialIcons name="arrow-back" size={28} color="white" />
           </Pressable>
 
-          <Text className="text-4xl font-qbold text-white">Tus chats</Text>
+          <Text className="text-4xl font-qbold text-white">Mis chats</Text>
         </XStack>
       </LinearGradient>
 

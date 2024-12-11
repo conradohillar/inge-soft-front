@@ -1,8 +1,10 @@
-import { SizableText, YStack, XStack } from "tamagui";
+import { SizableText, XStack, YStack } from "tamagui";
 import HorizontalTabs from "../../components/HorizontalTabs";
 import { useLocalSearchParams } from "expo-router";
-import { View } from "react-native";
+import { View, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 export default function TripsPage() {
   const { category } = useLocalSearchParams();
@@ -20,14 +22,34 @@ export default function TripsPage() {
           borderBottomRightRadius: 32,
         }}
       >
-        <View className="px-6">
-          <SizableText className="text-4xl font-qbold text-white">
-            Tus viajes
-          </SizableText>
-          <SizableText className="text-4xl font-qbold text-white/90">
-            como {category === "rider" ? "pasajero" : "conductor"}
-          </SizableText>
-        </View>
+        <XStack className="px-6">
+          {/* Botón flotante para volver */}
+          <Pressable
+            onPress={() => router.back()}
+            className="bg-white/20 rounded-full p-2 mr-6 h-12 w-12 items-center justify-center"
+            style={({ pressed }) => ({
+              opacity: pressed ? 0.7 : 1,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.1,
+              shadowRadius: 4,
+              elevation: 3,
+            })}
+          >
+            <MaterialIcons name="arrow-back" size={28} color="white" />
+          </Pressable>
+          <YStack>
+            <SizableText className="text-3xl font-qbold text-white">
+              Tus viajes
+            </SizableText>
+            <SizableText className="text-3xl font-qbold text-white/90">
+              como {category === "rider" ? "pasajero" : "conductor"}
+            </SizableText>
+          </YStack>
+        </XStack>
       </LinearGradient>
 
       {/* Contenido de los tabs */}

@@ -89,14 +89,11 @@ export default function Home() {
           <Text className="text-4xl font-qbold text-white/90">
             {globalState.firstName}!
           </Text>
-          <TouchableOpacity onPress={() => router.push("/(pages)/ChatPage")}>
-            <Text className="text-white font-qregular text-sm">CHAT</Text>
-          </TouchableOpacity>
         </YStack>
       </LinearGradient>
 
       <View className="px-4 -mt-12">
-        <XStack space="$4">
+        <XStack gap="$4">
           <Link href="/(pages)/SearchTripPage" className="flex-1" asChild>
             <Pressable
               style={({ pressed }) => ({

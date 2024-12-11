@@ -63,7 +63,7 @@ export default function SearchTripPage() {
   return (
     <View className="flex-1 bg-background">
       <ScrollView>
-        <Pressable className="mb-10">
+        <Pressable>
           {/* Header con gradiente */}
           <LinearGradient
             colors={["#59A58A", "#7AB5A0"]}
@@ -95,7 +95,7 @@ export default function SearchTripPage() {
                 elevation: 3,
               }}
             >
-              <YStack space="$5" className="w-full items-center">
+              <YStack gap="$5" className="w-full items-center">
                 <Controller
                   control={control}
                   rules={{ required: true }}
@@ -150,12 +150,12 @@ export default function SearchTripPage() {
 
           {/* Botones de acción */}
           <View className="px-6 mt-10">
-            <YStack space="$3">
+            <YStack gap="$3">
               <ButtonNext
                 onPress={handleSubmit(handleViajoYo)}
                 variant="secondary"
               >
-                <XStack space="$2" alignItems="center">
+                <XStack gap="$2" alignItems="center">
                   <MaterialIcons name="person" size={24} color="white" />
                   <Text className="text-xl font-qsemibold text-white ml-2 mr-6">
                     Viajo yo
@@ -164,7 +164,7 @@ export default function SearchTripPage() {
               </ButtonNext>
 
               <ButtonNext onPress={handleSubmit(handleEnviarPaquete)}>
-                <XStack space="$2" alignItems="center">
+                <XStack gap="$2" alignItems="center">
                   <Image
                     source={icons.filledPackage}
                     className="w-6 h-6 mt-1"
@@ -180,7 +180,7 @@ export default function SearchTripPage() {
           </View>
 
           {/* Botón inferior */}
-          <View className="px-6 pb-2 pt-4 bg-background">
+          <View className="px-6 py-4">
             <Link href="/(tabs)/home" asChild>
               <Pressable
                 className="flex-row items-center justify-center py-3 bg-white rounded-2xl"

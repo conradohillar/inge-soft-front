@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, Pressable } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import CarCard from "../../components/CarCard";
 import LoadingPage from "../(pages)/LoadingPage";
@@ -8,7 +8,8 @@ import AddCarModal from "../../components/AddCarModal";
 import { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Button } from "tamagui";
+import { Button, XStack } from "tamagui";
+import { router } from "expo-router";
 
 export default function MyCarsPage() {
   const [isAddCarModalVisible, setIsAddCarModalVisible] = useState(false);
@@ -32,15 +33,34 @@ export default function MyCarsPage() {
         colors={["#59A58A", "#7AB5A0"]}
         style={{
           width: "100%",
-          paddingTop: 60,
-          paddingBottom: 80,
+          paddingTop: 50,
+          paddingBottom: 55,
           borderBottomLeftRadius: 32,
           borderBottomRightRadius: 32,
         }}
       >
-        <View className="px-6 items-center">
+        <XStack className="px-6">
+          {/* Botón flotante para volver */}
+          <Pressable
+            onPress={() => router.back()}
+            className="bg-white/20 rounded-full p-2 mr-6"
+            style={({ pressed }) => ({
+              opacity: pressed ? 0.7 : 1,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.1,
+              shadowRadius: 4,
+              elevation: 3,
+            })}
+          >
+            <MaterialIcons name="arrow-back" size={28} color="white" />
+          </Pressable>
+
           <Text className="text-4xl font-qbold text-white">Mis autos</Text>
-        </View>
+        </XStack>
       </LinearGradient>
 
       {/* Lista de autos */}
