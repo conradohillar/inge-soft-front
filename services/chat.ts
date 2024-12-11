@@ -5,7 +5,7 @@ import { queryClient } from '../app/_layout';
 
 
 
-const BASE_URL = `http://${LOCAL_IP}:8000/chat`;
+const BASE_URL = `https://rydio.com.ar/chat`;
 let wc: WebSocket;
 
 

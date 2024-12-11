@@ -5,7 +5,7 @@ import { handleRequest } from './utils';
 import { Beaker } from '@tamagui/lucide-icons';
 
 
-const BASE_URL = `http://${LOCAL_IP}:8000/rides`;
+const BASE_URL = `https://rydio.com.ar/rides`;
 
 
 export const getRideData = async (fromLocation, toLocation) => {
@@ -114,7 +114,7 @@ export const handleEndTripMut = async (id) => {
 
 export const payRide = async (data) => {
     const headers = await getHeaderWithToken();
-    const url = `http://${LOCAL_IP}:8000/payments/create?title=${data.title}&price=${data.price}&ride_id=${data.ride_id}`;
+    const url = `https://rydio.com.ar/payments/create?title=${data.title}&price=${data.price}&ride_id=${data.ride_id}`;
 
     return handleRequest(() => axios.post(url, data, { headers }));
 }

@@ -123,9 +123,6 @@ export default function Home() {
           <TouchableOpacity onPress={() => router.push("/(pages)/ChatPage")}>
             <Text className="text-white font-qregular text-sm">CHAT</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => router.push("/(pages)/TestNots")}>
-            <Text className="text-white font-qregular text-sm">Test NOts</Text>
-          </TouchableOpacity>
         </YStack>
       </LinearGradient>
 

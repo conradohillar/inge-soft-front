@@ -4,7 +4,7 @@ import axios from 'axios';
 import { handleRequest } from './utils';
 
 
-const BASE_URL = `http://${LOCAL_IP}:8000/users`;
+const BASE_URL = `https://rydio.com.ar/users`;
 
 const getHeaders = async () => {
     return await getHeaderWithToken();

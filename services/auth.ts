@@ -7,7 +7,7 @@ const basicHeader = {
 };
 
 export const sign_in = async (email: string, password: string, setGlobalState) => {
-    const url = `http://${LOCAL_IP}:8000/auth/token`;
+    const url = `https://rydio.com.ar/auth/token`;
     const headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
     };
@@ -32,7 +32,7 @@ export const sign_in = async (email: string, password: string, setGlobalState) =
 }
 
 export const sign_up = async (userData) => {
-    const url = `http://${LOCAL_IP}:8000/auth/users/register`
+    const url = `https://rydio.com.ar/auth/users/register`
 
     try {
         const response = await axios.post(url, userData, {headers: basicHeader});
