@@ -86,7 +86,7 @@ export default function TripCard({
             {state && (
               <Image
                 source={getStateIcon(state).source}
-                className="w-7 h-7 mr-2"
+                className="w-8 h-8 mr-2"
                 resizeMode="contain"
                 style={{
                   tintColor: getStateIcon(state).color,

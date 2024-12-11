@@ -125,7 +125,7 @@ export default function PostTripPage2() {
       const section = "MIS VIAJES";
       const sectionSource = icons.car;
       const returnTo = "Volver al Inicio";
-      const returnToSource = icons.home;
+      const returnToSource = "home";
       const returnToRef = "/(tabs)/home";
 
       router.push({

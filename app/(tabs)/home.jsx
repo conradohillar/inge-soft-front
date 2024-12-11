@@ -52,43 +52,12 @@ export default function Home() {
     },
   });
 
-  const noTripsProgrammed = () => {
-    return (
-      <>
-        <Text className="text-2xl text-gray-400 font-qbold text-center">
-          No tenés ningún viaje
-        </Text>
-        <Text className="text-2xl text-gray-400 font-qbold text-center">
-          programado para hoy
-        </Text>
-      </>
-    );
-  };
-
   const handleStartTrip = (ride_id) => {
     start_mutation.mutate(ride_id);
   };
 
   const handleEndTrip = (ride_id) => {
     end_mutation.mutate(ride_id);
-  };
-
-  const renderActiveTripCard = ({ item }) => {
-    const sliced_from = item.city_from.slice(0, 3).toUpperCase();
-    const sliced_to = item.city_to.slice(0, 3).toUpperCase();
-
-    return (
-      <ActiveTripCard
-        from={sliced_from}
-        to={sliced_to}
-        passengers={item.persons}
-        packages={item.packages}
-        departure={item.start_time.split(":").slice(0, 2).join(":")}
-        isActive={item.real_start_time !== null}
-        handleStartTrip={() => handleStartTrip(item.ride_id)}
-        handleEndTrip={() => handleEndTrip(item.ride_id)}
-      />
-    );
   };
 
   const router = useRouter();

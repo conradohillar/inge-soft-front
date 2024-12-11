@@ -1,5 +1,6 @@
 import { View, Text, ScrollView, Image, Pressable } from "react-native";
-import { XStack, YStack } from "tamagui";
+import { useState } from "react";
+import { Avatar, XStack, YStack } from "tamagui";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { getDriverHistoryDetail } from "../../services/rides";
@@ -8,9 +9,18 @@ import { useLocalSearchParams } from "expo-router";
 import ErrorPage from "./ErrorPage";
 import { LinearGradient } from "expo-linear-gradient";
 import icons from "../../constants/icons";
+import RateCommentModal from "../../components/RateCommentModal";
 
 export default function TripHistoryDetailForDriver() {
   const { ride_id } = useLocalSearchParams();
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [receiverId, setReceiverId] = useState(null);
+
+  const handleRateRider = (id) => {
+    setReceiverId(id);
+    setIsModalVisible(true);
+  };
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["driverHistoryDetail", ride_id],
@@ -143,6 +153,65 @@ export default function TripHistoryDetailForDriver() {
             </XStack>
           </View>
 
+          {/* Pasajeros */}
+          <View
+            className="bg-white rounded-3xl p-6 mb-4"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.08,
+              shadowRadius: 12,
+              elevation: 3,
+            }}
+          >
+            <Text className="text-sm font-qsemibold text-primary mb-4">
+              Pasajeros anotados
+            </Text>
+            {data.riders && data.riders.length > 0 ? (
+              data.riders.map((rider) => (
+                <XStack
+                  key={rider.user_id}
+                  className="items-center space-x-4 mb-4 last:mb-0"
+                >
+                  <Avatar
+                    circular
+                    size="$8"
+                    borderColor="$gray5"
+                    borderWidth={1}
+                  >
+                    <Avatar.Image
+                      src={rider.photo_url || icons.placeholder_profile}
+                    />
+                    <Avatar.Fallback backgroundColor="$gray8" />
+                  </Avatar>
+
+                  <YStack space="$2">
+                    <Text className="font-qbold text-base text-black">
+                      {rider.name}
+                    </Text>
+                    <Pressable
+                      onPress={() => handleRateRider(rider.user_id)}
+                      className="bg-primary/10 px-4 py-2 rounded-xl flex-row items-center space-x-2"
+                    >
+                      <MaterialIcons
+                        name="star-outline"
+                        size={20}
+                        color="#59A58A"
+                      />
+                      <Text className="font-qsemibold text-sm text-primary">
+                        Calificar
+                      </Text>
+                    </Pressable>
+                  </YStack>
+                </XStack>
+              ))
+            ) : (
+              <Text className="text-base font-qregular text-gray-300 italic self-center">
+                No se anotaron pasajeros en este viaje
+              </Text>
+            )}
+          </View>
+
           {/* Espacios Utilizados */}
           <View
             className="bg-white rounded-3xl py-6 pl-6 pr-8 mb-4"
@@ -246,6 +315,15 @@ export default function TripHistoryDetailForDriver() {
             </XStack>
           </View>
         </View>
+
+        <RateCommentModal
+          isVisible={isModalVisible}
+          onBackdropPress={() => setIsModalVisible(false)}
+          category={"rider"}
+          rideId={ride_id}
+          receiverId={receiverId}
+          setIsVisible={setIsModalVisible}
+        />
       </Pressable>
     </ScrollView>
   );

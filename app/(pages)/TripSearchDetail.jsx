@@ -48,7 +48,7 @@ export default function TripSearchDetail() {
       const section = "MIS VIAJES";
       const sectionSource = icons.car;
       const returnTo = "Volver al Inicio";
-      const returnToSource = icons.home;
+      const returnToSource = "home";
       const returnToRef = "/(tabs)/home";
 
       router.push({
@@ -65,13 +65,6 @@ export default function TripSearchDetail() {
     },
   });
 
-  const paymentMutation = useMutation({
-    mutationFn: (data) => payRide(data),
-    onSuccess: (data) => {
-      Linking.openURL(data.link);
-    },
-  });
-
   const handleJoin = () => {
     const data = {
       ride_id: ride_id,
@@ -81,15 +74,6 @@ export default function TripSearchDetail() {
       large_packages: spacesLargePackage,
     };
     mutation.mutate(data);
-  };
-
-  const handlePayment = () => {
-    const data = {
-      title: "Pagá la reserva de tu viaje",
-      price: price * 0.15,
-      ride_id: ride_id,
-    };
-    paymentMutation.mutate(data);
   };
 
   if (isLoading || mutation.isPending) return <LoadingPage />;
@@ -356,7 +340,6 @@ export default function TripSearchDetail() {
                   </Text>
                   <ButtonNext
                     onPress={() => {
-                      handlePayment();
                       handleJoin();
                     }}
                     variant="secondary"

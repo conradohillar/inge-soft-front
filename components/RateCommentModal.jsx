@@ -13,9 +13,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { addComment } from "../services/users";
 
-const RateCommentModal = ({ isVisible, setIsVisible, category, receiverId, rideId }) => {
-
-
+const RateCommentModal = ({
+  isVisible,
+  setIsVisible,
+  category,
+  receiverId,
+  rideId,
+}) => {
   const {
     control,
     handleSubmit,
@@ -29,26 +33,36 @@ const RateCommentModal = ({ isVisible, setIsVisible, category, receiverId, rideI
   });
 
   const mutation = useMutation({
-    mutationFn: (formData) => addComment(receiverId, rideId, category, formData.rating, formData.comment),
+    mutationFn: (formData) =>
+      addComment(
+        receiverId,
+        rideId,
+        category,
+        formData.rating,
+        formData.comment
+      ),
     onSuccess: async () => {
       setIsVisible(false);
     },
   });
 
   const handleContinue = async (formData) => {
-    mutation.mutate(formData);
-  }
+    if (receiverId != null) {
+      mutation.mutate(formData);
+    }
+  };
 
   const closeModal = () => {
     setIsVisible(false);
-  }
-
+  };
 
   return (
     <ModalTemplate isVisible={isVisible} onBackdropPress={closeModal}>
       <View className="justify-center items-center flex-1">
         <YStack className="bg-white py-5 rounded-xl items-center w-[100%] justify-center">
-          <Text className="text-2xl font-bold color-primary pb-4">Opina sobre tu {category == 'driver' ? 'conductor' : 'pasajero'}</Text>
+          <Text className="text-2xl font-bold color-primary pb-4">
+            Opiná sobre tu {category == "driver" ? "conductor" : "pasajero"}
+          </Text>
           <Controller
             control={control}
             rules={{
@@ -84,21 +98,22 @@ const RateCommentModal = ({ isVisible, setIsVisible, category, receiverId, rideI
                   handleChangeText={onChange}
                   value={value}
                   title={"Comentario"}
+                  hint={errors.comment?.message}
+                  borderColor={errors.comment ? "border-red-500" : undefined}
                 />
               )}
               name="comment"
             />
-            {errors.comment && (
-              <Text className="text-red-500 text-base font-qsemibold">
-                {errors.comment.message}
-              </Text>
-            )}
           </View>
           <Button
             className="w-[50%] h-[42] rounded-2xl items-center pb-0.5 mt-5"
             onPress={handleSubmit(handleContinue)}
           >
-            {(mutation.isPending && <Spinner size={40} color="$green10" className="mb-2 mr-2" />) || <Text className="text-lg font-qsemibold text-white">Enviar</Text>}
+            {(mutation.isPending && (
+              <Spinner size={40} color="$green10" className="mb-2 mr-2" />
+            )) || (
+              <Text className="text-lg font-qsemibold text-white">Enviar</Text>
+            )}
           </Button>
           <TouchableOpacity
             className={"w-[40%] items-center justify-center pt-4"}

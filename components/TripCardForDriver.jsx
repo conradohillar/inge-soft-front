@@ -26,7 +26,7 @@ export default function TripCardForDriver({
           borderColor: "#ccc",
           borderRadius: 40,
           opacity: pressed ? 0.7 : 1,
-          backgroundColor: pressed ? "#cdddcd" : "#eee",
+          backgroundColor: pressed ? "#eee" : "#fff",
           shadowColor: "#000",
           shadowOffset: {
             width: 0,
@@ -57,7 +57,7 @@ export default function TripCardForDriver({
             <Text className="text-2xl font-qbold text-black"> {to}</Text>
           </XStack>
 
-          <YStack className="items-start">
+          <YStack className="items-start pl-2">
             <Text className="text-base font-qsemibold text-gray-500">
               Pasajeros: {passengers}
             </Text>
@@ -68,7 +68,7 @@ export default function TripCardForDriver({
               {state && (
                 <Image
                   source={icons.alert}
-                  className="w-10 h-10 mr-5"
+                  className="w-8 h-8 mr-5"
                   tintColor="#ff6633"
                   resizeMode="contain"
                 />

@@ -1,8 +1,9 @@
-import { Image, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { XStack, YStack } from "tamagui";
 import icons from "../../constants/icons";
 import { Link, useLocalSearchParams } from "expo-router";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function PostSuccessful() {
   const {
@@ -36,18 +37,29 @@ export default function PostSuccessful() {
             resizeMode="contain"
           />
         </XStack>
-        <Link href={returnToRef} asChild>
-          <XStack className="items-center justify-center space-x-4 mt-5">
-            <Text className="text-black text-2xl font-qbold underline">
-              {returnTo}
-            </Text>
-            <Image
-              source={returnToSource}
-              className="w-10 h-10"
-              resizeMode="contain"
-            />
-          </XStack>
-        </Link>
+
+        {/* Botón inferior */}
+        <View className="px-6 pb-2 bg-background">
+          <Link href={returnToRef} asChild>
+            <Pressable
+              className="flex-row items-center justify-center pb-3 bg-white rounded-2xl"
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.7 : 1,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.1,
+                shadowRadius: 4,
+                elevation: 3,
+              })}
+            >
+              <MaterialIcons name={returnToSource} size={32} color="#444444" />
+              <Text className="ml-2 font-qbold text-2xl">{returnTo}</Text>
+            </Pressable>
+          </Link>
+        </View>
       </YStack>
     </YStack>
   );

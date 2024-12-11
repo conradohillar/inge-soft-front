@@ -197,7 +197,7 @@ export default function SearchTripPage() {
                 })}
               >
                 <MaterialIcons name="home" size={24} color="#59A58A" />
-                <Text className="ml-2 text-primary font-qsemibold text-lg">
+                <Text className="ml-2 text-primary font-qsemibold text-lg mb-1">
                   Volver al inicio
                 </Text>
               </Pressable>
