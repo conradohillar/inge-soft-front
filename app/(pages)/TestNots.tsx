@@ -69,7 +69,7 @@ async function registerForPushNotificationsAsync() {
     }
     try {
       const pushTokenString = (
-        await Notifications.getDevicePushTokenAsync())
+        await Notifications.getExpoPushTokenAsync())
       .data;
       console.log(pushTokenString);
       return pushTokenString;
