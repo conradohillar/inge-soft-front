@@ -8,7 +8,8 @@ import FrontPage from "./(pages)/FrontPage";
 import LandingPage from "./(pages)/LandingPage";
 import { useFonts } from "expo-font";
 import { useGlobalState } from "./_layout";
-import Home from "./(tabs)/home";
+import { router } from "expo-router";
+
 export default function App() {
   const colorScheme = useColorScheme();
   const [isReady, setIsReady] = useState(false);
@@ -49,9 +50,12 @@ export default function App() {
     );
   }
 
+  // if the user is logged in, redirect to the home page
+  // TESTEAR ESTOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
   if (globalState.isLoggedIn) {
-    return <Home />;
+    router.push("/(tabs)/home");
   }
+  ///////////////////////////////////////////////////////
 
   return (
     <TamaguiProvider config={config}>
