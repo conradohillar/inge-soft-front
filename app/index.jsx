@@ -8,13 +8,13 @@ import FrontPage from "./(pages)/FrontPage";
 import LandingPage from "./(pages)/LandingPage";
 import { useFonts } from "expo-font";
 import { useGlobalState } from "./_layout";
-import { router } from "expo-router";
 import registerNNPushToken from "native-notify";
+import { setToken } from "../services/utils";
 
 export default function App() {
   const colorScheme = useColorScheme();
   const [isReady, setIsReady] = useState(false);
-  const { globalState } = useGlobalState();
+  const { globalState, setGlobalState } = useGlobalState();
   const [fontsLoaded] = useFonts({
     Inter: require("../assets/fonts/Inter_18pt-Regular.ttf"),
     "Quicksand-Semibold": require("../assets/fonts/Quicksand-SemiBold.ttf"),
@@ -50,13 +50,6 @@ export default function App() {
       </>
     );
   }
-
-  // if the user is logged in, redirect to the home page
-  // TESTEAR ESTOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-  if (globalState.isLoggedIn) {
-    router.push("/(tabs)/home");
-  }
-  ///////////////////////////////////////////////////////
 
   return (
     <TamaguiProvider config={config}>

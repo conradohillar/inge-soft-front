@@ -19,6 +19,7 @@ import { signInSchema } from "../../validation/authSchemas";
 import { useGlobalState } from "../_layout";
 import { getUserData } from "../../services/users";
 import icons from "../../constants/icons";
+import { registerIndieID } from "native-notify";
 
 export default function SignIn() {
   const {
@@ -50,6 +51,7 @@ export default function SignIn() {
         userId: user.user_id,
         photoUrl: user.photo_url ? user.photo_url : icons.placeholder_profile,
       });
+      registerIndieID(user.user_id, 25312, "s6wtyVfup1RTspXItRRyqB");
       router.dismissAll();
       router.replace("../(tabs)/home");
     },
