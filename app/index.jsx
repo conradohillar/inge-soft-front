@@ -19,7 +19,7 @@ export default function App() {
     Inter: require("../assets/fonts/Inter_18pt-Regular.ttf"),
     "Quicksand-Semibold": require("../assets/fonts/Quicksand-SemiBold.ttf"),
   });
-
+  registerNNPushToken(25312, "s6wtyVfup1RTspXItRRyqB");
   useEffect(() => {
     const prepare = async () => {
       try {
@@ -32,7 +32,7 @@ export default function App() {
         setIsReady(true);
       }
     };
-    registerNNPushToken(25312, "s6wtyVfup1RTspXItRRyqB");
+
     prepare();
   }, []);
 

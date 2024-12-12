@@ -10,7 +10,7 @@ let wc: WebSocket;
 
 
 export const connect = async (chat_id:String, user_id:String) => {
-    wc = new WebSocket(`ws://${LOCAL_IP}:8000/chat/${chat_id}?token=${await getToken()}`);
+    wc = new WebSocket(`wss://rydio.com.ar/chat/chat/${chat_id}?token=${await getToken()}`);
     wc.onmessage = (event) => {
         const messageData = JSON.parse(event.data);
         const previousMessages : [] = queryClient.getQueryData(["getMessages", chat_id]) || [];
