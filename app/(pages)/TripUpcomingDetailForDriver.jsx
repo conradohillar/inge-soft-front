@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { XStack, YStack, Avatar, Button } from "tamagui";
 import Header from "../../components/Header";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getDriverUpcomingDetail } from "../../services/rides";
 import LoadingPage from "./LoadingPage";
 import { Link } from "expo-router";
@@ -13,14 +13,52 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import ButtonNext from "../../components/ButtonNext";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { handleStartTripMut, handleEndTripMut } from "../../services/rides";
 
 export default function TripUpcomingDetailForDriver() {
   const { ride_id } = useLocalSearchParams();
+  const queryClient = useQueryClient();
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["driverUpcomingDetail", ride_id],
     queryFn: () => getDriverUpcomingDetail(ride_id),
   });
+
+  const start_mutation = useMutation({
+    mutationFn: (id) => handleStartTripMut(id),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["driverUpcomingDetail", ride_id],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["ridesUpcoming"],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["get", "upcoming", "driver"],
+      });
+    },
+  });
+
+  const end_mutation = useMutation({
+    mutationFn: (id) => handleEndTripMut(id),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["driverUpcomingDetail", ride_id],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["ridesUpcoming"],
+      });
+      router.back();
+    },
+  });
+
+  const handleStartTrip = (ride_id) => {
+    start_mutation.mutate(ride_id);
+  };
+
+  const handleEndTrip = (ride_id) => {
+    end_mutation.mutate(ride_id);
+  };
 
   const router = useRouter();
 
@@ -43,8 +81,6 @@ export default function TripUpcomingDetailForDriver() {
 
     return currentDateTime >= receivedDateTimeMinus30Min;
   }
-
-  const handleStartTrip = () => {};
 
   if (isLoading) {
     return <LoadingPage />;
@@ -366,7 +402,9 @@ export default function TripUpcomingDetailForDriver() {
                 ))
               ) : (
                 <Text className="text-base font-qregular text-gray-300 italic self-center">
-                  Aún no hay pasajeros en este viaje
+                  {data.real_start_time !== null
+                    ? "No se anotaron pasajeros en este viaje"
+                    : "Aún no hay pasajeros en este viaje"}
                 </Text>
               )}
             </View>
@@ -378,11 +416,36 @@ export default function TripUpcomingDetailForDriver() {
               data.date,
               data.start_minimum_time
             ) && (
-              <ButtonNext onPress={handleStartTrip} variant="secondary">
-                <Text className="text-xl font-qsemibold text-white">
-                  Comenzar viaje!
-                </Text>
-              </ButtonNext>
+              <View className="">
+                {data.real_start_time !== null && (
+                  <XStack className="items-center justify-center bg-primary/10 py-2 mb-4 rounded-xl">
+                    <MaterialIcons
+                      name="directions-car"
+                      size={20}
+                      color="#59A58A"
+                    />
+                    <Text className="ml-2 text-base font-qsemibold text-primary">
+                      Viaje en curso
+                    </Text>
+                  </XStack>
+                )}
+                <ButtonNext
+                  onPress={() => {
+                    data.real_start_time !== null
+                      ? handleEndTrip(ride_id)
+                      : handleStartTrip(ride_id);
+                  }}
+                  variant={
+                    data.real_start_time !== null ? "primary" : "secondary"
+                  }
+                >
+                  <Text className="text-xl font-qsemibold text-white">
+                    {data.real_start_time !== null
+                      ? "Terminar viaje"
+                      : "Comenzar viaje!"}
+                  </Text>
+                </ButtonNext>
+              </View>
             )) || (
               <ButtonNext onPress={handleRequests}>
                 <Text className="text-xl font-qsemibold text-white">

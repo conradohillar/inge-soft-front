@@ -16,39 +16,44 @@ import LoadingPage from "../(pages)/LoadingPage";
 import ErrorPage from "../(pages)/ErrorPage";
 import { useState } from "react";
 import TripEndedModal from "../../components/TripEndedModal";
-import { handleStartTripMut, handleEndTripMut } from "../../services/rides";
-import { useQueryClient } from "@tanstack/react-query";
+import {
+  handleStartTripMut,
+  handleEndTripMut,
+  getTodayRides,
+} from "../../services/rides";
 import { Link, useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
-
+import { queryClient } from "../_layout";
 export default function Home() {
   const { globalState, setGlobalState } = useGlobalState();
-  const queryClient = useQueryClient();
-
-  const [isTripEndedModalVisible, setTripEndedModalVisible] = useState(false);
-
-  const toggleTripEndedModal = () => {
-    setTripEndedModalVisible(!isTripEndedModalVisible);
-  };
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["ridesUpcoming"],
-    queryFn: () => getUserOrDriverRides("upcoming", "driver"),
+    queryFn: () => getTodayRides(),
   });
 
   const start_mutation = useMutation({
     mutationFn: (id) => handleStartTripMut(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["ridesUpcoming"] });
+    onSuccess: (data, variables) => {
+      queryClient.setQueryData(["ridesUpcoming"], (oldData) => {
+        if (!oldData) return oldData;
+        return oldData.map((item) => {
+          if (item.ride_id === variables) {
+            return { ...item, real_start_time: data.real_start_time };
+          }
+          return item;
+        });
+      });
     },
   });
 
   const end_mutation = useMutation({
     mutationFn: (id) => handleEndTripMut(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["ridesUpcoming"] });
-      toggleTripEndedModal();
+    onSuccess: (data, variables) => {
+      queryClient.setQueryData(["ridesUpcoming"], (oldData) => {
+        return oldData.filter((item) => item.ride_id !== variables);
+      });
     },
   });
 
@@ -178,17 +183,27 @@ export default function Home() {
               const sliced_from = item.city_from.slice(0, 3).toUpperCase();
               const sliced_to = item.city_to.slice(0, 3).toUpperCase();
 
-              return (
+              return item.type == "driver" ? (
                 <ActiveTripCard
                   key={item.ride_id}
                   from={sliced_from}
                   to={sliced_to}
-                  passengers={item.persons}
+                  passengers={item.people}
                   packages={item.packages}
                   departure={item.start_time.split(":").slice(0, 2).join(":")}
                   isActive={item.real_start_time !== null}
                   handleStartTrip={() => handleStartTrip(item.ride_id)}
                   handleEndTrip={() => handleEndTrip(item.ride_id)}
+                />
+              ) : (
+                <ActiveTripCardForRider
+                  key={item.ride_id}
+                  from={sliced_from}
+                  to={sliced_to}
+                  passengers={item.people}
+                  packages={item.packages}
+                  departure={item.start_time.split(":").slice(0, 2).join(":")}
+                  isActive={item.real_start_time !== null}
                 />
               );
             })}
