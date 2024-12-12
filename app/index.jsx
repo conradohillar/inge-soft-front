@@ -9,6 +9,7 @@ import LandingPage from "./(pages)/LandingPage";
 import { useFonts } from "expo-font";
 import { useGlobalState } from "./_layout";
 import { router } from "expo-router";
+import registerNNPushToken from "native-notify";
 
 export default function App() {
   const colorScheme = useColorScheme();
@@ -18,7 +19,7 @@ export default function App() {
     Inter: require("../assets/fonts/Inter_18pt-Regular.ttf"),
     "Quicksand-Semibold": require("../assets/fonts/Quicksand-SemiBold.ttf"),
   });
-
+  registerNNPushToken(25312, "s6wtyVfup1RTspXItRRyqB");
   useEffect(() => {
     const prepare = async () => {
       try {
