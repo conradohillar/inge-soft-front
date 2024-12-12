@@ -14,15 +14,15 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.rydio"
+      "bundleIdentifier": "com.rydio.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icons/logo.png",
-        "backgroundColor": "#ffffff",
-        "googleServicesFile": "./google-services.json"
+        "backgroundColor": "#ffffff"
       },
-      "package": "com.rydio"
+      "package": "com.rydio.app",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
