@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { router } from "expo-router";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CustomInput from "../../components/CustomInput";
 import ButtonNext from "../../components/ButtonNext";
 import LoadingPage from "../(pages)/LoadingPage";
@@ -35,7 +35,7 @@ export default function SignIn() {
   });
 
   const { globalState, setGlobalState } = useGlobalState();
-
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (formData) =>
       sign_in(formData.email, formData.password, setGlobalState),
@@ -52,6 +52,9 @@ export default function SignIn() {
         photoUrl: user.photo_url ? user.photo_url : icons.placeholder_profile,
       });
       registerIndieID(user.user_id, 25312, "s6wtyVfup1RTspXItRRyqB");
+      queryClient.invalidateQueries({
+        queryKey: ["ridesUpcoming"],
+      });
       router.dismissAll();
       router.replace("../(tabs)/home");
     },
