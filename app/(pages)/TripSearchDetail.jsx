@@ -18,10 +18,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import ButtonNext from "../../components/ButtonNext";
 import icons from "../../constants/icons";
+import ConfirmReservationModal from "../../components/ConfirmReservationModal";
+
 export default function TripSearchDetail() {
   const { ride_id, people, smallPacks, mediumPacks, largePacks } =
     useLocalSearchParams();
   const [pressed, setPressed] = useState(false);
+  const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
 
   const [seats, setSeats] = useState(parseInt(people, 10));
   const [spacesSmallPackage, setSmallPackage] = useState(
@@ -74,6 +77,15 @@ export default function TripSearchDetail() {
       large_packages: spacesLargePackage,
     };
     mutation.mutate(data);
+  };
+
+  const handleReservePress = () => {
+    setIsConfirmModalVisible(true);
+  };
+
+  const handleConfirmReservation = () => {
+    handleJoin();
+    setIsConfirmModalVisible(false);
   };
 
   if (isLoading || mutation.isPending) return <LoadingPage />;
@@ -338,12 +350,7 @@ export default function TripSearchDetail() {
                   <Text className="text-2xl font-qbold text-black mb-8">
                     Total: ${price}
                   </Text>
-                  <ButtonNext
-                    onPress={() => {
-                      handleJoin();
-                    }}
-                    variant="secondary"
-                  >
+                  <ButtonNext onPress={handleReservePress} variant="secondary">
                     <Text className="text-xl font-qsemibold text-white">
                       Reservar viaje
                     </Text>
@@ -354,6 +361,12 @@ export default function TripSearchDetail() {
           </View>
         </View>
       </Pressable>
+
+      <ConfirmReservationModal
+        isVisible={isConfirmModalVisible}
+        onClose={() => setIsConfirmModalVisible(false)}
+        onConfirm={handleConfirmReservation}
+      />
     </ScrollView>
   );
 }
