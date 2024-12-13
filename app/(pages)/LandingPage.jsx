@@ -9,12 +9,14 @@ import { getToken } from "../../services/utils";
 import { registerIndieID } from "native-notify";
 import { getUserData } from "../../services/users";
 import LoadingPage from "./LoadingPage";
+import icons from "../../constants/icons";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function LandingPage() {
   const router = useRouter();
   const { globalState, setGlobalState } = useGlobalState();
   const [loading, setLoading] = useState(true);
-
+  const queryClient = useQueryClient();
   useEffect(() => {
     const initialize = async () => {
       try {
@@ -34,7 +36,9 @@ export default function LandingPage() {
               photoUrl: user.photo_url || icons.placeholder_profile,
             }));
             registerIndieID(user.user_id, 25312, "s6wtyVfup1RTspXItRRyqB");
-
+            queryClient.invalidateQueries({
+              queryKey: ["ridesUpcoming"],
+            });
             router.replace("../(tabs)/home");
           } catch (error) {
             setLoading(false);

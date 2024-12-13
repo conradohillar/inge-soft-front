@@ -1,7 +1,7 @@
 import { Image, TouchableOpacity, Text, View } from "react-native";
 import { Avatar, XStack, YStack } from "tamagui";
 import icons from "../../constants/icons";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import { deleteImage, newImage, newName } from "../../services/users";
-import { useGlobalState } from "../_layout";
+import { queryClient, useGlobalState } from "../_layout";
 import ProfilePictureModal from "../../components/PofilePictureModal";
 import EditNameModal from "../../components/EditNameModal";
 import CustomAlert from "../../components/CustomAlert";
@@ -150,6 +150,7 @@ export default function Profile() {
           "s6wtyVfup1RTspXItRRyqB"
         );
         await setToken("");
+
         await setGlobalState({ ...globalState, isLoggedIn: false });
         router.dismissAll();
         router.push("/(pages)/LandingPage");
