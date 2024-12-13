@@ -13,6 +13,7 @@ const ActiveTripCard = ({
   isActive,
   handleStartTrip,
   handleEndTrip,
+  disabled,
 }) => {
   return (
     <Card
@@ -75,7 +76,7 @@ const ActiveTripCard = ({
               onPress={handleStartTrip}
               variant="secondary"
               opacity={isActive ? 0.5 : 1}
-              disabled={isActive}
+              disabled={disabled || isActive}
             >
               <XStack className="items-center justify-center space-x-2">
                 <MaterialIcons
@@ -93,7 +94,7 @@ const ActiveTripCard = ({
             <VarButton
               onPress={handleEndTrip}
               opacity={isActive ? 1 : 0.5}
-              disabled={!isActive}
+              disabled={disabled || !isActive}
             >
               <XStack className="items-center justify-center space-x-2">
                 <MaterialIcons name="stop-circle" size={20} color="white" />

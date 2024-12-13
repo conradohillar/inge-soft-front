@@ -7,12 +7,12 @@
 // import { CropRegion } from "vision-camera-cropper";
 // import * as DDN from "vision-camera-dynamsoft-document-normalizer";
 
-// export interface CameraScreenProps {
+  export interface CameraScreenProps {
 //   route:any;
 //   navigation:any;
-// }
+ }
 
-// export default function CameraScreen(props:CameraScreenProps){
+ export default function CameraScreen(props:CameraScreenProps){
 //   console.log(Cropper);
 
 //   const [hasPermission, setHasPermission] = useState(false);
@@ -163,7 +163,7 @@
 //       </View>
 //     </View>
 //   )
-// }
+ }
 
 
 // const styles = StyleSheet.create({

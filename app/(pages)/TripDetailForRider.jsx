@@ -12,14 +12,32 @@ import { useState, useEffect } from "react";
 import ButtonNext from "../../components/ButtonNext";
 import icons from "../../constants/icons";
 import PaymentModal from "../../components/PaymentModal";
+import { createChat } from "../../services/chat";
+import { leaveRide } from "../../services/rides";
+import { useMutation } from "@tanstack/react-query";
 
 export default function TripDetailForRider() {
   const { ride_id, type } = useLocalSearchParams();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(false);
+
   const { data, isError, isLoading } = useQuery({
     queryKey: ["riderDetail", ride_id],
     queryFn: () => getRiderDetail(ride_id),
+  });
+
+  const create_chat_mutation = useMutation({
+    mutationFn: (id) => createChat(id),
+    onSuccess: () => {
+      setIsPaymentModalVisible(false);
+    },
+  });
+
+  const leave_ride_mutation = useMutation({
+    mutationFn: (id) => leaveRide(id),
+    onSuccess: () => {
+      router.back();
+    },
   });
 
   // Sincronizar isPaymentModalVisible con data.paid
@@ -37,6 +55,14 @@ export default function TripDetailForRider() {
     } else {
       setIsPaymentModalVisible(false);
     }
+  };
+
+  const handlePayment = () => {
+    create_chat_mutation.mutate(data.driver_id);
+  };
+
+  const handleCancel = () => {
+    leave_ride_mutation.mutate(ride_id);
   };
 
   if (isLoading) return <LoadingPage />;
@@ -349,11 +375,7 @@ export default function TripDetailForRider() {
           {/* Botón de cancelar solo para viajes upcoming */}
           {type === "upcoming" && data.state !== "accepted" && (
             <View className="px-6 mb-8 mt-4">
-              <ButtonNext
-                onPress={() => {
-                  /* TODO */
-                }}
-              >
+              <ButtonNext onPress={handleCancel}>
                 <Text className="text-xl font-qsemibold text-white">
                   Cancelar reserva
                 </Text>
@@ -374,9 +396,8 @@ export default function TripDetailForRider() {
         <PaymentModal
           isVisible={isPaymentModalVisible}
           onClose={handlePaymentModalClose}
-          onPay={() => {
-            /* TODO */
-          }}
+          onPay={handlePayment}
+          onCancel={handleCancel}
         />
       </Pressable>
     </ScrollView>

@@ -39,7 +39,7 @@ export default function Header() {
       style={{ borderBottomWidth: 2, borderBottomColor: "#ccc" }}
     >
       <View className="relative">
-        <TouchableOpacity onPress={toggleModal} asChild>
+        <TouchableOpacity onPress={toggleModal}>
           <Button className="w-10 h-10 rounded-2xl bg-background2">
             <Image
               source={icons.notification}
