@@ -114,7 +114,7 @@ export const leaveRide = async (ride_id) => {
     const headers = await getHeaderWithToken();
     const url = `${BASE_URL}/leave/${ride_id}`;
 
-    return handleRequest(() => axios.post(url, null, { headers }));
+    return handleRequest(() => axios.delete(url, { headers }));
 }
 
 export const payRide = async (data) => {

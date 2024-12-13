@@ -15,11 +15,14 @@ import PaymentModal from "../../components/PaymentModal";
 import { createChat } from "../../services/chat";
 import { leaveRide } from "../../services/rides";
 import { useMutation } from "@tanstack/react-query";
+import CancelReservationModal from "../../components/CancelReservationModal";
+import { queryClient } from "../../app/_layout";
 
 export default function TripDetailForRider() {
   const { ride_id, type } = useLocalSearchParams();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(false);
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["riderDetail", ride_id],
@@ -36,6 +39,9 @@ export default function TripDetailForRider() {
   const leave_ride_mutation = useMutation({
     mutationFn: (id) => leaveRide(id),
     onSuccess: () => {
+      setIsCancelModalVisible(false);
+      setIsPaymentModalVisible(false);
+      queryClient.invalidateQueries({ queryKey: ["get", "upcoming", "rider"] });
       router.back();
     },
   });
@@ -61,7 +67,11 @@ export default function TripDetailForRider() {
     create_chat_mutation.mutate(data.driver_id);
   };
 
-  const handleCancel = () => {
+  const handleCancelPress = () => {
+    setIsCancelModalVisible(true);
+  };
+
+  const handleConfirmCancel = () => {
     leave_ride_mutation.mutate(ride_id);
   };
 
@@ -372,10 +382,10 @@ export default function TripDetailForRider() {
             </View>
           </View>
 
-          {/* Botón de cancelar solo para viajes upcoming */}
+          {/* Botón de cancelar */}
           {type === "upcoming" && data.state !== "accepted" && (
             <View className="px-6 mb-8 mt-4">
-              <ButtonNext onPress={handleCancel}>
+              <ButtonNext onPress={handleCancelPress}>
                 <Text className="text-xl font-qsemibold text-white">
                   Cancelar reserva
                 </Text>
@@ -397,8 +407,17 @@ export default function TripDetailForRider() {
           isVisible={isPaymentModalVisible}
           onClose={handlePaymentModalClose}
           onPay={handlePayment}
-          onCancel={handleCancel}
-          canCancel={false}
+          onCancel={handleCancelPress}
+          canCancel={isBeforePrevDay(
+            getDepartureDateTime(data.date, data.start_minimum_time)
+          )}
+        />
+
+        {/* Modal de confirmación */}
+        <CancelReservationModal
+          isVisible={isCancelModalVisible}
+          onClose={() => setIsCancelModalVisible(false)}
+          onConfirm={handleConfirmCancel}
         />
       </Pressable>
     </ScrollView>

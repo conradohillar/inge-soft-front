@@ -30,21 +30,21 @@ const PaymentModal = ({
 
             <Text className="text-base font-qregular text-gray-600">
               {canCancel
-                ? "Una vez que pagues, si decidís cancelar la reserva no se te retribuirá el dinero."
+                ? "Realizá el pago para unirte al viaje.\nUna vez que pagues, si decidís cancelar la reserva no se te retribuirá el dinero."
                 : "Realizá el pago para unirte al viaje.\nYa es tarde para cancelar la reserva."}
             </Text>
 
             <XStack className="justify-end space-x-4 mt-2">
               <Pressable
                 onPress={onCancel}
-                className="px-4 py-2 bg-gray-200 rounded-lg"
+                className="px-4 py-2 bg-red-500 rounded-lg"
                 disabled={!canCancel}
                 style={{
                   opacity: canCancel ? 1 : 0.2,
                 }}
               >
-                <Text className="text-base font-qsemibold text-gray-700">
-                  Cancelar
+                <Text className="text-base font-qsemibold text-white">
+                  Cancelar viaje
                 </Text>
               </Pressable>
               <Pressable
