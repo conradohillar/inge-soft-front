@@ -1,5 +1,4 @@
 import { getHeaderWithToken } from './utils';
-import { LOCAL_IP } from '@env';
 import axios from 'axios';
 import { handleRequest } from './utils';
 

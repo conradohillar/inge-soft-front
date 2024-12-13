@@ -1,4 +1,3 @@
-import {LOCAL_IP} from '@env';
 import { setToken, getHeaderWithToken } from './utils';
 import axios from 'axios';
 

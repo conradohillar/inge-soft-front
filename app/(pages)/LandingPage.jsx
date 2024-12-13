@@ -20,23 +20,27 @@ export default function LandingPage() {
       try {
         const token = await getToken();
 
-        if (token) {
-          const user = await getUserData();
+        if (token !== null && token !== "") {
+          try {
+            const user = await getUserData();
+            await setGlobalState((prevState) => ({
+              ...prevState,
+              fullName: user.name,
+              firstName: user.name.split(" ")[0],
+              email: user.email,
+              isLoggedIn: true,
+              isDriver: user.is_driver,
+              userId: user.user_id,
+              photoUrl: user.photo_url || icons.placeholder_profile,
+            }));
+            registerIndieID(user.user_id, 25312, "s6wtyVfup1RTspXItRRyqB");
 
-          await setGlobalState((prevState) => ({
-            ...prevState,
-            fullName: user.name,
-            firstName: user.name.split(" ")[0],
-            email: user.email,
-            isLoggedIn: true,
-            isDriver: user.is_driver,
-            userId: user.user_id,
-            photoUrl: user.photo_url || icons.placeholder_profile,
-          }));
-
-          registerIndieID(user.user_id, 25312, "s6wtyVfup1RTspXItRRyqB");
-
-          router.replace("../(tabs)/home");
+            router.replace("../(tabs)/home");
+          } catch (error) {
+            setLoading(false);
+            console.log("Error getting user data: ", error);
+            return;
+          }
         }
         setLoading(false);
       } catch (error) {
@@ -61,6 +65,11 @@ export default function LandingPage() {
 
             <YStack className="items-center justify-center w-full h-[50%] space-y-2">
               <View className="w-[90%]">
+                <BlackButton href="/(pages)/TestDocReader" height={75}>
+                  <Text className="text-[22px] font-qsemibold text-white">
+                    Test scan
+                  </Text>
+                </BlackButton>
                 <BlackButton href="/(auth)/sign-in" height={75}>
                   <Text className="text-[22px] font-qsemibold text-white">
                     Iniciar sesión

@@ -43,7 +43,7 @@ const PagesLayout = () => {
               <Stack.Screen name="TripUpcomingDetailForDriver" />
               <Stack.Screen name="UserProfile" />
               <Stack.Screen name="ChatPage" />
-              <Stack.Screen name="TestNots" />
+              <Stack.Screen name="CameraScreen" />
             </Stack>
           </SafeAreaView>
         </TouchableWithoutFeedback>
