@@ -10,7 +10,14 @@ import {
 } from "react-native";
 import { XStack, YStack, Text, Spinner, Spacer } from "tamagui";
 import { useEffect, useState } from "react";
-import { Send, ArrowLeft, Trash, Copy, Pencil } from "@tamagui/lucide-icons";
+import {
+  Send,
+  ArrowLeft,
+  Trash,
+  Copy,
+  Pencil,
+  Key,
+} from "@tamagui/lucide-icons";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import {
@@ -54,6 +61,24 @@ export default function ChatPage() {
   });
 
   useEffect(() => {
+    return () => {
+      queryClient.invalidateQueries(["chats"]);
+      // queryClient.setQueryData(["chats"], (oldData) => {
+      //   return oldData.map((chat) => {
+      //     if (chat.chat_id === chatId) {
+      //       return {
+      //         ...chat,
+      //         last_msg: data[0].msg,
+      //         last_msg_time: data[0].sent_at,
+      //       };
+      //     }
+      //     return chat;
+      //   });
+      // });
+    };
+  }, []);
+
+  useEffect(() => {
     connect(chatId, globalState.userId);
 
     return () => {
@@ -66,14 +91,15 @@ export default function ChatPage() {
     queryClient.setQueryData(["getMessages", chatId], (oldData) => [
       {
         id: "",
+        Key: "random",
         msg: message,
         writer_id: globalState.userId,
         sent_at: new Date().toISOString(),
       },
       ...oldData,
     ]);
-    await sendMessage(message);
     setMessage("");
+    await sendMessage(message);
   };
 
   const handleLongPress = (item) => {

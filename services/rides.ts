@@ -1,8 +1,6 @@
 import { getHeaderWithToken } from './utils';
-import { LOCAL_IP } from '@env';
 import axios from 'axios';
 import { handleRequest } from './utils';
-import { Beaker } from '@tamagui/lucide-icons';
 
 
 const BASE_URL = `https://rydio.com.ar/rides`;

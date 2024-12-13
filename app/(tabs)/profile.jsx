@@ -15,6 +15,8 @@ import EditNameModal from "../../components/EditNameModal";
 import CustomAlert from "../../components/CustomAlert";
 import PressableCard from "../../components/PressableCard.jsx";
 import { FlatList } from "react-native";
+import { unregisterIndieDevice } from "native-notify";
+import { setToken } from "../../services/utils";
 
 export default function Profile() {
   const router = useRouter();
@@ -136,14 +138,21 @@ export default function Profile() {
   };
 
   const handleLogout = () => {
+    if (!globalState.isLoggedIn) return;
     setAlertConfig({
       visible: true,
       title: "Cerrar sesión",
       message: "¿Estás seguro que querés cerrar sesión?",
-      onConfirm: () => {
-        setGlobalState({ ...globalState, isLoggedIn: false });
+      onConfirm: async () => {
+        unregisterIndieDevice(
+          globalState.userId,
+          25312,
+          "s6wtyVfup1RTspXItRRyqB"
+        );
+        await setToken("");
+        await setGlobalState({ ...globalState, isLoggedIn: false });
         router.dismissAll();
-        router.replace("/(pages)/LandingPage");
+        router.push("/(pages)/LandingPage");
       },
     });
   };

@@ -1,4 +1,3 @@
-import { LOCAL_IP } from '@env';
 import { getToken, getHeaderWithToken, handleRequest } from './utils';
 import axios from 'axios';
 import { queryClient } from '../app/_layout';
@@ -10,7 +9,7 @@ let wc: WebSocket;
 
 
 export const connect = async (chat_id:String, user_id:String) => {
-    wc = new WebSocket(`wss://rydio.com.ar/chat/chat/${chat_id}?token=${await getToken()}`);
+    wc = new WebSocket(`wss://rydio.com.ar/chat/${chat_id}?token=${await getToken()}`);
     wc.onmessage = (event) => {
         const messageData = JSON.parse(event.data);
         const previousMessages : [] = queryClient.getQueryData(["getMessages", chat_id]) || [];

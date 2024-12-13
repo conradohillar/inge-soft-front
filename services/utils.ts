@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
-import { LOCAL_IP, API_KEY_LOCATIONIQ } from '@env'
+import { API_KEY_LOCATIONIQ } from '@env'
 
 
 export const handleRequest = async (requestFunc) => {
@@ -16,11 +16,6 @@ export const handleRequest = async (requestFunc) => {
 };
 export const setToken = async (token: string) => {
     await SecureStore.setItemAsync("token", token);
-    let result = await SecureStore.getItemAsync("token");
-    if (!result) {
-        console.error("No token found");
-        throw new Error(`No value found for key: token`);
-    }
 }
 
 export const getToken = async () => {
