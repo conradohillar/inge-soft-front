@@ -34,6 +34,13 @@ export const getUserOrDriverRides = async (type, category) => {
      return handleRequest(() => axios.get(url, { headers }));
 }
 
+export const getTodayRides = async () => {
+    const headers = await getHeaderWithToken();
+    const url = `${BASE_URL}/today/rider_driver`
+
+    return handleRequest(() => axios.get(url, { headers }));
+}
+
 
 export const getRideSearchDetail = async (rideId) => {
 
