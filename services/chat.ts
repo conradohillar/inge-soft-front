@@ -87,3 +87,8 @@ export const getUserChats = async () => {
     return await handleRequest(() => axios.get(url, { headers }));
 }   
 
+export const createChat = async (driver_id) => {
+    const headers = await getHeaderWithToken();
+    const url = `${BASE_URL}/create?driver_id=${driver_id}`;
+    return await handleRequest(() => axios.post(url, null, { headers }));
+}

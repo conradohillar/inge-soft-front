@@ -112,12 +112,12 @@ export const handleEndTripMut = async (id) => {
     return handleRequest(() => axios.post(url, null, { headers }));
 }
 
-// export const cancelReservation = async (data) => {
-//     const headers = await getHeaderWithToken();
-//     const url = `${BASE_URL}/requests/cancel`;
+export const leaveRide = async (ride_id) => {
+    const headers = await getHeaderWithToken();
+    const url = `${BASE_URL}/leave/${ride_id}`;
 
-//     return handleRequest(() => axios.put(url, data, { headers }));
-// }
+    return handleRequest(() => axios.post(url, null, { headers }));
+}
 
 export const payRide = async (data) => {
     const headers = await getHeaderWithToken();

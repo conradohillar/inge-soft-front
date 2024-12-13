@@ -69,19 +69,6 @@ export default function TripUpcomingDetailForDriver() {
     });
   };
 
-  function isCurrentTimeGreaterOrEqual(date, time) {
-    const receivedDateTime = new Date(`${date}T${time}`);
-
-    const receivedDateTimeMinus30Min = new Date(
-      receivedDateTime.getTime() - 30 * 60000
-    );
-
-    let currentDateTime = new Date();
-    currentDateTime = new Date(currentDateTime.getTime() - 3 * 60 * 60000);
-
-    return currentDateTime >= receivedDateTimeMinus30Min;
-  }
-
   if (isLoading) {
     return <LoadingPage />;
   }
@@ -458,4 +445,17 @@ export default function TripUpcomingDetailForDriver() {
       </Pressable>
     </ScrollView>
   );
+}
+
+export function isCurrentTimeGreaterOrEqual(date, time) {
+  const receivedDateTime = new Date(`${date}T${time}`);
+
+  const receivedDateTimeMinus30Min = new Date(
+    receivedDateTime.getTime() - 30 * 60000
+  );
+
+  let currentDateTime = new Date();
+  currentDateTime = new Date(currentDateTime.getTime() - 3 * 60 * 60000);
+
+  return currentDateTime >= receivedDateTimeMinus30Min;
 }

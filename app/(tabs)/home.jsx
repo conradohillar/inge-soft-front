@@ -14,8 +14,6 @@ import { getUserOrDriverRides } from "../../services/rides";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import LoadingPage from "../(pages)/LoadingPage";
 import ErrorPage from "../(pages)/ErrorPage";
-import { useState } from "react";
-import TripEndedModal from "../../components/TripEndedModal";
 import {
   handleStartTripMut,
   handleEndTripMut,
@@ -25,6 +23,7 @@ import { Link, useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import { queryClient } from "../_layout";
+import { isCurrentTimeGreaterOrEqual } from "../(pages)/TripUpcomingDetailForDriver";
 export default function Home() {
   const { globalState, setGlobalState } = useGlobalState();
 
@@ -192,6 +191,12 @@ export default function Home() {
                   packages={item.packages}
                   departure={item.start_time.split(":").slice(0, 2).join(":")}
                   isActive={item.real_start_time !== null}
+                  disabled={
+                    !isCurrentTimeGreaterOrEqual(
+                      new Date().toISOString().split("T")[0],
+                      item.start_time
+                    )
+                  }
                   handleStartTrip={() => handleStartTrip(item.ride_id)}
                   handleEndTrip={() => handleEndTrip(item.ride_id)}
                 />

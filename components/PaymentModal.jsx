@@ -2,7 +2,7 @@ import { Modal, View, Text, Pressable } from "react-native";
 import { XStack, YStack } from "tamagui";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const PaymentModal = ({ isVisible, onClose, onPay }) => {
+const PaymentModal = ({ isVisible, onClose, onPay, onCancel }) => {
   return (
     <Modal
       visible={isVisible}
@@ -29,7 +29,7 @@ const PaymentModal = ({ isVisible, onClose, onPay }) => {
 
             <XStack className="justify-end space-x-4 mt-2">
               <Pressable
-                onPress={onClose}
+                onPress={onCancel}
                 className="px-4 py-2 bg-gray-200 rounded-lg"
               >
                 <Text className="text-base font-qsemibold text-gray-700">
