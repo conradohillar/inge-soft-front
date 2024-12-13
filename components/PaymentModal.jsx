@@ -2,7 +2,13 @@ import { Modal, View, Text, Pressable } from "react-native";
 import { XStack, YStack } from "tamagui";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const PaymentModal = ({ isVisible, onClose, onPay, onCancel }) => {
+const PaymentModal = ({
+  isVisible,
+  onClose,
+  onPay,
+  onCancel,
+  canCancel = true,
+}) => {
   return (
     <Modal
       visible={isVisible}
@@ -23,14 +29,19 @@ const PaymentModal = ({ isVisible, onClose, onPay, onCancel }) => {
             </XStack>
 
             <Text className="text-base font-qregular text-gray-600">
-              Una vez que pagues, si decidís cancelar la reserva no se te
-              retribuirá el dinero.
+              {canCancel
+                ? "Una vez que pagues, si decidís cancelar la reserva no se te retribuirá el dinero."
+                : "Realizá el pago para unirte al viaje.\nYa es tarde para cancelar la reserva."}
             </Text>
 
             <XStack className="justify-end space-x-4 mt-2">
               <Pressable
                 onPress={onCancel}
                 className="px-4 py-2 bg-gray-200 rounded-lg"
+                disabled={!canCancel}
+                style={{
+                  opacity: canCancel ? 1 : 0.2,
+                }}
               >
                 <Text className="text-base font-qsemibold text-gray-700">
                   Cancelar

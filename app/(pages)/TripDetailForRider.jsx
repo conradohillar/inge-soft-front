@@ -398,6 +398,7 @@ export default function TripDetailForRider() {
           onClose={handlePaymentModalClose}
           onPay={handlePayment}
           onCancel={handleCancel}
+          canCancel={false}
         />
       </Pressable>
     </ScrollView>
@@ -412,4 +413,22 @@ const getStateIcon = (state) => {
   } else if (state === "dismissed") {
     return require("../../assets/icons/dismissed.png");
   } else return null;
+};
+
+const isBeforePrevDay = (departure_time) => {
+  const departureDate = new Date(departure_time);
+  const prevDay = new Date(departureDate);
+  prevDay.setDate(prevDay.getDate() - 1);
+  prevDay.setHours(departureDate.getHours());
+  prevDay.setMinutes(departureDate.getMinutes());
+  prevDay.setSeconds(departureDate.getSeconds());
+
+  const now = new Date();
+
+  // Retorna true si estamos antes del día anterior a la misma hora
+  return now <= prevDay;
+};
+
+const getDepartureDateTime = (date, time) => {
+  return `${date}T${time}`; // Formato: "2024-03-20T15:30:00"
 };

@@ -14,10 +14,13 @@ import ButtonNext from "../../components/ButtonNext";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { handleStartTripMut, handleEndTripMut } from "../../services/rides";
+import PaymentRequiredModal from "../../components/PaymentRequiredModal";
 
 export default function TripUpcomingDetailForDriver() {
   const { ride_id } = useLocalSearchParams();
   const queryClient = useQueryClient();
+
+  const [chatModal, setChatModal] = useState(false);
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["driverUpcomingDetail", ride_id],
@@ -65,6 +68,13 @@ export default function TripUpcomingDetailForDriver() {
   const handleRequests = () => {
     router.push({
       pathname: "/(pages)/ReservationRequest",
+      params: { ride_id },
+    });
+  };
+
+  const handleOpenChat = (chat_id) => {
+    router.push({
+      pathname: "/(pages)/ChatPage",
       params: { ride_id },
     });
   };
@@ -370,21 +380,22 @@ export default function TripUpcomingDetailForDriver() {
                         </Link>
                       </YStack>
                     </XStack>
-                    <Link
-                      href={{
-                        pathname: "/(pages)/ChatPage",
-                        params: { chat_id: rider.chat_id },
+                    <Pressable
+                      className="h-12 w-12 bg-primary/10 rounded-full items-center justify-center"
+                      onPress={() => {
+                        if (rider.chat_id) {
+                          setChatModal(true);
+                        } else {
+                          handleOpenChat(rider.chat_id);
+                        }
                       }}
-                      asChild
                     >
-                      <Pressable className="h-12 w-12 bg-primary/10 rounded-full items-center justify-center">
-                        <MaterialCommunityIcons
-                          name="message-text-outline"
-                          size={22}
-                          color="#59A58A"
-                        />
-                      </Pressable>
-                    </Link>
+                      <MaterialCommunityIcons
+                        name="message-text-outline"
+                        size={22}
+                        color="#59A58A"
+                      />
+                    </Pressable>
                   </XStack>
                 ))
               ) : (
@@ -442,6 +453,10 @@ export default function TripUpcomingDetailForDriver() {
             )}
           </View>
         </View>
+        <PaymentRequiredModal
+          isVisible={chatModal}
+          onClose={() => setChatModal(false)}
+        />
       </Pressable>
     </ScrollView>
   );
