@@ -65,11 +65,6 @@ export default function LandingPage() {
 
             <YStack className="items-center justify-center w-full h-[50%] space-y-2">
               <View className="w-[90%]">
-                <BlackButton href="/(pages)/CameraScreen" height={75}>
-                  <Text className="text-[22px] font-qsemibold text-white">
-                    Test scan
-                  </Text>
-                </BlackButton>
                 <BlackButton href="/(auth)/sign-in" height={75}>
                   <Text className="text-[22px] font-qsemibold text-white">
                     Iniciar sesión
