@@ -375,11 +375,7 @@ export default function TripDetailForRider() {
           {/* Botón de cancelar solo para viajes upcoming */}
           {type === "upcoming" && data.state !== "accepted" && (
             <View className="px-6 mb-8 mt-4">
-              <ButtonNext
-                onPress={() => {
-                  /* TODO */
-                }}
-              >
+              <ButtonNext onPress={handleCancel}>
                 <Text className="text-xl font-qsemibold text-white">
                   Cancelar reserva
                 </Text>
