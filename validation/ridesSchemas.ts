@@ -6,8 +6,45 @@ export const postTripSchema = yup.object().shape({
     date: yup
         .string()
         .required('Campo obligatorio.')
-        .test('is-valid-date', 'Fecha inválida.', value => !isNaN(Date.parse(value))),
-    time: yup.string().required('Campo obligatorio.')
+        .test('is-valid-date', 'Fecha inválida.', value => !isNaN(Date.parse(value)))
+        .test('is-not-past', 'Fecha inválida.', value => {
+            const selectedDate = new Date(value);
+            const today = new Date();
+            
+            selectedDate.setHours(0, 0, 0, 0);
+            today.setHours(0, 0, 0, 0);
+            
+            return selectedDate >= today;
+        }),
+    time: yup
+        .string()
+        .required('Campo obligatorio.')
+        .test('is-valid-time', 
+            "Hora inválida", 
+            (value, context) => {
+            if (!value || !context.parent.date) return true;
+
+                const selectedTime = new Date(context.originalValue);
+                const selectedDate = new Date(context.parent.date);
+                const today = new Date();
+                
+                if (selectedDate.getDate() === today.getDate() &&
+                    selectedDate.getMonth() === today.getMonth() &&
+                    selectedDate.getFullYear() === today.getFullYear()) {
+                    
+                    const hours = selectedTime.getHours();
+                    const minutes = selectedTime.getMinutes();
+                    const currentHour = today.getHours();
+                    const currentMinutes = today.getMinutes();
+
+                    const selectedTimeInMinutes = hours * 60 + minutes;
+                    const currentTimeInMinutes = currentHour * 60 + currentMinutes;
+                    
+                    return selectedTimeInMinutes > currentTimeInMinutes;
+                }
+                
+                return true;
+            })
 });
 
 export const postTripDetailsSchema = yup.object().shape({

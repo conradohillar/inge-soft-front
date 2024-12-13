@@ -25,6 +25,7 @@ export default function TripUpcomingDetailForDriver() {
   const { data, isError, isLoading } = useQuery({
     queryKey: ["driverUpcomingDetail", ride_id],
     queryFn: () => getDriverUpcomingDetail(ride_id),
+    staleTime: 10000,
   });
 
   const start_mutation = useMutation({
@@ -75,7 +76,7 @@ export default function TripUpcomingDetailForDriver() {
   const handleOpenChat = (chat_id) => {
     router.push({
       pathname: "/(pages)/ChatPage",
-      params: { ride_id },
+      params: { chatId: chat_id },
     });
   };
 
@@ -384,9 +385,9 @@ export default function TripUpcomingDetailForDriver() {
                       className="h-12 w-12 bg-primary/10 rounded-full items-center justify-center"
                       onPress={() => {
                         if (rider.chat_id) {
-                          setChatModal(true);
-                        } else {
                           handleOpenChat(rider.chat_id);
+                        } else {
+                          setChatModal(true);
                         }
                       }}
                     >

@@ -75,7 +75,7 @@ export default function TimePicker({
           </XStack>
         </Pressable>
         {hint && (
-          <Text className="text-red-500 text-sm font-qsemibold pt-2 px-6 self-start">
+          <Text className="text-red-500 text-sm font-qsemibold pt-2 px-4 self-start">
             {hint}
           </Text>
         )}

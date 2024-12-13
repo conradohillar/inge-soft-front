@@ -90,7 +90,7 @@ export default function CustomInput({
         )}
       </XStack>
       {hint && (
-        <Text className="text-red-500 text-sm font-qsemibold pt-2 px-5 self-start">
+        <Text className="text-red-500 text-sm font-qsemibold pt-2 px-2 self-start">
           {hint}
         </Text>
       )}
