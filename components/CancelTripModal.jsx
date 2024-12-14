@@ -1,4 +1,4 @@
-import { Modal, View, Text, Pressable } from "react-native";
+import { Modal, View, Text, Pressable, ActivityIndicator } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const CancelTripModal = ({
@@ -7,6 +7,7 @@ const CancelTripModal = ({
   onConfirm,
   canCancel = true,
   hasRiders = false,
+  isLoading = false,
 }) => {
   return (
     <Modal
@@ -56,6 +57,7 @@ const CancelTripModal = ({
               <Pressable
                 onPress={onClose}
                 className="bg-gray-100 rounded-xl py-3 px-6"
+                disabled={isLoading}
               >
                 <Text className="text-base font-qsemibold text-gray-700">
                   No, volver
@@ -64,11 +66,21 @@ const CancelTripModal = ({
 
               <Pressable
                 onPress={onConfirm}
-                className="bg-red-500 rounded-xl py-3 px-6"
+                disabled={isLoading}
+                className="bg-red-500 rounded-xl py-3 px-6 flex-row items-center space-x-2"
               >
-                <Text className="text-base font-qsemibold text-white">
-                  Sí, cancelar
-                </Text>
+                {isLoading ? (
+                  <>
+                    <ActivityIndicator color="white" size="small" />
+                    <Text className="text-base font-qsemibold text-white">
+                      Cancelando...
+                    </Text>
+                  </>
+                ) : (
+                  <Text className="text-base font-qsemibold text-white">
+                    Sí, cancelar
+                  </Text>
+                )}
               </Pressable>
             </View>
           ) : (

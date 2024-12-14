@@ -83,10 +83,10 @@ export default function SignUp() {
                   rules={{ required: true }}
                   render={({ field: { onChange, value } }) => (
                     <CustomInput
-                      title="Nombre"
+                      title="Nombre y apellido"
                       value={value}
                       handleChangeText={onChange}
-                      placeholder="Ingresá tu nombre completo"
+                      placeholder="Ingresá tu nombre y apellido"
                       hint={errors.userName?.message}
                       borderColor={
                         errors.userName ? "border-red-500" : undefined

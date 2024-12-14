@@ -65,8 +65,8 @@ export default function TripUpcomingDetailForDriver() {
 
   const delete_mutation = useMutation({
     mutationFn: (id) => deleteRide(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
         queryKey: ["get", "upcoming", "driver"],
       });
       setIsCancelModalVisible(false);
@@ -484,17 +484,11 @@ export default function TripUpcomingDetailForDriver() {
         {/* Botón de cancelar viaje al final */}
         <View className="px-6 pb-8">
           <Pressable
-            className="py-4 flex-row items-center justify-center space-x-2"
+            className="pb-2 pt-3 flex-row items-center justify-center space-x-2 bg-red-50 rounded-xl w-[70%] self-center"
             style={({ pressed }) => ({
               opacity: pressed ? 0.7 : 1,
             })}
-            onPress={() => {
-              console.log(
-                "Departure date:",
-                getDepartureDateTime(data.date, data.start_minimum_time)
-              );
-              setIsCancelModalVisible(true);
-            }}
+            onPress={() => setIsCancelModalVisible(true)}
           >
             <Text className="text-lg font-qsemibold text-red-500 mb-2">
               Cancelar viaje
@@ -514,6 +508,7 @@ export default function TripUpcomingDetailForDriver() {
             )
           }
           hasRiders={data.riders && data.riders.length > 0}
+          isLoading={delete_mutation.isPending}
         />
       </Pressable>
     </ScrollView>
