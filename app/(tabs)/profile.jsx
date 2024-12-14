@@ -282,12 +282,6 @@ export default function Profile() {
                 : "Convertite en conductor",
             },
             {
-              onPress: () => router.push("/(pages)/ValidatePage"),
-              icon: "badge",
-              title: "Validar mi cuenta",
-              subtitle: "Verificá tu identidad",
-            },
-            {
               onPress: handleLogout,
               icon: "logout",
               title: "Cerrar sesión",
