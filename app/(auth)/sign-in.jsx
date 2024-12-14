@@ -118,10 +118,7 @@ export default function SignIn() {
                 </XStack>
               )}
 
-              <YStack
-                space="$2"
-                className={`${mutation.isError ? "" : "mb-8"}`}
-              >
+              <YStack gap="$2" className={`${mutation.isError ? "" : "mb-8"}`}>
                 <Controller
                   control={control}
                   rules={{ required: true }}

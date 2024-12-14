@@ -2,10 +2,11 @@ import { Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { XStack, YStack } from "tamagui";
 import icons from "../../constants/icons";
-import { Link, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 
 export default function PostSuccessful() {
+  const router = useRouter();
   const {
     title,
     section,
@@ -14,6 +15,12 @@ export default function PostSuccessful() {
     returnToSource,
     returnToRef,
   } = useLocalSearchParams();
+
+  const handleReturn = () => {
+    router.replace(returnToRef);
+    router.dismissAll();
+  };
+
   return (
     <YStack className="h-full items-center justify-center bg-background">
       <Text className="text-6xl text-primary font-qbold">Genial!</Text>
@@ -40,25 +47,24 @@ export default function PostSuccessful() {
 
         {/* Botón inferior */}
         <View className="px-6 pb-2 bg-background">
-          <Link href={returnToRef} asChild>
-            <Pressable
-              className="flex-row items-center justify-center pb-3 bg-white rounded-2xl"
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.7 : 1,
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.1,
-                shadowRadius: 4,
-                elevation: 3,
-              })}
-            >
-              <MaterialIcons name={returnToSource} size={32} color="#444444" />
-              <Text className="ml-2 font-qbold text-2xl">{returnTo}</Text>
-            </Pressable>
-          </Link>
+          <Pressable
+            onPress={handleReturn}
+            className="flex-row items-center justify-center pb-3 bg-white rounded-2xl"
+            style={({ pressed }) => ({
+              opacity: pressed ? 0.7 : 1,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.1,
+              shadowRadius: 4,
+              elevation: 3,
+            })}
+          >
+            <MaterialIcons name={returnToSource} size={32} color="#444444" />
+            <Text className="ml-2 font-qbold text-2xl">{returnTo}</Text>
+          </Pressable>
         </View>
       </YStack>
     </YStack>

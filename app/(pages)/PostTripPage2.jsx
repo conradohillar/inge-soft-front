@@ -21,10 +21,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import Window from "../../components/Window";
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import ConfirmPostModal from "../../components/ConfirmPostModal";
 
 export default function PostTripPage2() {
   const [isAddCarModalVisible, setIsAddCarModalVisible] = useState(false);
+  const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
   const [priceErrors, setPriceErrors] = useState(0);
+  const [formDataToSubmit, setFormDataToSubmit] = useState(null);
 
   const toggleAddCarModal = () => {
     setIsAddCarModalVisible(!isAddCarModalVisible);
@@ -145,6 +148,11 @@ export default function PostTripPage2() {
   const router = useRouter();
 
   const handleContinue = async (formData) => {
+    setFormDataToSubmit(formData);
+    setIsConfirmModalVisible(true);
+  };
+
+  const handleConfirmPost = () => {
     const auxTime = new Date(
       new Date(`1970-01-01T${departureTime}`).getTime() + 60 * 60 * 1000
     )
@@ -158,20 +166,27 @@ export default function PostTripPage2() {
         ride_date: formattedDate,
         start_minimum_time: departureTime,
         start_maximum_time: auxTime,
-        available_space_people: Number(formData.availableSeats),
-        available_space_small_package: Number(formData.spacesSmallPackage),
-        available_space_medium_package: Number(formData.spacesMediumPackage),
-        available_space_large_package: Number(formData.spacesLargePackage),
+        available_space_people: Number(formDataToSubmit.availableSeats),
+        available_space_small_package: Number(
+          formDataToSubmit.spacesSmallPackage
+        ),
+        available_space_medium_package: Number(
+          formDataToSubmit.spacesMediumPackage
+        ),
+        available_space_large_package: Number(
+          formDataToSubmit.spacesLargePackage
+        ),
       },
       price: {
-        price_person: Number(formData.pricePerson),
-        price_small_package: Number(formData.priceSmallPackage),
-        price_medium_package: Number(formData.priceMediumPackage),
-        price_large_package: Number(formData.priceLargePackage),
+        price_person: Number(formDataToSubmit.pricePerson),
+        price_small_package: Number(formDataToSubmit.priceSmallPackage),
+        price_medium_package: Number(formDataToSubmit.priceMediumPackage),
+        price_large_package: Number(formDataToSubmit.priceLargePackage),
       },
     };
 
-    mutation.mutate({ tripData: obj, car: formData.car });
+    mutation.mutate({ tripData: obj, car: formDataToSubmit.car });
+    setIsConfirmModalVisible(false);
   };
 
   if (mutation.isPending || isLoading) {
@@ -498,6 +513,12 @@ export default function PostTripPage2() {
         <AddCarModal
           isVisible={isAddCarModalVisible}
           onClose={toggleAddCarModal}
+        />
+
+        <ConfirmPostModal
+          isVisible={isConfirmModalVisible}
+          onClose={() => setIsConfirmModalVisible(false)}
+          onConfirm={handleConfirmPost}
         />
       </Pressable>
     </ScrollView>

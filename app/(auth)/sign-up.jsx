@@ -86,7 +86,7 @@ export default function SignUp() {
                       title="Nombre"
                       value={value}
                       handleChangeText={onChange}
-                      placeholder="Ingresá tu nombre"
+                      placeholder="Ingresá tu nombre completo"
                       hint={errors.userName?.message}
                       borderColor={
                         errors.userName ? "border-red-500" : undefined
