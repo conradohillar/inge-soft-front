@@ -1,11 +1,4 @@
-import {
-  KeyboardAvoidingView,
-  Platform,
-  Text,
-  Image,
-  Pressable,
-  View,
-} from "react-native";
+import { Text, Image, Pressable, View, ScrollView } from "react-native";
 import { router } from "expo-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CustomInput from "../../components/CustomInput";
@@ -69,11 +62,8 @@ export default function SignIn() {
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      className="flex-1 bg-background"
-    >
-      <YStack className="flex-1 px-6">
+    <ScrollView bounces={true}>
+      <YStack className="flex-1 px-6 bg-background">
         <YStack className="h-full w-full items-center justify-center">
           {/* Header */}
           <YStack className="items-center pt-16 pb-12">
@@ -202,6 +192,6 @@ export default function SignIn() {
           </YStack>
         </YStack>
       </YStack>
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
