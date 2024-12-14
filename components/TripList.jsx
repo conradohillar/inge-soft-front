@@ -158,7 +158,7 @@ export default function TripList({ type, category }) {
 
   return (
     <SafeAreaView className="h-full w-full bg-background">
-      <View className="flex-1">
+      <View className="flex-1 mb-10">
         <FlatList
           data={data}
           keyExtractor={(item) => item.ride_id}

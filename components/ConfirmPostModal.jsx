@@ -41,10 +41,11 @@ const ConfirmReservationModal = ({ isVisible, onClose, onConfirm }) => {
                 un paquete.
               </Text>
               <Text className="text-base font-qregular text-gray-600">
-                • Tendrás que aceptar la solicitud del usuario.
+                • Tendrás que aceptar la solicitud del usuario para que pueda
+                unirse al viaje.
               </Text>
               <Text className="text-base font-qregular text-gray-600">
-                • El usuario te pagará por el viaje una vez que haya sido
+                • El usuario te pagará por el viaje una vez que este haya sido
                 completado.
               </Text>
             </View>

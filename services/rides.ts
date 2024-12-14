@@ -123,3 +123,10 @@ export const payRide = async (data) => {
 
     return handleRequest(() => axios.post(url, data, { headers }));
 }
+
+export const deleteRide = async (ride_id) => {
+    const headers = await getHeaderWithToken();
+    const url = `${BASE_URL}/delete/${ride_id}`;
+
+    return handleRequest(() => axios.delete(url, { headers }));
+}

@@ -13,14 +13,21 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import ButtonNext from "../../components/ButtonNext";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { handleStartTripMut, handleEndTripMut } from "../../services/rides";
+import {
+  handleStartTripMut,
+  handleEndTripMut,
+  deleteRide,
+} from "../../services/rides";
 import PaymentRequiredModal from "../../components/PaymentRequiredModal";
+import CancelTripModal from "../../components/CancelTripModal";
+import { isBeforePrevDay, getDepartureDateTime } from "./TripDetailForRider";
 
 export default function TripUpcomingDetailForDriver() {
   const { ride_id } = useLocalSearchParams();
   const queryClient = useQueryClient();
 
   const [chatModal, setChatModal] = useState(false);
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["driverUpcomingDetail", ride_id],
@@ -56,12 +63,27 @@ export default function TripUpcomingDetailForDriver() {
     },
   });
 
+  const delete_mutation = useMutation({
+    mutationFn: (id) => deleteRide(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["get", "upcoming", "driver"],
+      });
+      setIsCancelModalVisible(false);
+      router.back();
+    },
+  });
+
   const handleStartTrip = (ride_id) => {
     start_mutation.mutate(ride_id);
   };
 
   const handleEndTrip = (ride_id) => {
     end_mutation.mutate(ride_id);
+  };
+
+  const handleCancelTrip = () => {
+    delete_mutation.mutate(ride_id);
   };
 
   const router = useRouter();
@@ -457,6 +479,41 @@ export default function TripUpcomingDetailForDriver() {
         <PaymentRequiredModal
           isVisible={chatModal}
           onClose={() => setChatModal(false)}
+        />
+
+        {/* Botón de cancelar viaje al final */}
+        <View className="px-6 pb-8">
+          <Pressable
+            className="py-4 flex-row items-center justify-center space-x-2"
+            style={({ pressed }) => ({
+              opacity: pressed ? 0.7 : 1,
+            })}
+            onPress={() => {
+              console.log(
+                "Departure date:",
+                getDepartureDateTime(data.date, data.start_minimum_time)
+              );
+              setIsCancelModalVisible(true);
+            }}
+          >
+            <Text className="text-lg font-qsemibold text-red-500 mb-2">
+              Cancelar viaje
+            </Text>
+            <MaterialIcons name="close" size={24} color="#EF4444" />
+          </Pressable>
+        </View>
+
+        <CancelTripModal
+          isVisible={isCancelModalVisible}
+          onClose={() => setIsCancelModalVisible(false)}
+          onConfirm={handleCancelTrip}
+          canCancel={
+            (!data.riders || data.riders.length === 0) &&
+            isBeforePrevDay(
+              getDepartureDateTime(data.date, data.start_minimum_time)
+            )
+          }
+          hasRiders={data.riders && data.riders.length > 0}
         />
       </Pressable>
     </ScrollView>

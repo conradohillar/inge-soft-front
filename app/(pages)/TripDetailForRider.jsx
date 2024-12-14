@@ -434,7 +434,7 @@ const getStateIcon = (state) => {
   } else return null;
 };
 
-const isBeforePrevDay = (departure_time) => {
+export const isBeforePrevDay = (departure_time) => {
   const departureDate = new Date(departure_time);
   const prevDay = new Date(departureDate);
   prevDay.setDate(prevDay.getDate() - 1);
@@ -448,6 +448,6 @@ const isBeforePrevDay = (departure_time) => {
   return now <= prevDay;
 };
 
-const getDepartureDateTime = (date, time) => {
+export const getDepartureDateTime = (date, time) => {
   return `${date}T${time}`; // Formato: "2024-03-20T15:30:00"
 };
