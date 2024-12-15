@@ -1,4 +1,11 @@
-import { View, Text, ScrollView, Pressable, Image } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Pressable,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import { useEffect, useState } from "react";
 import { XStack, YStack, Avatar, Button } from "tamagui";
 import Header from "../../components/Header";
@@ -54,7 +61,7 @@ export default function TripUpcomingDetailForDriver() {
     mutationFn: (id) => handleEndTripMut(id),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ["driverUpcomingDetail", ride_id],
+        queryKey: ["get", "upcoming", "driver"],
       });
       await queryClient.invalidateQueries({
         queryKey: ["ridesUpcoming"],
@@ -460,11 +467,15 @@ export default function TripUpcomingDetailForDriver() {
                     data.real_start_time !== null ? "primary" : "secondary"
                   }
                 >
-                  <Text className="text-xl font-qsemibold text-white">
-                    {data.real_start_time !== null
-                      ? "Terminar viaje"
-                      : "Comenzar viaje!"}
-                  </Text>
+                  {end_mutation.isPending ? (
+                    <ActivityIndicator size="small" color="white" />
+                  ) : (
+                    <Text className="text-xl font-qsemibold text-white">
+                      {data.real_start_time !== null
+                        ? "Terminar viaje"
+                        : "Comenzar viaje!"}
+                    </Text>
+                  )}
                 </ButtonNext>
               </View>
             )) || (

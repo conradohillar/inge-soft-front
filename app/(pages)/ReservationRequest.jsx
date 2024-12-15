@@ -65,6 +65,7 @@ export default function ReservationRequest() {
         userId={item.user_id}
         handleAccept={handleAccept}
         handleDismiss={handleDismiss}
+        isLoading={mutation.isPending}
       />
     );
   };

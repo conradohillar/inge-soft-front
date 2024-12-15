@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, View, Text, Pressable } from "react-native";
+import { Image, View, Text, Pressable, ActivityIndicator } from "react-native";
 import { Button, XStack, YStack, Avatar } from "tamagui";
 import icons from "../constants/icons";
 import { Link } from "expo-router";
@@ -14,6 +14,7 @@ export default function RequestCard({
   userId,
   handleAccept,
   handleDismiss,
+  isLoading,
 }) {
   return (
     <View className="py-3">
@@ -126,12 +127,17 @@ export default function RequestCard({
                   shadowRadius: 6,
                   elevation: 2,
                 }}
+                disabled={isLoading}
               >
-                <Image
-                  source={icons.tick}
-                  className="h-6 w-6"
-                  resizeMode="contain"
-                />
+                {isLoading ? (
+                  <ActivityIndicator size="small" color="white" />
+                ) : (
+                  <Image
+                    source={icons.tick}
+                    className="h-6 w-6"
+                    resizeMode="contain"
+                  />
+                )}
               </Button>
               <Button
                 onPress={() => handleDismiss(userId)}
@@ -147,12 +153,17 @@ export default function RequestCard({
                   shadowRadius: 6,
                   elevation: 2,
                 }}
+                disabled={isLoading}
               >
-                <Image
-                  source={icons.cross}
-                  className="h-7 w-7"
-                  resizeMode="contain"
-                />
+                {isLoading ? (
+                  <ActivityIndicator size="small" color="#EF4444" />
+                ) : (
+                  <Image
+                    source={icons.cross}
+                    className="h-7 w-7"
+                    resizeMode="contain"
+                  />
+                )}
               </Button>
             </XStack>
           </View>

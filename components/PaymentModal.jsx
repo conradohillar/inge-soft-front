@@ -40,7 +40,7 @@ const PaymentModal = ({
                 className="px-4 py-2 bg-red-500 rounded-lg"
                 disabled={!canCancel}
                 style={{
-                  opacity: canCancel ? 1 : 0.2,
+                  opacity: canCancel ? 1 : 0.5,
                 }}
               >
                 <Text className="text-base font-qsemibold text-white">
