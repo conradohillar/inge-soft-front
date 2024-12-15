@@ -161,10 +161,8 @@ export default function Profile() {
           "s6wtyVfup1RTspXItRRyqB"
         );
         await setToken("");
-
         await setGlobalState({ ...globalState, isLoggedIn: false });
         queryClient.clear(); // Clear the query cache on logout
-        router.dismissAll();
         router.replace("/(pages)/LandingPage");
       },
     });
