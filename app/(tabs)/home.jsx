@@ -96,7 +96,7 @@ export default function Home() {
             ¡Bienvenido,
           </Text>
           <Text className="text-4xl font-qbold text-white/90">
-            {globalState.firstName}!
+            {globalState.isLoggedIn ? globalState.firstName : "Invitado"}!
           </Text>
         </YStack>
       </LinearGradient>
@@ -159,12 +159,36 @@ export default function Home() {
                 minHeight: 200, // Aumentamos la altura mínima
               }}
             >
-              <View className="bg-primary/10 h-14 w-14 rounded-2xl items-center justify-center mb-4">
-                <MaterialIcons
-                  name="add-circle-outline"
-                  size={28}
-                  color="#59A58A"
-                />
+              <View
+                className={`bg-white rounded-3xl py-6 px-4 ${
+                  !globalState.isDriver || !globalState.isLoggedIn
+                    ? "opacity-50"
+                    : ""
+                }`}
+                style={{
+                  shadowColor: "#000",
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.08,
+                  shadowRadius: 12,
+                  elevation: 3,
+                  minHeight: 200, // Aumentamos la altura mínima
+                }}
+              >
+                <View className="bg-primary/10 h-14 w-14 rounded-2xl items-center justify-center mb-4">
+                  <MaterialIcons
+                    name="add-circle-outline"
+                    size={28}
+                    color="#59A58A"
+                  />
+                </View>
+                <View className="flex-1 justify-start">
+                  <Text className="text-xl font-qbold text-black mb-2">
+                    Publicar viaje
+                  </Text>
+                  <Text className="text-sm font-qregular text-gray-500">
+                    Compartí tu ruta
+                  </Text>
+                </View>
               </View>
               <View className="flex-1 justify-start">
                 <Text className="text-xl font-qbold text-black mb-2">
