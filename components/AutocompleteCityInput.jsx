@@ -27,6 +27,7 @@ export default function AutocompleteCityInput({
     setLoading(true);
     try {
       const items = await autocomplete(text);
+      console.log(items);
       const suggestions = items.map((item, index) => ({
         id: index,
         title: item.display_name,
@@ -35,7 +36,7 @@ export default function AutocompleteCityInput({
       setSuggestionsList(suggestions);
       setLoading(false);
     } catch (e) {
-      throw e;
+      console.error(e);
     }
   }, []);
 

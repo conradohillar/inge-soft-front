@@ -46,7 +46,7 @@ export const getHeaderWithToken = async () => {
 let lastRequestTime = 0;
 
 
-export const autocomplete = async (text) => {
+export const autocomplete = async (text: string) => {
     const now = Date.now();
 
 
@@ -56,9 +56,10 @@ export const autocomplete = async (text) => {
 
     lastRequestTime = now;
     try {
-        const url = `https://api.locationiq.com/v1/autocomplete?key=${API_KEY_LOCATIONIQ}&q=${text}&limit=8&countrycodes=AR`;
-
+        const url = `https://api.locationiq.com/v1/autocomplete?key=pk.2e190d42afd4bf8da39b9ba216bc5be7&q=${text}&limit=8&countrycodes=AR`;
+        console.log(url);
         const response = await axios.get(url);
+        console.log(response.data);
         return response.data;
     } catch (error) {
         throw new Error(error);
