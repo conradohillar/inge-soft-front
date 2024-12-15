@@ -39,7 +39,7 @@ export default function Profile() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["getDriverId", globalState.userId],
     queryFn: () => getDriverId(),
-    enabled: globalState.isDriver,
+    enabled: globalState.isDriver && globalState.isLoggedIn,
   });
 
   const toggleProfilePictureModal = () => {

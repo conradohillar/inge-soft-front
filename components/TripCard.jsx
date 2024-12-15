@@ -1,5 +1,5 @@
 import { Image, View, Text, Pressable } from "react-native";
-import { Avatar, XStack, YStack } from "tamagui";
+import { Avatar, Card, XStack, YStack } from "tamagui";
 import icons from "../constants/icons";
 const getStateIcon = (state) => {
   const icons = {
@@ -34,10 +34,10 @@ export default function TripCard({
     <Pressable
       onPress={() => handleOpenDetail(ride_id)}
       style={({ pressed }) => ({
-        transform: [{ scale: pressed ? 0.995 : 1 }],
+        transform: [{ scale: pressed ? 0.99 : 1 }],
       })}
     >
-      <View
+      <Card
         className="bg-white rounded-3xl p-6 w-full"
         style={{
           shadowColor: "#000",
@@ -94,7 +94,7 @@ export default function TripCard({
             )}
           </XStack>
         </YStack>
-      </View>
+      </Card>
     </Pressable>
   );
 }

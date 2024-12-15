@@ -35,7 +35,7 @@ const ActiveTripCard = ({
       <Card
         className="bg-white rounded-3xl my-2"
         bordered
-        style={{
+        style={({ pressed }) => ({
           shadowColor: "#000",
           shadowOffset: {
             width: 0,
@@ -44,7 +44,7 @@ const ActiveTripCard = ({
           shadowOpacity: 0.08,
           shadowRadius: 12,
           elevation: 3,
-        }}
+        })}
       >
         {/* Header con origen y destino */}
         <YStack className="p-4 border-b border-gray-100">

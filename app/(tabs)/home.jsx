@@ -103,76 +103,79 @@ export default function Home() {
 
       <View className="px-4 -mt-12">
         <XStack gap="$4">
-          <Link href="/(pages)/SearchTripPage" className="flex-1" asChild>
-            <Pressable
-              style={({ pressed }) => ({
-                transform: [{ scale: pressed ? 0.98 : 1 }],
-              })}
+          <Pressable
+            className="flex-1"
+            style={({ pressed }) => ({
+              transform: [{ scale: pressed ? 0.98 : 1 }],
+            })}
+            onPress={() => {
+              router.push("/(pages)/SearchTripPage");
+            }}
+          >
+            <View
+              className="bg-white rounded-3xl py-6 px-4"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.08,
+                shadowRadius: 12,
+                elevation: 3,
+                minHeight: 200, // Aumentamos la altura mínima
+              }}
             >
-              <View
-                className="bg-white rounded-3xl py-6 px-4"
-                style={{
-                  shadowColor: "#000",
-                  shadowOffset: { width: 0, height: 2 },
-                  shadowOpacity: 0.08,
-                  shadowRadius: 12,
-                  elevation: 3,
-                  minHeight: 200, // Aumentamos la altura mínima
-                }}
-              >
-                <View className="bg-primary/10 h-14 w-14 rounded-2xl items-center justify-center mb-4">
-                  <MaterialIcons name="search" size={28} color="#59A58A" />
-                </View>
-                <View className="flex-1 justify-center">
-                  <Text className="text-xl font-qbold text-black mb-2">
-                    Buscar viaje
-                  </Text>
-                  <Text className="text-sm font-qregular text-gray-500">
-                    Encontrá tu próximo destino
-                  </Text>
-                </View>
+              <View className="bg-primary/10 h-14 w-14 rounded-2xl items-center justify-center mb-4">
+                <MaterialIcons name="search" size={28} color="#59A58A" />
               </View>
-            </Pressable>
-          </Link>
+              <View className="flex-1 justify-center">
+                <Text className="text-xl font-qbold text-black mb-2">
+                  Buscar viaje
+                </Text>
+                <Text className="text-sm font-qregular text-gray-500">
+                  Encontrá tu próximo destino
+                </Text>
+              </View>
+            </View>
+          </Pressable>
 
-          <Link href="/(pages)/PostTripPage" className="flex-1" asChild>
-            <Pressable
-              style={({ pressed }) => ({
-                transform: [{ scale: pressed ? 0.98 : 1 }],
-              })}
-              disabled={!globalState.isDriver}
+          <Pressable
+            onPress={() => {
+              router.push("/(pages)/PostTripPage");
+            }}
+            className="flex-1"
+            style={({ pressed }) => ({
+              transform: [{ scale: pressed ? 0.98 : 1 }],
+            })}
+          >
+            <View
+              className={`bg-white rounded-3xl py-6 px-4 ${
+                !globalState.isDriver ? "opacity-50" : ""
+              }`}
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.08,
+                shadowRadius: 12,
+                elevation: 3,
+                minHeight: 200, // Aumentamos la altura mínima
+              }}
             >
-              <View
-                className={`bg-white rounded-3xl py-6 px-4 ${
-                  !globalState.isDriver ? "opacity-50" : ""
-                }`}
-                style={{
-                  shadowColor: "#000",
-                  shadowOffset: { width: 0, height: 2 },
-                  shadowOpacity: 0.08,
-                  shadowRadius: 12,
-                  elevation: 3,
-                  minHeight: 200, // Aumentamos la altura mínima
-                }}
-              >
-                <View className="bg-primary/10 h-14 w-14 rounded-2xl items-center justify-center mb-4">
-                  <MaterialIcons
-                    name="add-circle-outline"
-                    size={28}
-                    color="#59A58A"
-                  />
-                </View>
-                <View className="flex-1 justify-start">
-                  <Text className="text-xl font-qbold text-black mb-2">
-                    Publicar viaje
-                  </Text>
-                  <Text className="text-sm font-qregular text-gray-500">
-                    Compartí tu ruta
-                  </Text>
-                </View>
+              <View className="bg-primary/10 h-14 w-14 rounded-2xl items-center justify-center mb-4">
+                <MaterialIcons
+                  name="add-circle-outline"
+                  size={28}
+                  color="#59A58A"
+                />
               </View>
-            </Pressable>
-          </Link>
+              <View className="flex-1 justify-start">
+                <Text className="text-xl font-qbold text-black mb-2">
+                  Publicar viaje
+                </Text>
+                <Text className="text-sm font-qregular text-gray-500">
+                  Compartí tu ruta
+                </Text>
+              </View>
+            </View>
+          </Pressable>
         </XStack>
       </View>
 
