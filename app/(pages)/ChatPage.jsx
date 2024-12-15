@@ -10,14 +10,7 @@ import {
 } from "react-native";
 import { XStack, YStack, Text, Spinner, Spacer } from "tamagui";
 import { useEffect, useState } from "react";
-import {
-  Send,
-  ArrowLeft,
-  Trash,
-  Copy,
-  Pencil,
-  Key,
-} from "@tamagui/lucide-icons";
+import { Send, ArrowLeft, Trash, Copy, Pencil } from "@tamagui/lucide-icons";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import {

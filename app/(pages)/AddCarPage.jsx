@@ -1,20 +1,11 @@
 import { Text } from "react-native";
-import React, { useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { YStack, XStack, ScrollView } from "tamagui";
+import { YStack } from "tamagui";
 import CustomInput from "../../components/CustomInput";
 import ButtonNext from "../../components/ButtonNext";
 import { Link, useRouter } from "expo-router";
 import LoadingPage from "../(pages)/LoadingPage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import ErrorPage from "../(pages)/ErrorPage";
 import { icons } from "../../constants";
-import {
-  TouchableWithoutFeedback,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
 import { newCar } from "../../services/users";
 import { addCarSchema } from "../../validation/usersSchemas";
 import { useForm, Controller } from "react-hook-form";

@@ -13,7 +13,6 @@ import { useGlobalState } from "../_layout";
 import { getUserData } from "../../services/users";
 import icons from "../../constants/icons";
 import { registerIndieID } from "native-notify";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SignIn() {
   const {
@@ -63,8 +62,8 @@ export default function SignIn() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
-      <ScrollView bounces={true}>
+    <Pressable className="flex-1 bg-background">
+      <ScrollView bounces={true} className="flex-1">
         <View className="flex-1 bg-background px-2">
           <YStack className="flex-1 px-6 bg-background">
             <YStack className="h-full w-full items-center justify-center">
@@ -202,6 +201,6 @@ export default function SignIn() {
           </YStack>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </Pressable>
   );
 }
