@@ -98,18 +98,17 @@ export default function SearchTripPage() {
               <YStack gap="$5" className="w-full items-center">
                 <Controller
                   control={control}
-                  rules={{ required: true }}
+                  name="fromLocation"
                   render={({ field: { onChange, value } }) => (
-                    <AutocompleteCityInput
-                      title="Desde"
-                      placeholder="i.e: Tigre"
-                      setValue={onChange}
+                    <DropdownComponent
+                      data={value.map((city) => ({
+                        label: `${city}`,
+                        value: city,
+                      }))}
                       value={value}
-                      hint={errors.fromLocation && errors.fromLocation.message}
-                      borderColor={errors.fromLocation ? "#FF0000" : undefined}
+                      setValue={onChange}
                     />
                   )}
-                  name="fromLocation"
                 />
 
                 <Controller
