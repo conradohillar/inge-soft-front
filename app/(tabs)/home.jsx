@@ -96,7 +96,7 @@ export default function Home() {
             ¡Bienvenido,
           </Text>
           <Text className="text-4xl font-qbold text-white/90">
-            {globalState.firstName}!
+            {globalState.isLoggedIn ? globalState.firstName : "Invitado"}!
           </Text>
         </YStack>
       </LinearGradient>
@@ -144,7 +144,9 @@ export default function Home() {
             >
               <View
                 className={`bg-white rounded-3xl py-6 px-4 ${
-                  !globalState.isDriver ? "opacity-50" : ""
+                  !globalState.isDriver || !globalState.isLoggedIn
+                    ? "opacity-50"
+                    : ""
                 }`}
                 style={{
                   shadowColor: "#000",

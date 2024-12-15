@@ -39,7 +39,7 @@ export default function Profile() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["getDriverId", globalState.userId],
     queryFn: () => getDriverId(),
-    enabled: globalState.isDriver,
+    enabled: globalState.isDriver && globalState.isLoggedIn,
   });
 
   const toggleProfilePictureModal = () => {
@@ -163,8 +163,9 @@ export default function Profile() {
         await setToken("");
 
         await setGlobalState({ ...globalState, isLoggedIn: false });
+        queryClient.clear(); // Clear the query cache on logout
         router.dismissAll();
-        router.push("/(pages)/LandingPage");
+        router.replace("/(pages)/LandingPage");
       },
     });
   };
@@ -196,24 +197,30 @@ export default function Profile() {
                 <Avatar.Image
                   data-testid="profile-picture"
                   accessibilityLabel="Cam"
-                  src={globalState.photoUrl}
+                  src={
+                    globalState.isLoggedIn
+                      ? globalState.photoUrl
+                      : icons.placeholder_profile
+                  }
                 />
               </Avatar>
-              <TouchableOpacity
-                onPress={toggleProfilePictureModal}
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  right: 0,
-                  backgroundColor: "#458A6F",
-                  borderRadius: 12,
-                  padding: 4,
-                  borderWidth: 2,
-                  borderColor: "white",
-                }}
-              >
-                <MaterialIcons name="edit" size={16} color="white" />
-              </TouchableOpacity>
+              {globalState.isLoggedIn && (
+                <TouchableOpacity
+                  onPress={toggleProfilePictureModal}
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    right: 0,
+                    backgroundColor: "#458A6F",
+                    borderRadius: 12,
+                    padding: 4,
+                    borderWidth: 2,
+                    borderColor: "white",
+                  }}
+                >
+                  <MaterialIcons name="edit" size={16} color="white" />
+                </TouchableOpacity>
+              )}
               <ProfilePictureModal
                 isVisible={isProfilePictureModalVisible}
                 onClose={toggleProfilePictureModal}
@@ -231,37 +238,39 @@ export default function Profile() {
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
-                    {globalState.fullName}
+                    {globalState.isLoggedIn ? globalState.fullName : "Invitado"}
                   </Text>
                 </View>
-                <TouchableOpacity
-                  onPress={toggleEditNameModal}
-                  style={{
-                    backgroundColor: "#458A6F",
-                    borderRadius: 12,
-                    padding: 4,
-                    borderWidth: 2,
-                    borderColor: "white",
-                  }}
-                >
-                  <MaterialIcons name="edit" size={16} color="white" />
-                  <EditNameModal
-                    onTextChange={(text) =>
-                      setGlobalState({ ...globalState, fullName: text })
-                    }
-                    value={globalState.fullName}
-                    isVisible={isEditNameModalVisible}
-                    onClose={toggleEditNameModal}
-                    onSave={handleSaveName}
-                  />
-                </TouchableOpacity>
+                {globalState.isLoggedIn && (
+                  <TouchableOpacity
+                    onPress={toggleEditNameModal}
+                    style={{
+                      backgroundColor: "#458A6F",
+                      borderRadius: 12,
+                      padding: 4,
+                      borderWidth: 2,
+                      borderColor: "white",
+                    }}
+                  >
+                    <MaterialIcons name="edit" size={16} color="white" />
+                    <EditNameModal
+                      onTextChange={(text) =>
+                        setGlobalState({ ...globalState, fullName: text })
+                      }
+                      value={globalState.fullName}
+                      isVisible={isEditNameModalVisible}
+                      onClose={toggleEditNameModal}
+                      onSave={handleSaveName}
+                    />
+                  </TouchableOpacity>
+                )}
               </XStack>
               <Text
                 className="text-m font-qsemibold text-white/80"
                 numberOfLines={1}
                 ellipsizeMode="tail"
               >
-                {globalState.email}
+                {globalState.isLoggedIn ? globalState.email : ""}
               </Text>
             </YStack>
           </XStack>
@@ -324,7 +333,7 @@ export default function Profile() {
                   subtitle: "Salir de la aplicación",
                 }
               : {
-                  onPress: () => router.push("/(auth)/sign-in"),
+                  onPress: () => router.replace("/(pages)/LandingPage"),
                   icon: "login",
                   title: "Iniciar sesión",
                   subtitle: "Iniciá sesión con tu cuenta",
