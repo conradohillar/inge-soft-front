@@ -10,12 +10,7 @@ const PaymentModal = ({
   canCancel = true,
 }) => {
   return (
-    <Modal
-      visible={isVisible}
-      transparent={true}
-      animationType="slide"
-      onRequestClose={onClose}
-    >
+    <Modal visible={isVisible} transparent={true} onRequestClose={onClose}>
       <View className="flex-1 justify-center items-center bg-black/50">
         <View className="bg-white rounded-3xl p-6 w-11/12 shadow-lg">
           <YStack space="$4">
@@ -37,11 +32,10 @@ const PaymentModal = ({
             <XStack className="justify-end space-x-4 mt-2">
               <Pressable
                 onPress={onCancel}
-                className="px-4 py-2 bg-red-500 rounded-lg"
+                className={`px-4 py-2 ${
+                  canCancel ? "bg-red-500" : "bg-gray-400"
+                } rounded-lg`}
                 disabled={!canCancel}
-                style={{
-                  opacity: canCancel ? 1 : 0.5,
-                }}
               >
                 <Text className="text-base font-qsemibold text-white">
                   Cancelar viaje

@@ -14,6 +14,7 @@ import icons from "../../constants/icons";
 import PaymentModal from "../../components/PaymentModal";
 import { createChat } from "../../services/chat";
 import { leaveRide } from "../../services/rides";
+import { payRide } from "../../services/rides";
 import { useMutation } from "@tanstack/react-query";
 import CancelReservationModal from "../../components/CancelReservationModal";
 import { queryClient } from "../../app/_layout";
