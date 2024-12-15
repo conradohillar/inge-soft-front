@@ -31,6 +31,10 @@ export default function TripDetailForRider() {
 
   const create_chat_mutation = useMutation({
     mutationFn: (id) => createChat(id),
+  });
+
+  const pay_mutation = useMutation({
+    mutationFn: (pay_data) => payRide(pay_data),
     onSuccess: () => {
       setIsPaymentModalVisible(false);
     },
@@ -38,10 +42,12 @@ export default function TripDetailForRider() {
 
   const leave_ride_mutation = useMutation({
     mutationFn: (id) => leaveRide(id),
-    onSuccess: () => {
+    onSuccess: async () => {
       setIsCancelModalVisible(false);
       setIsPaymentModalVisible(false);
-      queryClient.invalidateQueries({ queryKey: ["get", "upcoming", "rider"] });
+      await queryClient.invalidateQueries({
+        queryKey: ["get", "upcoming", "rider"],
+      });
       router.back();
     },
   });
@@ -65,6 +71,12 @@ export default function TripDetailForRider() {
 
   const handlePayment = () => {
     create_chat_mutation.mutate(data.driver_id);
+    const payment_data = {
+      title: "Pago de viaje",
+      price: data.price,
+      ride_id: ride_id,
+    };
+    pay_mutation.mutate(payment_data);
   };
 
   const handleCancelPress = () => {

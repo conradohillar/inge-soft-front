@@ -1,7 +1,7 @@
 import { Image, TouchableOpacity, Text, View } from "react-native";
 import { Avatar, XStack, YStack } from "tamagui";
 import icons from "../../constants/icons";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
@@ -17,6 +17,10 @@ import PressableCard from "../../components/PressableCard.jsx";
 import { FlatList } from "react-native";
 import { unregisterIndieDevice } from "native-notify";
 import { setToken } from "../../services/utils";
+import RatingsOptionsModal from "../../components/RatingsOptionsModal";
+import LoadingPage from "../(pages)/LoadingPage";
+import ErrorPage from "../(pages)/ErrorPage";
+import { getDriverId } from "../../services/users";
 
 export default function Profile() {
   const router = useRouter();
@@ -29,6 +33,13 @@ export default function Profile() {
     visible: false,
     message: "",
     title: "",
+  });
+  const [isRatingsModalVisible, setRatingsModalVisible] = useState(false);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["getDriverId"],
+    queryFn: () => getDriverId(),
+    enabled: globalState.isDriver,
   });
 
   const toggleProfilePictureModal = () => {
@@ -142,7 +153,7 @@ export default function Profile() {
     setAlertConfig({
       visible: true,
       title: "Cerrar sesión",
-      message: "¿Estás seguro que querés cerrar sesión?",
+      message: "¿Estás seguro de que querés\ncerrar sesión?",
       onConfirm: async () => {
         unregisterIndieDevice(
           globalState.userId,
@@ -157,6 +168,14 @@ export default function Profile() {
       },
     });
   };
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (isError) {
+    return <ErrorPage />;
+  }
 
   return (
     <View className="flex-1 bg-background">
@@ -271,6 +290,12 @@ export default function Profile() {
               subtitle: "Accedé a la lista de tus chats",
             },
             {
+              onPress: () => setRatingsModalVisible(true),
+              icon: "star",
+              title: "Mis calificaciones",
+              subtitle: "Ver mis reseñas",
+            },
+            {
               onPress: !globalState.isDriver
                 ? () => router.push("/(pages)/CredentialsPage")
                 : () => handleRestrictedAccess("Ya sos conductor."),
@@ -301,6 +326,13 @@ export default function Profile() {
           showsVerticalScrollIndicator={false}
         />
       </View>
+
+      <RatingsOptionsModal
+        isVisible={isRatingsModalVisible}
+        onClose={() => setRatingsModalVisible(false)}
+        user_id={data}
+        isDriver={globalState.isDriver}
+      />
 
       <YStack className="items-center mt-4">
         {removeImage.isError && removeImage.error.message == 408 && (

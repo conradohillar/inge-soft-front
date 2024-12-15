@@ -73,7 +73,8 @@ export default function UserProfile() {
           </Text>
           <RatingStars rating={data.avg_rating} size={24} />
           <Text className="text-gray-500 text-sm font-qsemibold">
-            de {data.comments.length} opiniones
+            de {data.comments.length}{" "}
+            {data.comments.length === 1 ? "opinión" : "opiniones"}
           </Text>
         </YStack>
       </View>

@@ -157,7 +157,7 @@ export default function PostTripPage() {
                 />
                 <XStack className="items-center px-2 self-center mt-4">
                   <Text className="text-sm text-gray-400 font-qsemibold">
-                    Nota: se asignará automáticamente una franja de
+                    Nota: se asignará automáticamente una franja de salida de
                     <Text className="text-sm text-primary font-qbold">
                       {" "}
                       1 hora.

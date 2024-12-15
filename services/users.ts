@@ -17,6 +17,12 @@ export const getUserData = async () => {
     return handleRequest(() => axios.get(url, { headers }));
 };
 
+export const getDriverId = async () => {
+    const headers = await getHeaders();
+    const url = `${BASE_URL}/driver/id`;
+    return handleRequest(() => axios.get(url, { headers }));
+};
+
 export const deleteImage = async () => {
     const headers = await getHeaders();
     const url = `${BASE_URL}/delete/photo`;
