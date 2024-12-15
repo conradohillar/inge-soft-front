@@ -278,40 +278,57 @@ export default function Profile() {
                     handleRestrictedAccess(
                       "Primero tenés que convertirte en conductor."
                     ),
-              disabled: !globalState.isDriver,
+              disabled: !globalState.isDriver || !globalState.isLoggedIn,
               icon: "directions-car",
               title: "Mis autos",
-              subtitle: "Administrá tus vehículos",
+              subtitle: !globalState.isLoggedIn
+                ? "Iniciá sesión para acceder"
+                : "Administrá tus vehículos",
             },
             {
               onPress: () => router.push("/(pages)/ChatListPage"),
+              disabled: !globalState.isLoggedIn,
               icon: "chat-bubble",
               title: "Mis chats",
-              subtitle: "Accedé a la lista de tus chats",
+              subtitle: !globalState.isLoggedIn
+                ? "Iniciá sesión para acceder"
+                : "Accedé a la lista de tus chats",
             },
             {
               onPress: () => setRatingsModalVisible(true),
+              disabled: !globalState.isLoggedIn,
               icon: "star",
               title: "Mis calificaciones",
-              subtitle: "Ver mis reseñas",
+              subtitle: !globalState.isLoggedIn
+                ? "Iniciá sesión para acceder"
+                : "Ver mis reseñas",
             },
             {
               onPress: !globalState.isDriver
                 ? () => router.push("/(pages)/CredentialsPage")
                 : () => handleRestrictedAccess("Ya sos conductor."),
-              disabled: globalState.isDriver,
+              disabled: globalState.isDriver || !globalState.isLoggedIn,
               icon: "credit-card",
               title: "Credenciales",
-              subtitle: globalState.isDriver
+              subtitle: !globalState.isLoggedIn
+                ? "Iniciá sesión para acceder"
+                : globalState.isDriver
                 ? "Ya sos conductor"
                 : "Convertite en conductor",
             },
-            {
-              onPress: handleLogout,
-              icon: "logout",
-              title: "Cerrar sesión",
-              subtitle: "Salir de la aplicación",
-            },
+            globalState.isLoggedIn
+              ? {
+                  onPress: handleLogout,
+                  icon: "logout",
+                  title: "Cerrar sesión",
+                  subtitle: "Salir de la aplicación",
+                }
+              : {
+                  onPress: () => router.push("/(auth)/sign-in"),
+                  icon: "login",
+                  title: "Iniciar sesión",
+                  subtitle: "Iniciá sesión con tu cuenta",
+                },
           ]}
           renderItem={({ item }) => (
             <PressableCard

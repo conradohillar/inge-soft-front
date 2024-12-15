@@ -29,7 +29,12 @@ export default function Home() {
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["ridesUpcoming"],
-    queryFn: () => getTodayRides(),
+    queryFn: () => {
+      if (globalState.isLoggedIn) {
+        return getTodayRides();
+      }
+      return [];
+    },
   });
 
   const start_mutation = useMutation({

@@ -34,7 +34,6 @@ export default function TripCard({
     <Pressable
       onPress={() => handleOpenDetail(ride_id)}
       style={({ pressed }) => ({
-        opacity: pressed ? 0.9 : 1,
         transform: [{ scale: pressed ? 0.995 : 1 }],
       })}
     >
