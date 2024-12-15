@@ -1,4 +1,11 @@
-import { View, Text, ScrollView, Image, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  Pressable,
+  Linking,
+} from "react-native";
 import { XStack, YStack, Avatar } from "tamagui";
 import { useQuery } from "@tanstack/react-query";
 import { getRiderDetail } from "../../services/rides";
@@ -36,7 +43,10 @@ export default function TripDetailForRider() {
 
   const pay_mutation = useMutation({
     mutationFn: (pay_data) => payRide(pay_data),
-    onSuccess: () => {
+    onSuccess: async (response) => {
+      if (response.link) {
+        await Linking.openURL(response.link);
+      }
       setIsPaymentModalVisible(false);
     },
   });

@@ -27,6 +27,10 @@ const ActiveTripCard = ({
           params: { ride_id },
         })
       }
+      style={({ pressed }) => ({
+        opacity: pressed ? 0.9 : 1,
+        transform: [{ scale: pressed ? 0.99 : 1 }],
+      })}
     >
       <Card
         className="bg-white rounded-3xl my-2"
