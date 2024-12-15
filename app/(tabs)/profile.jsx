@@ -37,7 +37,7 @@ export default function Profile() {
   const [isRatingsModalVisible, setRatingsModalVisible] = useState(false);
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["getDriverId"],
+    queryKey: ["getDriverId", globalState.userId],
     queryFn: () => getDriverId(),
     enabled: globalState.isDriver,
   });
@@ -330,7 +330,8 @@ export default function Profile() {
       <RatingsOptionsModal
         isVisible={isRatingsModalVisible}
         onClose={() => setRatingsModalVisible(false)}
-        user_id={data}
+        driver_id={data}
+        user_id={globalState.userId}
         isDriver={globalState.isDriver}
       />
 
