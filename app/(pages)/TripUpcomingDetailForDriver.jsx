@@ -484,7 +484,7 @@ export default function TripUpcomingDetailForDriver() {
         {/* Botón de cancelar viaje al final */}
         <View className="px-6 pb-8">
           <Pressable
-            className="pb-2 pt-3 flex-row items-center justify-center space-x-2 bg-red-50 rounded-xl w-[70%] self-center"
+            className="pb-2 pt-3 flex-row items-center justify-center space-x-2 bg-red-50 rounded-full w-[85%] self-center"
             style={({ pressed }) => ({
               opacity: pressed ? 0.7 : 1,
             })}

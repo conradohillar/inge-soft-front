@@ -65,7 +65,7 @@ export default function SignIn() {
   return (
     <SafeAreaView className="flex-1 bg-background">
       <ScrollView bounces={true}>
-        <View className="flex-1 bg-background px-6">
+        <View className="flex-1 bg-background px-2">
           <YStack className="flex-1 px-6 bg-background">
             <YStack className="h-full w-full items-center justify-center">
               {/* Header */}

@@ -75,7 +75,7 @@ const ActiveTripCard = ({
             <VarButton
               onPress={handleStartTrip}
               variant="secondary"
-              opacity={isActive ? 0.5 : 1}
+              opacity={disabled || isActive ? 0.5 : 1}
               disabled={disabled || isActive}
             >
               <XStack className="items-center justify-center space-x-2">
@@ -93,7 +93,7 @@ const ActiveTripCard = ({
           <View className="flex-1">
             <VarButton
               onPress={handleEndTrip}
-              opacity={isActive ? 1 : 0.5}
+              opacity={disabled || !isActive ? 0.5 : 1}
               disabled={disabled || !isActive}
             >
               <XStack className="items-center justify-center space-x-2">
