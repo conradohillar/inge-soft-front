@@ -185,6 +185,7 @@ export default function Home() {
               return item.type == "driver" ? (
                 <ActiveTripCard
                   key={item.ride_id}
+                  ride_id={item.ride_id}
                   from={sliced_from}
                   to={sliced_to}
                   passengers={item.people}
@@ -203,6 +204,7 @@ export default function Home() {
               ) : (
                 <ActiveTripCardForRider
                   key={item.ride_id}
+                  ride_id={item.ride_id}
                   from={sliced_from}
                   to={sliced_to}
                   passengers={item.people}
