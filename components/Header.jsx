@@ -1,7 +1,7 @@
 import { Menu } from "@tamagui/lucide-icons";
 import { Link } from "expo-router";
-import { Image, View, Text, TouchableOpacity, Pressable } from "react-native";
-import { XStack, YStack, Button } from "tamagui";
+import { Image, View, Text, TouchableOpacity } from "react-native";
+import { XStack, Button } from "tamagui";
 import icons from "../constants/icons";
 import React, { useState, useEffect } from "react";
 import {
@@ -19,22 +19,12 @@ export default function Header() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const getNots = async () => {
-    let not = await getIndieNotificationInbox(
+    let noti = await getIndieNotificationInbox(
       globalState.userId,
       25312,
       "s6wtyVfup1RTspXItRRyqB"
     );
-    // Transformar las notificaciones al formato esperado por NotificationsModal
-    const formattedNotifications = not.map((notification) => ({
-      id: notification.notification_id,
-      title: notification.title,
-      message: notification.message,
-      time: new Date(notification.date).toRelative(), // Necesitarás una función para formatear la fecha
-      read: false, // Agregar lógica de leído/no leído si es necesario
-      icon: "notifications", // Ajustar según el tipo de notificación
-      type: "general", // Ajustar según el tipo de notificación
-    }));
-    setNotifications(formattedNotifications);
+    setNotifications(noti);
   };
 
   useEffect(() => {
@@ -52,7 +42,7 @@ export default function Header() {
   const handleDeleteNotification = async (notificationId) => {
     let not = await deleteIndieNotificationInbox(
       globalState.userId,
-      notificationId,
+      String(notificationId),
       25312,
       "s6wtyVfup1RTspXItRRyqB"
     );
@@ -69,7 +59,7 @@ export default function Header() {
           onPress={() => setModalVisible(true)}
           className="w-10 h-10 rounded-2xl bg-background2 items-center justify-center"
         >
-          <MaterialIcons name="notifications" size={24} color="#59A58A" />
+          <MaterialIcons name="notifications" size={34} color="#555" />
           {notifications.length > 0 && (
             <View className="absolute -top-1 -right-1 bg-red-500 rounded-full h-4 w-4 items-center justify-center">
               <Text className="text-white text-xs font-qbold">
