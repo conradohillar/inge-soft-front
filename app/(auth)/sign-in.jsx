@@ -69,7 +69,7 @@ export default function SignIn() {
             <YStack className="h-full w-full items-center justify-center">
               {/* Header */}
               <YStack className="items-center pt-16 pb-12">
-                <Text className="text-4xl font-qbold text-primary mb-2">
+                <Text className="text-4xl font-qbold text-primary mb-2 mt-6">
                   ¡Bienvenido!
                 </Text>
                 <Text className="text-base font-qregular text-gray-500 text-center">
