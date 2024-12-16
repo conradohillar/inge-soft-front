@@ -1,3 +1,4 @@
+import { Menu } from "@tamagui/lucide-icons";
 import { Link } from "expo-router";
 import {
   Image,
@@ -10,7 +11,12 @@ import {
 import { XStack, YStack, Button } from "tamagui";
 import icons from "../constants/icons";
 import React, { useState, useEffect } from "react";
+import {
+  getIndieNotificationInbox,
+  deleteIndieNotificationInbox,
+} from "native-notify";
 import { useGlobalState } from "../app/_layout";
+import * as Notifications from "expo-notifications";
 
 export default function Header() {
   const { globalState } = useGlobalState();
@@ -18,15 +24,34 @@ export default function Header() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const getNots = async () => {
-    setNotifications([]);
+    let not = await getIndieNotificationInbox(
+      globalState.userId,
+      25312,
+      "s6wtyVfup1RTspXItRRyqB"
+    );
+    setNotifications(not);
   };
 
   useEffect(() => {
     getNots();
+
+    const subscription = Notifications.addNotificationReceivedListener(() => {
+      getNots();
+    });
+
+    return () => {
+      subscription.remove();
+    };
   }, []);
 
   const handleDeleteNotification = async (notificationId) => {
-    setNotifications([]);
+    let not = await deleteIndieNotificationInbox(
+      globalState.userId,
+      notificationId,
+      25312,
+      "s6wtyVfup1RTspXItRRyqB"
+    );
+    setNotifications(not);
   };
 
   const toggleModal = () => {
@@ -39,7 +64,7 @@ export default function Header() {
       style={{ borderBottomWidth: 2, borderBottomColor: "#ccc" }}
     >
       <View className="relative">
-        <TouchableOpacity onPress={toggleModal}>
+        <TouchableOpacity onPress={toggleModal} asChild>
           <Button className="w-10 h-10 rounded-2xl bg-background2">
             <Image
               source={icons.notification}
