@@ -381,7 +381,7 @@ export default function TripUpcomingDetailForDriver() {
                     <XStack className="items-center space-x-3">
                       <Avatar
                         circular
-                        size="$8"
+                        size="$6"
                         borderColor="$gray5"
                         borderWidth={1}
                       >
@@ -394,20 +394,43 @@ export default function TripUpcomingDetailForDriver() {
                         <Text className="font-qbold text-base text-black">
                           {rider.name}
                         </Text>
-                        <Link
-                          href={{
-                            pathname: "/(pages)/UserProfile",
-                            params: {
-                              user_id: rider.user_id,
-                              category: "rider",
-                            },
-                          }}
-                          asChild
-                        >
-                          <Text className="font-qsemibold text-sm text-primary underline">
-                            Ver perfil
-                          </Text>
-                        </Link>
+                        <XStack className="items-center space-x-2 mt-1">
+                          <Link
+                            href={{
+                              pathname: "/(pages)/UserProfile",
+                              params: {
+                                user_id: rider.user_id,
+                                category: "rider",
+                              },
+                            }}
+                            asChild
+                          >
+                            <Text className="font-qsemibold text-sm text-primary underline">
+                              Ver perfil
+                            </Text>
+                          </Link>
+                          <Text className="text-gray-300">•</Text>
+                          <View
+                            className={`flex-row items-center px-2 py-1 rounded-full ${
+                              rider.paid ? "bg-green-100" : "bg-yellow-100"
+                            }`}
+                          >
+                            <MaterialIcons
+                              name={rider.paid ? "check-circle" : "schedule"}
+                              size={14}
+                              color={rider.paid ? "#059669" : "#D97706"}
+                            />
+                            <Text
+                              className={`ml-1 text-xs font-qsemibold ${
+                                rider.paid
+                                  ? "text-green-600"
+                                  : "text-yellow-600"
+                              }`}
+                            >
+                              {rider.paid ? "Pagado" : "Pendiente"}
+                            </Text>
+                          </View>
+                        </XStack>
                       </YStack>
                     </XStack>
                     <Pressable
