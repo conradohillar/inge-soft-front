@@ -56,8 +56,14 @@ export default function NewCredentialsSuccessful() {
               elevation: 3,
             })}
           >
-            <MaterialIcons name={returnToSource} size={32} color="#444444" />
-            <Text className="ml-2 font-qbold text-2xl">{returnTo}</Text>
+            <XStack className="items-center space-x-2">
+              <Image
+                source={returnToSource}
+                className="w-8 h-8"
+                resizeMode="contain"
+              />
+              <Text className="ml-2 font-qbold text-2xl mt-1">{returnTo}</Text>
+            </XStack>
           </Pressable>
         </View>
       </YStack>

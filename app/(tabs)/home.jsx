@@ -24,8 +24,17 @@ import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import { queryClient } from "../_layout";
 import { isCurrentTimeGreaterOrEqual } from "../(pages)/TripUpcomingDetailForDriver";
+import CustomAlert from "../../components/CustomAlert";
+import { useState } from "react";
+
 export default function Home() {
   const { globalState, setGlobalState } = useGlobalState();
+  const router = useRouter();
+  const [alertConfig, setAlertConfig] = useState({
+    visible: false,
+    title: "",
+    message: "",
+  });
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["ridesUpcoming"],
@@ -69,7 +78,29 @@ export default function Home() {
     end_mutation.mutate(ride_id);
   };
 
-  const router = useRouter();
+  const handlePostTrip = () => {
+    if (!globalState.isLoggedIn) {
+      setAlertConfig({
+        visible: true,
+        title: "Acceso restringido",
+        message: "Necesitás iniciar sesión para publicar un viaje",
+        onConfirm: () => router.push("/(auth)/sign-in"),
+      });
+      return;
+    }
+
+    if (!globalState.isDriver) {
+      setAlertConfig({
+        visible: true,
+        title: "Acceso restringido",
+        message: "Primero tenés que convertirte en conductor",
+        onConfirm: () => router.push("/(pages)/CredentialsPage"),
+      });
+      return;
+    }
+
+    router.push("/(pages)/PostTripPage");
+  };
 
   if (isLoading) {
     return <LoadingPage />;
@@ -138,20 +169,14 @@ export default function Home() {
           </Pressable>
 
           <Pressable
-            onPress={() => {
-              router.push("/(pages)/PostTripPage");
-            }}
+            onPress={handlePostTrip}
             className="flex-1"
             style={({ pressed }) => ({
               transform: [{ scale: pressed ? 0.98 : 1 }],
             })}
           >
             <View
-              className={`bg-white rounded-3xl py-6 px-4 ${
-                !globalState.isDriver || !globalState.isLoggedIn
-                  ? "opacity-50"
-                  : ""
-              }`}
+              className={`bg-white rounded-3xl py-6 px-4`}
               style={{
                 shadowColor: "#000",
                 shadowOffset: { width: 0, height: 2 },
@@ -246,6 +271,14 @@ export default function Home() {
           </View>
         )}
       </View>
+
+      <CustomAlert
+        isVisible={alertConfig.visible}
+        onClose={() => setAlertConfig({ ...alertConfig, visible: false })}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        onConfirm={alertConfig.onConfirm}
+      />
     </ScrollView>
   );
 }

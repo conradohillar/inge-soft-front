@@ -33,7 +33,7 @@ const CustomAlert = ({
         >
           {/* Header */}
           <View className="flex-row justify-between items-center mb-4">
-            <Text className="text-2xl font-qbold text-black flex-1 text-center">
+            <Text className="text-2xl font-qbold text-black flex-1 text-center mr-6">
               {title}
             </Text>
             <TouchableOpacity onPress={onClose} className="absolute right-0">
