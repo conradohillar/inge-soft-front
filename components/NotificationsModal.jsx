@@ -16,9 +16,8 @@ export default function NotificationsModal({
     >
       <View className="flex-1 bg-black/30">
         <View
-          className="m-4 mt-16 bg-white rounded-3xl pb-2"
+          className="m-4 mt-16 bg-white rounded-3xl pb-2 max-h-[80%] min-h-[50%]"
           style={{
-            maxHeight: "80%",
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.08,
@@ -59,7 +58,6 @@ export default function NotificationsModal({
                     </View>
                     <TouchableOpacity
                       onPress={() => {
-                        console.log("Deleted", item.notification_id);
                         onDeleteNotification(item.notification_id);
                       }}
                       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}

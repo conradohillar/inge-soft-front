@@ -40,13 +40,18 @@ export default function Header() {
   }, []);
 
   const handleDeleteNotification = async (notificationId) => {
-    let not = await deleteIndieNotificationInbox(
+    setNotifications((prevNotifications) =>
+      prevNotifications.filter(
+        (notification) => notification.notification_id !== notificationId
+      )
+    );
+
+    /* let not = await deleteIndieNotificationInbox(
       globalState.userId,
       String(notificationId),
       25312,
       "s6wtyVfup1RTspXItRRyqB"
-    );
-    setNotifications(not);
+    ); */
   };
 
   return (
