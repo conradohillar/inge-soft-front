@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Rydio",
-    "displayName": "Rydio",
+    "name": "rydio",
+    "displayName": "rydio",
     "scheme": "react-learning",
     "slug": "react-learning",
     "version": "1.0.0",
