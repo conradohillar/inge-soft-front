@@ -80,14 +80,14 @@ export default function TripDetailForRider() {
     }
   };
 
-  const handlePayment = () => {
-    create_chat_mutation.mutate(data.driver_id);
+  const handlePayment = async () => {
     const payment_data = {
       title: "Pago de viaje",
       price: data.price,
       ride_id: ride_id,
     };
     pay_mutation.mutate(payment_data);
+    create_chat_mutation.mutate(data.driver_id);
   };
 
   const handleCancelPress = () => {
@@ -98,7 +98,8 @@ export default function TripDetailForRider() {
     leave_ride_mutation.mutate(ride_id);
   };
 
-  if (isLoading) return <LoadingPage />;
+  if (isLoading || pay_mutation.isPending || create_chat_mutation.isPending)
+    return <LoadingPage />;
   if (isError) return <ErrorPage />;
 
   return (
